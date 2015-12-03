@@ -8,13 +8,13 @@
     <display-name>Structured Products</display-name>
 
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>\WEB-INF\views\index.html</welcome-file>
     </welcome-file-list>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
-            classpath*:META-INF/spring/context.xml
+            <!--classpath*:META-INF/spring/context.xml-->
             classpath*:META-INF/spring/web.config.xml
         </param-value>
     </context-param>
@@ -32,7 +32,7 @@
 
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
     <listener>

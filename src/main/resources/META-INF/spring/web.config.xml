@@ -11,13 +11,8 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <mvc:annotation-driven/>
-    <context:component-scan base-package="com.structuredproducts.mvc" />
+    <context:component-scan base-package="com.structuredproducts.rest" />
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
 
 </beans>
