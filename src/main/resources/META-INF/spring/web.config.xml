@@ -14,5 +14,4 @@
     <context:component-scan base-package="com.structuredproducts.rest" />
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
-
 </beans>
