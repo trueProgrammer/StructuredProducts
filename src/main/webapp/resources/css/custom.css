@@ -25,7 +25,7 @@
 }
 
 .service-block-img {
-	width: 80%;
+    height: 11.5em;
 }
 
 .latest-list li a {
@@ -50,4 +50,11 @@
 .header-fixed .header.header-fixed-shrink .logo img {
     max-width: 100%;
     margin: 45px 0 -4px;
+}
+
+.clients-rows {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 50px;
+    margin-top: 10px;
+    padding-bottom: 30px;
 }

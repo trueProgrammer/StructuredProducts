@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="resources/assets/css/footers/footer-v2.css">
 
     <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="resources/assets/plugins/layer-slider/layerslider/css/layerslider.css">
     <link rel="stylesheet" href="resources/assets/plugins/font-awesome/css/font-awesome.min.css">
 
     <!-- CSS Customization -->
@@ -42,27 +41,15 @@
     <script type="text/javascript" src="resources/lib/jquery.min.js"></script>
     <script type="text/javascript" src="resources/lib/jquery-migrate.min.js"></script>
     <script type="text/javascript" src="resources/lib/bootstrap.min.js"></script>
-    <!-- JS Implementing Plugins -->
+
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="resources/js/app.js"></script>
+
+    <link rel="stylesheet" href="resources/assets/plugins/layer-slider/layerslider/css/layerslider.css">
     <script type="text/javascript" src="resources/assets/plugins/layer-slider/layerslider/js/greensock.js"></script>
     <script type="text/javascript" src="resources/assets/plugins/layer-slider/layerslider/js/layerslider.transitions.js"></script>
     <script type="text/javascript" src="resources/assets/plugins/layer-slider/layerslider/js/layerslider.kreaturamedia.jquery.js"></script>
-    <!-- JS Page Level -->
-    <script type="text/javascript" src="resources/js/app.js"></script>
     <script type="text/javascript" src="resources/assets/js/plugins/layer-slider.js"></script>
-    <script type="text/javascript">
-        jQuery(document).ready(function() {
-            App.init();
-            jQuery("#layerslider").layerSlider({
-                navStartStop: false,
-                skin: 'fullwidth',
-                responsive : true,
-                responsiveUnder : 960,
-                layersContainer : 960,
-                autoPlayVideos: true,
-                skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
-            });
-        });
-    </script>
 
 </head>
 
@@ -70,112 +57,13 @@
 
 <div class="wrapper">
 
-    <div ng-include="'/views/template/header.htm'"></div>
+    <div ng-include="'views/template/header.htm'"></div>
 
-    <!--=== Slider ===-->
-    <div id="layerslider" style="width: 100%; height: 500px; margin: 0px auto;">
-        <!-- First slide -->
-        <div class="ls-slide" data-ls="slidedelay:2500;transition2d:25;">
-            <img src="resources/img/bg1.jpg" class="ls-bg" alt="Slide background">
-        </div>
+    <div ng-view></div>
 
-        <!--Second Slide-->
-        <div class="ls-slide" data-ls="transition2d:93;">
-            <img src="resources/img/18.jpg" class="ls-bg" alt="Slide background">
-        </div>
-
-        <!--Third Slide-->
-        <div class="ls-slide" style="slidedirection: right; transition2d: 92,93,105; ">
-            <img src="resources/img/bg2.jpg" class="ls-bg" alt="Slide background">
-        </div>
-        <!--End Third Slide-->
-    </div><!--/layer_slider-->
-    <!--=== End Slider ===-->
-
-    <!--=== Content ===-->
-    <div class="container content-sm">
-
-        <div class="headline-center-v2 headline-center-v2-dark margin-bottom-20">
-            <h2>Наши сервисы</h2>
-            <span class="bordered-icon"><i class="fa fa-th-large"></i></span>
-        </div><!--/Headline Center V2-->
-
-        <!-- Service Blocks -->
-        <div class="row margin-bottom-30">
-            <div class="col-md-3-custom col-sm-6">
-                <div class="service-block service-block-default service-block-custom">
-                    <div class="desc">
-                        <img class="service-block-img" alt="" src="resources/img/puzzle.png">
-                        <h3>О структурных продуктах</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3-custom col-sm-6">
-                <div class="service-block service-block-default service-block-custom">
-                    <div class="desc">
-                        <img class="service-block-img" alt="" src="resources/img/search_for_invest.png">
-                        <h3>Найти возможность для инвестирования</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3-custom col-sm-6">
-                <div class="service-block service-block-default service-block-custom">
-                    <div class="desc">
-                        <img class="service-block-img" alt="" src="resources/img/portfel.png">
-                        <h3>Выбрать структурный продукт</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Service Blokcs -->
-
-        <hr class="devider devider-db">
-
-        <!-- Info Blokcs -->
-        <div class="row margin-bottom-40">
-            <!-- Latest -->
-            <div class="col-md-6 md-margin-bottom-40">
-                <div class="posts">
-                    <div class="headline"><h2>Новости</h2></div>
-                    <ul class="list-unstyled latest-list">
-                        <li>
-                            <a href="#">Anim moon officia Unify is an incredibly beautiful responsive Bootstrap Template</a>
-                            <p class="news-list-date">May 8, 2014</p>
-                        </li>
-                        <li>
-                            <a href="#">Best shoots</a>
-                            <p class="news-list-date">June 23, 2014</p>
-                        </li>
-                    </ul>
-                </div>
-            </div><!--/col-md-3-->
-            <!-- End Latest -->
-
-            <!-- Latest -->
-            <div class="col-md-6 md-margin-bottom-40">
-                <div class="posts">
-                    <div class="headline"><h2>Инвестиционные идеи</h2></div>
-                    <ul class="list-unstyled latest-list">
-                        <li>
-                            <a href="#">Incredible content</a>
-                            <p class="news-list-date">May 8, 2014</p>
-                        </li>
-                        <li>
-                            <a href="#">Best shoots</a>
-                            <p class="news-list-date">June 23, 2014</p>
-                        </li>
-                    </ul>
-                </div>
-            </div><!--/col-md-3-->
-            <!-- End Latest -->
-        </div><!--/row-->
-        <!-- End Info Blokcs -->
-
-    </div>
-    <!--=== End Content ===-->
-
-    <div ng-include="'/views/template/footer.htm'"></div>
+    <div ng-include="'views/template/footer.htm'"></div>
 
 </div>
+
 </body>
 </html>
