@@ -4,4 +4,4 @@ angular.module('app',[])
         $http.get(url).success(function(data) {
             $scope.message = data.name;
         })
-    })
+    });
