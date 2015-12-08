@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 @RequestMapping("/v1/data")
-public class RestController {
+public class DataController {
 
-    private final static Logger logger = Logger.getLogger(RestController.class);
+    private final static Logger logger = Logger.getLogger(DataController.class);
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Data> getData() {
@@ -23,5 +23,7 @@ public class RestController {
         logger.error("Get data");
         return new ResponseEntity<>(new Data("test"), HttpStatus.OK);
     }
+
+
 
 }

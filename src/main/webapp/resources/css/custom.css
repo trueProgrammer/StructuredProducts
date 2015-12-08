@@ -4,8 +4,8 @@
 }
 
 .header .navbar-nav {
-    float: left;
-    margin-left: 24em;
+    float: right;
+    margin-right: 45%;
 }
 
 .header-fixed .header.header-fixed-shrink .navbar-nav > li > a {
@@ -24,10 +24,6 @@
     text-align: center;
 }
 
-.service-block-img {
-    height: 11.5em;
-}
-
 .latest-list li a {
 	color: black;
     font-size: 110%;
@@ -38,14 +34,9 @@
 }
 
 .col-md-3-custom {
-    width: 25%;
-    margin-left: 5.6em;
+    width: 33.3333%;
 }
 
-.service-block-custom {
-    height: 19em;
-    width: 21em;
-}
 
 .header-fixed .header.header-fixed-shrink .logo img {
     max-width: 100%;
