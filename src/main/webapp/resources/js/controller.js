@@ -1,9 +1,24 @@
 var app = angular.module('app',['ngRoute'])
     .controller('main', function($scope, $http) {
-        var url = "api/v1/data";
-        $http.get(url).success(function(data) {
-            $scope.message = data.name;
-        })
+        var infoUrl = "api/v1/data",
+            emailUrl = api/v1/service/mail;
+
+        $scope.getInfo = function() {
+            $http.get(infoUrl).success(function(data) {
+                $scope.message = data.name;
+            });
+        };
+
+        $scope.sendEmail = function() {
+            $http.post(emailUrl, @scope.email).
+                then(function(response) {
+                          // success
+                  },
+                  function(response) { // optional
+                          // failed
+                  });
+        };
+
     })
     .controller('main', [function() {
         angular.element(document).ready(function () {

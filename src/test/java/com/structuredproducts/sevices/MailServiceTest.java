@@ -16,7 +16,11 @@ public class MailServiceTest {
 
     @Test
     public void test() {
-        mailService.sendMessage();
+        try {
+            mailService.sendMessage();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 
 }

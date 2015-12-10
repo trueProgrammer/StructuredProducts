@@ -1,5 +1,6 @@
 package com.structuredproducts.sevices;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.mail.*;
@@ -7,26 +8,28 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * Created by Vlad on 08.12.2015.
  */
 public class MailService {
 
-    @Value( "${mail.login}" )
-    private String login = "vl.isaev@mail.ru";
-    @Value( "$mail.password" )
-    private String password = "17935totalWarpony019vis";
+    private static final Logger log = Logger.getLogger(MailService.class);
 
-    //yulia.ser.balashova@gmail.com
-    //9841silent_hill9841
+    @Value( "${mail.login}" )
+    private String login;
+    @Value( "$mail.password" )
+    private String password;
+
+    private final Random random = new Random();
 
     private final Properties props;
 
     public MailService() {
         props = new Properties();
 
-        props.put("mail.smtp.host", "smtp.gmail.com"); // for gmail use smtp.gmail.com
+        props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.auth", "true");
         props.put("mail.debug", "true");
         props.put("mail.smtp.starttls.enable", "true");
@@ -38,35 +41,33 @@ public class MailService {
 
 
 
-    public void sendMessage() {
-        System.out.println(login);
-        System.out.println(password);
+    public void sendMessage() throws ServiceException {
+
+        log.debug("Email will be send");
 
         try {
             Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
 
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("yulia.ser.balashova@gmail.com", "9841silent_hill9841");
+                    return new PasswordAuthentication(login, password);
                 }
             });
 
-            mailSession.setDebug(true); // Enable the debug mode
+            mailSession.setDebug(true);
 
             Message msg = new MimeMessage( mailSession );
 
-            //--[ Set the FROM, TO, DATE and SUBJECT fields
-            msg.setFrom( new InternetAddress( "test@mail.ru" ) );
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("yulia.ser.balashova@gmail.com"));
+            msg.setFrom(new InternetAddress(login));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(login));
             msg.setSentDate(new Date());
-            msg.setSubject( "Test" );
+            msg.setSubject("Test" + random.nextInt());
 
-            //--[ Create the body of the mail
-            msg.setText( "Test e-mail sent with JavaMail" );
+            msg.setText( "Test e-mail sent with using JavaMail" );
 
-            //--[ Ask the Transport class to send our mail message
             Transport.send( msg );
         } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            log.error("Email hasn't send.", e);
+            throw new ServiceException("Email hasn't send.", e);
         }
 
     }
