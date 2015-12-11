@@ -41,7 +41,7 @@ public class MailService {
 
 
 
-    public void sendMessage() throws ServiceException {
+    public void sendMessage(String name, String from, String text) throws ServiceException {
 
         log.debug("Email will be send");
 
@@ -60,7 +60,9 @@ public class MailService {
             msg.setFrom(new InternetAddress(login));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(login));
             msg.setSentDate(new Date());
-            msg.setSubject("Test" + random.nextInt());
+            msg.setSubject("Contact form" + random.nextInt());
+
+            msg.setText(String.format("FROM [%s] \n\n Name [%s] \n\n Text:\n%s", from, name, text));
 
             msg.setText( "Test e-mail sent with using JavaMail" );
 
