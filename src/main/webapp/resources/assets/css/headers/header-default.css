@@ -261,7 +261,7 @@
     }
     
     .header .navbar-nav {
-        margin: 0 0 5px;
+        margin: 0 0 5px !important;
         float: none !important;
     }
 

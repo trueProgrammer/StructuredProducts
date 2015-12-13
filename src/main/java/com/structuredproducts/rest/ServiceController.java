@@ -1,7 +1,6 @@
 package com.structuredproducts.rest;
 
 import com.structuredproducts.sevices.MailService;
-import com.structuredproducts.sevices.ServiceException;
 import com.structuredproducts.util.ServiceUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

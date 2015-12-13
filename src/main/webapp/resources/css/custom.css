@@ -4,8 +4,8 @@
 }
 
 .header .navbar-nav {
-    float: right;
-    margin-right: 45%;
+    float: left;
+    margin-left: 280px;
 }
 
 .header-fixed .header.header-fixed-shrink .navbar-nav > li > a {

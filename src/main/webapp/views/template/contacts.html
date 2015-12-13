@@ -48,39 +48,18 @@
                         </div>
                     </div>
 
-                    <p><button class="btn-u" ng-click="sendEmail()" >Send Message</button></p>
+                    <p><button class="btn-u" ng-click="sendEmail(emailForm)" >Send Message</button></p>
                 </fieldset>
 
                 <!--ng-disabled="!validateForm(emailForm)"-->
 
                 <div class="row">
                     <div name="alertDiv" class="col-lg-12">
-                        <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="1" type="{{emailAlert.type}}"
+                        <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="7000" type="{{emailAlert.type}}"
                                ng-if="emailAlert.visible">{{emailAlert.msg}}</alert>
                     </div>
                 </div>
 
-                <div ng-if="emailAlert.visible">
-                    <div class="row">
-                        <div name="alertDiv" class="col-lg-12">
-                            <alert id="emailAlert" type="{{emailAlert.type}}" dismiss-on-timeout='1'
-                                   close="closeAlert()" ng-if="emailAlert.visible">{{emailAlert.msg}}</alert>
-                        </div>
-                    </div>
-                </div>
-
-                <!--<div class="message" close="closeAlert()" dismiss-on-timeout='2500' ng-if="emailAlert.visible">
-                    <i class="rounded-x fa fa-check"></i>
-                    <p>Your message was successfully sent!</p>
-                </div>
-                <div class="message">
-                    <i class="rounded-x fa fa-check"></i>
-                    <p>Your message was successfully sent!</p>
-                </div>
-                <div role="alert">
-                    <span class="error" ng-show="emailForm.input.$error.required">
-                      Required!</span>
-                </div>-->
             </form>
             <!-- End email form -->
 

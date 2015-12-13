@@ -1,5 +1,5 @@
 var app = angular.module('App',
-                        ['ngRoute']);
+                        ['ngRoute', 'ui.bootstrap']);
 
 app.config(['$routeProvider',
     function($routeProvider) {
@@ -29,8 +29,6 @@ app.controller('main', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
 
     $scope.emailAlert = {
-        type: 'danger',
-        msg: 'Email was send.',
         visible: false
     };
 
@@ -38,21 +36,37 @@ app.controller('main', [ '$scope', '$log', 'restService',
         $scope.emailAlert.visible = false;
     };
 
+    $scope.showFailAlert = function(msg) {
+       $scope.emailAlert.type = 'danger',
+       $scope.emailAlert.msg = msg;
+       $scope.emailAlert.visible = true;
+    };
+
+    $scope.showSuccessAlert = function(msg) {
+        $scope.emailAlert.type = 'success',
+        $scope.emailAlert.msg = msg;
+        $scope.emailAlert.visible = true;
+    }
+
     $scope.validateForm = function(form) {
         return form.$dirty
             && form.$valid;
     };
 
-    $scope.sendEmail = function () {
+    $scope.sendEmail = function (form) {
+        if(!$scope.validateForm(form)) {
+            return;
+        }
         restService.sendEmail(
             $scope.email,
             function() {
-                $log.info("Email success sended.");
-                $scope.emailAlert.visible = true;
+                $log.info("Email success sent.");
+                $scope.showSuccessAlert("Message sent successfully.");
+                $scope.email = '';
             },
             function(response) {
-                $log.error("Email sending failed." + response.statusText);
-                $scope.emailAlert.visible = true;
+                $log.error("Email sending failed.");
+                $scope.showFailAlert("Email sending failed.");
             }
         )
     };

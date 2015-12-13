@@ -19,7 +19,7 @@ public class MailService {
 
     @Value( "${mail.login}" )
     private String login;
-    @Value( "$mail.password" )
+    @Value( "${mail.password}" )
     private String password;
 
     private final Random random = new Random();
@@ -39,11 +39,9 @@ public class MailService {
         props.put("mail.smtp.socketFactory.fallback", "false");
     }
 
-
-
     public void sendMessage(String name, String from, String text) throws ServiceException {
 
-        log.debug("Email will be send");
+        log.debug(String.format("Email [name:%s, from:%s] will be send.", name, from));
 
         try {
             Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -60,15 +58,13 @@ public class MailService {
             msg.setFrom(new InternetAddress(login));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(login));
             msg.setSentDate(new Date());
-            msg.setSubject("Contact form" + random.nextInt());
+            msg.setSubject("Contact form " + random.nextInt());
 
-            msg.setText(String.format("FROM [%s] \n\n Name [%s] \n\n Text:\n%s", from, name, text));
+            msg.setText(String.format("FROM [%s] \n\nName [%s] \n\nText:\n%s", from, name, text));
 
-            msg.setText( "Test e-mail sent with using JavaMail" );
-
-            Transport.send( msg );
+            Transport.send(msg);
         } catch (MessagingException e) {
-            log.error("Email hasn't send.", e);
+            log.error(String.format("Email [name:%s, from:%s] hasn't send.", name, from), e);
             throw new ServiceException("Email hasn't send.", e);
         }
 
