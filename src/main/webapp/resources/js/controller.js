@@ -19,10 +19,10 @@ app.config(['$routeProvider',
             when('/partners', {
                 templateUrl: 'views/template/partners.html',
                 controller: 'main'
-            }).
-            otherwise({
-                redirectTo: '/'
             });
+/*            otherwise({
+                redirectTo: '/'
+            });*/
     }]);
 
 app.controller('main', [ '$scope', '$log', 'restService',
