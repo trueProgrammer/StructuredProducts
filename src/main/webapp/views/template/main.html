@@ -96,7 +96,9 @@
         <div class="col-md-4 col-sm-6">
             <div class="service-block service-block-default">
                 <h2 class="heading-md">Найти возможности для инвестирования</h2>
-                <a href="#top" class="btn-u btn-brd btn-brd-hover btn-u-default btn-u-block">Top 5</a>
+                <a href="" ng-click="gotoAnchor('top')" class="btn btn-link">Top 5
+                    <i class="fa fa-angle-down"></i>
+                </a>
             </div>
         </div>
         <div class="col-md-4 col-sm-6">
@@ -115,26 +117,58 @@
     <div class="row margin-bottom-40">
         <!-- Latest -->
         <div class="col-md-6 md-margin-bottom-40">
-            <div class="posts">
-                <div class="headline"><h2>Новости</h2></div>
-                <ul class="list-unstyled latest-list">
-                    <li>
-                        <a href="#">Anim moon officia Unify is an incredibly beautiful responsive Bootstrap Template</a>
-                        <p class="news-list-date">May 8, 2014</p>
-                    </li>
-                    <li>
-                        <a href="#">Best shoots</a>
-                        <p class="news-list-date">June 23, 2014</p>
-                    </li>
-                </ul>
-            </div>
+            <div class="headline"><h2>Топ-5 продуктов</h2></div>
+
+            <!--Basic Table-->
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th class="hidden-sm">Last Name</th>
+                    <th>Username</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td class="hidden-sm">Otto</td>
+                    <td>@mdo</td>
+                    <td><span class="label label-warning">Expiring</span></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td class="hidden-sm">Thornton</td>
+                    <td>@fat</td>
+                    <td><span class="label label-success">Success</span></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td class="hidden-sm">the Bird</td>
+                    <td>@twitter</td>
+                    <td><span class="label label-danger">Error!</span></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>htmlstream</td>
+                    <td class="hidden-sm">Web Design</td>
+                    <td>@htmlstream</td>
+                    <td><span class="label label-info">Pending..</span></td>
+                </tr>
+                </tbody>
+            </table>
+            <!--End Basic Table-->
         </div><!--/col-md-3-->
         <!-- End Latest -->
 
         <!-- Latest -->
-        <div class="col-md-6 md-margin-bottom-40">
+        <div id="anchortop" class="col-md-6 md-margin-bottom-40">
             <div class="posts">
-                <div class="headline"><h2>Инвестиционные идеи</h2></div>
+                <div class="headline"><h2>Инвестиционные идеи и предложения от наших партнеров</h2></div>
                 <ul class="list-unstyled latest-list">
                     <li>
                         <a href="#">Incredible content</a>
@@ -146,29 +180,76 @@
                     </li>
                 </ul>
             </div>
+
+            <!--Invoice Table-->
+            <div class="panel panel-default margin-bottom-40">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Инвестиционные идеи и предложения от наших партнеров</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Здесь вы можете найти самую последнюю и интересную информацию от наших партнеров</p>
+                </div>
+                <table class="table table-striped invoice-table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Item</th>
+                        <th class="hidden-sm">Description</th>
+                        <th>Quantity</th>
+                        <th>Unit Cost</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Майка</td>
+                        <td class="hidden-sm">Армани</td>
+                        <td>252</td>
+                        <td>$52</td>
+                        <td>$18476</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Спортивный костюм</td>
+                        <td class="hidden-sm">Адидас</td>
+                        <td>78</td>
+                        <td>$128</td>
+                        <td>$12047</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Костюм</td>
+                        <td class="hidden-sm">Хуго босс</td>
+                        <td>16</td>
+                        <td>$450</td>
+                        <td>$7968</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Платье</td>
+                        <td class="hidden-sm">Долче габана</td>
+                        <td>191</td>
+                        <td>$24</td>
+                        <td>$4099</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Трусы</td>
+                        <td class="hidden-sm">Келвин клайн</td>
+                        <td>65</td>
+                        <td>$119</td>
+                        <td>$9456</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--End Invoice Table-->
+
         </div><!--/col-md-3-->
         <!-- End Latest -->
     </div><!--/row-->
     <!-- End Info Blokcs -->
-
-    <section id="top">
-        <!-- Latest -->
-        <div class="col-md-6 md-margin-bottom-40">
-            <div class="posts">
-                <div class="headline"><h2>Инвестиционные идеи</h2></div>
-                <ul class="list-unstyled latest-list">
-                    <li>
-                        <a href="#">Incredible content</a>
-                        <p class="news-list-date">May 8, 2014</p>
-                    </li>
-                    <li>
-                        <a href="#">Best shoots</a>
-                        <p class="news-list-date">June 23, 2014</p>
-                    </li>
-                </ul>
-            </div>
-        </div><!--/col-md-3-->
-    </section>
 
 </div>
 <!--=== End Content ===-->

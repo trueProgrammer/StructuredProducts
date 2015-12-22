@@ -3,10 +3,10 @@
 	height: 1.1em;
 }
 
-.header .navbar-nav {
+/*.header .navbar-nav {
     float: left;
     margin-left: 280px;
-}
+}*/
 
 .header-fixed .header.header-fixed-shrink .navbar-nav > li > a {
 	bottom: -12px;
@@ -51,23 +51,4 @@
 
 .service-block-default:hover {
     box-shadow: 0px 0px 5px 3px #a3a3a3;
-}
-
-.scroll-button {
-    border-color: #eee;
-    color: #555;
-    background: none;
-    padding: 5px 13px;
-    border: solid 1px transparent;
-    -webkit-transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: 400;
-    position: relative;
-    white-space: nowrap;
-    display: inline-block;
-    text-decoration: none;
 }

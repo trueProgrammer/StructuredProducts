@@ -19,14 +19,18 @@ app.config(['$routeProvider',
             when('/partners', {
                 templateUrl: 'views/template/partners.html',
                 controller: 'main'
-            });
-/*            otherwise({
+            }).
+            otherwise({
                 redirectTo: '/'
-            });*/
+            });
     }]);
 
-app.controller('main', [ '$scope', '$log', 'restService',
-    function($scope, $log, restService) {
+app.run(['$anchorScroll', function($anchorScroll) {
+  $anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
+}])
+
+app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$location',
+    function($scope, $log, restService, $anchorScroll, $location) {
 
     $scope.emailAlert = {
         visible: false
@@ -69,6 +73,19 @@ app.controller('main', [ '$scope', '$log', 'restService',
                 $scope.showFailAlert("Email sending failed.");
             }
         )
+    };
+
+    $scope.gotoAnchor = function(x) {
+        var newHash = 'anchor' + x;
+        if ($location.hash() !== newHash) {
+        // set the $location.hash to `newHash` and
+        // $anchorScroll will automatically scroll to it
+        $location.hash('anchor' + x);
+        } else {
+        // call $anchorScroll() explicitly,
+        // since $location.hash hasn't changed
+        $anchorScroll();
+        }
     };
 
     //init app function
