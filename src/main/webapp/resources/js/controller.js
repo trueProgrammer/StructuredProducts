@@ -1,5 +1,5 @@
 var app = angular.module('App',
-                        ['ngRoute', 'ui.bootstrap']);
+                        ['ngRoute', 'ui.bootstrap', 'duScroll']);
 
 app.config(['$routeProvider',
     function($routeProvider) {
@@ -20,17 +20,40 @@ app.config(['$routeProvider',
                 templateUrl: 'views/template/partners.html',
                 controller: 'main'
             }).
+            when('/news', {
+                templateUrl: 'views/template/news.html',
+                controller: 'news'
+            }).
             otherwise({
                 redirectTo: '/'
             });
     }]);
 
-app.run(['$anchorScroll', function($anchorScroll) {
-  $anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
-}])
+app.controller('news', [ '$scope', '$log', 'restService', '$anchorScroll', '$location','$routeParams',
+    function($scope, $log, restService, $anchorScroll, $location, $routeParams) {
 
-app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$location',
-    function($scope, $log, restService, $anchorScroll, $location) {
+        (function() {
+                 $log.info($routeParams);
+            }());
+
+        //init app function
+        angular.element(document).ready(function () {
+            App.init();
+            jQuery("#layerslider").layerSlider({
+                navStartStop: false,
+                skin: 'fullwidth',
+                responsive : true,
+                responsiveUnder : 960,
+                layersContainer : 960,
+                autoPlayVideos: true,
+                skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
+            });
+        });
+
+}]);
+
+app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$location', '$document',
+    function($scope, $log, restService, $anchorScroll, $location, $document) {
 
     $scope.emailAlert = {
         visible: false
@@ -75,17 +98,21 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$loc
         )
     };
 
-    $scope.gotoAnchor = function(x) {
-        var newHash = 'anchor' + x;
-        if ($location.hash() !== newHash) {
-        // set the $location.hash to `newHash` and
-        // $anchorScroll will automatically scroll to it
-        $location.hash('anchor' + x);
-        } else {
-        // call $anchorScroll() explicitly,
-        // since $location.hash hasn't changed
-        $anchorScroll();
-        }
+    (function() {
+        restService.getNews(
+            function(news) {
+                $log.info("Get news success.");
+                $scope.news = news;
+            },
+            function(response) {
+                $log.error("Get news failed.");
+            }
+        )
+    }());
+
+    $scope.gotoAnchorAnimated = function(id) {
+        var section = angular.element(document.getElementById(id));
+        $document.scrollToElementAnimated(section);
     };
 
     //init app function
@@ -102,4 +129,4 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$loc
         });
     });
 
-}]);
+}]).value('duScrollOffset', 35);

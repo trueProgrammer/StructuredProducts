@@ -18,7 +18,21 @@ app.service('restService', [
                     onFail(response.data);
                 }
             );
-        }
+        },
+
+        getNews: function (onSuccess, onFail) {
+            $log.info("Get news");
+            $http.get(
+                dataUri + "news"
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            );
+        },
     }
 
 }]);

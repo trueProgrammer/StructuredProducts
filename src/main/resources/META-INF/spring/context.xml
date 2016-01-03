@@ -11,5 +11,6 @@
     <context:property-placeholder location="classpath:sp.properties" />
 
     <bean class="com.structuredproducts.sevices.MailService"/>
+    <bean class="com.structuredproducts.sevices.NewsService"/>
 
 </beans>

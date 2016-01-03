@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("v1/service")
-public class ServiceController {
+public class EmailController {
 
     private final static Logger logger = Logger.getLogger(DataController.class);
 

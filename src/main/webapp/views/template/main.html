@@ -21,7 +21,7 @@
 <!--=== End Slider ===-->
 
 <!--=== Content ===-->
-<div class="container content-sm">
+<div class="container content-sm" ng-controller="main">
 
     <div class="headline-center-v2 headline-center-v2-dark margin-bottom-20">
         <h2>Наши сервисы</h2>
@@ -31,93 +31,59 @@
     <!-- Service Blocks -->
     <div class="row service-box-v1">
         <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                <img class="service-block-img" alt="" src="resources/img/puzzle.png">
-                <h2 class="heading-md">О структурных продуктах</h2>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                <img class="service-block-img" alt="" src="resources/img/puzzle.png">
-                <h2 class="heading-md">Найти возможность для инвестирования</h2>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                <img class="service-block-img" alt="" src="resources/img/puzzle.png">
-                <h2 class="heading-md">Выбрать структурный продукт</h2>
-            </div>
-        </div>
-    </div>
-    <!-- End Service Blokcs -->
-    <!-- Service Blocks -->
-    <div class="row service-box-v1">
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                <h2 class="heading-md">О структурных продуктах<br><br></h2>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default" style="padding: 0 0 !important;">
-                <h2 class="heading-sm" style="margin:20px 30px; font-size: 20px !important;">Найти возможность для
-                    инвестирования<br><br></h2>
-                <button type="button" class="btn-u dropdown-toggle" data-toggle="dropdown" style="width: 100%;color:
-                #555;background: #fff;border: inherit !important;">
-                    Топ-5
+            <div class="service-block service-block-default main-button-with-top">
+                <img class="service-block-img" alt="" src="resources/img/search_for_invest.png">
+                <h2 class="heading-sm" style="margin:20px 30px; font-size: 20px !important;">Выбрать свой
+                    инвестиционный продукт</h2>
+                <button type="button" class="btn-u main-page-button" ng-click="gotoAnchorAnimated('anchortop')">
+                    <h3>Топ-5</h3>
                     <i class="fa fa-angle-down"></i>
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">1.Супер продукт</a></li>
-                    <li><a href="#">2.Самый прибыльный</a></li>
-                    <li><a href="#">3.Еще один продукт</a></li>
-                    <li><a href="#">4.Так себе продукт</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Лучший за неделю</a></li>
-                    <li><a href="#">Лучший по типу</a></li>
-                    <li><a href="#">Новинки</a></li>
-                </ul>
             </div>
         </div>
+
         <div class="col-md-4 col-sm-6">
             <div class="service-block service-block-default">
-                <h2 class="heading-md">Выбрать структурный продукт<br><br></h2>
+                <img class="service-block-img" alt="" src="resources/img/puzzle.png">
+                <h2 class="heading-md">Создать свой инвестиционный продукт</h2>
+            </div>
+        </div>
+
+        <div class="col-md-4 col-sm-6">
+            <div class="service-block service-block-default">
+                <img class="service-block-img" alt="" src="resources/img/portfel.png">
+                <h2 class="heading-md">Скоро новая возможность<br><br></h2>
             </div>
         </div>
     </div>
     <!-- End Service Blokcs -->
 
-    <!-- Service Blocks -->
-    <div class="row service-box-v1">
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                <h2 class="heading-md">О структурных продуктах<br><br></h2>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                <h2 class="heading-md">Найти возможности для инвестирования</h2>
-                <a href="" ng-click="gotoAnchor('top')" class="btn btn-link">Top 5
-                    <i class="fa fa-angle-down"></i>
-                </a>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                <h2 class="heading-md">Выбрать структурный продукт<br><br></h2>
-            </div>
-        </div>
-    </div>
-    <!-- End Service Blokcs -->
-
-    <hr class="devider devider-db">
-
-
+    <hr class="devider page-divider">
 
     <!-- Info Blokcs -->
     <div class="row margin-bottom-40">
         <!-- Latest -->
         <div class="col-md-6 md-margin-bottom-40">
             <div class="headline"><h2>Топ-5 продуктов</h2></div>
+
+            <div class="panel-body select-table-body">
+                <div class="col-md-4">
+                    <label for="bestProducts"> Лучшие продукты: </label><br>
+                    <select id="bestProducts">
+                        <option >За неделю</option>
+                        <option >За месяц</option>
+                        <option >Новинки</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="byType"> По типу: </label><br>
+                    <select id="byType">
+                        <option >Все</option>
+                        <option >Прибыльные</option>
+                        <option >Неприбыльные</option>
+                    </select>
+                </div>
+            </div>
 
             <!--Basic Table-->
             <table class="table">
@@ -170,86 +136,18 @@
             <div class="posts">
                 <div class="headline"><h2>Инвестиционные идеи и предложения от наших партнеров</h2></div>
                 <ul class="list-unstyled latest-list">
-                    <li>
-                        <a href="#">Incredible content</a>
-                        <p class="news-list-date">May 8, 2014</p>
-                    </li>
-                    <li>
-                        <a href="#">Best shoots</a>
-                        <p class="news-list-date">June 23, 2014</p>
-                    </li>
+                    <div ng-repeat="val in news">
+                        <li>
+                            <a href="#/news?id={{val.id}}">{{val.preview}}</a>
+                            <p class="news-list-date">{{val.date | date:'MMM dd, yyyy'}}</p>
+                        </li>
+                    </div>
                 </ul>
             </div>
-
-            <!--Invoice Table-->
-            <div class="panel panel-default margin-bottom-40">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Инвестиционные идеи и предложения от наших партнеров</h3>
-                </div>
-                <div class="panel-body">
-                    <p>Здесь вы можете найти самую последнюю и интересную информацию от наших партнеров</p>
-                </div>
-                <table class="table table-striped invoice-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Item</th>
-                        <th class="hidden-sm">Description</th>
-                        <th>Quantity</th>
-                        <th>Unit Cost</th>
-                        <th>Total</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Майка</td>
-                        <td class="hidden-sm">Армани</td>
-                        <td>252</td>
-                        <td>$52</td>
-                        <td>$18476</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Спортивный костюм</td>
-                        <td class="hidden-sm">Адидас</td>
-                        <td>78</td>
-                        <td>$128</td>
-                        <td>$12047</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Костюм</td>
-                        <td class="hidden-sm">Хуго босс</td>
-                        <td>16</td>
-                        <td>$450</td>
-                        <td>$7968</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Платье</td>
-                        <td class="hidden-sm">Долче габана</td>
-                        <td>191</td>
-                        <td>$24</td>
-                        <td>$4099</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Трусы</td>
-                        <td class="hidden-sm">Келвин клайн</td>
-                        <td>65</td>
-                        <td>$119</td>
-                        <td>$9456</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!--End Invoice Table-->
 
         </div><!--/col-md-3-->
         <!-- End Latest -->
     </div><!--/row-->
     <!-- End Info Blokcs -->
-
 </div>
 <!--=== End Content ===-->

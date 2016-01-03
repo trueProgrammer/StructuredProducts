@@ -52,3 +52,25 @@
 .service-block-default:hover {
     box-shadow: 0px 0px 5px 3px #a3a3a3;
 }
+
+.select-table-body {
+    margin-top: -25px;
+    margin-left: -28px;
+}
+
+.page-divider {
+    margin: 60px 0;
+}
+
+.main-page-button {
+    width: 100%;
+    color: #555;
+    background: #fff;
+    border: inherit !important;
+}
+
+.main-button-with-top {
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+}

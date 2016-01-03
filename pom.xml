@@ -19,6 +19,9 @@
         <javax.mail.version>1.4.7</javax.mail.version>
         <junit.version>4.12</junit.version>
         <guava.version>19.0</guava.version>
+        <supercsv.version>2.4.0</supercsv.version>
+        <hamcrest.version>2.0.0.0</hamcrest.version>
+        <commons.io.version>2.4</commons.io.version>
     </properties>
 
     <dependencies>
@@ -80,27 +83,50 @@
             <version>${guava.version}</version>
         </dependency>
 
+        <!-- CSV -->
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv</artifactId>
+            <version>${supercsv.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv-dozer</artifactId>
+            <version>${supercsv.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.io.version}</version>
+        </dependency>
+
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j.version}</version>
         </dependency>
 
-
+        <!-- Test -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-junit</artifactId>
+            <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
