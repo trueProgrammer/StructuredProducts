@@ -69,6 +69,11 @@
     border: inherit !important;
 }
 
+.main-page-button:hover {
+    background: #2295b9;
+    color: #fff;
+}
+
 .main-button-with-top {
     padding-right: 0 !important;
     padding-bottom: 0 !important;
