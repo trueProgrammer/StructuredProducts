@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="resources/assets/css/pages/page_search_inner.css">
+
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">Инвестиционные идеи</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="#/">Главная</a></li>
+            <li class="active">Инвестиционные идеи</li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+<!--=== Search Block Version 2 ===-->
+<div class="search-block-v2">
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h2>Самые последние и актуальные инвестиционные от наших партнеров.</h2>
+        </div>
+    </div>
+</div><!--/container-->
+<!--=== End Search Block Version 2 ===-->
+
+<div class="container s-results margin-bottom-50">
+
+    <div ng-repeat="val in investideas">
+        <!-- Begin Inner Results -->
+        <div class="inner-results">
+            <h3><a href="#/investidea?id={{val.id}}">{{val.header}}</a></h3>
+            <p>{{val.preview}}</p>
+            <ul class="list-inline down-ul">
+                <li>{{val.date | date:'dd, MMMM yyyy'}}</li>
+                <li>{{val.company}}</li>
+            </ul>
+        </div>
+        <!-- Begin Inner Results -->
+
+        <hr>
+    </div>
+</div>

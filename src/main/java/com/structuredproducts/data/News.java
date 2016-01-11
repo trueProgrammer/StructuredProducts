@@ -1,4 +1,4 @@
-package com.structuredproducts.rest;
+package com.structuredproducts.data;
 
 import java.util.Date;
 

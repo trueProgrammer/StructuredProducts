@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="resources/assets/css/pages/page_invoice.css">
+
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">{{investidea.header}}</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="#/">Главная</a></li>
+            <li><a href="#/investideas">Инвестиционные идеи</a></li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+<div class="container content">
+
+    <div class="row invoice-header">
+        <div class="col-xs-6">
+            <img src="resources/assets/img/img.jpg" alt="">
+            <h2 class="pull-left">{{investidea.company}}</h2>
+        </div>
+        <div class="col-xs-6 invoice-numb">
+            {{investidea.date | date:'dd, MMMM yyyy'}}
+        </div>
+    </div>
+
+    <div class="clearfix margin-bottom-10"></div>
+    <div class="shadow-wrapper">
+        <div class="tag-box tag-box-v1 box-shadow shadow-effect-2">
+            <h2>{{investidea.header}}</h2>
+            <p>{{investidea.content}}</p>
+        </div>
+    </div>
+
+    <div class="clearfix margin-bottom-40"></div>
+
+</div>

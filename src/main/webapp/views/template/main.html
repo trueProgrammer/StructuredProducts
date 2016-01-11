@@ -21,7 +21,7 @@
 <!--=== End Slider ===-->
 
 <!--=== Content ===-->
-<div class="container content-sm" ng-controller="main">
+<div class="container content-sm">
 
     <div class="headline-center-v2 headline-center-v2-dark margin-bottom-20">
         <h2>Наши сервисы</h2>
@@ -62,25 +62,21 @@
 
     <!-- Info Blokcs -->
     <div class="row margin-bottom-40">
-        <!-- Latest -->
+
         <div id="anchortop" class="col-md-6 md-margin-bottom-40">
             <div class="headline"><h2>Топ-5 продуктов</h2></div>
 
             <div class="panel-body select-table-body">
                 <div class="col-md-4">
-                    <label for="bestProducts"> Лучшие продукты: </label><br>
-                    <select id="bestProducts">
-                        <option >За неделю</option>
-                        <option >За месяц</option>
-                        <option >Новинки</option>
+                    <label for="byTimeType"> Лучшие продукты: </label><br>
+                    <select id="byTimeType" ng-model="data.timeType" ng-change="topProductsChange()">
+                        <option ng-repeat="val in data.timeTypes" value="{{val}}">{{val}}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label for="byType"> По типу: </label><br>
-                    <select id="byType">
-                        <option >Все</option>
-                        <option >Прибыльные</option>
-                        <option >Неприбыльные</option>
+                    <label for="byProductType"> По типу: </label><br>
+                    <select id="byProductType" ng-model="data.productType" ng-change="topProductsChange()">
+                        <option ng-repeat="val in data.productTypes" value="{{val}}">{{val}}</option>
                     </select>
                 </div>
             </div>
@@ -90,63 +86,61 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>First Name</th>
-                    <th class="hidden-sm">Last Name</th>
-                    <th>Username</th>
-                    <th>Status</th>
+                    <th>Название</th>
+                    <th>Банк</th>
+                    <th>Вложения</th>
+                    <th>Доля</th>
+                    <th>Срок</th>
+                    <th>Тип продукта</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td class="hidden-sm">Otto</td>
-                    <td>@mdo</td>
-                    <td><span class="label label-warning">Expiring</span></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td class="hidden-sm">Thornton</td>
-                    <td>@fat</td>
-                    <td><span class="label label-success">Success</span></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Larry</td>
-                    <td class="hidden-sm">the Bird</td>
-                    <td>@twitter</td>
-                    <td><span class="label label-danger">Error!</span></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>htmlstream</td>
-                    <td class="hidden-sm">Web Design</td>
-                    <td>@htmlstream</td>
-                    <td><span class="label label-info">Pending..</span></td>
-                </tr>
+                    <tr ng-repeat="val in topProducts">
+                        <td>{{$index + 1}}</td>
+                        <td>{{val.name}}</td>
+                        <td>{{val.bank}}</td>
+                        <td>{{val.invest}}</td>
+                        <td>{{val.participation}}</td>
+                        <td>{{val.date}}</td>
+                        <td>{{val.productType}}</td>
+                    </tr>
                 </tbody>
             </table>
             <!--End Basic Table-->
-        </div><!--/col-md-3-->
+        </div>
         <!-- End Latest -->
 
-        <!-- Latest -->
+        <!-- Ideas -->
         <div class="col-md-6 md-margin-bottom-40">
-            <div class="posts">
-                <div class="headline"><h2>Инвестиционные идеи и предложения от наших партнеров</h2></div>
-                <ul class="list-unstyled latest-list">
-                    <div ng-repeat="val in news">
-                        <li>
-                            <a href="#/news?id={{val.id}}">{{val.preview}}</a>
-                            <p class="news-list-date">{{val.date | date:'MMM dd, yyyy'}}</p>
-                        </li>
-                    </div>
-                </ul>
-            </div>
 
-        </div><!--/col-md-3-->
-        <!-- End Latest -->
+            <div class="headline"><h2>Инвестиционные идеи наших партнеров</h2></div>
+
+            <!-- Accordion -->
+            <div id="accordion-v1" class="panel-group acc-v1">
+
+                <div ng-repeat="val in data.investideas">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a href="" ng-click="accordion.select('accordion-v1', 'collapse' + $index)" data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">
+                                    <b>{{val.header}}</b><span class="results-number" style="font-size: 14px; float: right">{{val.date | date:'dd.MM.yyyy'}}, {{val.company}}</span>
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse in" ng-if="accordion.isSelected('accordion-v1', 'collapse' + $index)">
+                            <div class="panel-body">
+                                {{val.preview}}
+                                <br>
+                                <i class="fa fa-angle-right color-blue"></i> <a href="#/investidea?id={{val.id}}">Читать подробнее.</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- End Accordion -->
+        </div>
+        <!-- End Ideas -->
     </div><!--/row-->
     <!-- End Info Blokcs -->
 </div>

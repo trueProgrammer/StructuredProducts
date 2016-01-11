@@ -1,6 +1,6 @@
 package com.structuredproducts.sevices;
 
-import com.structuredproducts.rest.News;
+import com.structuredproducts.data.News;
 import com.structuredproducts.util.ServiceUtils;
 import org.apache.log4j.Logger;
 import org.supercsv.cellprocessor.ParseDate;
@@ -20,13 +20,13 @@ import java.util.List;
 /**
  * Created by Vlad on 26.12.2015.
  */
-public class NewsService {
+public class NewsService extends AbstractCSVService{
 
     private static final Logger log = Logger.getLogger(MailService.class);
 
     private static final String NEWS_FILENAME = "data/news.csv";
 
-    private static final CellProcessor[] DAY_PROCESSORS = new CellProcessor[] {
+    private static final CellProcessor[] NEWS_PROCESSORS = new CellProcessor[] {
             new ParseDate("dd.MM.yyyy"),    //Date
             new NotNull(),                  //header
             new NotNull(),                  //preview
@@ -46,37 +46,8 @@ public class NewsService {
         return null;
     }
 
-
-
     public List<News> getNews(){
-        ICsvBeanReader beanReader = null;
-        List<News> list = new ArrayList<>();
-        try {
-            String file = this.getClass().getClassLoader().getResource(NEWS_FILENAME).getFile();
-            beanReader = new CsvBeanReader(new FileReader(file), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
-
-            final String[] header = beanReader.getHeader(true);
-
-            News news;
-            while( (news = beanReader.read(News.class, header, DAY_PROCESSORS)) != null ) {
-                list.add(news);
-            }
-
-        } catch (FileNotFoundException e) {
-            log.error(e);
-        } catch (IOException e) {
-            log.error(e);
-        } finally {
-            if( beanReader != null ) {
-                try {
-                    beanReader.close();
-                } catch (IOException e) {
-                    log.error(e);
-                }
-            }
-        }
-
-        return list;
+        return (List<News>) getListFromFile(News.class, NEWS_FILENAME, NEWS_PROCESSORS);
     }
 
 }

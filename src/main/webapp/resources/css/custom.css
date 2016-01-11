@@ -3,10 +3,10 @@
 	height: 1.1em;
 }
 
-/*.header .navbar-nav {
+.header .navbar-nav {
     float: left;
     margin-left: 280px;
-}*/
+}
 
 .header-fixed .header.header-fixed-shrink .navbar-nav > li > a {
 	bottom: -12px;
@@ -49,6 +49,10 @@
     padding-bottom: 30px;
 }
 
+.service-block {
+    background: #eee !important;
+}
+
 .service-block-default:hover {
     box-shadow: 0px 0px 5px 3px #a3a3a3;
 }
@@ -78,4 +82,8 @@
     padding-right: 0 !important;
     padding-bottom: 0 !important;
     padding-left: 0 !important;
+}
+
+.panel-title {
+    background: #fefefe;
 }

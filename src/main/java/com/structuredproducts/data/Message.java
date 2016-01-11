@@ -1,4 +1,4 @@
-package com.structuredproducts.rest;
+package com.structuredproducts.data;
 
 /**
  * Created by Vlad on 08.12.2015.

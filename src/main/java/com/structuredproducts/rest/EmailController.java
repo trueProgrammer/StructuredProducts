@@ -1,5 +1,6 @@
 package com.structuredproducts.rest;
 
+import com.structuredproducts.data.Message;
 import com.structuredproducts.sevices.MailService;
 import com.structuredproducts.util.ServiceUtils;
 import org.apache.log4j.Logger;

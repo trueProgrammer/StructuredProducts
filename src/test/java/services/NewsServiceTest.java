@@ -1,11 +1,10 @@
 package services;
 
-import com.structuredproducts.rest.News;
+import com.structuredproducts.data.News;
 import com.structuredproducts.sevices.NewsService;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +17,10 @@ import static org.junit.Assert.assertThat;
  */
 public class NewsServiceTest {
 
+    private final NewsService newsService = new NewsService();
+
     @Test
     public void parseNewsTest() {
-        NewsService newsService = new NewsService();
-
         List<News> news = newsService.getNews();
 
         assertThat(news, Matchers.notNullValue());
@@ -30,9 +29,6 @@ public class NewsServiceTest {
 
     @Test
     public void getNewsByDateAndHeaderTest() {
-        NewsService newsService = new NewsService();
-
-
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, 11, 26);
         Date date = calendar.getTime();

@@ -9,9 +9,8 @@
 a {
   color: #3498db;
 }
-a:focus, 
-a:hover, 
-a:active {
+
+a:hover {
 	color: #3498db;
 }
 .color-green {

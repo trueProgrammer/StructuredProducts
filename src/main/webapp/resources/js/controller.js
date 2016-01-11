@@ -24,17 +24,62 @@ app.config(['$routeProvider',
                 templateUrl: 'views/template/news.html',
                 controller: 'news'
             }).
+            when('/investidea', {
+                templateUrl: 'views/template/investidea.html',
+                controller: 'investidea'
+            }).
+            when('/investideas', {
+                templateUrl: 'views/template/investideas.html',
+                controller: 'investideas'
+            }).
             otherwise({
                 redirectTo: '/'
             });
     }]);
 
+app.controller('investideas', [ '$scope', '$log', 'restService',
+    function($scope, $log, restService) {
+
+        (function() {
+             restService.getInvestIdeas(
+                false,
+                function(response) {
+                    $log.info("Get invest idea success.");
+                    $scope.investideas = response;
+                },
+                function() {
+                    $log.error("Get invest idea failed.");
+                }
+             );
+        }());
+
+}]);
+
+app.controller('investidea', [ '$scope', '$log', 'restService','$routeParams',
+    function($scope, $log, restService, $routeParams) {
+
+        (function() {
+             $log.info($routeParams);
+             restService.getInvestIdeaById(
+                $routeParams.id,
+                function(response) {
+                    $log.info("Get invest idea success.");
+                    $scope.investidea = response;
+                },
+                function() {
+                    $log.error("Get invest idea failed.");
+                }
+             );
+        }());
+
+}]);
+
 app.controller('news', [ '$scope', '$log', 'restService', '$anchorScroll', '$location','$routeParams',
     function($scope, $log, restService, $anchorScroll, $location, $routeParams) {
 
         (function() {
-                 $log.info($routeParams);
-            }());
+             $log.info($routeParams);
+        }());
 
         //init app function
         angular.element(document).ready(function () {
@@ -54,6 +99,13 @@ app.controller('news', [ '$scope', '$log', 'restService', '$anchorScroll', '$loc
 
 app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$location', '$document',
     function($scope, $log, restService, $anchorScroll, $location, $document) {
+
+    var selected = {};
+
+    $scope.data = {};
+    $scope.accordion = {};
+    $scope.topProducts = [];
+
 
     $scope.emailAlert = {
         visible: false
@@ -98,14 +150,87 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$loc
         )
     };
 
+    $scope.accordion.select = function (id, tab) {
+        if (selected[id] === undefined) {
+            selected[id] = tab;
+        } else {
+            if (selected[id] === tab) {
+                selected[id] = undefined;
+            } else {
+                selected[id] = tab;
+            }
+        }
+    }
+
+    $scope.accordion.isSelected = function (id, tab) {
+        if (selected[id] === undefined) {
+            return false;
+        } else {
+            if( selected[id] === tab ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    $scope.topProductsChange = function () {
+            restService.getTopProducts(
+                $scope.data.timeType,
+                $scope.data.productType,
+                function(response) {
+                    $log.info("Get top products success.");
+                    $scope.topProducts = response;
+                },
+                function() {
+                    $log.error("Get top products success.");
+                }
+            )
+        };
+
+    //get invest ideas
     (function() {
-        restService.getNews(
-            function(news) {
-                $log.info("Get news success.");
-                $scope.news = news;
+        restService.getInvestIdeas(
+            true,
+            function(investideas) {
+                $log.info("Get invest ideas.");
+                $scope.data.investideas = investideas;
             },
             function(response) {
-                $log.error("Get news failed.");
+                $log.error("Get invest ideas failed.");
+            }
+        )
+    }());
+
+    //get time types
+    (function() {
+        restService.getTimeTypes(
+            function(timeTypes) {
+                $log.info("Get time types success.");
+                $scope.data.timeTypes = timeTypes;
+                $scope.data.timeType = timeTypes[0];
+
+                //load data to table
+                $scope.topProductsChange();
+            },
+            function(response) {
+                $log.error("Get time types failed.");
+            }
+        )
+    }());
+
+    //get product types
+    (function() {
+        restService.getProductTypes(
+            function(productTypes) {
+                $log.info("Get product types success.");
+                $scope.data.productTypes = productTypes;
+                $scope.data.productType = productTypes[0];
+
+                //load data to table
+                $scope.topProductsChange();
+            },
+            function(response) {
+                $log.error("Get product types failed.");
             }
         )
     }());
