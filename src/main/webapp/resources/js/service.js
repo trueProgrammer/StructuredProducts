@@ -34,6 +34,24 @@ app.service('restService', [
             );
         },
 
+        uploadFileToUrl: function(file){
+            var fd = new FormData();
+            fd.append('file', file);
+
+            $http.post(
+                dataUri + "fileupload",
+                fd,
+                {
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                }
+            )
+            .success(function(){
+            })
+            .error(function(){
+            });
+        },
+
         getInvestIdeas: function (showOnMainPage, onSuccess, onFail) {
             $log.info("Get invest ideas");
             $http.get(

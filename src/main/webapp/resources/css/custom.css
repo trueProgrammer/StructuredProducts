@@ -1,6 +1,6 @@
 .header .logo img {
-	margin: 15px 0;
-	height: 1.1em;
+	margin: 13px 0;
+	height: 2.55em;
 }
 
 .header .navbar-nav {
@@ -16,7 +16,7 @@
     margin-top: -2.1em;
 }
 
-.footer-v2 .footer {
+.footer-v1 .footer {
     padding: 15px 0;
 }
 
@@ -49,12 +49,8 @@
     padding-bottom: 30px;
 }
 
-.service-block {
-    background: #eee !important;
-}
-
 .service-block-default:hover {
-    box-shadow: 0px 0px 5px 3px #a3a3a3;
+    box-shadow: 0px 0px 5px 3px #aead95;
 }
 
 .select-table-body {
@@ -67,6 +63,7 @@
 }
 
 .main-page-button {
+    margin-top: 20px;
     width: 100%;
     color: #555;
     background: #fff;
@@ -86,4 +83,38 @@
 
 .panel-title {
     background: #fefefe;
+}
+
+fieldset {
+    background: #fff;
+    display: block;
+    padding: .35em .625em .75em;
+    margin: 0 2px;
+    border: none !important;
+}
+
+.sky-row {
+    margin: 0 -15px;
+}
+
+.sky-form {
+    box-shadow: none;
+    border: 1px solid #eee;
+    margin: 0;
+    outline: none;
+    font: 13px/1.55 'Open Sans', Helvetica, Arial, sans-serif;
+    color: #666;
+}
+
+.col {
+    float: left;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+.col-4 {
+    width: 33.33%;
 }

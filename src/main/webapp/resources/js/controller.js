@@ -32,10 +32,23 @@ app.config(['$routeProvider',
                 templateUrl: 'views/template/investideas.html',
                 controller: 'investideas'
             }).
+            when('/admin', {
+                templateUrl: 'views/template/admin.html',
+                controller: 'admin'
+            }).
             otherwise({
                 redirectTo: '/'
             });
     }]);
+
+app.controller('admin', [ '$scope', '$log', 'restService',
+    function($scope, $log, restService) {
+
+    $scope.uploadFile = function(){
+       restService.uploadFileToUrl($scope.myFile);
+    };
+
+}]);
 
 app.controller('investideas', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
