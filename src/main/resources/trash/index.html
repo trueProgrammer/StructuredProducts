@@ -1,0 +1,105 @@
+<div ui-content-for="title" class="ng-hide">
+    <span>MASS :: Smart Monkey :: Resources</span>
+</div>
+    <div class="scrollable">
+        <div class="scrollable-content">
+            <div class="container-fluid " ng-controller="SMResourceController">
+
+
+                <div ng-if="errorAlert.visible">
+                    <div class="row">
+                        <div name="alertDiv" class="col-lg-12">
+                            <alert id="errorAlert" type="{{errorAlert.type}}" ng-if="errorAlert.visible">{{errorAlert.msg}}</alert>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="failedLaunchAlert.visible">
+                    <div class="row">
+                        <div name="alertDiv" class="col-lg-12">
+                            <alert id="failedLaunchAlert" type="{{failedLaunchAlert.type}}"
+                                   close="closeAlert()" ng-if="failedLaunchAlert.visible">{{failedLaunchAlert.msg}}</alert>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="failedDeleteAlert.visible">
+                    <div class="row">
+                        <div name="alertDiv" class="col-lg-12">
+                            <alert id="failedDeleteAlert" type="{{failedDeleteAlert.type}}"
+                                   close="closeAlert()" ng-if="failedDeleteAlert.visible">{{failedDeleteAlert.msg}}</alert>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-if="! errorAlert.visible">
+                    <div ng-if="smResourceList">
+                        <div class="row">
+
+                            <div ng-controller="ResourceTypesDropDownController">
+
+                                <div class="form-group col-xs-4">
+                                    <label for="resourcesSelector" class="col-xs-5 control-label">Resource Type:</label>
+                                    <div class="selectContainer display-inline-block">
+                                        <select name="resourcesSelector" id="resourcesSelector" class="form-control"
+                                                ng-options="resType.display for resType in resourceTypes track by resType.id"
+                                                ng-model="selectedItems.selectedType"
+                                                ng-change="dropboxitemselected(selectedItems.selectedType)"></select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                            <div class="col-lg-3">
+                                <button id="uploadButton" type="button" class="btn-default btn btn-lg col-lg-12"
+                                        ng-click="uploadResource()">
+                                Upload
+                                </button>
+                            </div>
+                            <div class="col-lg-3">
+                                <a id="downloadButton" class="btn btn-default btn-lg col-lg-12" ng-href="{{downloadUrl}}" role="button"
+                                   target="_blank" ng-disabled="!selectedItems.selectedRes">
+                                    Download
+                                </a>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <button id="deleteButton" type="button" class="btn-default btn btn-lg col-lg-12 "
+                                        ng-disabled="!selectedItems.selectedRes" ng-click="deleteResource()">
+                                    Delete
+                                </button>
+
+                            </div>
+                            <div class="col-lg-3">
+                                <button id="launchButton" type="button" class="btn-default btn btn-lg col-lg-12 "
+                                        ng-disabled="!selectedItems.selectedRes || selectedItems.selectedType.id !== 'configuration'"
+                                        ng-click="launch()">
+                                    Launch
+                                </button>
+
+                            </div>
+                                </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                    <table id="smResourcesTable" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Resource</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="resource in smResourceList"
+                                                ng-click="setSelected(resource)" class="{{resource.selected}}"><td
+                                                    class="{{resource.selected}}">{{resource.name}}</td></tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
