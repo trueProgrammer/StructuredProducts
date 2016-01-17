@@ -110,8 +110,8 @@ app.controller('news', [ '$scope', '$log', 'restService', '$anchorScroll', '$loc
 
 }]);
 
-app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$location', '$document',
-    function($scope, $log, restService, $anchorScroll, $location, $document) {
+app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$document',
+    function($scope, $log, restService, $anchorScroll, $document) {
 
     var selected = {};
 
