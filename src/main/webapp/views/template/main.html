@@ -34,10 +34,10 @@
         <div class="col-md-4 col-sm-6">
             <div class="service-block service-block-default main-button-with-top">
                 <i class="icon-custom rounded-x icon-bg-dark fa fa-search"></i>
-                <h2  class="heading-sm" class="invest-button">Выбрать инвестиционный продукт</h2>
-                <button type="button" class="main-page-button" ng-click="gotoAnchorAnimated('anchortop')">
-                    <h3 class="top-five-button">Топ-5</h3>
-                    <i class="fa fa-angle-down"></i>
+                <h2  class="heading-sm invest-button">Выбрать инвестиционный продукт</h2>
+                <button type="button" class="main-page-button" ng-click="go('/products')">
+
+                    <h3 class="top-five-button"><i class="fa fa-angle-right"></i>Топ-5</h3>
                 </button>
             </div>
         </div>
@@ -88,88 +88,5 @@
     </div>
     <!-- End Service Blokcs -->
 
-    <!-- Info Blokcs -->
-    <div class="row margin-bottom-40">
-
-        <div id="anchortop" class="col-md-6 md-margin-bottom-40">
-            <div class="headline"><h2>Топ-5 продуктов</h2></div>
-
-            <div class="panel-body select-table-body">
-                <div class="col-md-4">
-                    <label for="byTimeType"> Лучшие продукты: </label><br>
-                    <select id="byTimeType" ng-model="data.timeType" ng-change="topProductsChange()">
-                        <option ng-repeat="val in data.timeTypes" value="{{val}}">{{val}}</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="byProductType"> По типу: </label><br>
-                    <select id="byProductType" ng-model="data.productType" ng-change="topProductsChange()">
-                        <option ng-repeat="val in data.productTypes" value="{{val}}">{{val}}</option>
-                    </select>
-                </div>
-            </div>
-
-            <!--Basic Table-->
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Название</th>
-                    <th>Банк</th>
-                    <th>Вложения</th>
-                    <th>Доля</th>
-                    <th>Срок</th>
-                    <th>Тип продукта</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="val in topProducts">
-                        <td>{{$index + 1}}</td>
-                        <td>{{val.name}}</td>
-                        <td>{{val.bank}}</td>
-                        <td>{{val.invest}}</td>
-                        <td>{{val.participation}}</td>
-                        <td>{{val.date}}</td>
-                        <td>{{val.productType}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <!--End Basic Table-->
-        </div>
-        <!-- End Latest -->
-
-        <!-- Ideas -->
-        <div class="col-md-6 md-margin-bottom-40">
-
-            <div class="headline"><h2>Инвестиционные идеи наших партнеров</h2></div>
-
-            <!-- Accordion -->
-            <div id="accordion-v1" class="panel-group acc-v1">
-
-                <div ng-repeat="val in data.investideas">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a href="" ng-click="accordion.select('accordion-v1', 'collapse' + $index)" data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">
-                                    <b>{{val.header}}</b><span class="results-number invest-idea-header">{{val.date | date:'dd.MM.yyyy'}}, {{val.company}}</span>
-                                </a>
-                            </h4>
-                        </div>
-                        <div class="panel-collapse collapse in" ng-if="accordion.isSelected('accordion-v1', 'collapse' + $index)">
-                            <div class="panel-body">
-                                {{val.preview}}
-                                <br>
-                                <i class="fa fa-angle-right color-blue"></i> <a href="#/investidea?id={{val.id}}">Читать подробнее.</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- End Accordion -->
-        </div>
-        <!-- End Ideas -->
-    </div><!--/row-->
-    <!-- End Info Blokcs -->
 </div>
 <!--=== End Content ===-->
