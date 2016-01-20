@@ -32,10 +32,19 @@ app.config(['$routeProvider',
                 templateUrl: 'views/template/admin.html',
                 controller: 'admin'
             }).
+            when('/partners', {
+                templateUrl: 'views/template/partners.html',
+                controller: 'partners'
+            }).
             otherwise({
                 redirectTo: '/'
             });
     }]);
+
+app.controller('partners', [ '$scope', '$log', 'restService',
+    function($scope, $log, restService) {
+
+}]);
 
 app.controller('admin', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {

@@ -1,6 +1,7 @@
 .header .logo img {
 	margin: 13px 0;
-	height: 3.3em;
+	height: 55%;
+    max-width: 100%;
 }
 
 .header .navbar-nav {
@@ -43,7 +44,7 @@
 
 .header-fixed .header.header-fixed-shrink .logo img {
     max-width: 100%;
-    margin: 45px 0 -4px;
+    /*margin: 45px 0 -4px;*/
 }
 
 .clients-rows {
@@ -140,4 +141,8 @@ fieldset {
 .invest-idea-header {
     font-size: 14px;
     float: right;
+}
+
+.main-table {
+    width: 94%;
 }
