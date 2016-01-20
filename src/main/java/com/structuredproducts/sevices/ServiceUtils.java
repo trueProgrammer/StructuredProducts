@@ -1,4 +1,4 @@
-package com.structuredproducts.util;
+package com.structuredproducts.sevices;
 
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;

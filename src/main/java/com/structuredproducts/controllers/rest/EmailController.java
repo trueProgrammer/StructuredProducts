@@ -1,8 +1,8 @@
-package com.structuredproducts.rest;
+package com.structuredproducts.controllers.rest;
 
-import com.structuredproducts.data.Message;
+import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.sevices.MailService;
-import com.structuredproducts.util.ServiceUtils;
+import com.structuredproducts.sevices.ServiceUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

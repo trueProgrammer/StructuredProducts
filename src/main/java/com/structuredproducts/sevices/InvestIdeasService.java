@@ -1,7 +1,6 @@
 package com.structuredproducts.sevices;
 
-import com.structuredproducts.data.InvestIdea;
-import com.structuredproducts.data.News;
+import com.structuredproducts.controllers.data.InvestIdea;
 import org.apache.log4j.Logger;
 import org.supercsv.cellprocessor.ParseBool;
 import org.supercsv.cellprocessor.ParseDate;

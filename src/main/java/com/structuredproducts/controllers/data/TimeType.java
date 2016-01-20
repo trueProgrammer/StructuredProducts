@@ -1,6 +1,4 @@
-package com.structuredproducts.data;
-
-import java.sql.Time;
+package com.structuredproducts.controllers.data;
 
 /**
  * Created by Vlad on 08.01.2016.

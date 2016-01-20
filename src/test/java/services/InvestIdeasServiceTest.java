@@ -1,6 +1,6 @@
 package services;
 
-import com.structuredproducts.data.InvestIdea;
+import com.structuredproducts.controllers.data.InvestIdea;
 import com.structuredproducts.sevices.InvestIdeasService;
 import org.junit.Assert;
 import org.junit.Test;

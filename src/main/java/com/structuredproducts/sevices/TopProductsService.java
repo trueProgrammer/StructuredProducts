@@ -1,6 +1,6 @@
 package com.structuredproducts.sevices;
 
-import com.structuredproducts.data.*;
+import com.structuredproducts.controllers.data.*;
 import org.apache.log4j.Logger;
 import org.supercsv.cellprocessor.*;
 import org.supercsv.cellprocessor.constraint.NotNull;

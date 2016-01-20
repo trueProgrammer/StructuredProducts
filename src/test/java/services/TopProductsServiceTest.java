@@ -1,13 +1,12 @@
 package services;
 
-import com.structuredproducts.data.ProductType;
-import com.structuredproducts.data.TimeType;
-import com.structuredproducts.data.TopProduct;
+import com.structuredproducts.controllers.data.ProductType;
+import com.structuredproducts.controllers.data.TimeType;
+import com.structuredproducts.controllers.data.TopProduct;
 import com.structuredproducts.sevices.TopProductsService;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**

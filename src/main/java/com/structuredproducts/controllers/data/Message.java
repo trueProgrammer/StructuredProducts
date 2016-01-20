@@ -1,4 +1,4 @@
-package com.structuredproducts.data;
+package com.structuredproducts.controllers.data;
 
 /**
  * Created by Vlad on 08.12.2015.

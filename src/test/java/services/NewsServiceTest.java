@@ -1,6 +1,6 @@
 package services;
 
-import com.structuredproducts.data.News;
+import com.structuredproducts.controllers.data.News;
 import com.structuredproducts.sevices.NewsService;
 import org.hamcrest.Matchers;
 import org.junit.Test;

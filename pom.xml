@@ -22,6 +22,9 @@
         <supercsv.version>2.4.0</supercsv.version>
         <hamcrest.version>2.0.0.0</hamcrest.version>
         <commons.io.version>2.4</commons.io.version>
+        <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
+        <hibernate.entitymaneger.version>5.0.7.Final</hibernate.entitymaneger.version>
+        <postgresl.driver.version>9.4.1207</postgresl.driver.version>
     </properties>
 
     <dependencies>
@@ -82,6 +85,24 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
+
+        <!-- Persistence -->
+        <dependency>
+            <groupId>org.hibernate.javax.persistence</groupId>
+            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <version>${hibernate.jpa.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.entitymaneger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresl.driver.version}</version>
+        </dependency>
+
 
         <!-- CSV -->
         <dependency>

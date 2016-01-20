@@ -1,4 +1,4 @@
-package com.structuredproducts.data;
+package com.structuredproducts.controllers.data;
 
 import java.util.Date;
 

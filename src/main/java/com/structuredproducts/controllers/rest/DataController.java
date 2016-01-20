@@ -1,6 +1,6 @@
-package com.structuredproducts.rest;
+package com.structuredproducts.controllers.rest;
 
-import com.structuredproducts.data.*;
+import com.structuredproducts.controllers.data.*;
 import com.structuredproducts.sevices.InvestIdeasService;
 import com.structuredproducts.sevices.NewsService;
 import com.structuredproducts.sevices.TopProductsService;
