@@ -96,11 +96,12 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
     function($scope, $log, restService, $anchorScroll, $document) {
 
     var selected = {};
+    var currentPage = 0;
+    var pages = ['layerslider', 'page1','page2','page3', 'footer'];
 
     $scope.data = {};
     $scope.accordion = {};
     $scope.topProducts = [];
-
 
     $scope.emailAlert = {
         visible: false
@@ -230,10 +231,67 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
         )
     }());
 
+    $scope.gotoAnchorAnimated = function(id, page) {
+        currentPage = page;
+        $scope.gotoAnchorAnimated(id);
+    }
+
     $scope.gotoAnchorAnimated = function(id) {
         var section = angular.element(document.getElementById(id));
         $document.scrollToElementAnimated(section);
     };
+
+    $scope.gotoAnchorAnimatedWithOffset = function(id, offset) {
+        var section = angular.element(document.getElementById(id));
+        $document.scrollToElementAnimated(section, offset);
+    };
+
+    function MouseWheelHandler() {
+        return function (e) {
+            var direction = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+
+            if (direction < 0) {
+                if(currentPage < pages.length - 1) {
+                    currentPage++;
+                    if(currentPage == 1) {
+                        $scope.gotoAnchorAnimatedWithOffset(pages[currentPage], 60);
+                    } else {
+                        $scope.gotoAnchorAnimated(pages[currentPage]);
+                    }
+                }
+            } else {
+                if(currentPage > 0) {
+                    currentPage--;
+                    $scope.gotoAnchorAnimated(pages[currentPage]);
+                }
+            }
+
+
+            /*var currentPosition = $(window).scrollTop();
+            var buttonBottom = $("#buttons").offset().top + $("#buttons").height();
+            var page2Position = $("#page2").offset().top;
+
+            if (direction < 0) {
+                var bottom = currentPosition + $(window).height();
+                var page2Size = $("#page2").height();
+                var value = page2Position - bottom;
+
+                if(bottom <= page2Position && bottom > buttonBottom) {
+                    $scope.gotoAnchorAnimated('page2');
+                } else if(bottom > page2Position && bottom < (page2Position + page2Size * 0.5)  && currentPosition < page2Position) {
+                    $scope.gotoAnchorAnimated('page2');
+                }
+            } else {
+                var page1Position = $("#page1").offset().top;
+                var page1Size = $("#page1").height();
+                var value = currentPosition + e.deltaY;
+                if(value < page2Position && currentPosition > (page1Position )){
+                    $scope.gotoAnchorAnimated('page1');
+                }
+            }*/
+
+        }
+    }
 
     //init app function
     angular.element(document).ready(function () {
@@ -247,6 +305,12 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
             autoPlayVideos: true,
             skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
         });
+        if (document.addEventListener) {
+            document.addEventListener("mousewheel", MouseWheelHandler(), false);
+            document.addEventListener("DOMMouseScroll", MouseWheelHandler(), false);
+        } else {
+            sq.attachEvent("onmousewheel", MouseWheelHandler());
+        }
     });
 
-}]).value('duScrollOffset', 70);
+}]).value('duScrollOffset', 0).value("duScrollDuration",100);

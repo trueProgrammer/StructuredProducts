@@ -1,6 +1,6 @@
 .header .logo img {
-	margin: 13px 0;
-	height: 55%;
+    margin-top: 13px;
+	margin-bottom: 10px;
     max-width: 100%;
 }
 
@@ -145,4 +145,31 @@ fieldset {
 
 .main-table {
     width: 94%;
+}
+
+.bg-color-light {
+    color: black;
+}
+
+.blue-style {
+    color:#34a0d9;
+}
+
+.red-style {
+    color: #e72e29;
+}
+
+.content-lg {
+    padding-top: 70px;
+    padding-bottom: 10px;
+}
+
+.title-v1 {
+    margin-bottom: 50px;
+}
+
+@media only screen and (min-width: 992px) and (min-height: 515px) {
+    .screen-height {
+        height: 100vh;
+    }
 }
