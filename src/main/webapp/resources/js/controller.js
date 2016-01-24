@@ -97,7 +97,7 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
 
     var selected = {};
     var currentPage = 0;
-    var pages = ['layerslider', 'page1','page2','page3', 'footer'];
+    var pages = ['page1','page2','page3', 'footer'];
 
     $scope.data = {};
     $scope.accordion = {};
@@ -231,7 +231,7 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
         )
     }());
 
-    $scope.gotoAnchorAnimated = function(id, page) {
+    $scope.gotoAnchorAnimatedWithPage = function(id, page) {
         currentPage = page;
         $scope.gotoAnchorAnimated(id);
     }
@@ -246,14 +246,26 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
         $document.scrollToElementAnimated(section, offset);
     };
 
+    var lastScrollTime = 0;
+
     function MouseWheelHandler() {
         return function (e) {
+
+            var now = new Date().getTime();
+
+            if(now - lastScrollTime < 100) {
+                lastScrollTime = now;
+                return;
+            }
+
+            lastScrollTime = now;
+
             var direction = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
 
             if (direction < 0) {
                 if(currentPage < pages.length - 1) {
                     currentPage++;
-                    if(currentPage == 1) {
+                    if(currentPage == 0) {
                         $scope.gotoAnchorAnimatedWithOffset(pages[currentPage], 60);
                     } else {
                         $scope.gotoAnchorAnimated(pages[currentPage]);
@@ -265,30 +277,6 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
                     $scope.gotoAnchorAnimated(pages[currentPage]);
                 }
             }
-
-
-            /*var currentPosition = $(window).scrollTop();
-            var buttonBottom = $("#buttons").offset().top + $("#buttons").height();
-            var page2Position = $("#page2").offset().top;
-
-            if (direction < 0) {
-                var bottom = currentPosition + $(window).height();
-                var page2Size = $("#page2").height();
-                var value = page2Position - bottom;
-
-                if(bottom <= page2Position && bottom > buttonBottom) {
-                    $scope.gotoAnchorAnimated('page2');
-                } else if(bottom > page2Position && bottom < (page2Position + page2Size * 0.5)  && currentPosition < page2Position) {
-                    $scope.gotoAnchorAnimated('page2');
-                }
-            } else {
-                var page1Position = $("#page1").offset().top;
-                var page1Size = $("#page1").height();
-                var value = currentPosition + e.deltaY;
-                if(value < page2Position && currentPosition > (page1Position )){
-                    $scope.gotoAnchorAnimated('page1');
-                }
-            }*/
 
         }
     }
@@ -309,7 +297,7 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
             document.addEventListener("mousewheel", MouseWheelHandler(), false);
             document.addEventListener("DOMMouseScroll", MouseWheelHandler(), false);
         } else {
-            sq.attachEvent("onmousewheel", MouseWheelHandler());
+            document.attachEvent("onmousewheel", MouseWheelHandler());
         }
     });
 

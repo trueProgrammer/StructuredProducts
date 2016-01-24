@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 
-<!--=== Slider ===-->
-<div id="layerslider" style="width: 100%;height: 500px; margin: 0px auto;">
-    <!-- First slide -->
-    <div class="ls-slide" data-ls="slidedelay:2500;transition2d:25;">
-        <img src="resources/img/bg1.jpg" class="ls-bg" alt="Slide background">
-    </div>
-
-    <!--Second Slide-->
-    <div class="ls-slide" data-ls="transition2d:93;">
-        <img src="resources/img/18.jpg" class="ls-bg" alt="Slide background">
-    </div>
-
-    <!--Third Slide-->
-    <div class="ls-slide"style="slidedirection: right;transition2d: 92,93,105;">
-        <img src="resources/img/bg2.jpg" class="ls-bg" alt="Slide background">
-    </div>
-    <!--End Third Slide-->
-</div><!--/layer_slider-->
-<!--=== End Slider ===-->
-
 <!--=== Content ===-->
 <div class="content-sm" style="padding-top: 0px;">
 
-    <div id="page1" class="container screen-height">
+    <div id="page1" class="screen-height-95">
 
-        <br/><br/><br/><br/>
+        <!--=== Slider ===-->
+        <div id="layerslider" style="width: 100%;height: 40%; margin: 0px auto;">
+            <!-- First slide -->
+            <div class="ls-slide" data-ls="slidedelay:2500;transition2d:25;">
+                <img src="resources/img/bg1.jpg" class="ls-bg" alt="Slide background">
+            </div>
 
-        <div class="title-v1">
+            <!--Second Slide-->
+            <div class="ls-slide" data-ls="transition2d:93;">
+                <img src="resources/img/18.jpg" class="ls-bg" alt="Slide background">
+            </div>
+
+            <!--Third Slide-->
+            <div class="ls-slide"style="slidedirection: right;transition2d: 92,93,105;">
+                <img src="resources/img/bg2.jpg" class="ls-bg" alt="Slide background">
+            </div>
+            <!--End Third Slide-->
+        </div><!--/layer_slider-->
+        <!--=== End Slider ===-->
+
+        <br/>
+
+        <div class="title-v1 margin-bottom-20">
             <h2>С помощью <span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span> вы можете</h2>
         </div>
 
-        <!-- Service Blocks -->
-        <div id="main-button" class="margin-bottom-60">
-            <div id="buttons" class="row">
-                <div class="col-md-4 col-sm-6">
-                    <div class="service-block service-block-default main-button-with-top">
-                        <i class="icon-custom rounded-x icon-bg-dark fa fa-search"></i>
-                        <h2  class="heading-sm invest-button">Выбрать свой инвестиционный продукт</h2>
-                        <button type="button" class="main-page-button" ng-click="gotoAnchorAnimated('page2', 2)">
-                            <h3 class="top-five-button">Топ-5</h3>
-                            <i class="fa fa-angle-down"></i>
-                        </button>
+        <div class="container" style="height: 60%">
+            <!-- Service Blocks -->
+            <div id="main-button" class="margin-bottom-60">
+                <div id="buttons" class="row">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block service-block-default main-button-with-top">
+                            <i class="icon-custom rounded-x icon-bg-dark fa fa-search"></i>
+                            <h2  class="heading-sm invest-button">Выбрать свой инвестиционный продукт</h2>
+                            <button type="button" class="main-page-button" ng-click="gotoAnchorAnimatedWithPage('page2', 1)">
+                                <h3 class="top-five-button">Топ-5</h3>
+                                <i class="fa fa-angle-down"></i>
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="service-block service-block-default">
-                        <i class="icon-custom rounded-x icon-bg-dark fa fa-briefcase"></i>
-                        <h2 class="heading-md"><br>Создать инвестиционный продукт самостоятельно<br><br></h2>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block service-block-default button-height">
+                            <i class="icon-custom rounded-x icon-bg-dark fa fa-briefcase"></i>
+                            <h2 class="heading-md">Создать инвестиционный продукт самостоятельно</h2>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4 col-sm-6">
-                    <div class="service-block service-block-default">
-                        <i class="icon-custom rounded-x icon-bg-dark fa fa-question"></i>
-                        <h2 class="heading-md"><br>Coming soon<br><br><br></h2>
-                        <p></p>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-block service-block-default">
+                            <i class="icon-custom rounded-x icon-bg-dark fa fa-question"></i>
+                            <h2 class="heading-md"><br/>Coming soon<br/><br/><br/></h2>
+                            <p></p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -96,15 +98,11 @@
     <div id="page2" class="bg-color-light screen-height">
         <div class="container content-lg">
 
-            <div class="title-v1">
-                <h2>Список структурных продуктов и инвестиционных идей</h2>
-            </div>
-
-            <div class="row margin-bottom-40">
+            <div class="row">
 
                 <div class="col-md-6 md-margin-bottom-40">
 
-                    <div class="headline"><h2>Список продуктов</h2></div>
+                    <div class="headline"><h2>Топ 5 структурных продуктов</h2></div>
 
                     <div class="panel-body select-table-body">
                         <div class="col-md-4">
@@ -181,8 +179,14 @@
                     </div>
                     <!-- End Accordion -->
                 </div>
+
                 <!-- End Ideas -->
             </div><!--/row-->
+
+            <button type="button" class="btn-u btn-u-sm btn-brd btn-brd-hover btn-u-blue" ng-click="gotoAnchorAnimatedWithPage('page3', 2)">
+                <h3>Контактная информация</h3>
+            </button>
+
         </div>
     </div>
     <!-- End Info Blokcs -->

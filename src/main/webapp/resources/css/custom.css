@@ -168,8 +168,24 @@ fieldset {
     margin-bottom: 50px;
 }
 
-@media only screen and (min-width: 992px) and (min-height: 515px) {
+@media only screen and (min-width: 992px) and (min-height: 505px) {
     .screen-height {
         height: 100vh;
+    }
+}
+
+@media only screen and (min-width: 992px) and (min-height: 550px) {
+    .screen-height-95 {
+        height: 95vh;
+    }
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+
+@media only screen and (min-width:1200px) {
+    .button-height {
+        height: 200px;
     }
 }
