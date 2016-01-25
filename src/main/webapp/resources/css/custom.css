@@ -14,7 +14,7 @@
 }
 
 .header-fixed .header.header-fixed-shrink .navbar-nav > li > a {
-	bottom: -12px;
+	bottom: -14px;
 }
 
 .social-icons {
@@ -67,7 +67,7 @@
 }
 
 .main-page-button {
-    margin-top: 20px;
+    margin-top: 18px;
     width: 100%;
     color: #555;
     background: #fff;
@@ -174,7 +174,7 @@ fieldset {
     }
 }
 
-@media only screen and (min-width: 992px) and (min-height: 550px) {
+@media only screen and (min-width: 992px) and (min-height: 540px) {
     .screen-height-95 {
         height: 95vh;
     }
@@ -188,4 +188,8 @@ fieldset {
     .button-height {
         height: 200px;
     }
+}
+
+.sky-form {
+    border: none !important;
 }

@@ -231,19 +231,24 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
         )
     }());
 
-    $scope.gotoAnchorAnimatedWithPage = function(id, page) {
-        currentPage = page;
-        $scope.gotoAnchorAnimated(id);
-    }
-
     $scope.gotoAnchorAnimated = function(id) {
         var section = angular.element(document.getElementById(id));
         $document.scrollToElementAnimated(section);
     };
 
+    $scope.gotoAnchorAnimatedWithPage = function(page, id) {
+        currentPage = id;
+        $scope.gotoAnchorAnimated(page);
+    };
+
     $scope.gotoAnchorAnimatedWithOffset = function(id, offset) {
         var section = angular.element(document.getElementById(id));
         $document.scrollToElementAnimated(section, offset);
+    };
+
+    $scope.gotoAnchorAnimatedWithPageAndOffset = function(page,id, offset) {
+        currentPage = id;
+        $scope.gotoAnchorAnimatedWithOffset(page, offset);
     };
 
     var lastScrollTime = 0;
@@ -265,7 +270,7 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
             if (direction < 0) {
                 if(currentPage < pages.length - 1) {
                     currentPage++;
-                    if(currentPage == 0) {
+                    if(currentPage == 1) {
                         $scope.gotoAnchorAnimatedWithOffset(pages[currentPage], 60);
                     } else {
                         $scope.gotoAnchorAnimated(pages[currentPage]);

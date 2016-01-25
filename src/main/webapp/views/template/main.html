@@ -6,7 +6,7 @@
     <div id="page1" class="screen-height-95">
 
         <!--=== Slider ===-->
-        <div id="layerslider" style="width: 100%;height: 40%; margin: 0px auto;">
+        <div id="layerslider" style="width: 100%;height: 40%; margin: 0px auto;min-height: 240px;">
             <!-- First slide -->
             <div class="ls-slide" data-ls="slidedelay:2500;transition2d:25;">
                 <img src="resources/img/bg1.jpg" class="ls-bg" alt="Slide background">
@@ -25,21 +25,19 @@
         </div><!--/layer_slider-->
         <!--=== End Slider ===-->
 
-        <br/>
-
-        <div class="title-v1 margin-bottom-20">
-            <h2>С помощью <span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span> вы можете</h2>
-        </div>
-
         <div class="container" style="height: 60%">
+            <br/>
+            <div class="title-v1 margin-bottom-20">
+                <h2>С помощью <span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span> вы можете</h2>
+            </div>
             <!-- Service Blocks -->
             <div id="main-button" class="margin-bottom-60">
                 <div id="buttons" class="row">
                     <div class="col-md-4 col-sm-6">
                         <div class="service-block service-block-default main-button-with-top">
-                            <i class="icon-custom rounded-x icon-bg-dark fa fa-search"></i>
+                            <img alt="" src="resources/img/target.png">
                             <h2  class="heading-sm invest-button">Выбрать свой инвестиционный продукт</h2>
-                            <button type="button" class="main-page-button" ng-click="gotoAnchorAnimatedWithPage('page2', 1)">
+                            <button type="button" class="main-page-button" ng-click="gotoAnchorAnimatedWithPageAndOffset('page2', 1, 60)">
                                 <h3 class="top-five-button">Топ-5</h3>
                                 <i class="fa fa-angle-down"></i>
                             </button>
@@ -47,13 +45,13 @@
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <div class="service-block service-block-default button-height">
-                            <i class="icon-custom rounded-x icon-bg-dark fa fa-briefcase"></i>
+                            <img alt="" src="resources/img/portfel_icon.png">
                             <h2 class="heading-md">Создать инвестиционный продукт самостоятельно</h2>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
                         <div class="service-block service-block-default">
-                            <i class="icon-custom rounded-x icon-bg-dark fa fa-question"></i>
+                            <img alt="" src="resources/img/dollar.png">
                             <h2 class="heading-md"><br/>Coming soon<br/><br/><br/></h2>
                             <p></p>
                         </div>
@@ -62,37 +60,6 @@
             </div>
         </div>
     </div>
-    <!-- Service Blocks --
-    <div class="row service-box-v1">
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default main-button-with-top">
-                <img class="service-block-img" alt="" src="resources/img/search_for_invest.png">
-                <h2 class="heading-sm" style="margin:20px 30px; font-size: 20px !important;">Выбрать свой
-                    инвестиционный продукт</h2>
-                <button type="button" class="main-page-button" ng-click="gotoAnchorAnimated('anchortop')">
-                    <h3>Топ-5</h3>
-                    <i class="fa fa-angle-down"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                <img class="service-block-img" alt="" src="resources/img/puzzle.png">
-                <h2 class="heading-md">Создать свой инвестиционный продукт</h2>
-            </div>
-        </div>
-
-        <div class="col-md-4 col-sm-6">
-            <div class="service-block service-block-default">
-                !--<img class="service-block-img" alt="" src="resources/img/portfel.png">--
-                <h2 class="heading-md">Скоро новая возможность<br><br></h2>
-            </div>
-        </div>
-    </div>
-    <!-- End Service Blokcs -->
-
-
 
     <!-- Info Blokcs -->
     <div id="page2" class="bg-color-light screen-height">
@@ -126,7 +93,6 @@
                         <tr>
                             <th>#</th>
                             <th>Название</th>
-                            <th>Банк</th>
                             <th>Вложения</th>
                             <th>Доля</th>
                             <th>Срок</th>
@@ -137,7 +103,6 @@
                         <tr ng-repeat="val in topProducts">
                             <td>{{$index + 1}}</td>
                             <td>{{val.name}}</td>
-                            <td>{{val.bank}}</td>
                             <td>{{val.invest}}</td>
                             <td>{{val.participation}}</td>
                             <td>{{val.date}}</td>
@@ -251,17 +216,17 @@
                 <ul class="list-unstyled">
                     <li class="padding-bottom-10">
                         <i class="icon-custom icon-sm rounded-x icon-color-u fa fa-home"></i>
-                        <h6>Address</h6>
+                        <label>Address:</label>
                         <p>221B Baker Street, London, United Kingdom</p>
                     </li>
                     <li class="padding-bottom-10">
                         <i class="icon-custom icon-sm rounded-x icon-color-u fa fa-phone"></i>
-                        <h6>Phone</h6>
+                        <label>Phone:</label>
                         <p>+ 1 (633) 904 4785</p>
                     </li>
                     <li class="padding-bottom-10">
                         <i class="icon-custom icon-sm rounded-x icon-color-u fa fa-envelope"></i>
-                        <h6>Email</h6>
+                        <label>Email:</label>
                         <a href="mailto:#" class="link-black">xstrum.service@gmail.com</a>
                     </li>
                 </ul>
