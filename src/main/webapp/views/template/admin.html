@@ -1,4 +1,3 @@
-
 <!--=== Breadcrumbs ===-->
 <div class="breadcrumbs">
     <div class="container">
@@ -14,10 +13,14 @@
 <!--=== Content ===-->
 <div class="container content-sm">
 
-    <div id="grid1" ui-grid="gridOptions1" class="grid"></div>
+
 
 
     <div class="sky-form">
+        <style ui-grid-style>"table main-table"</style>
+        <div ui-grid="gridOptions1" class="table main-table" ng-style="getTableHeight()"></div>
+        <style ui-grid-style>"table main-table"</style>
+
         <fieldset>
             <section>
                 <h2>Файл топовых продуктов</h2>

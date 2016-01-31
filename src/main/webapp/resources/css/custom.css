@@ -193,3 +193,11 @@ fieldset {
 .sky-form {
     border: none !important;
 }
+
+.sortorder.reverse:after {
+    content: '\25bc';
+}
+
+.sortorder:after {
+    content: '\25b2';
+}

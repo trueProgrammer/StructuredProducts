@@ -92,15 +92,21 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Название</th>
-                            <th>Вложения</th>
+                            <th>
+                                <a href="" ng-click="order('name')">Название</a>
+                                <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                            </th>
+                            <th>
+                                Вложения
+                                <span class="sortorder" ng-class="{reverse:reverse}"></span>
+                            </th>
                             <th>Доля</th>
                             <th>Срок</th>
                             <th>Тип продукта</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="val in topProducts">
+                        <tr ng-repeat="val in topProducts | orderBy:predicate:reverse">
                             <td>{{$index + 1}}</td>
                             <td>{{val.name}}</td>
                             <td>{{val.invest}}</td>

@@ -1,5 +1,5 @@
 var app = angular.module('App',
-                        ['ngRoute', 'ui.bootstrap', 'duScroll']);
+                        ['ngRoute', 'ui.bootstrap', 'duScroll', 'ui.grid']);
 
 app.config(['$routeProvider',
     function($routeProvider) {
@@ -49,9 +49,48 @@ app.controller('partners', [ '$scope', '$log', 'restService',
 app.controller('admin', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
 
-    $scope.uploadFile = function(){
-       restService.uploadFileToUrl($scope.myFile);
+    $scope.gridOptions1 = {
+        enableColumnMenus : false,
+        //enableVerticalScrollbar: false,
+        //enableHorizontalScrollbar: false,
+        columnDefs: [
+            { field: 'firstName' },
+            { field: 'lastName' },
+            { field: 'company'}
+        ],
     };
+
+    $scope.getTableHeight = function() {
+        var rowHeight = 30; // your row height
+        var headerHeight = 30; // your header height
+        return {
+            height: (3 * rowHeight + headerHeight) + "px"
+        };
+    };
+
+    $scope.gridOptions1.enableVerticalScrollbar = 0;
+    $scope.gridOptions1.enableHorizontalScrollbar = 0;
+    //$scope.gridOptions1.enableScrollbars = false;
+    $scope.gridOptions1.data = [
+        {
+            "firstName": "Cox",
+            "lastName": "Carney",
+            "company": "Enormo",
+            "employed": true
+        },
+        {
+            "firstName": "Lorraine",
+            "lastName": "Wise",
+            "company": "Comveyer",
+            "employed": false
+        },
+        {
+            "firstName": "Nancy",
+            "lastName": "Waters",
+            "company": "Fuelton",
+            "employed": false
+        }
+    ];
 
 }]);
 
@@ -170,18 +209,25 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
     }
 
     $scope.topProductsChange = function () {
-            restService.getTopProducts(
-                $scope.data.timeType,
-                $scope.data.productType,
-                function(response) {
-                    $log.info("Get top products success.");
-                    $scope.topProducts = response;
-                },
-                function() {
-                    $log.error("Get top products success.");
-                }
-            )
-        };
+        restService.getTopProducts(
+            $scope.data.timeType,
+            $scope.data.productType,
+            function(response) {
+                $log.info("Get top products success.");
+                $scope.topProducts = response;
+            },
+            function() {
+                $log.error("Get top products success.");
+            }
+        )
+    };
+
+    $scope.predicate = 'name';
+    $scope.reverse = true;
+    $scope.order = function(predicate) {
+        $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+        $scope.predicate = predicate;
+    };
 
     //get invest ideas
     (function() {
