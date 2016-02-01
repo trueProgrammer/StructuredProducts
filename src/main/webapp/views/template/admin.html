@@ -19,8 +19,12 @@
 
         <div class="col-md-6 md-margin-bottom-20">
             <h2>Тип структурного продукта</h2>
-            <button type="button" class="btn-u" ng-click="addData()">Добавить данные</button>
-            <button type="button" class="btn-u" ng-click="saveData()" ng-disabled="saveButtons[productType] == true">
+            <div name="alertDiv" class="col-lg-12">
+                <alert close="closeAlert()" dismiss-on-timeout="15000" type="danger"
+                       ng-if="productTypeAlert.visible">{{productTypeAlert.msg}}</alert>
+            </div>
+            <button type="button" ng-click="addData('productType')">Добавить данные</button>
+            <button class="admin-button" type="button" ng-click="saveData('productType')" ng-disabled="saveButtonsDisabled.productType">
                 Сохранить
             </button>
             <div ui-grid="productType" ui-grid-edit></div>
@@ -28,23 +32,101 @@
 
         <div class="col-md-6 md-margin-bottom-20">
             <h2>Срок</h2>
+            <div name="alertDiv" class="col-lg-12">
+                <alert close="closeAlert()" dismiss-on-timeout="15000" type="danger"
+                       ng-if="termAlert.visible">{{termAlert.msg}}</alert>
+            </div>
+            <button type="button" ng-click="addData('productType')">Добавить данные</button>
+            <button class="admin-button" type="button" ng-click="saveData('term')" ng-disabled="saveButtonsDisabled.term">
+                Сохранить
+            </button>
             <div ui-grid="term" ui-grid-edit></div>
         </div>
 
     </div>
 
     <div class="row">
-
         <div class="col-md-6 md-margin-bottom-20">
             <h2>Минимальная сумма инвестиций</h2>
-            <div ui-grid="minInvestment" ></div>
+            <div name="alertDiv" class="col-lg-12">
+                <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="15000" type="danger"
+                       ng-if="investmentAlert.visible">{{investmentAlert.msg}}</alert>
+            </div>
+            <button type="button" ng-click="addData('investment')">Добавить данные</button>
+            <button class="admin-button" type="button" ng-click="saveData('investment')" ng-disabled="saveButtonsDisabled.investment">
+                Сохранить
+            </button>
+            <div ui-grid="investment" ui-grid-edit></div>
         </div>
 
         <div class="col-md-6 md-margin-bottom-20">
             <h2>Провайдер продукта</h2>
-            <div ui-grid="issuer" ></div>
+            <div name="alertDiv" class="col-lg-12">
+                <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="15000" type="danger"
+                       ng-if="issuerAlert.visible">{{issuerAlert.msg}}</alert>
+            </div>
+            <button type="button" ng-click="addData('issuer')">Добавить данные</button>
+            <button class="admin-button" type="button" ng-click="saveData('issuer')" ng-disabled="saveButtonsDisabled.issuer">
+                Сохранить
+            </button>
+            <div ui-grid="issuer" ui-grid-edit></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 md-margin-bottom-20">
+            <h2>Доходность</h2>
+            <div name="alertDiv" class="col-lg-12">
+                <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="15000" type="danger"
+                       ng-if="returnAlert.visible">{{returnAlert.msg}}</alert>
+            </div>
+            <button type="button" ng-click="addData('return')">Добавить данные</button>
+            <button class="admin-button" type="button" ng-click="saveData('return')" ng-disabled="saveButtonsDisabled.return">
+                Сохранить
+            </button>
+            <div ui-grid="return" ui-grid-edit></div>
         </div>
 
+        <div class="col-md-6 md-margin-bottom-20">
+            <h2>Стратегия</h2>
+            <div name="alertDiv" class="col-lg-12">
+                <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="15000" type="danger"
+                       ng-if="strategyAlert.visible">{{strategyAlert.msg}}</alert>
+            </div>
+            <button type="button" ng-click="addData('strategy')">Добавить данные</button>
+            <button class="admin-button" type="button" ng-click="saveData('strategy')" ng-disabled="saveButtonsDisabled.strategy">
+                Сохранить
+            </button>
+            <div ui-grid="strategy" ui-grid-edit></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 md-margin-bottom-20">
+            <h2>Юридическая форма</h2>
+            <div name="alertDiv" class="col-lg-12">
+                <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="15000" type="danger"
+                       ng-if="legalTypeAlert.visible">{{legalTypeAlert.msg}}</alert>
+            </div>
+            <button type="button" ng-click="addData('legalType')">Добавить данные</button>
+            <button class="admin-button" type="button" ng-click="saveData('legalType')" ng-disabled="saveButtonsDisabled.legalType">
+                Сохранить
+            </button>
+            <div ui-grid="legalType" ui-grid-edit></div>
+        </div>
+
+        <div class="col-md-6 md-margin-bottom-20">
+            <h2>Размер выплаты</h2>
+            <div name="alertDiv" class="col-lg-12">
+                <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="15000" type="danger"
+                       ng-if="payoffAlert.visible">{{payoffAlert.msg}}</alert>
+            </div>
+            <button type="button" ng-click="addData('payoff')">Добавить данные</button>
+            <button class="admin-button" type="button" ng-click="saveData('payoff')" ng-disabled="saveButtonsDisabled.payoff">
+                Сохранить
+            </button>
+            <div ui-grid="payoff" ui-grid-edit></div>
+        </div>
     </div>
 
 </div>

@@ -49,34 +49,49 @@ app.controller('partners', [ '$scope', '$log', 'restService',
 app.controller('admin', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
 
-        $scope.saveButtons = [
-            productType = false,
-        ];
+        $scope.productTypeAlert = { visible: false };
+        $scope.termAlert = { visible: false };
+        $scope.investmentAlert = { visible: false };
+        $scope.issuerAlert = { visible: false };
+        $scope.returnAlert = { visible: false };
+        $scope.strategyAlert = { visible: false };
+        $scope.legalTypeAlert = { visible: false };
+        $scope.payoffAlert = { visible: false };
+
+        $scope.closeAlert = function() {
+            $scope.productTypeAlert.visible = false;
+            $scope.termAlert.visible = false;
+            $scope.investmentAlert.visible = false;
+            $scope.issuerAlert.visible = false;
+            $scope.returnAlert.visible = false;
+            $scope.strategyAlert.visible = false;
+            $scope.legalTypeAlert.visible = false;
+            $scope.payoffAlert.visible = false;
+        };
+
+        $scope.showFailAlert = function(msg, id) {
+            $scope[id].msg = msg;
+            $scope[id].visible = true;
+        };
+
+        $scope.saveButtonsDisabled = {
+            productType : true,
+            term : true,
+            investment : true,
+            issuer : true,
+        };
 
         $scope.productType = {
             enableColumnMenus : false,
             columnDefs: [
                 { field: 'name', displayName: 'Тип структурного продукта', width: "100%" },
             ],
-        };
-
-        $scope.productType.onRegisterApi = function(gridApi){
-            //set gridApi on scope
-            $scope.gridApi = gridApi;
-            gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
-                $scope.saveButtons.productType = true;
-                $scope.apply();
-/*                restService.updateInstrumentType(
-                    rowEntity,
-                    'productType',
-                    function(response) {
-                        $log.info("Update product type success.");
-                    },
-                    function() {
-                        $log.error("Update product type failed.");
-                    }
-                );*/
-            });
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled.productType = false;
+                });
+            }
         };
 
         $scope.productType.data = [
@@ -91,50 +106,126 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.term = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'term', displayName: 'Срок', width: "100%" },
+                { field: 'min', displayName: 'Минимум', width: "50%" },
+                { field: 'max', displayName: 'Максимум', width: "50%" },
             ],
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled.term = false;
+                });
+            }
         };
 
         $scope.term.data = [
             {
                 "id": 1,
-                "term": "100% защита капитала плюс гарантированная доходность",
+                "min": "3",
+                "max": "6",
             },
             {
                 "id": 2,
-                "term": "100% защита капитала без гарантированной доходности",
+                "min": "12",
+                "max": "",
             }
         ];
 
 
-        $scope.minInvestment = {
+        $scope.investment = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'minInvestment', displayName: 'Минимальная сумма инвестиций', width: "100%" },
+                { field: 'min', displayName: 'Минимум', width: "50%" },
+                { field: 'max', displayName: 'Максимум', width: "50%" },
             ],
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled.investment = false;
+                });
+            }
         };
 
         $scope.issuer = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'issuer', displayName: 'Провайдер продукта', width: "100%" },
+                { field: 'name', displayName: 'Провайдер продукта', width: "100%" },
             ],
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled.issuer = false;
+                });
+            }
         };
 
-        $scope.addData = function() {
-            var length = $scope.productType.data.length + 1;
-            $scope.productType.data.push({});
+        $scope.return = {
+            enableColumnMenus : false,
+            columnDefs: [
+                { field: 'count', displayName: 'Доходность', width: "100%" },
+            ],
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled.return = false;
+                });
+            }
         };
 
-        $scope.saveData = function() {
+        $scope.strategy = {
+            enableColumnMenus : false,
+            columnDefs: [
+                { field: 'name', displayName: 'Стратегия', width: "100%" },
+            ],
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled.strategy = false;
+                });
+            }
+        };
+
+        $scope.legalType = {
+            enableColumnMenus : false,
+            columnDefs: [
+                { field: 'name', displayName: 'Юридическая форма', width: "100%" },
+            ],
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled.legalType = false;
+                });
+            }
+        };
+
+        $scope.payoff = {
+            enableColumnMenus : false,
+            columnDefs: [
+                { field: 'name', displayName: 'Размер выплаты', width: "100%" },
+            ],
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled.payoff = false;
+                });
+            }
+        };
+
+        $scope.addData = function(id) {
+            var length = $scope[id].data.length + 1;
+            $scope[id].data.push({});
+        };
+
+        $scope.saveData = function(id) {
+            $scope.saveButtonsDisabled[id] = true;
             restService.updateInstrumentType(
-                rowEntity,
-                'productType',
+                $scope[id].data,
+                id,
                 function(response) {
-                    $log.info("Update product type success.");
+                    $log.info("Update " + id + " success.");
                 },
-                function() {
-                    $log.error("Update product type failed.");
+                function(response) {
+                    $scope.showFailAlert(response, id+'Alert');
+                    $log.error("Update " + id + " failed.");
                 }
             );
         };

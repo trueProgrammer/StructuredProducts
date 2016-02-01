@@ -3,11 +3,14 @@ package com.structuredproducts.sevices;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.common.base.Charsets;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class ServiceUtils {
@@ -18,9 +21,10 @@ public class ServiceUtils {
                 new ByteArrayInputStream(request.getBytes(Charsets.UTF_8)), Map.class);
     }
 
-    public static <T> T getObject(Class<T> clazz, String json) throws IOException {
+    public static <T> List<T> getObject(Class<T> clazz, String json) throws IOException {
         final ObjectMapper mapper = new ObjectMapper(new JsonFactory());
-        return mapper.readValue(new ByteArrayInputStream(json.getBytes(Charsets.UTF_8)), clazz);
+        return mapper.readValue(new ByteArrayInputStream(json.getBytes(Charsets.UTF_8)),
+                TypeFactory.defaultInstance().constructCollectionType(List.class, clazz));
     }
 
     public static boolean compareDatesWithoutTimes(Date date1, Date date2) {

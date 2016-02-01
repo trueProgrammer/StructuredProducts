@@ -201,3 +201,7 @@ fieldset {
 .sortorder:after {
     content: '\25b2';
 }
+
+.admin-button:disabled {
+    background: #f3f3f3;
+}
