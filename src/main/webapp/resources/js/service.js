@@ -2,7 +2,8 @@ app.service('restService', [
     '$http', '$log',
     function ($http, $log) {
         var dataUri = 'api/v1/data/',
-            serviceUri = 'api/v1/service/';
+            serviceUri = 'api/v1/service/',
+            adminUri = 'api/v1/admin/';
 
     return {
         sendEmail: function (json, onSuccess, onFail) {
@@ -142,6 +143,26 @@ app.service('restService', [
             $log.info("Get time types");
             $http.get(
                 dataUri + "timetypes"
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            );
+        },
+
+        updateInstrumentType: function (json, entityType, onSuccess, onFail) {
+            $log.info("Update instrument type");
+            $http.post(
+                adminUri + "instrumentType",
+                json,
+                {
+                    params: {
+                        entityType: entityType,
+                    }
+                }
             )
                 .then(
                 function (response) {

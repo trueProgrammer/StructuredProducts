@@ -62,11 +62,6 @@ public class DataController {
         return new ResponseEntity<>(values, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/fileupload", method = RequestMethod.POST)
-    public ResponseEntity<HttpStatus> fileupload(String file, String filename) {
-        return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-    }
-
     @RequestMapping(path = "/news",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<News[]> getNews() {
         List<News> list = newsService.getNews();

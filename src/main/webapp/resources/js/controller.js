@@ -1,5 +1,5 @@
 var app = angular.module('App',
-                        ['ngRoute', 'ui.bootstrap', 'duScroll', 'ui.grid']);
+                        ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ui.grid', 'ui.grid.edit']);
 
 app.config(['$routeProvider',
     function($routeProvider) {
@@ -49,48 +49,153 @@ app.controller('partners', [ '$scope', '$log', 'restService',
 app.controller('admin', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
 
-    $scope.gridOptions1 = {
-        enableColumnMenus : false,
-        //enableVerticalScrollbar: false,
-        //enableHorizontalScrollbar: false,
-        columnDefs: [
-            { field: 'firstName' },
-            { field: 'lastName' },
-            { field: 'company'}
-        ],
-    };
+        $scope.saveButtons = [
+            productType = false,
+        ];
 
-    $scope.getTableHeight = function() {
+        $scope.productType = {
+            enableColumnMenus : false,
+            columnDefs: [
+                { field: 'name', displayName: 'Тип структурного продукта', width: "100%" },
+            ],
+        };
+
+        $scope.productType.onRegisterApi = function(gridApi){
+            //set gridApi on scope
+            $scope.gridApi = gridApi;
+            gridApi.edit.on.afterCellEdit($scope,function(rowEntity, colDef, newValue, oldValue){
+                $scope.saveButtons.productType = true;
+                $scope.apply();
+/*                restService.updateInstrumentType(
+                    rowEntity,
+                    'productType',
+                    function(response) {
+                        $log.info("Update product type success.");
+                    },
+                    function() {
+                        $log.error("Update product type failed.");
+                    }
+                );*/
+            });
+        };
+
+        $scope.productType.data = [
+            {
+                "name": "100% защита капитала плюс гарантированная доходность",
+            },
+            {
+                "name": "100% защита капитала без гарантированной доходности",
+            }
+        ];
+
+        $scope.term = {
+            enableColumnMenus : false,
+            columnDefs: [
+                { field: 'term', displayName: 'Срок', width: "100%" },
+            ],
+        };
+
+        $scope.term.data = [
+            {
+                "id": 1,
+                "term": "100% защита капитала плюс гарантированная доходность",
+            },
+            {
+                "id": 2,
+                "term": "100% защита капитала без гарантированной доходности",
+            }
+        ];
+
+
+        $scope.minInvestment = {
+            enableColumnMenus : false,
+            columnDefs: [
+                { field: 'minInvestment', displayName: 'Минимальная сумма инвестиций', width: "100%" },
+            ],
+        };
+
+        $scope.issuer = {
+            enableColumnMenus : false,
+            columnDefs: [
+                { field: 'issuer', displayName: 'Провайдер продукта', width: "100%" },
+            ],
+        };
+
+        $scope.addData = function() {
+            var length = $scope.productType.data.length + 1;
+            $scope.productType.data.push({});
+        };
+
+        $scope.saveData = function() {
+            restService.updateInstrumentType(
+                rowEntity,
+                'productType',
+                function(response) {
+                    $log.info("Update product type success.");
+                },
+                function() {
+                    $log.error("Update product type failed.");
+                }
+            );
+        };
+
+/*    $scope.instrumentsType = {
+        enableColumnResize : true,
+        enableColumnMenus : false,
+        columnDefs: [
+            { field: 'type', displayName: 'Тип структурного продукта', width: 350 },
+            { field: 'term', displayName: 'Срок', width: 150 },
+            { field: 'minInvestment', displayName: 'Минимальная сумма инвестиций', width: 200},
+            { field: 'issuer', displayName: 'Провайдер продукта', width: 200},
+            { field: 'return', displayName: 'Доходность', width: 100},
+            { field: 'strategy', displayName: 'Стратегия', width: 200},
+            { field: 'legalType', displayName: 'Юридическая форма', width: 200},
+            { field: 'payoff', displayName: 'Размер выплаты', width: 300},
+            { field: 'risks', displayName: 'Риски', width: 150},
+            { field: 'currency', displayName: 'Валюта', width: 100},
+            { field: 'paymentPeriodicity', displayName: 'Периодичность выплаты дохода', width: 250},
+        ],
+    };*/
+
+    /*$scope.getTableHeight = function() {
         var rowHeight = 30; // your row height
         var headerHeight = 30; // your header height
         return {
             height: (3 * rowHeight + headerHeight) + "px"
         };
-    };
+    };*/
 
-    $scope.gridOptions1.enableVerticalScrollbar = 0;
-    $scope.gridOptions1.enableHorizontalScrollbar = 0;
-    //$scope.gridOptions1.enableScrollbars = false;
-    $scope.gridOptions1.data = [
+    //$scope.instrumentsType.enableVerticalScrollbar = 2;
+    //$scope.instrumentsType.enableHorizontalScrollbar = 2;
+    //$scope.instrumentsType.enableScrollbars = false;
+/*    $scope.instrumentsType.data = [
         {
-            "firstName": "Cox",
-            "lastName": "Carney",
-            "company": "Enormo",
-            "employed": true
+            "type": "100% защита капитала плюс гарантированная доходность",
+            "term": "от 3 до 6 месяцев",
+            "minInvestment": "До 200 тысяч рублей",
+            "issuer": "БКС",
+            "return": "15%",
+            "strategy": "Рост цены базового актива",
+            "legalType": " Все",
+            "payoff": "Без ограничения максимальной доходности",
+            "risks": "Все",
+            "currency": "RUR",
+            "paymentPeriodicity": "ежегодно",
         },
         {
-            "firstName": "Lorraine",
-            "lastName": "Wise",
-            "company": "Comveyer",
-            "employed": false
-        },
-        {
-            "firstName": "Nancy",
-            "lastName": "Waters",
-            "company": "Fuelton",
-            "employed": false
+            "type": "100% защита капитала без гарантированной доходности",
+            "term": "свыше 12 месяцев",
+            "minInvestment": "От 1 миллиона рублей",
+            "issuer": "Открытие",
+            "return": "19%",
+            "strategy": "Барьерные стратегии",
+            "legalType": " Все",
+            "payoff": "С ограниченным размером максимальной доходности",
+            "risks": "Все",
+            "currency": "USD",
+            "paymentPeriodicity": "ежегодно",
         }
-    ];
+    ];*/
 
 }]);
 

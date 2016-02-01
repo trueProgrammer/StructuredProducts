@@ -10,31 +10,41 @@
 </div><!--/breadcrumbs-->
 <!--=== End Breadcrumbs ===-->
 
+
+
 <!--=== Content ===-->
 <div class="container content-sm">
 
+    <div class="row">
 
+        <div class="col-md-6 md-margin-bottom-20">
+            <h2>Тип структурного продукта</h2>
+            <button type="button" class="btn-u" ng-click="addData()">Добавить данные</button>
+            <button type="button" class="btn-u" ng-click="saveData()" ng-disabled="saveButtons[productType] == true">
+                Сохранить
+            </button>
+            <div ui-grid="productType" ui-grid-edit></div>
+        </div>
 
+        <div class="col-md-6 md-margin-bottom-20">
+            <h2>Срок</h2>
+            <div ui-grid="term" ui-grid-edit></div>
+        </div>
 
-    <div class="sky-form">
-        <style ui-grid-style>"table main-table"</style>
-        <div ui-grid="gridOptions1" class="table main-table" ng-style="getTableHeight()"></div>
-        <style ui-grid-style>"table main-table"</style>
-
-        <fieldset>
-            <section>
-                <h2>Файл топовых продуктов</h2>
-                <div class="sky-row">
-                    <div class="col col-4">
-                        <input type = "file" file-model = "myFile"/>
-                        <button ng-click = "uploadFile()" style="margin-top: 5px;">Загрузить</button>
-                    </div>
-                    <div class="col col-4">
-                        <input type = "file" file-model = "myFile"/>
-                        <button ng-click = "uploadFile()" style="margin-top: 5px;">Загрузить</button>
-                    </div>
-                </div>
-            </section>
-        </fieldset>
     </div>
+
+    <div class="row">
+
+        <div class="col-md-6 md-margin-bottom-20">
+            <h2>Минимальная сумма инвестиций</h2>
+            <div ui-grid="minInvestment" ></div>
+        </div>
+
+        <div class="col-md-6 md-margin-bottom-20">
+            <h2>Провайдер продукта</h2>
+            <div ui-grid="issuer" ></div>
+        </div>
+
+    </div>
+
 </div>

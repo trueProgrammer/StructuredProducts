@@ -1,6 +1,7 @@
 package com.structuredproducts.sevices;
 
 import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Charsets;
 
@@ -15,6 +16,11 @@ public class ServiceUtils {
         final ObjectMapper mapper = new ObjectMapper(new JsonFactory());
         return mapper.readValue(
                 new ByteArrayInputStream(request.getBytes(Charsets.UTF_8)), Map.class);
+    }
+
+    public static <T> T getObject(Class<T> clazz, String json) throws IOException {
+        final ObjectMapper mapper = new ObjectMapper(new JsonFactory());
+        return mapper.readValue(new ByteArrayInputStream(json.getBytes(Charsets.UTF_8)), clazz);
     }
 
     public static boolean compareDatesWithoutTimes(Date date1, Date date2) {
