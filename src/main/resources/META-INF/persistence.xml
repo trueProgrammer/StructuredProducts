@@ -9,6 +9,11 @@
 
         <properties>
 
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+            <property name="net.sf.ehcache.configurationResourceName" value="/ehcache-config.xml"/>
+
             <property name="hibernate.connection.url"
                       value="jdbc:postgresql://localhost/structuredproducts" />
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />

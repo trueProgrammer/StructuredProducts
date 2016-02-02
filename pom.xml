@@ -23,7 +23,7 @@
         <hamcrest.version>2.0.0.0</hamcrest.version>
         <commons.io.version>2.4</commons.io.version>
         <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
-        <hibernate.entitymaneger.version>5.0.7.Final</hibernate.entitymaneger.version>
+        <hibernate.version>5.0.7.Final</hibernate.version>
         <postgresl.driver.version>9.4.1207</postgresl.driver.version>
     </properties>
 
@@ -95,13 +95,24 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.entitymaneger.version}</version>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>2.6.11</version>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresl.driver.version}</version>
         </dependency>
+
 
 
         <!-- CSV -->

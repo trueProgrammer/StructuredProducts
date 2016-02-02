@@ -153,10 +153,49 @@ app.service('restService', [
             );
         },
 
+        getInstrumentType: function (entityType, onSuccess, onFail) {
+            $log.info("Get instrument type");
+            $http.get(
+                adminUri + "instrumentType",
+                {
+                    params: {
+                        entityType: entityType,
+                    }
+                }
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            );
+        },
+
+        deleteInstrumentType: function (json, entityType, onSuccess, onFail) {
+            $log.info("Delete instrument type");
+            $http.post(
+                adminUri + "instrumentType/delete",
+                json,
+                {
+                    params: {
+                        entityType: entityType,
+                    },
+                }
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data.message);
+                }
+            );
+        },
+
         updateInstrumentType: function (json, entityType, onSuccess, onFail) {
             $log.info("Update instrument type");
             $http.post(
-                adminUri + "instrumentType",
+                adminUri + "instrumentType/update",
                 json,
                 {
                     params: {

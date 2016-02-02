@@ -1,5 +1,5 @@
 var app = angular.module('App',
-                        ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ui.grid', 'ui.grid.edit']);
+                        ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ui.grid', 'ui.grid.edit', 'ui.grid.selection']);
 
 app.config(['$routeProvider',
     function($routeProvider) {
@@ -49,6 +49,17 @@ app.controller('partners', [ '$scope', '$log', 'restService',
 app.controller('admin', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
 
+        var selection = {
+            productType : [],
+            term : [],
+            investment : [],
+            issuer : [],
+            return : [],
+            strategy : [],
+            legal : [],
+            payoff : [],
+        };
+
         $scope.productTypeAlert = { visible: false };
         $scope.termAlert = { visible: false };
         $scope.investmentAlert = { visible: false };
@@ -84,30 +95,29 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.productType = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Тип структурного продукта', width: "100%" },
+                { field: 'name', displayName: 'Тип структурного продукта', width: "90%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                     $scope.saveButtonsDisabled.productType = false;
                 });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        selection['productType'].push(row.entity);
+                    } else {
+                        var index = selection['productType'].indexOf(row.entity);
+                        selection['productType'].splice(index, 1);
+                    }
+                });
             }
         };
-
-        $scope.productType.data = [
-            {
-                "name": "100% защита капитала плюс гарантированная доходность",
-            },
-            {
-                "name": "100% защита капитала без гарантированной доходности",
-            }
-        ];
 
         $scope.term = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'min', displayName: 'Минимум', width: "50%" },
-                { field: 'max', displayName: 'Максимум', width: "50%" },
+                { field: 'min', displayName: 'Минимум', width: "45%" },
+                { field: 'max', displayName: 'Максимум', width: "45%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -117,25 +127,11 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             }
         };
 
-        $scope.term.data = [
-            {
-                "id": 1,
-                "min": "3",
-                "max": "6",
-            },
-            {
-                "id": 2,
-                "min": "12",
-                "max": "",
-            }
-        ];
-
-
         $scope.investment = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'min', displayName: 'Минимум', width: "50%" },
-                { field: 'max', displayName: 'Максимум', width: "50%" },
+                { field: 'min', displayName: 'Минимум', width: "45%" },
+                { field: 'max', displayName: 'Максимум', width: "45%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -148,7 +144,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.issuer = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Провайдер продукта', width: "100%" },
+                { field: 'name', displayName: 'Провайдер продукта', width: "90%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -161,7 +157,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.return = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'count', displayName: 'Доходность', width: "100%" },
+                { field: 'count', displayName: 'Доходность', width: "90%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -174,7 +170,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.strategy = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Стратегия', width: "100%" },
+                { field: 'name', displayName: 'Стратегия', width: "90%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -187,7 +183,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.legalType = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Юридическая форма', width: "100%" },
+                { field: 'name', displayName: 'Юридическая форма', width: "90%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -200,7 +196,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.payoff = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Размер выплаты', width: "100%" },
+                { field: 'name', displayName: 'Размер выплаты', width: "90%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -225,68 +221,52 @@ app.controller('admin', [ '$scope', '$log', 'restService',
                 },
                 function(response) {
                     $scope.showFailAlert(response, id+'Alert');
+                    getInstrumentType(id);
                     $log.error("Update " + id + " failed.");
                 }
             );
         };
 
-/*    $scope.instrumentsType = {
-        enableColumnResize : true,
-        enableColumnMenus : false,
-        columnDefs: [
-            { field: 'type', displayName: 'Тип структурного продукта', width: 350 },
-            { field: 'term', displayName: 'Срок', width: 150 },
-            { field: 'minInvestment', displayName: 'Минимальная сумма инвестиций', width: 200},
-            { field: 'issuer', displayName: 'Провайдер продукта', width: 200},
-            { field: 'return', displayName: 'Доходность', width: 100},
-            { field: 'strategy', displayName: 'Стратегия', width: 200},
-            { field: 'legalType', displayName: 'Юридическая форма', width: 200},
-            { field: 'payoff', displayName: 'Размер выплаты', width: 300},
-            { field: 'risks', displayName: 'Риски', width: 150},
-            { field: 'currency', displayName: 'Валюта', width: 100},
-            { field: 'paymentPeriodicity', displayName: 'Периодичность выплаты дохода', width: 250},
-        ],
-    };*/
-
-    /*$scope.getTableHeight = function() {
-        var rowHeight = 30; // your row height
-        var headerHeight = 30; // your header height
-        return {
-            height: (3 * rowHeight + headerHeight) + "px"
+        $scope.removeData = function(id) {
+            restService.deleteInstrumentType(
+                selection['productType'],
+                id,
+                function(response) {
+                    $log.info("Delete " + id + " success.");
+                    selection[id] = [];
+                    getInstrumentType(id);
+                },
+                function(response) {
+                    $scope.showFailAlert(response, id+'Alert');
+                    $log.error("Delete " + id + " failed.");
+                    selection[id] = [];
+                    getInstrumentType(id);
+                }
+            );
         };
-    };*/
 
-    //$scope.instrumentsType.enableVerticalScrollbar = 2;
-    //$scope.instrumentsType.enableHorizontalScrollbar = 2;
-    //$scope.instrumentsType.enableScrollbars = false;
-/*    $scope.instrumentsType.data = [
-        {
-            "type": "100% защита капитала плюс гарантированная доходность",
-            "term": "от 3 до 6 месяцев",
-            "minInvestment": "До 200 тысяч рублей",
-            "issuer": "БКС",
-            "return": "15%",
-            "strategy": "Рост цены базового актива",
-            "legalType": " Все",
-            "payoff": "Без ограничения максимальной доходности",
-            "risks": "Все",
-            "currency": "RUR",
-            "paymentPeriodicity": "ежегодно",
-        },
-        {
-            "type": "100% защита капитала без гарантированной доходности",
-            "term": "свыше 12 месяцев",
-            "minInvestment": "От 1 миллиона рублей",
-            "issuer": "Открытие",
-            "return": "19%",
-            "strategy": "Барьерные стратегии",
-            "legalType": " Все",
-            "payoff": "С ограниченным размером максимальной доходности",
-            "risks": "Все",
-            "currency": "USD",
-            "paymentPeriodicity": "ежегодно",
+        function getInstrumentType(entity) {
+            restService.getInstrumentType(
+                entity,
+                function(values) {
+                    $scope[entity].data = values;
+                },
+                function(response) {
+                    $log.error("Get instrument values for "+entity+" failed.");
+                }
+            )
         }
-    ];*/
+
+        (function() {
+            getInstrumentType('productType');
+            getInstrumentType('term');
+            getInstrumentType('investment');
+            getInstrumentType('issuer');
+            getInstrumentType('return');
+            getInstrumentType('strategy');
+            getInstrumentType('legalType');
+            getInstrumentType('payoff');
+        }());
 
 }]);
 

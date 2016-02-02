@@ -1,5 +1,8 @@
 package com.structuredproducts.persistence.entities.instrument;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +15,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
+@Cache(usage= CacheConcurrencyStrategy.READ_ONLY, region="employee")
 @Table(name="UNDERLAYING", schema = "INSTRUMENT")
 public class Underlaying implements Serializable {
     @Id

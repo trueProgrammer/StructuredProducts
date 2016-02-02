@@ -1,6 +1,8 @@
 package com.structuredproducts.persistence.entities.instrument;
 
 import com.google.common.collect.Lists;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@Cache(usage= CacheConcurrencyStrategy.READ_ONLY, region="employee")
 @Table(name="UNDERLAYING_TYPE", schema = "INSTRUMENT")
 public class UnderlayingType implements Serializable{
     @Id
