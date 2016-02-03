@@ -202,6 +202,9 @@ fieldset {
     content: '\25b2';
 }
 
-.admin-button:disabled {
+.disabled-button:disabled {
     background: #f3f3f3;
 }
+.disabled-button[disabled]:hover {
+     background: #f3f3f3;
+ }

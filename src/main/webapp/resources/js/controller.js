@@ -49,221 +49,86 @@ app.controller('partners', [ '$scope', '$log', 'restService',
 app.controller('admin', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
 
-        var selection = {
-            productType : [],
-            term : [],
-            investment : [],
-            issuer : [],
-            return : [],
-            strategy : [],
-            legal : [],
-            payoff : [],
+        $scope.saveButtonsDisabled = true;
+        $scope.selection = [];
+
+        var selected;
+        var columns = {
+            productType : [
+                { field: 'name', displayName: 'Тип структурного продукта', width: "94%" },
+            ],
+            term : [
+                { field: 'min', displayName: 'Минимум', width: "47%" },
+                { field: 'max', displayName: 'Максимум', width: "47%" },
+            ],
+            investment : [
+                    { field: 'min', displayName: 'Минимум', width: "47%" },
+                    { field: 'max', displayName: 'Максимум', width: "47%" },
+            ],
+            issuer : [
+                    { field: 'name', displayName: 'Провайдер продукта', width: "94%" },
+            ],
+            return : [
+                { field: 'count', displayName: 'Доходность', width: "94%" },
+            ],
+            strategy : [
+                { field: 'name', displayName: 'Стратегия', width: "94%" },
+            ],
+            legalType: [
+                { field: 'name', displayName: 'Юридическая форма', width: "94%" },
+            ],
+            payoff: [
+                { field: 'name', displayName: 'Размер выплаты', width: "94%" },
+            ],
         };
 
-        $scope.productTypeAlert = { visible: false };
-        $scope.termAlert = { visible: false };
-        $scope.investmentAlert = { visible: false };
-        $scope.issuerAlert = { visible: false };
-        $scope.returnAlert = { visible: false };
-        $scope.strategyAlert = { visible: false };
-        $scope.legalTypeAlert = { visible: false };
-        $scope.payoffAlert = { visible: false };
+        function getValues(entity) {
+            restService.getInstrumentType(
+                entity,
+                function(values) {
+                    $scope.table.data = values;
+                },
+                function(response) {
+                    $log.error("Get instrument values for "+entity+" failed.");
+                }
+            )
+        };
+
+        $scope.table = {
+            enableColumnMenus : false,
+            onRegisterApi : function(gridApi) {
+                $scope.gridApi = gridApi;
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                    $scope.saveButtonsDisabled = false;
+                });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        $scope.selection.push(row.entity);
+                    } else {
+                        var index = $scope.selection.indexOf(row.entity);
+                        $scope.selection.splice(index, 1);
+                    }
+                });
+            }
+        };
+
+        $scope.selectTable = function(id) {
+            selected = id;
+            $scope.selection = [];
+            $scope.table.columnDefs = columns[id];
+            getValues(id);
+        };
+
+        $scope.alert = { visible: false };
+
 
         $scope.closeAlert = function() {
-            $scope.productTypeAlert.visible = false;
-            $scope.termAlert.visible = false;
-            $scope.investmentAlert.visible = false;
-            $scope.issuerAlert.visible = false;
-            $scope.returnAlert.visible = false;
-            $scope.strategyAlert.visible = false;
-            $scope.legalTypeAlert.visible = false;
-            $scope.payoffAlert.visible = false;
+            $scope.alert.visible = false;
         };
 
         $scope.showFailAlert = function(msg, id) {
             $scope[id].msg = msg;
             $scope[id].visible = true;
-        };
-
-        $scope.saveButtonsDisabled = {
-            productType : true,
-            term : true,
-            investment : true,
-            issuer : true,
-            return : true,
-            strategy : true,
-            legal : true,
-            payoff : true,
-        };
-
-        $scope.productType = {
-            enableColumnMenus : false,
-            columnDefs: [
-                { field: 'name', displayName: 'Тип структурного продукта', width: "94%" },
-            ],
-            onRegisterApi : function(gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    $scope.saveButtonsDisabled.productType = false;
-                });
-                gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    if(row.isSelected) {
-                        selection['productType'].push(row.entity);
-                    } else {
-                        var index = selection['productType'].indexOf(row.entity);
-                        selection['productType'].splice(index, 1);
-                    }
-                });
-            }
-        };
-
-        $scope.term = {
-            enableColumnMenus : false,
-            columnDefs: [
-                { field: 'min', displayName: 'Минимум', width: "47%" },
-                { field: 'max', displayName: 'Максимум', width: "47%" },
-            ],
-            onRegisterApi : function(gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    $scope.saveButtonsDisabled.term = false;
-                });
-                gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    if(row.isSelected) {
-                        selection['term'].push(row.entity);
-                    } else {
-                        var index = selection['term'].indexOf(row.entity);
-                        selection['term'].splice(index, 1);
-                    }
-                });
-            }
-        };
-
-        $scope.investment = {
-            enableColumnMenus : false,
-            columnDefs: [
-                { field: 'min', displayName: 'Минимум', width: "47%" },
-                { field: 'max', displayName: 'Максимум', width: "47%" },
-            ],
-            onRegisterApi : function(gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    $scope.saveButtonsDisabled.investment = false;
-                });
-                gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    if(row.isSelected) {
-                        selection['investment'].push(row.entity);
-                    } else {
-                        var index = selection['investment'].indexOf(row.entity);
-                        selection['investment'].splice(index, 1);
-                    }
-                });
-            }
-        };
-
-        $scope.issuer = {
-            enableColumnMenus : false,
-            columnDefs: [
-                { field: 'name', displayName: 'Провайдер продукта', width: "94%" },
-            ],
-            onRegisterApi : function(gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    $scope.saveButtonsDisabled.issuer = false;
-                });
-                gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    if(row.isSelected) {
-                        selection['issuer'].push(row.entity);
-                    } else {
-                        var index = selection['issuer'].indexOf(row.entity);
-                        selection['issuer'].splice(index, 1);
-                    }
-                });
-            }
-        };
-
-        $scope.return = {
-            enableColumnMenus : false,
-            columnDefs: [
-                { field: 'count', displayName: 'Доходность', width: "94%" },
-            ],
-            onRegisterApi : function(gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    $scope.saveButtonsDisabled.return = false;
-                });
-                gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    if(row.isSelected) {
-                        selection['return'].push(row.entity);
-                    } else {
-                        var index = selection['return'].indexOf(row.entity);
-                        selection['return'].splice(index, 1);
-                    }
-                });
-            }
-        };
-
-        $scope.strategy = {
-            enableColumnMenus : false,
-            columnDefs: [
-                { field: 'name', displayName: 'Стратегия', width: "94%" },
-            ],
-            onRegisterApi : function(gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    $scope.saveButtonsDisabled.strategy = false;
-                });
-                gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    if(row.isSelected) {
-                        selection['strategy'].push(row.entity);
-                    } else {
-                        var index = selection['strategy'].indexOf(row.entity);
-                        selection['strategy'].splice(index, 1);
-                    }
-                });
-            }
-        };
-
-        $scope.legalType = {
-            enableColumnMenus : false,
-            columnDefs: [
-                { field: 'name', displayName: 'Юридическая форма', width: "94%" },
-            ],
-            onRegisterApi : function(gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    $scope.saveButtonsDisabled.legalType = false;
-                });
-                gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    if(row.isSelected) {
-                        selection['legalType'].push(row.entity);
-                    } else {
-                        var index = selection['legalType'].indexOf(row.entity);
-                        selection['legalType'].splice(index, 1);
-                    }
-                });
-            }
-        };
-
-        $scope.payoff = {
-            enableColumnMenus : false,
-            columnDefs: [
-                { field: 'name', displayName: 'Размер выплаты', width: "94%" },
-            ],
-            onRegisterApi : function(gridApi) {
-                $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
-                    $scope.saveButtonsDisabled.payoff = false;
-                });
-                gridApi.selection.on.rowSelectionChanged($scope,function(row){
-                    if(row.isSelected) {
-                        selection['payoff'].push(row.entity);
-                    } else {
-                        var index = selection['payoff'].indexOf(row.entity);
-                        selection['payoff'].splice(index, 1);
-                    }
-                });
-            }
         };
 
         $scope.addData = function(id) {
@@ -281,51 +146,32 @@ app.controller('admin', [ '$scope', '$log', 'restService',
                 },
                 function(response) {
                     $scope.showFailAlert(response, id+'Alert');
-                    getInstrumentType(id);
+                    getValues(id);
                     $log.error("Update " + id + " failed.");
                 }
             );
         };
 
-        $scope.removeData = function(id) {
+        $scope.removeData = function() {
             restService.deleteInstrumentType(
-                selection[id],
-                id,
+                selection[selected],
+                selected,
                 function(response) {
                     $log.info("Delete " + id + " success.");
-                    selection[id] = [];
-                    getInstrumentType(id);
+                    selection[selected] = [];
+                    getValues(selected);
                 },
                 function(response) {
-                    $scope.showFailAlert(response, id+'Alert');
-                    $log.error("Delete " + id + " failed.");
-                    selection[id] = [];
-                    getInstrumentType(id);
+                    $scope.showFailAlert(response, selected+'Alert');
+                    $log.error("Delete " + selected + " failed.");
+                    selection[selected] = [];
+                    getValues(selected);
                 }
             );
         };
 
-        function getInstrumentType(entity) {
-            restService.getInstrumentType(
-                entity,
-                function(values) {
-                    $scope[entity].data = values;
-                },
-                function(response) {
-                    $log.error("Get instrument values for "+entity+" failed.");
-                }
-            )
-        }
-
         (function() {
-            getInstrumentType('productType');
-            getInstrumentType('term');
-            getInstrumentType('investment');
-            getInstrumentType('issuer');
-            getInstrumentType('return');
-            getInstrumentType('strategy');
-            getInstrumentType('legalType');
-            getInstrumentType('payoff');
+            $scope.selectTable('productType');
         }());
 
 }]);
