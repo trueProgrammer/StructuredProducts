@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Cache(usage= CacheConcurrencyStrategy.READ_ONLY, region="employee")
-@Table(name="PRODUCT_TYPE", schema = "INSTRUMENT")
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
+@Table(name="STRATEGY", schema = "INSTRUMENT")
 public class Strategy implements Serializable {
     @Id
     @GeneratedValue

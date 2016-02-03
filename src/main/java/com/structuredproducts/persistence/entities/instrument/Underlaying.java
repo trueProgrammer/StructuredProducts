@@ -10,12 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Cache(usage= CacheConcurrencyStrategy.READ_ONLY, region="employee")
+@Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
 @Table(name="UNDERLAYING", schema = "INSTRUMENT")
 public class Underlaying implements Serializable {
     @Id

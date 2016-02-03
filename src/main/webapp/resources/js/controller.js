@@ -90,12 +90,16 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             term : true,
             investment : true,
             issuer : true,
+            return : true,
+            strategy : true,
+            legal : true,
+            payoff : true,
         };
 
         $scope.productType = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Тип структурного продукта', width: "90%" },
+                { field: 'name', displayName: 'Тип структурного продукта', width: "94%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -116,13 +120,21 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.term = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'min', displayName: 'Минимум', width: "45%" },
-                { field: 'max', displayName: 'Максимум', width: "45%" },
+                { field: 'min', displayName: 'Минимум', width: "47%" },
+                { field: 'max', displayName: 'Максимум', width: "47%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                     $scope.saveButtonsDisabled.term = false;
+                });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        selection['term'].push(row.entity);
+                    } else {
+                        var index = selection['term'].indexOf(row.entity);
+                        selection['term'].splice(index, 1);
+                    }
                 });
             }
         };
@@ -130,13 +142,21 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.investment = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'min', displayName: 'Минимум', width: "45%" },
-                { field: 'max', displayName: 'Максимум', width: "45%" },
+                { field: 'min', displayName: 'Минимум', width: "47%" },
+                { field: 'max', displayName: 'Максимум', width: "47%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                     $scope.saveButtonsDisabled.investment = false;
+                });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        selection['investment'].push(row.entity);
+                    } else {
+                        var index = selection['investment'].indexOf(row.entity);
+                        selection['investment'].splice(index, 1);
+                    }
                 });
             }
         };
@@ -144,12 +164,20 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.issuer = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Провайдер продукта', width: "90%" },
+                { field: 'name', displayName: 'Провайдер продукта', width: "94%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                     $scope.saveButtonsDisabled.issuer = false;
+                });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        selection['issuer'].push(row.entity);
+                    } else {
+                        var index = selection['issuer'].indexOf(row.entity);
+                        selection['issuer'].splice(index, 1);
+                    }
                 });
             }
         };
@@ -157,12 +185,20 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.return = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'count', displayName: 'Доходность', width: "90%" },
+                { field: 'count', displayName: 'Доходность', width: "94%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                     $scope.saveButtonsDisabled.return = false;
+                });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        selection['return'].push(row.entity);
+                    } else {
+                        var index = selection['return'].indexOf(row.entity);
+                        selection['return'].splice(index, 1);
+                    }
                 });
             }
         };
@@ -170,12 +206,20 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.strategy = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Стратегия', width: "90%" },
+                { field: 'name', displayName: 'Стратегия', width: "94%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                     $scope.saveButtonsDisabled.strategy = false;
+                });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        selection['strategy'].push(row.entity);
+                    } else {
+                        var index = selection['strategy'].indexOf(row.entity);
+                        selection['strategy'].splice(index, 1);
+                    }
                 });
             }
         };
@@ -183,12 +227,20 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.legalType = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Юридическая форма', width: "90%" },
+                { field: 'name', displayName: 'Юридическая форма', width: "94%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                     $scope.saveButtonsDisabled.legalType = false;
+                });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        selection['legalType'].push(row.entity);
+                    } else {
+                        var index = selection['legalType'].indexOf(row.entity);
+                        selection['legalType'].splice(index, 1);
+                    }
                 });
             }
         };
@@ -196,12 +248,20 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.payoff = {
             enableColumnMenus : false,
             columnDefs: [
-                { field: 'name', displayName: 'Размер выплаты', width: "90%" },
+                { field: 'name', displayName: 'Размер выплаты', width: "94%" },
             ],
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
                     $scope.saveButtonsDisabled.payoff = false;
+                });
+                gridApi.selection.on.rowSelectionChanged($scope,function(row){
+                    if(row.isSelected) {
+                        selection['payoff'].push(row.entity);
+                    } else {
+                        var index = selection['payoff'].indexOf(row.entity);
+                        selection['payoff'].splice(index, 1);
+                    }
                 });
             }
         };
@@ -229,7 +289,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
 
         $scope.removeData = function(id) {
             restService.deleteInstrumentType(
-                selection['productType'],
+                selection[id],
                 id,
                 function(response) {
                     $log.info("Delete " + id + " success.");
@@ -309,10 +369,6 @@ app.controller('investidea', [ '$scope', '$log', 'restService','$routeParams',
 
 app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$document',
     function($scope, $log, restService, $anchorScroll, $document) {
-
-    var selected = {};
-    var currentPage = 0;
-    var pages = ['page1','page2','page3', 'footer'];
 
     $scope.data = {};
     $scope.accordion = {};
@@ -453,6 +509,10 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
         )
     }());
 
+    var selected = {};
+    var currentPage = 0;
+    var pages = ['page1','page2','page3', 'footer'];
+
     $scope.gotoAnchorAnimated = function(id) {
         var section = angular.element(document.getElementById(id));
         $document.scrollToElementAnimated(section);
@@ -520,6 +580,10 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
             autoPlayVideos: true,
             skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
         });
+
+        $scope.$on('mousewheel', MouseWheelHandler());
+        $scope.$on('DOMMouseScroll', MouseWheelHandler());
+
         if (document.addEventListener) {
             document.addEventListener("mousewheel", MouseWheelHandler(), false);
             document.addEventListener("DOMMouseScroll", MouseWheelHandler(), false);
