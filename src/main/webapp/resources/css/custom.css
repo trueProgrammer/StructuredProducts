@@ -203,8 +203,8 @@ fieldset {
 }
 
 .disabled-button:disabled {
-    background: #f3f3f3;
+    background: #e0e0e0;
 }
 .disabled-button[disabled]:hover {
-     background: #f3f3f3;
+     background: #e0e0e0;
  }

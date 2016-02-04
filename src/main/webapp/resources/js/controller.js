@@ -80,6 +80,9 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             payoff: [
                 { field: 'name', displayName: 'Размер выплаты', width: "94%" },
             ],
+            underlayingType: [
+                { field: 'name', displayName: 'Тип базового актива', width: "94%" },
+            ],
         };
 
         function getValues(entity) {
@@ -121,50 +124,49 @@ app.controller('admin', [ '$scope', '$log', 'restService',
 
         $scope.alert = { visible: false };
 
-
         $scope.closeAlert = function() {
             $scope.alert.visible = false;
         };
 
         $scope.showFailAlert = function(msg, id) {
-            $scope[id].msg = msg;
-            $scope[id].visible = true;
+            $scope.alert.msg = msg;
+            $scope.alert.visible = true;
         };
 
-        $scope.addData = function(id) {
-            var length = $scope[id].data.length + 1;
-            $scope[id].data.push({});
+        $scope.addData = function() {
+            var length = $scope.table.data.length + 1;
+            $scope.table.data.push({});
         };
 
-        $scope.saveData = function(id) {
-            $scope.saveButtonsDisabled[id] = true;
+        $scope.saveData = function() {
+            $scope.saveButtonsDisabled = true;
             restService.updateInstrumentType(
-                $scope[id].data,
-                id,
+                $scope.table.data,
+                selected,
                 function(response) {
-                    $log.info("Update " + id + " success.");
+                    $log.info("Update " + selected + " success.");
                 },
                 function(response) {
                     $scope.showFailAlert(response, id+'Alert');
                     getValues(id);
-                    $log.error("Update " + id + " failed.");
+                    $log.error("Update " + selected + " failed.");
                 }
             );
         };
 
         $scope.removeData = function() {
             restService.deleteInstrumentType(
-                selection[selected],
+                $scope.selection,
                 selected,
                 function(response) {
-                    $log.info("Delete " + id + " success.");
-                    selection[selected] = [];
+                    $log.info("Delete " + selected + " success.");
+                    $scope.selection = [];
                     getValues(selected);
                 },
                 function(response) {
                     $scope.showFailAlert(response, selected+'Alert');
                     $log.error("Delete " + selected + " failed.");
-                    selection[selected] = [];
+                    $scope.selection = [];
                     getValues(selected);
                 }
             );

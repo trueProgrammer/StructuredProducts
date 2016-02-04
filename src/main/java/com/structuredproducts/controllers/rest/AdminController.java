@@ -2,14 +2,7 @@ package com.structuredproducts.controllers.rest;
 
 import com.google.common.collect.ImmutableMap;
 import com.structuredproducts.controllers.data.Message;
-import com.structuredproducts.persistence.entities.instrument.Investment;
-import com.structuredproducts.persistence.entities.instrument.Issuer;
-import com.structuredproducts.persistence.entities.instrument.LegalType;
-import com.structuredproducts.persistence.entities.instrument.PayOff;
-import com.structuredproducts.persistence.entities.instrument.ProductType;
-import com.structuredproducts.persistence.entities.instrument.Return;
-import com.structuredproducts.persistence.entities.instrument.Strategy;
-import com.structuredproducts.persistence.entities.instrument.Term;
+import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.DBService;
 import com.structuredproducts.sevices.ServiceUtils;
 import org.apache.log4j.Logger;
@@ -45,6 +38,7 @@ public class AdminController {
             put("strategy", Strategy.class).
             put("legalType", LegalType.class).
             put("payoff", PayOff.class).
+            put("underlayingType", UnderlayingType.class).
             build();
 
 
