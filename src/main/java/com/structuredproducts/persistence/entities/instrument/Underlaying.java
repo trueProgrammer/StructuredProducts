@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class Underlaying implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(unique = true)
     private String name;
     @ManyToOne(targetEntity = UnderlayingType.class)
@@ -29,11 +29,11 @@ public class Underlaying implements Serializable {
     public Underlaying() {
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

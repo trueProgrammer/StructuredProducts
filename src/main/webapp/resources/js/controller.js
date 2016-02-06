@@ -52,10 +52,15 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.saveButtonsDisabled = true;
         $scope.selection = [];
 
-        var selected;
+        $scope.selected;
         var columns = {
             productType : [
-                { field: 'name', displayName: 'Тип структурного продукта', width: "94%" },
+                //{ field: 'name', displayName: 'Тип структурного продукта', width: "94%" },
+                { field: 'name', displayName: 'Тип структурного продукта', width: "94%", cellFilter: 'mapGender',
+                    editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'name', editDropdownOptionsArray: [
+                    { id: 1, name: 'male' },
+                    { id: 2, name: 'female' }
+                ]},
             ],
             term : [
                 { field: 'min', displayName: 'Минимум', width: "47%" },
@@ -116,7 +121,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         };
 
         $scope.selectTable = function(id) {
-            selected = id;
+            $scope.selected = id;
             $scope.selection = [];
             $scope.table.columnDefs = columns[id];
             getValues(id);
@@ -142,14 +147,15 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             $scope.saveButtonsDisabled = true;
             restService.updateInstrumentType(
                 $scope.table.data,
-                selected,
+                $scope.selected,
                 function(response) {
-                    $log.info("Update " + selected + " success.");
+                    $log.info("Update " + $scope.selected + " success.");
+                    getValues($scope.selected);
                 },
                 function(response) {
                     $scope.showFailAlert(response, id+'Alert');
-                    getValues(id);
-                    $log.error("Update " + selected + " failed.");
+                    getValues($scope.selected);
+                    $log.error("Update " + $scope.selected + " failed.");
                 }
             );
         };
@@ -157,17 +163,17 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.removeData = function() {
             restService.deleteInstrumentType(
                 $scope.selection,
-                selected,
+                $scope.selected,
                 function(response) {
-                    $log.info("Delete " + selected + " success.");
+                    $log.info("Delete " + $scope.selected + " success.");
                     $scope.selection = [];
-                    getValues(selected);
+                    getValues($scope.selected);
                 },
                 function(response) {
-                    $scope.showFailAlert(response, selected+'Alert');
-                    $log.error("Delete " + selected + " failed.");
+                    $scope.showFailAlert(response, $scope.selected+'Alert');
+                    $log.error("Delete " + $scope.selected + " failed.");
                     $scope.selection = [];
-                    getValues(selected);
+                    getValues($scope.selected);
                 }
             );
         };
@@ -176,7 +182,20 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             $scope.selectTable('productType');
         }());
 
-}]);
+}]).filter('mapGender', function() {
+    var genderHash = {
+        1: 'male',
+        2: 'female'
+    };
+
+    return function(input) {
+        if (!input){
+            return '';
+        } else {
+            return genderHash[input];
+        }
+    };
+});
 
 app.controller('investideas', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {

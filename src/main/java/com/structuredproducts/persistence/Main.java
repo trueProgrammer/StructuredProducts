@@ -1,6 +1,7 @@
 package com.structuredproducts.persistence;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.structuredproducts.persistence.entities.instrument.Investment;
 import com.structuredproducts.persistence.entities.instrument.Issuer;
 import com.structuredproducts.persistence.entities.instrument.ProductType;
@@ -26,7 +27,11 @@ public class Main {
 
         DBService dbService = new DBService();
 
-        List<ProductType> list = (List<ProductType>) dbService.getResultList(ProductType.class);
+        //List<ProductType> list = (List<ProductType>) dbService.getResultList(ProductType.class);
+
+        ProductType p = new ProductType();
+        p.setName("qwerty!!");
+        List<ProductType> list = Lists.newArrayList(p);
 
         dbService.saveList(list);
 
@@ -58,7 +63,7 @@ class DBService {
         transaction.begin();
         try {
             for (Object obj : list) {
-                dbManager.getEntityManager().persist(obj);
+                dbManager.getEntityManager().merge(obj);
             }
             transaction.commit();
         } catch (Exception e) {
