@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
-@Table(name="PRODUCT_TYPE", schema = "INSTRUMENT")
+@Table(name="CURRENCY", schema = "INSTRUMENT")
 public class Currency implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

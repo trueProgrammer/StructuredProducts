@@ -8,6 +8,7 @@ import com.structuredproducts.persistence.entities.instrument.Issuer;
 import com.structuredproducts.persistence.entities.instrument.LegalType;
 import com.structuredproducts.persistence.entities.instrument.PayOff;
 import com.structuredproducts.persistence.entities.instrument.PaymentPeriodicity;
+import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.persistence.entities.instrument.ProductType;
 import com.structuredproducts.persistence.entities.instrument.Return;
 import com.structuredproducts.persistence.entities.instrument.Risks;
@@ -44,6 +45,7 @@ public class DBService {
             put(Risks.class, "INSTRUMENT.RISKS").
             put(Currency.class, "INSTRUMENT.CURRENCY").
             put(PaymentPeriodicity.class, "INSTRUMENT.PAYMENT_PERIODICITY").
+            put(Product.class, "INSTRUMENT.PRODUCT").
             build();
 
     public List<?> getResultList(Class<?> clazz) {

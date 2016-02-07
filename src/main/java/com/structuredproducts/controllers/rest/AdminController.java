@@ -38,8 +38,12 @@ public class AdminController {
             put("strategy", Strategy.class).
             put("legalType", LegalType.class).
             put("payoff", PayOff.class).
+            put("risks", Risks.class).
+            put("currency", Currency.class).
             put("underlayingType", UnderlayingType.class).
             put("underlaying", Underlaying.class).
+            put("product", Product.class).
+            put("paymentPeriodicity", PaymentPeriodicity.class).
             build();
 
 
@@ -78,6 +82,11 @@ public class AdminController {
     public ResponseEntity<Object[]> getValues(@RequestParam("entityType")String entityType) {
         Class<?> clazz = ENTITY_TYPES.get(entityType);
         List<?> list = dbService.getResultList(clazz);
+        if(Nameble.class.isAssignableFrom(clazz)) {
+            for(Object obj : list) {
+                ((Nameble)obj).setName();
+            }
+        }
         return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
     }
 

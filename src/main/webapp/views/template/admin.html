@@ -19,6 +19,9 @@
 
         <div class="col-md-3">
             <ul class="list-group sidebar-nav-v1">
+                <li class="list-group-item"><a href="" ng-click="selectTable('product')" ng-class="{'blue-style': selected == 'product'}">
+                    Структурные продукты
+                </a></li>
                 <li class="list-group-item"><a href="" ng-click="selectTable('productType')" ng-class="{'blue-style': selected == 'productType'}">
                     Тип структурного продукта
                 </a></li>
@@ -48,6 +51,15 @@
                 </a></li>
                 <li class="list-group-item"><a href="" ng-click="selectTable('underlaying')" ng-class="{'blue-style': selected == 'underlaying'}">
                     Базовый актив
+                </a></li>
+                <li class="list-group-item"><a href="" ng-click="selectTable('risks')" ng-class="{'blue-style': selected == 'risks'}">
+                    Риски
+                </a></li>
+                <li class="list-group-item"><a href="" ng-click="selectTable('currency')" ng-class="{'blue-style': selected == 'currency'}">
+                    Валюта
+                </a></li>
+                <li class="list-group-item"><a href="" ng-click="selectTable('paymentPeriodicity')" ng-class="{'blue-style': selected == 'paymentPeriodicity'}">
+                    Периодичность выплаты дохода
                 </a></li>
             </ul>
         </div>

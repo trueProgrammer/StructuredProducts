@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
 @Table(name="RISKS", schema = "INSTRUMENT")
 public class Risks implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

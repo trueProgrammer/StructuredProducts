@@ -96,14 +96,73 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             payoff: [
                 { field: 'name', displayName: 'Размер выплаты', width: "94%" },
             ],
+            risks: [
+                { field: 'name', displayName: 'Риски', width: "94%" },
+            ],
+            currency: [
+                { field: 'name', displayName: 'Валюта', width: "94%" },
+            ],
+            paymentPeriodicity: [
+                { field: 'name', displayName: 'Периодичность выплаты дохода', width: "94%" },
+            ],
             underlayingType: [
                 { field: 'name', displayName: 'Тип базового актива', width: "94%" },
             ],
             underlaying: [
                 { field: 'name', displayName: 'Базовый актив', width: "47%" },
-                { field: 'type', editField: 'type', displayName: 'Тип базового актива', width: "47%",
+                { field: 'type', displayName: 'Тип базового актива', width: "47%",
                     cellFilter: "griddropdown:this",
                     editableEntity: 'underlayingType', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+            ],
+            product: [
+                { field: 'productType', displayName: 'Тип структурного продукта', width: 250,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'productType', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'term', displayName: 'Срок', width: 150,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'term', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'underlaying', displayName: 'Базовый актив', width: 100,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'underlaying', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'investment', displayName: 'Минимальная сумма инвестиций', width: 250,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'investment', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'issuer', displayName: 'Провайдер продукта', width: 200,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'issuer', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'returnValue', displayName: 'Доходность', width: 150,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'return', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'count', editDropdownOptionsArray: []},
+                { field: 'strategy', displayName: 'Стратегия', width: 150,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'strategy', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'legalType', displayName: 'Юридическая форма', width: 150,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'legalType', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'payoff', displayName: 'Размер выплат', width: 150,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'payoff', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'risks', displayName: 'Риски', width: 150,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'risks', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'currency', displayName: 'Валюта', width: 150,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'currency', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'paymentPeriodicity', displayName: 'Периодичность выплаты дохода', width: 150,
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'paymentPeriodicity', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
             ],
         };
@@ -121,6 +180,8 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         };
 
         $scope.table = {
+            enableVerticalScrollbar : 2,
+            enableHorizontalScrollbar : 2,
             enableColumnMenus : false,
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
@@ -141,6 +202,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.selectTable = function(id) {
             $scope.selected = id;
             $scope.selection = [];
+            $scope.saveButtonsDisabled = true;
             for(field in columns[id]) {
                 if (columns[id][field].editDropdownOptionsArray) {
                     returnValues(columns[id][field].editableEntity, columns[id][field]);
@@ -156,7 +218,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             $scope.alert.visible = false;
         };
 
-        $scope.showFailAlert = function(msg, id) {
+        $scope.showFailAlert = function(msg) {
             $scope.alert.msg = msg;
             $scope.alert.visible = true;
         };
@@ -176,7 +238,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
                     getValues($scope.selected);
                 },
                 function(response) {
-                    $scope.showFailAlert(response, id+'Alert');
+                    $scope.showFailAlert(response);
                     getValues($scope.selected);
                     $log.error("Update " + $scope.selected + " failed.");
                 }
@@ -193,7 +255,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
                     getValues($scope.selected);
                 },
                 function(response) {
-                    $scope.showFailAlert(response, $scope.selected+'Alert');
+                    $scope.showFailAlert(response);
                     $log.error("Delete " + $scope.selected + " failed.");
                     $scope.selection = [];
                     getValues($scope.selected);
@@ -202,13 +264,16 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         };
 
         (function() {
-            $scope.selectTable('productType');
+            $scope.selectTable('product');
         }());
 
 
 }])
     .filter('griddropdown', function() {
         return function (input, context) {
+            if(typeof input === 'undefined') {
+                return '';
+            }
             var map = context.col.colDef.editDropdownOptionsArray;
             var valueField = context.col.colDef.editDropdownValueLabel;
             var initial = context.row.entity[context.col.field];
