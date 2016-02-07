@@ -52,15 +52,26 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.saveButtonsDisabled = true;
         $scope.selection = [];
 
+        var dropDownValues = {};
+        var returnValues = function(entity, array) {
+                restService.getInstrumentType(
+                entity,
+                function(values) {
+                    dropDownValues[entity] = values;
+                    array.editDropdownOptionsArray = values;
+                },
+                function(response) {
+                    $log.error("Get instrument values for " + entity + " failed.");
+                    return [];
+                }
+            );
+        };
+
+
         $scope.selected;
         var columns = {
             productType : [
-                //{ field: 'name', displayName: 'Тип структурного продукта', width: "94%" },
-                { field: 'name', displayName: 'Тип структурного продукта', width: "94%", cellFilter: 'mapGender',
-                    editableCellTemplate: 'ui-grid/dropdownEditor', editDropdownValueLabel: 'name', editDropdownOptionsArray: [
-                    { id: 1, name: 'male' },
-                    { id: 2, name: 'female' }
-                ]},
+                { field: 'name', displayName: 'Тип структурного продукта', width: "94%" },
             ],
             term : [
                 { field: 'min', displayName: 'Минимум', width: "47%" },
@@ -87,6 +98,13 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             ],
             underlayingType: [
                 { field: 'name', displayName: 'Тип базового актива', width: "94%" },
+            ],
+            underlaying: [
+                { field: 'name', displayName: 'Базовый актив', width: "47%" },
+                { field: 'type', editField: 'type', displayName: 'Тип базового актива', width: "47%",
+                    cellFilter: "griddropdown:this",
+                    editableEntity: 'underlayingType', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
             ],
         };
 
@@ -123,6 +141,11 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         $scope.selectTable = function(id) {
             $scope.selected = id;
             $scope.selection = [];
+            for(field in columns[id]) {
+                if (columns[id][field].editDropdownOptionsArray) {
+                    returnValues(columns[id][field].editableEntity, columns[id][field]);
+                }
+            }
             $scope.table.columnDefs = columns[id];
             getValues(id);
         };
@@ -182,20 +205,26 @@ app.controller('admin', [ '$scope', '$log', 'restService',
             $scope.selectTable('productType');
         }());
 
-}]).filter('mapGender', function() {
-    var genderHash = {
-        1: 'male',
-        2: 'female'
-    };
 
-    return function(input) {
-        if (!input){
-            return '';
-        } else {
-            return genderHash[input];
-        }
-    };
-});
+}])
+    .filter('griddropdown', function() {
+        return function (input, context) {
+            var map = context.col.colDef.editDropdownOptionsArray;
+            var valueField = context.col.colDef.editDropdownValueLabel;
+            var initial = context.row.entity[context.col.field];
+            if (typeof map !== "undefined") {
+                for (var i = 0; i < map.length; i++) {
+                    if (map[i]['id'] == input['id']) {
+                        return map[i][valueField];
+                    }
+                }
+            } else if (initial) {
+                return initial;
+            }
+            return input;
+        };
+    });
+
 
 app.controller('investideas', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {

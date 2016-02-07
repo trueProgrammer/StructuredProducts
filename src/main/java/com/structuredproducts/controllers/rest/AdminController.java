@@ -39,6 +39,7 @@ public class AdminController {
             put("legalType", LegalType.class).
             put("payoff", PayOff.class).
             put("underlayingType", UnderlayingType.class).
+            put("underlaying", Underlaying.class).
             build();
 
 

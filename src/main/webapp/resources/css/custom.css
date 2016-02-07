@@ -152,7 +152,7 @@ fieldset {
 }
 
 .blue-style {
-    color:#34a0d9;
+    color:#34a0d9 !important;
 }
 
 .red-style {
@@ -207,4 +207,4 @@ fieldset {
 }
 .disabled-button[disabled]:hover {
      background: #e0e0e0;
- }
+}

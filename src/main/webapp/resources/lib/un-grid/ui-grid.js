@@ -27798,7 +27798,11 @@ angular.module('ui.grid').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('ui-grid/dropdownEditor',
-    "<div><form name=\"inputForm\"><select ng-class=\"'colt' + col.uid\" ui-grid-edit-dropdown ng-model=\"MODEL_COL_FIELD\" ng-options=\"field[editDropdownIdLabel] as field[editDropdownValueLabel] CUSTOM_FILTERS for field in editDropdownOptionsArray\"></select></form></div>"
+    "<div><form name=\"inputForm\">" +
+    "<select ng-class=\"'colt' + col.uid\" ui-grid-edit-dropdown ng-model=\"MODEL_COL_FIELD\" " +
+    //"ng-options=\"field as field[editDropdownValueLabel] CUSTOM_FILTERS for field in editDropdownOptionsArray\">" +
+    "ng-options=\"option.name for option in editDropdownOptionsArray track by option.id\">" +
+    "</select></form></div>"
   );
 
 
