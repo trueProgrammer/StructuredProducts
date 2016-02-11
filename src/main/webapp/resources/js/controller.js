@@ -1,8 +1,9 @@
 var app = angular.module('App',
-                        ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ui.grid', 'ui.grid.edit', 'ui.grid.selection']);
+                        ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ngCookies', 'App.services',
+                            'ui.grid', 'ui.grid.edit', 'ui.grid.selection']);
 
-app.config(['$routeProvider',
-    function($routeProvider) {
+app.config(['$routeProvider', '$httpProvider',
+    function($routeProvider, $httpProvider) {
         $routeProvider.
             when('/', {
                 templateUrl: 'views/template/main.html',
@@ -36,10 +37,119 @@ app.config(['$routeProvider',
                 templateUrl: 'views/template/partners.html',
                 controller: 'partners'
             }).
+            when('/login', {
+                templateUrl: 'views/template/login.html',
+                controller: 'login'
+            }).
             otherwise({
                 redirectTo: '/'
             });
-    }]);
+
+        //$locationProvider.html5Mode(true);
+
+        /* Register error provider that shows message on failed requests or redirects to login page on
+         * unauthenticated requests */
+        $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
+                return {
+                    'responseError': function(rejection) {
+                        var status = rejection.status;
+                        var config = rejection.config;
+                        var method = config.method;
+                        var url = config.url;
+
+                        if (status == 401) {
+                            $location.path( "/login" );
+                        } else {
+                            $rootScope.error = method + " on " + url + " failed with status " + status;
+                        }
+
+                        return $q.reject(rejection);
+                    }
+                };
+            }
+        );
+
+        /* Registers auth token interceptor, auth token is either passed by header or by query parameter
+         * as soon as there is an authenticated user */
+        $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
+                return {
+                    'request': function(config) {
+                        var isRestCall = config.url.indexOf('api') == 0;
+                        if (isRestCall && angular.isDefined($rootScope.authToken)) {
+                            var authToken = $rootScope.authToken;
+                            //if (exampleAppConfig.useAuthTokenHeader) {
+                                config.headers['X-Auth-Token'] = authToken;
+/*                            } else {
+                                config.url = config.url + "?token=" + authToken;
+                            }*/
+                        }
+                        return config || $q.when(config);
+                    }
+                };
+            }
+        );
+
+    }])
+    .run(function($rootScope, $location, $cookieStore, UserService) {
+
+        /!* Try getting valid user from cookie or go to login page *!/
+        var originalPath = $location.path();
+        //$location.path("/login");
+
+        var authToken = $cookieStore.get('authToken');
+        if (authToken !== undefined && originalPath === '/admin') {
+            $rootScope.authToken = authToken;
+            UserService.get(function(user) {
+                $rootScope.user = user;
+                //$location.path(originalPath);
+            });
+        }
+
+    });
+
+app.controller('login', [ '$scope', '$rootScope', '$log','$location', 'UserService', '$cookieStore',
+    function($scope, $rootScope, $log, $location, UserService, $cookieStore) {
+
+        $scope.error = false;
+
+        //$scope.rememberMe = false;
+
+        $scope.login = function() {
+            UserService.authenticate($.param({username: $scope.username, password: $scope.password}),
+                function(result) {
+                    var authToken = result.token;
+                    $rootScope.authToken = authToken;
+                    //if ($scope.rememberMe) {
+                        $cookieStore.put('authToken', authToken);
+                    //}
+                    UserService.get(function(user) {
+                        $rootScope.user = user;
+                        //$location.path("/");
+                        $location.path("/admin");
+                    });
+                },
+                function(result) {
+                    $scope.error = true;
+                    //alert('Bad result!');
+                });
+        };
+
+}]);
+
+var services = angular.module('App.services', ['ngResource']);
+
+services.factory('UserService', function($resource) {
+
+    return $resource('api/v1/user/', {},
+        {
+            authenticate: {
+                method: 'POST',
+                params: {'action' : 'authenticate'},
+                headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+            },
+        }
+    );
+});
 
 app.controller('partners', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
@@ -116,6 +226,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
             ],
             product: [
+                { field: 'name', displayName: 'Название', width: 200 },
                 { field: 'productType', displayName: 'Тип структурного продукта', width: 250,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'productType', editableCellTemplate: 'ui-grid/dropdownEditor',
@@ -164,6 +275,7 @@ app.controller('admin', [ '$scope', '$log', 'restService',
                     cellFilter: "griddropdown:this",
                     editableEntity: 'paymentPeriodicity', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'description', displayName: 'Описание', width: 400 }
             ],
         };
 

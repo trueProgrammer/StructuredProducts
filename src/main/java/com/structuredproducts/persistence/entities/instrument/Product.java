@@ -3,6 +3,7 @@ package com.structuredproducts.persistence.entities.instrument;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +20,12 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(unique = true)
+    private String name;
+
+    @Column(unique = true)
+    private String description;
 
     @ManyToOne(targetEntity = ProductType.class)
     @JoinColumn(name = "productType")
@@ -173,5 +180,21 @@ public class Product {
 
     public void setPaymentPeriodicity(PaymentPeriodicity paymentPeriodicity) {
         this.paymentPeriodicity = paymentPeriodicity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

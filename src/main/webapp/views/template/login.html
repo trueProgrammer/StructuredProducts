@@ -1,0 +1,28 @@
+
+<div class="container content">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+
+                <div class="alert alert-danger" ng-show="error">
+                    There was a problem logging in. Please try again.
+                </div>
+
+                <div class="reg-header">
+                    <h2>Login to your account</h2>
+                </div>
+
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    <input type="text" name='username' ng-model="username" placeholder="Username" class="form-control">
+                </div>
+                <div class="input-group margin-bottom-20">
+                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                    <input type="password" name='password' ng-model="password" placeholder="Password"
+                           class="form-control">
+                </div>
+
+                <input name="submit"  class="btn btn-primary" value="Login" ng-click="login()"/>
+
+        </div>
+    </div>
+</div>

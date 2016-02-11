@@ -212,6 +212,20 @@ app.service('restService', [
             );
         },
 
+        login: function (name, pass, onSuccess, onFail) {
+            $log.info("LOGIN");
+            $http.post(
+                "api/v1/user/instrumentType"
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data.message);
+                }
+            );
+        },
+
     }
 
 }]);
