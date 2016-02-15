@@ -156,8 +156,8 @@ app.controller('partners', [ '$scope', '$log', 'restService',
 
 }]);
 
-app.controller('admin', [ '$scope', '$log', 'restService',
-    function($scope, $log, restService) {
+app.controller('admin', [ '$scope', '$log', 'restService', '$rootScope', '$location',
+    function($scope, $log, restService, $rootScope, $location) {
 
         $scope.saveButtonsDisabled = true;
         $scope.selection = [];
@@ -376,7 +376,11 @@ app.controller('admin', [ '$scope', '$log', 'restService',
         };
 
         (function() {
-            $scope.selectTable('product');
+            if(typeof $rootScope.user === 'undefined') {
+                $location.path("/login");
+            } else {
+                $scope.selectTable('product');
+            }
         }());
 
 
@@ -641,6 +645,8 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
         }
     }
 
+    var handler = MouseWheelHandler();
+
     //init app function
     angular.element(document).ready(function () {
         App.init();
@@ -654,15 +660,20 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
             skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
         });
 
-        $scope.$on('mousewheel', MouseWheelHandler());
-        $scope.$on('DOMMouseScroll', MouseWheelHandler());
-
         if (document.addEventListener) {
-            document.addEventListener("mousewheel", MouseWheelHandler(), false);
-            document.addEventListener("DOMMouseScroll", MouseWheelHandler(), false);
+            document.addEventListener("mousewheel", handler, false);
+            document.addEventListener("DOMMouseScroll", handler, false);
         } else {
             document.attachEvent("onmousewheel", MouseWheelHandler());
         }
     });
+
+    $scope.$on("$destroy", function() {
+        document.removeEventListener("DOMMouseScroll", handler, false);
+        document.removeEventListener("mousewheel", handler, false);
+    });
+
+/*        $scope.$on('mousewheel', MouseWheelHandler());
+        $scope.$on('DOMMouseScroll', MouseWheelHandler());*/
 
 }]).value('duScrollOffset', 0).value("duScrollDuration",100);
