@@ -11,7 +11,7 @@ app.config(['$routeProvider', '$httpProvider',
             }).
             when('/about', {
                 templateUrl: 'views/template/about.html',
-                controller: 'main'
+                controller: 'empty'
             }).
             when('/contacts', {
                 templateUrl: 'views/template/contacts.html',
@@ -35,7 +35,11 @@ app.config(['$routeProvider', '$httpProvider',
             }).
             when('/partners', {
                 templateUrl: 'views/template/partners.html',
-                controller: 'partners'
+                controller: 'empty'
+            }).
+            when('/structuredproducts', {
+                templateUrl: 'views/template/structuredproducts.html',
+                controller: 'empty'
             }).
             when('/login', {
                 templateUrl: 'views/template/login.html',
@@ -155,9 +159,8 @@ services.factory('UserService', function($resource) {
     );
 });
 
-app.controller('partners', [ '$scope', '$log', 'restService',
-    function($scope, $log, restService) {
-
+app.controller('empty', [ '$scope',
+    function($scope) {
 }]);
 
 app.controller('investproduct', ['$scope', '$log', 'restService',
