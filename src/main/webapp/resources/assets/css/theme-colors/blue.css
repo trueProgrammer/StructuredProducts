@@ -1234,12 +1234,6 @@ i.icon-bg-u {
   color: #3498db;
 }
 
-/* Headliner Center
-------------------------------------*/
-.headline-center h2:after {
-  background:  #3498db;
-}
-
 /* Headliner Left
 ------------------------------------*/
 .headline-left .headline-brd:after {

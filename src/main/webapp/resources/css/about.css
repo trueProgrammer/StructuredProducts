@@ -1,0 +1,21 @@
+h3 {
+    display: inline;
+}
+
+.main_img {
+    max-width: 100%;
+}
+
+.main-buttons {
+    margin-left: 22% !important;
+    margin-right: 22% !important;
+}
+
+.center {
+    text-align: center;
+    position: relative;
+}
+
+.right {
+    text-align: right;
+}

@@ -37,6 +37,10 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'views/template/partners.html',
                 controller: 'partners'
             }).
+            when('/structuredproducts', {
+                templateUrl: 'views/template/structuredproducts.html',
+                controller: 'structuredproducts'
+            }).
             when('/login', {
                 templateUrl: 'views/template/login.html',
                 controller: 'login'
