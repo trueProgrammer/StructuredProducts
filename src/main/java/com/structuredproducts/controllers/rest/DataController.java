@@ -1,9 +1,7 @@
 package com.structuredproducts.controllers.rest;
 
 import com.structuredproducts.controllers.data.*;
-import com.structuredproducts.sevices.InvestIdeasService;
-import com.structuredproducts.sevices.NewsService;
-import com.structuredproducts.sevices.TopProductsService;
+import com.structuredproducts.sevices.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +22,8 @@ public class DataController {
 
     private final static Logger logger = Logger.getLogger(DataController.class);
 
+    @Autowired
+    private ProductService productService;
     @Autowired
     private NewsService newsService;
     @Autowired
@@ -77,6 +77,12 @@ public class DataController {
         } else {
             return new ResponseEntity<>(new TopProduct[0], HttpStatus.OK);
         }
+    }
+
+    @RequestMapping(path = "/allproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Product[]> getAllProducts() {
+        List<Product> list = productService.getProducts();
+        return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/investideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

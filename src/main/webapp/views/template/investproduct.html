@@ -1,0 +1,59 @@
+<link rel="stylesheet" href="resources/assets/css/pages/page_invoice.css">
+
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs">
+    <div class="container">
+        <ul class="pull-right breadcrumb">
+            <li><a href="#/">Главная</a></li>
+            <li><a href="#/investproduct">Инвестиционные продукты</a></li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+<div class="container content">
+    <h2>Выбрать инвестиционный продукт</h2>
+    <div class="row">
+        <img class="col-md-8" src="resources/img/investproducts.jpg"/>
+        <div class="col-md-4">
+            <div class="risk-high"><p class="side-text-title">Рисковые структурные <br>продукты<br></p> <p class="side-text-more">подробнее -></p></div>
+            <div class="risk-medium"><p class="side-text-title">Структурные продукты <br>с участием<br> <p class="side-text-more"> подробнее -> </p></div>
+            <div class="risk-low"><p class="side-text-title">Структурные продукты  <br>со 100% защиты капитала<br> <p class="side-text-more"> подробнее -> </p></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table main-table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>
+                        <a href="" ng-click="order('name')">Название</a>
+                        <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                    </th>
+                    <th>
+                        Базовый актив
+                        <!--<span class="sortorder" ng-class="{reverse:reverse}"></span>-->
+                    </th>
+                    <th>Доходность</th>
+                    <th>Минимальная сумма</th>
+                    <th>Срок</th>
+                    <th>Провайдер</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="val in products | orderBy:predicate:reverse">
+                    <td>{{$index + 1}}</td>
+                    <td>{{val.name}}</td>
+                    <td>{{val.baseActive}}</td>
+                    <td>{{val.profit}}</td>
+                    <td>{{val.minInvestment}}</td>
+                    <td>{{val.term}}</td>
+                    <td>{{val.provider}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

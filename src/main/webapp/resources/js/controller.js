@@ -41,6 +41,10 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'views/template/login.html',
                 controller: 'login'
             }).
+            when('/investproduct', {
+                templateUrl: 'views/template/investproduct.html',
+                controller: 'investproduct'
+            }).
             otherwise({
                 redirectTo: '/'
             });
@@ -154,6 +158,26 @@ services.factory('UserService', function($resource) {
 app.controller('partners', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
 
+}]);
+
+app.controller('investproduct', ['$scope', '$log', 'restService',
+    function($scope, $log, restService) {
+        restService.getAllProducts(
+            function (response) {
+                $log.info("Get all products success.");
+                $scope.products = response;
+            },
+            function () {
+                $log.error("Get all products unsuccess.");
+            }
+        );
+
+        $scope.predicate = 'name';
+        $scope.reverse = true;
+        $scope.order = function(predicate) {
+            $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
+            $scope.predicate = predicate;
+        };
 }]);
 
 app.controller('admin', [ '$scope', '$log', 'restService', '$rootScope', '$location',

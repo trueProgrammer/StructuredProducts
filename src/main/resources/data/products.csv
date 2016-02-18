@@ -1,0 +1,3 @@
+id;name;term;baseActive;minInvestment;provider;profit;strategy;legalType;payoff;risk;currency;periodicity
+1;"Alpari";1;"Металлы";100;"Alpari";1000;"Обычная";"Легально";10;"Низкий";"Евро";"Ежемесячно"
+2;"Troika";2;"Акции";200;"Troika";2000;"Обычная";"Нелегально";20;"Средний";"Доллары";"Раз в квартал"

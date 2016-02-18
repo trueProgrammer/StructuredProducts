@@ -125,6 +125,19 @@ app.service('restService', [
             );
         },
 
+        getAllProducts: function(onSuccess, onFail) {
+            $log.info("Get all products");
+            $http
+                .get(dataUri + "allproducts")
+                .then(
+                function(response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            )
+        },
+
         getProductTypes: function (onSuccess, onFail) {
             $log.info("Get product types");
             $http.get(
