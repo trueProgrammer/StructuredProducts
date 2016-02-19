@@ -1212,8 +1212,8 @@ a.btn-u-xs {
 }
 .btn-u.btn-u-blue:hover, 
 .btn-u.btn-u-blue:focus, 
-.btn-u.btn-u-blue:active, 
-.btn-u.btn-u-blue.active, 
+.btn-u.btn-u-blue:active,
+.btn-u.btn-u-blue.active,
 .open .dropdown-toggle.btn-u.btn-u-blue {
    background: #2980b9;
 }
