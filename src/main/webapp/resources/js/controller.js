@@ -169,11 +169,51 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
             function (response) {
                 $log.info("Get all products success.");
                 $scope.products = response;
+
+                $scope.highRiskProducts = 0;
+                $scope.middleRiskProducts = 0;
+                $scope.lowRiskProducts = 0;
+
+                response.forEach(function(item) {
+                    if (item.risk === 'Высокий'){
+                        $scope.highRiskProducts++;
+                    }
+                    else if(item.risk === 'Средний') {
+                        $scope.middleRiskProducts++;
+                    } else {
+                        $scope.lowRiskProducts++;
+                    }
+                });
             },
             function () {
                 $log.error("Get all products unsuccess.");
             }
         );
+
+        var riskList = [];
+        //var selectedElements = [];
+        $scope.filterByRisk = function(risk, event) {
+            var target = event.currentTarget;
+            var index = riskList.indexOf(risk);
+            if (index == -1) {
+                riskList.push(risk);
+                //selectedElements.push(target);
+                target.style.borderWidth = "5px";
+            } else {
+                riskList.splice(index, 1);
+                //var indexSelectedElements = selectedElements.indexOf(target);
+                //selectedElements.splice(indexSelectedElements, 1);
+                target.style.borderWidth = "2px";
+            }
+            restService.getProductsByRisk(riskList, function(response) {
+                    $log.info("Get products by risk success.");
+                    $scope.products = response;
+            },
+            function() {
+                $log.error("Get products by risk unsuccess.");
+            })
+        };
+
 
         $scope.predicate = 'name';
         $scope.reverse = true;

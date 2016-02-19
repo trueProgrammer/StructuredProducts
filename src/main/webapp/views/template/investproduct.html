@@ -16,9 +16,20 @@
     <div class="row">
         <img class="col-md-8" src="resources/img/investproducts.jpg"/>
         <div class="col-md-4">
-            <div class="risk-high"><p class="side-text-title">Рисковые структурные <br>продукты<br></p> <p class="side-text-more">подробнее -></p></div>
-            <div class="risk-medium"><p class="side-text-title">Структурные продукты <br>с участием<br> <p class="side-text-more"> подробнее -> </p></div>
-            <div class="risk-low"><p class="side-text-title">Структурные продукты  <br>со 100% защиты капитала<br> <p class="side-text-more"> подробнее -> </p></div>
+            <div class="risk-high" ng-click="filterByRisk('Высокий', $event)">
+                <p class="side-text-title">Рисковые структурные <br>продукты<br></p>
+                <p class="side-text-more">подробнее -></p>
+                <p class="side-text-num">{{highRiskProducts}}</p>
+            </div>
+            <div class="risk-medium" ng-click="filterByRisk('Средний', $event)">
+                <p class="side-text-title">
+                Структурные продукты <br>с участием<br> <p class="side-text-more"> подробнее -> </p>
+                <p class="side-text-num">{{middleRiskProducts}}</p>
+            </div>
+            <div class="risk-low" ng-click="filterByRisk('Низкий', $event)">
+                <p class="side-text-title">Структурные продукты  <br>со 100% защиты капитала<br> <p class="side-text-more"> подробнее -> </p>
+                <p class="side-text-num">{{lowRiskProducts}}</p>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -29,13 +40,16 @@
                     <th>#</th>
                     <th>
                         <a href="" ng-click="order('name')">Название</a>
-                        <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                        <!--<span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>-->
                     </th>
                     <th>
                         Базовый актив
                         <!--<span class="sortorder" ng-class="{reverse:reverse}"></span>-->
                     </th>
-                    <th>Доходность</th>
+                    <th>
+                        <a href="" ng-click="order('profit')">Доходность</a>
+                        <span class="sortorder" ng-show="predicate === 'profit'" ng-class="{reverse:reverse}"></span>
+                    </th>
                     <th>Минимальная сумма</th>
                     <th>Срок</th>
                     <th>Провайдер</th>

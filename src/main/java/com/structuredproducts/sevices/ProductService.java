@@ -7,7 +7,11 @@ import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProductService extends AbstractCSVService {
     private static final Logger logger = Logger.getLogger(ProductService.class);
@@ -30,6 +34,12 @@ public class ProductService extends AbstractCSVService {
             new NotNull(),   //periodicity
     };
 
+    public List<Product> getProductsByRisks(String[] risks) {
+        List list = new ArrayList<>();
+        Collections.addAll(list, risks);
+        HashSet<String> risksSet = new HashSet<String>(list);
+        return getProducts().stream().filter(product -> risksSet.contains(product.getRisk())).collect(Collectors.toList());
+    }
     public List<Product> getProducts() {
         return getListFromFile(Product.class, PRODUCTS_FILENAME, PRODUCTS_PROCESSORS);
     }

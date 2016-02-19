@@ -85,6 +85,15 @@ public class DataController {
         return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/productsbyrisk", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Product[]>getProductsByRisk(String[] risks) {
+        if (risks == null) {
+            return getAllProducts();
+        }
+        List<Product> list = productService.getProductsByRisks(risks);
+        return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
+    }
+
     @RequestMapping(path = "/investideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<InvestIdea[]> getInvestIdeas(Boolean showOnMainPage) {
         List<InvestIdea> list;

@@ -232,3 +232,8 @@ fieldset {
 .side-text-more {
     text-align: right;
 }
+
+.side-text-num {
+    font-size: 14px;
+    text-align: center;
+}

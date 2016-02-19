@@ -128,7 +128,26 @@ app.service('restService', [
         getAllProducts: function(onSuccess, onFail) {
             $log.info("Get all products");
             $http
-                .get(dataUri + "allproducts")
+                .get(dataUri + "allproducts", {
+
+                })
+                .then(
+                function(response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            )
+        },
+
+        getProductsByRisk: function(riskList, onSuccess, onFail) {
+            $log.info("Get all products");
+            $http
+                .get(dataUri + "productsbyrisk", {
+                    params: {
+                        risks: riskList
+                    }
+                })
                 .then(
                 function(response) {
                     onSuccess(response.data);
