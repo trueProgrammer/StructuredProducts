@@ -48,6 +48,13 @@ public class DBService {
             put(Product.class, "INSTRUMENT.PRODUCT").
             build();
 
+    public List<?> getProductsByType(String type) {
+        Query query = dbManager.getEntityManager().createNativeQuery(
+                "SELECT * from INSTRUMENT.PRODUCT p WHERE p.risks = (SELECT id FROM INSTRUMENT.PRODUCT_TYPE r WHERE r.name = '" + type +"')",
+                Product.class);
+        query.setHint("org.hibernate.cacheable", Boolean.TRUE);
+        return query.getResultList();
+    }
     public List<?> getResultList(Class<?> clazz) {
         Query query = dbManager.getEntityManager().createNativeQuery("SELECT * from " + TABLE_TO_TYPE_MAPPING.get(clazz), clazz);
         query.setHint("org.hibernate.cacheable", Boolean.TRUE);

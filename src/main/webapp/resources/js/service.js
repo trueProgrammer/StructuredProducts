@@ -140,12 +140,12 @@ app.service('restService', [
             )
         },
 
-        getProductsByRisk: function(riskList, onSuccess, onFail) {
-            $log.info("Get all products");
+        getProductsByType: function(types, onSuccess, onFail) {
+            $log.info("Get products by type");
             $http
-                .get(dataUri + "productsbyrisk", {
+                .get(dataUri + "productsbytype", {
                     params: {
-                        risks: riskList
+                        types: types
                     }
                 })
                 .then(

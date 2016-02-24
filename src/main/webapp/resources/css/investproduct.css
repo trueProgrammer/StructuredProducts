@@ -1,0 +1,99 @@
+.risk-high {
+    border: 2px solid blue;
+}
+
+.risk-medium {
+    border: 2px solid red;
+    margin-top: 5px;
+
+}
+
+.risk-low {
+    border: 2px solid green;
+    margin-top: 5px;
+}
+
+.side-text-title {
+    text-align: center;
+    margin-bottom: 0px !important;
+}
+
+.side-text-more {
+    text-align: center;
+}
+
+.side-text-num {
+    font-size: 20px;
+    line-height: 27px;
+}
+
+.blue-button {
+    border-color: #2980b9;
+}
+
+.red-button {
+    border-color: #c0392b;
+}
+
+.green-button {
+    border-color: #2ecc71;
+}
+
+.num-blue {
+    color: #2980b9;
+}
+
+.num-red {
+    color: #c0392b;
+}
+
+.num-green {
+    color: #2ecc71;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.main-button {
+    width: 100%;
+    background: none;
+}
+
+.list-unstyled {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 992px) and (min-height: 542px) {
+    .screen-height-95 {
+        height: 95vh;
+    }
+}
+
+.height-50 {
+    height: 50%;
+}
+
+.col-md-8 {
+    height: 100%;
+}
+
+.graphic {
+    height: 100%;
+    width: 100%;
+}
+
+.no-padding-column {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    visibility: hidden;
+    height: 0px;
+}
+
+@media only screen and (min-width: 992px) {
+    .no-padding-column {
+        visibility: visible;
+        height: 100%;
+    }
+}

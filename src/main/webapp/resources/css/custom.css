@@ -208,32 +208,3 @@ fieldset {
 .disabled-button[disabled]:hover {
      background: #e0e0e0;
 }
-
-.risk-high {
-    border: 2px solid blue;
-}
-
-.risk-medium {
-    border: 2px solid red;
-    margin-top: 5px;
-
-}
-
-.risk-low {
-    border: 2px solid green;
-    margin-top: 5px;
-}
-
-.side-text-title {
-    text-align: center;
-    font-size:20px;
-}
-
-.side-text-more {
-    text-align: right;
-}
-
-.side-text-num {
-    font-size: 14px;
-    text-align: center;
-}
