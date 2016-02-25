@@ -5,6 +5,7 @@ import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.DBService;
 import com.structuredproducts.sevices.ServiceUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.StringWriter;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +63,22 @@ public class AdminController {
             logger.error("Error while convert from json to object: ["+entityType+"], ["+entity+"]", e);
             return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/products/csv",
+            method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public ResponseEntity<Message> uploadCsv(@RequestBody MultipartFile file) {
+        StringWriter writer = new StringWriter();
+        try {
+            IOUtils.copy(file.getInputStream(), writer, Charset.forName("UTF-8"));
+        } catch (IOException e) {
+            return new ResponseEntity<Message>(HttpStatus.BAD_REQUEST);
+        }
+        String csvContent = writer.toString();
+        logger.info("load csv content: " + csvContent);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

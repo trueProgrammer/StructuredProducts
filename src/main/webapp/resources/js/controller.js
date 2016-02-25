@@ -605,6 +605,16 @@ app.controller('admin', [ '$scope', '$log', 'restService', '$rootScope', '$locat
             }
         };
 
+        $scope.uploadCsv = function(file) {
+            restService.uploadProductsCsv(file,
+                function(){console.log('Successfully load csv')},
+                function(){console.log('Error occurs during load csv')}
+            );
+        };
+
+        $scope.clickUploadButton = function() {
+            $('#uploadFile').trigger('click');
+        };
         $scope.selectTable = function(id) {
             $scope.selected = id;
             $scope.selection = [];

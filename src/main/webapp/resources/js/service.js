@@ -185,6 +185,29 @@ app.service('restService', [
             );
         },
 
+        uploadProductsCsv: function(file, onSuccess, onFail) {
+            $log.info("Get time types");
+            var formData = new FormData();
+            formData.append('file', file);
+            $http(
+                {
+                    method: 'POST',
+                    url: adminUri + "products/csv",
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    data: formData
+                }
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            );
+        },
+
         getInstrumentType: function (entityType, onSuccess, onFail) {
             $log.info("Get instrument type");
             $http.get(
