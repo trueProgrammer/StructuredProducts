@@ -20,12 +20,11 @@ public class AbstractCSVService {
 
     private static final Logger log = Logger.getLogger(AbstractCSVService.class);
 
-    protected <T> List<T> getListFromFile(Class<T> clazz, final String FILE_NAME, final CellProcessor[] PROCESSORS) {
+    protected <T> List<T> getListFromStream(Class<T> clazz, final InputStreamReader reader, final CellProcessor[] PROCESSORS) {
         ICsvBeanReader beanReader = null;
         List<T> list = new ArrayList<>();
         try {
-            String file = this.getClass().getClassLoader().getResource(FILE_NAME).getFile();
-            beanReader = new CsvBeanReader(new InputStreamReader(new FileInputStream(file), "UTF8"), CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
+            beanReader = new CsvBeanReader(reader, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
 
             final String[] header = beanReader.getHeader(true);
 
@@ -49,6 +48,18 @@ public class AbstractCSVService {
         }
 
         return list;
+    }
+
+    protected <T> List<T> getListFromFile(Class<T> clazz, final String FILE_NAME, final CellProcessor[] PROCESSORS) {
+        try {
+            String file = this.getClass().getClassLoader().getResource(FILE_NAME).getFile();
+            return getListFromStream(clazz, new InputStreamReader(new FileInputStream(file), "UTF8"), PROCESSORS);
+        } catch (FileNotFoundException e) {
+            log.error(e);
+        } catch (IOException e) {
+            log.error(e);
+        }
+        return new ArrayList<>();
     }
 
 }

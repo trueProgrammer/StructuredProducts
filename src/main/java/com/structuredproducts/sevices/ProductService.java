@@ -1,12 +1,13 @@
 package com.structuredproducts.sevices;
 
-import com.structuredproducts.controllers.data.Product;
+import com.structuredproducts.controllers.data.ProductBean;
 import org.apache.log4j.Logger;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,25 +23,30 @@ public class ProductService extends AbstractCSVService {
             new ParseLong(), //id
             new NotNull(),   //name
             new ParseInt(),  //term
+            new NotNull(),   //product type
             new NotNull(),   //base active/underlying
             new ParseInt(),  //min investment
             new NotNull(),   //provider/issuer
             new ParseInt(),  //profit/return
             new NotNull(),   //strategy
             new NotNull(),   //legal type
-            new ParseInt(),  //payoff
+            new NotNull(),  //payoff
             new NotNull(),   //risks
             new NotNull(),   //currency
             new NotNull(),   //periodicity
     };
 
-    public List<Product> getProductsByRisks(String[] risks) {
+    public List<ProductBean> getProductsByRisks(String[] risks) {
         List list = new ArrayList<>();
         Collections.addAll(list, risks);
         HashSet<String> risksSet = new HashSet<String>(list);
         return getProducts().stream().filter(product -> risksSet.contains(product.getRisk())).collect(Collectors.toList());
     }
-    public List<Product> getProducts() {
-        return getListFromFile(Product.class, PRODUCTS_FILENAME, PRODUCTS_PROCESSORS);
+    public List<ProductBean> getProducts() {
+        return getListFromFile(ProductBean.class, PRODUCTS_FILENAME, PRODUCTS_PROCESSORS);
+    }
+
+    public List<ProductBean> getProducts(InputStreamReader reader) {
+        return getListFromStream(ProductBean.class, reader, PRODUCTS_PROCESSORS);
     }
 }

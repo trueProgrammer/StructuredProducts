@@ -607,7 +607,11 @@ app.controller('admin', [ '$scope', '$log', 'restService', '$rootScope', '$locat
 
         $scope.uploadCsv = function(file) {
             restService.uploadProductsCsv(file,
-                function(){console.log('Successfully load csv')},
+                function(){
+                    console.log('Successfully load csv');
+                    getValues("product");
+                    $scope.selectTable("product");
+                },
                 function(){console.log('Error occurs during load csv')}
             );
         };

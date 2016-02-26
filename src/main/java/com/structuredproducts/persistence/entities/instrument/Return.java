@@ -16,6 +16,10 @@ public class Return implements Serializable {
     @Column(unique = true)
     private Integer count;
 
+    public Return(Integer count) {
+        this.count = count;
+    }
+
     public Return() {
     }
 

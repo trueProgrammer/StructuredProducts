@@ -78,6 +78,38 @@ public class DBService {
         }
     }
 
+    public void saveProducts(List<Product> products) {
+        EntityTransaction transaction = dbManager.getEntityManager().getTransaction();
+        transaction.begin();
+        logger.debug("Transaction " + transaction.getRollbackOnly());
+        try {
+            products.forEach(product -> {
+                product.setCurrency(dbManager.getEntityManager().merge(product.getCurrency()));
+                product.setInvestment(dbManager.getEntityManager().merge(product.getInvestment()));
+                product.setIssuer(dbManager.getEntityManager().merge(product.getIssuer()));
+                product.setLegalType(dbManager.getEntityManager().merge(product.getLegalType()));
+                product.setPaymentPeriodicity(dbManager.getEntityManager().merge(product.getPaymentPeriodicity()));
+                product.setProductType(dbManager.getEntityManager().merge(product.getProductType()));
+                product.setPayoff(dbManager.getEntityManager().merge(product.getPayoff()));
+                product.setReturnValue(dbManager.getEntityManager().merge(product.getReturnValue()));
+                product.setRisks(dbManager.getEntityManager().merge(product.getRisks()));
+                product.setStrategy(dbManager.getEntityManager().merge(product.getStrategy()));
+                product.setTerm(dbManager.getEntityManager().merge(product.getTerm()));
+                product.setUnderlaying(dbManager.getEntityManager().merge(product.getUnderlaying()));
+                logger.debug("save all product contains");
+                dbManager.getEntityManager().merge(product);
+                logger.debug("save product ");
+            });
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Can not save list of products.", e);
+        } finally {
+            if(transaction.isActive()) {
+                transaction.rollback();
+            }
+        }
+    }
+
     public void remove(List<?> list) {
         EntityTransaction transaction = dbManager.getEntityManager().getTransaction();
         transaction.begin();

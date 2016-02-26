@@ -16,6 +16,7 @@
     <bean class="com.structuredproducts.sevices.MailService"/>
     <bean class="com.structuredproducts.sevices.NewsService"/>
     <bean class="com.structuredproducts.sevices.ProductService"/>
+    <bean class="com.structuredproducts.sevices.AbstractCsvToDbService"/>
     <bean class="com.structuredproducts.sevices.TopProductsService"/>
     <bean class="com.structuredproducts.sevices.InvestIdeasService"/>
 

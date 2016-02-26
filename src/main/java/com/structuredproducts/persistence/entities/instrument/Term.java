@@ -20,6 +20,11 @@ public class Term implements Serializable, Nameble {
     @Transient
     private String name;
 
+    public Term(Integer min, Integer max) {
+        this.min = min;
+        this.max = max;
+    }
+
     public Term() {
     }
 

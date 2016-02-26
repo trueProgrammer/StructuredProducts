@@ -1,6 +1,6 @@
 package com.structuredproducts.controllers.data;
 
-public class Product {
+public class ProductBean {
     private long id;
     private String name;
     private String baseActive;
@@ -9,11 +9,12 @@ public class Product {
     private int profit;
     private String strategy;
     private String legalType;
-    private int payoff;
+    private String payoff;
     private String risk;
     private String currency;
     private int term;
     private String periodicity;
+    private String productType;
 
     public int getTerm() {
         return term;
@@ -63,11 +64,11 @@ public class Product {
         this.legalType = legalType;
     }
 
-    public int getPayoff() {
+    public String getPayoff() {
         return payoff;
     }
 
-    public void setPayoff(int payoff) {
+    public void setPayoff(String payoff) {
         this.payoff = payoff;
     }
 
@@ -117,5 +118,13 @@ public class Product {
 
     public void setProvider(String provider) {
         this.provider = provider;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

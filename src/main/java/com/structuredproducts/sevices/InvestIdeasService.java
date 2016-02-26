@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Vlad on 10.01.2016.
  */
-public class InvestIdeasService extends AbstractCSVService{
+public class InvestIdeasService extends AbstractCSVService {
 
     private static final Logger log = Logger.getLogger(MailService.class);
 

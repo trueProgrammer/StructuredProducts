@@ -20,6 +20,11 @@ public class Investment implements Serializable, Nameble {
     @Transient
     private String name;
 
+    public Investment(Integer min, Integer max) {
+        this.min = min;
+        this.max = max;
+    }
+
     public Investment() {
     }
 

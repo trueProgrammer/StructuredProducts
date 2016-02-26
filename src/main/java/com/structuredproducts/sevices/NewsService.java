@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Vlad on 26.12.2015.
  */
-public class NewsService extends AbstractCSVService{
+public class NewsService extends AbstractCSVService {
 
     private static final Logger log = Logger.getLogger(MailService.class);
 
