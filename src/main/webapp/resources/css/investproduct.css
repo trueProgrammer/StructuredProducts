@@ -97,3 +97,20 @@
         height: 100%;
     }
 }
+
+.table-full {
+    visibility: hidden;
+}
+
+.table-min {
+    visibility: visible;
+}
+
+@media only screen and (min-width: 562px) {
+    .table-full {
+        visibility: visible;
+    }
+    .table-min {
+        visibility: hidden;
+    }
+}

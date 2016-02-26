@@ -175,10 +175,10 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 $scope.lowRiskProducts = 0;
 
                 response.forEach(function(item) {
-                    if (item.risk === 'Высокий'){
+                    if (item.productType.name === '100% защита капитала без гарантированной доходности'){
                         $scope.highRiskProducts++;
                     }
-                    else if(item.risk === 'Средний') {
+                    else if(item.productType.name === 'С участием (ограниченный риск)') {
                         $scope.middleRiskProducts++;
                     } else {
                         $scope.lowRiskProducts++;
@@ -193,6 +193,25 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
         var typesList = [];
 
         angular.element(document).ready(function () {
+            (function() {
+                var height = 33;var addition = 15;
+                var blueOffset = $("#blue-line").offset().top;
+                var redOffset = $("#red-line").offset().top;
+                if(redOffset - blueOffset < 10) {
+                    return;
+                }
+                var greenOffset = $("#green-line").offset().top;
+                if(redOffset - blueOffset < 70) {
+                    $("#red-button").offset({top: redOffset - height});
+                    $("#blue-button").offset({top: redOffset - height*2 - height - addition});
+                    $("#green-button").offset({top: redOffset + height*2 - height + addition});
+                } else {
+                    $("#green-button").offset({top: greenOffset - height});
+                    $("#blue-button").offset({top: blueOffset - height});
+                    $("#red-button").offset({top: blueOffset + (greenOffset - blueOffset) / 2 - height});
+                }
+            }());
+
             var greenEllipse = angular.element(document.getElementById("green-ellipse"));
             var redEllipse = angular.element(document.getElementById("red-ellipse"));
             var blueEllipse = angular.element(document.getElementById("blue-ellipse"));
@@ -234,19 +253,19 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 ellipsesUnfill();
             };
             function ellipsesFill() {
-                main.attr("fill", "#EDEFF3");
-                green.attr("fill", "#EDEFF3");
-                red.attr("fill", "#EDEFF3");
-                blue.attr("fill", "#EDEFF3");
+                /*main.attr("fill", "#8DCFF3");
+                green.attr("fill", "#8DCFF3");
+                red.attr("fill", "#8DCFF3");
+                blue.attr("fill", "#8DCFF3");*/
             };
             function ellipsesUnfill() {
-                if(clicked['green'] === true || clicked['red'] === true || clicked['blue'] === true) {
+                /*if(clicked['green'] === true || clicked['red'] === true || clicked['blue'] === true) {
                     return;
                 }
                 main.attr("fill", "white");
                 green.attr("fill", "white");
                 red.attr("fill", "white");
-                blue.attr("fill", "white");
+                blue.attr("fill", "white");*/
             };
 
             mainEllipse.on("mouseover", function(event) {
@@ -284,15 +303,15 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 }
             };
             function greenClick() {
-                $scope.filterByRisk('Низкий');
+                $scope.filterByType('Низкий');
                 //$scope.click('green',mouseOverGreen, mouseOutGreen);
             };
             function redClick() {
-                $scope.filterByRisk('Средний');
+                $scope.filterByType('Средний');
                 //$scope.click('green',mouseOverGreen, mouseOutGreen);
             };
             function blueClick() {
-                $scope.filterByRisk('Высокий');
+                $scope.filterByType('Высокий');
                 //$scope.click('green',mouseOverGreen, mouseOutGreen);
             };
             $scope.filterByType = function(risk, event) {
@@ -318,13 +337,25 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                         target.style.boxShadow = "none";
                     }
                 }
-                restService.getProductsByType(typesList, function(response) {
-                        $log.info("Get products by risk success.");
-                        $scope.products = response;
-                    },
-                    function() {
-                        $log.error("Get products by risk failure.");
-                    })
+                if(typesList.length === 0) {
+                    restService.getAllProducts(
+                        function (response) {
+                            $log.info("Get all products success.");
+                            $scope.products = response;
+                        },
+                        function () {
+                            $log.error("Get all products failure.");
+                        }
+                    );
+                } else {
+                    restService.getProductsByType(typesList, function (response) {
+                            $log.info("Get products by risk success.");
+                            $scope.products = response;
+                        },
+                        function () {
+                            $log.error("Get products by risk failure.");
+                        });
+                }
             };
             var greenLine = $("#green-line");
             var greenArc = $("#green-arc");
