@@ -26,6 +26,9 @@ public class Underlaying implements Serializable {
     @JoinColumn(name = "type")
     UnderlayingType type;
 
+    public Underlaying(String name) {
+        this.name = name;
+    }
     public Underlaying() {
     }
 

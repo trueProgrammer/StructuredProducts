@@ -19,13 +19,14 @@ public class ProductService extends AbstractCSVService {
 
     private static final String PRODUCTS_FILENAME = "data/products.csv";
 
-    private final static CellProcessor[] PRODUCTS_PROCESSORS = new CellProcessor[]{
-            new ParseLong(), //id
+    public final static CellProcessor[] PRODUCTS_PROCESSORS = new CellProcessor[]{
             new NotNull(),   //name
-            new ParseInt(),  //term
+            new NotNull(),   //description
             new NotNull(),   //product type
+            new ParseInt(),  //term
             new NotNull(),   //base active/underlying
             new ParseInt(),  //min investment
+            new ParseInt(),  //max investment
             new NotNull(),   //provider/issuer
             new ParseInt(),  //profit/return
             new NotNull(),   //strategy

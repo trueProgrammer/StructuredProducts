@@ -3,9 +3,10 @@ package com.structuredproducts.controllers.data;
 public class ProductBean {
     private long id;
     private String name;
-    private String baseActive;
+    private String description;
+    private String underlying;
     private int minInvestment;
-    private String provider;
+    private String issuer;
     private int profit;
     private String strategy;
     private String legalType;
@@ -15,9 +16,18 @@ public class ProductBean {
     private int term;
     private String periodicity;
     private String productType;
+    private int maxInvestment;
 
     public int getTerm() {
         return term;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setTerm(int term) {
@@ -88,19 +98,19 @@ public class ProductBean {
         this.currency = currency;
     }
 
-    public String getBaseActive() {
-        return baseActive;
+    public String getUnderlying() {
+        return underlying;
     }
 
-    public void setBaseActive(String baseActive) {
-        this.baseActive = baseActive;
+    public void setUnderlying(String underlying) {
+        this.underlying = underlying;
     }
 
     public int getProfit() {
         return profit;
     }
 
-    public void setProfit(int profit) {
+    public void setReturn(int profit) {
         this.profit = profit;
     }
 
@@ -112,12 +122,12 @@ public class ProductBean {
         this.periodicity = periodicity;
     }
 
-    public String getProvider() {
-        return provider;
+    public String getIssuer() {
+        return issuer;
     }
 
-    public void setProvider(String provider) {
-        this.provider = provider;
+    public void setIssuer(String issuer) {
+        this.issuer = issuer;
     }
 
     public String getProductType() {
@@ -126,5 +136,13 @@ public class ProductBean {
 
     public void setProductType(String productType) {
         this.productType = productType;
+    }
+
+    public void setMaxInvestment(int maxInvestment) {
+        this.maxInvestment = maxInvestment;
+    }
+
+    public int getMaxInvestment() {
+        return maxInvestment;
     }
 }

@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.*;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +30,7 @@ public class AdminController {
     @Autowired
     private DBService dbService;
     @Autowired
-    private AbstractCsvToDbService converter;
+    private ProductCsvToDbService converter;
 
     private static final Map<String, Class<?>> ENTITY_TYPES = ImmutableMap.<String, Class<?>>builder().
             put("productType", ProductType.class).
