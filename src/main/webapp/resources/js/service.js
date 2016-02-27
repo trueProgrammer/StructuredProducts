@@ -267,6 +267,20 @@ app.service('restService', [
             );
         },
 
+        downloadCsv: function(onSuccess, onFail) {
+            $log.info("Download csv");
+            $http.get(
+                adminUri + "instrument/download"
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data.message);
+                }
+            );
+        },
+
         login: function (name, pass, onSuccess, onFail) {
             $log.info("LOGIN");
             $http.post(

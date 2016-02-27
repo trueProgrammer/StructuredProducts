@@ -653,6 +653,15 @@ app.controller('admin', [ '$scope', '$log', 'restService', '$rootScope', '$locat
         $scope.clickUploadButton = function() {
             $('#uploadFile').trigger('click');
         };
+
+        $scope.clickDownloadButton = function() {
+            restService.downloadCsv(function(data) {
+                var blob = new Blob([data], {type: "text/plain; charset=utf-8"});
+                saveAs(blob, "product.csv");
+            }, function() {
+                $log.error("error");
+            });
+        };
         $scope.selectTable = function(id) {
             $scope.selected = id;
             $scope.selection = [];

@@ -3,12 +3,15 @@ package com.structuredproducts.sevices;
 import com.structuredproducts.controllers.data.ProductBean;
 import com.structuredproducts.persistence.entities.instrument.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.CsvMapReader;
+import org.supercsv.io.CsvMapWriter;
 import org.supercsv.io.ICsvMapReader;
 import org.supercsv.prefs.CsvPreference;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,26 +23,43 @@ public class ProductCsvToDbService {
     DBService dbService;
 
     private Map<String, String> beanPropertiesToColumnName = new HashMap<>();
-
     {
-        beanPropertiesToColumnName.put("name", "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435");//Название
-        beanPropertiesToColumnName.put("description", "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435");//Описание
-        beanPropertiesToColumnName.put("productType", "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430");//Тип продукта
-        beanPropertiesToColumnName.put("term","\u0421\u0440\u043E\u043A");//Срок
-        beanPropertiesToColumnName.put("underlying", "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0430\u043A\u0442\u0438\u0432"); //"Базовый актив"
-        beanPropertiesToColumnName.put("minInvestment","\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "Минимальная сумма");
-        beanPropertiesToColumnName.put("maxInvestment","\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "Максимальная сумма");
-        beanPropertiesToColumnName.put("issuer","\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440");// "Провайдер");
-        beanPropertiesToColumnName.put("return","\u0414\u043E\u0445\u043E\u0434\u043D\u043E\u0441\u0442\u044C");// "Доходность");
-        beanPropertiesToColumnName.put("strategy", "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F");// "Стратегия");
-        beanPropertiesToColumnName.put("legalType", "\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0444\u043E\u0440\u043C\u0430");//"Юридическая форма");
-        beanPropertiesToColumnName.put("payoff","\u0420\u0430\u0437\u043C\u0435\u0440 \u0432\u044B\u043F\u043B\u0430\u0442\u044B");// "Размер выплаты");
-        beanPropertiesToColumnName.put("risks", "\u0420\u0438\u0441\u043A\u0438");//"Риски");
-        beanPropertiesToColumnName.put("currency", "\u0412\u0430\u043B\u044E\u0442\u0430");//"Валюта");
-        beanPropertiesToColumnName.put("periodicity", "\u041F\u0435\u0440\u0438\u043E\u0434\u0438\u0447\u043D\u043E\u0441\u0442\u044C \u0432\u044B\u043F\u043B\u0430\u0442");//"Периодичность выплат");
+        beanPropertiesToColumnName.put("name", "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435");//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        beanPropertiesToColumnName.put("description", "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435");//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        beanPropertiesToColumnName.put("productType", "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430");//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        beanPropertiesToColumnName.put("term","\u0421\u0440\u043E\u043A");//пїЅпїЅпїЅпїЅ
+        beanPropertiesToColumnName.put("underlying", "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0430\u043A\u0442\u0438\u0432"); //"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"
+        beanPropertiesToColumnName.put("minInvestment","\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("maxInvestment","\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("issuer","\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440");// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("return","\u0414\u043E\u0445\u043E\u0434\u043D\u043E\u0441\u0442\u044C");// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("strategy", "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F");// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("legalType", "\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0444\u043E\u0440\u043C\u0430");//"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("payoff","\u0420\u0430\u0437\u043C\u0435\u0440 \u0432\u044B\u043F\u043B\u0430\u0442\u044B");// "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("risks", "\u0420\u0438\u0441\u043A\u0438");//"пїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("currency", "\u0412\u0430\u043B\u044E\u0442\u0430");//"пїЅпїЅпїЅпїЅпїЅпїЅ");
+        beanPropertiesToColumnName.put("periodicity", "\u041F\u0435\u0440\u0438\u043E\u0434\u0438\u0447\u043D\u043E\u0441\u0442\u044C \u0432\u044B\u043F\u043B\u0430\u0442");//"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
     }
 
-    public void convert(InputStreamReader reader) {
+    private String header[] = new String[]{
+            "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435",//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435",//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430",//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+            "\u0421\u0440\u043E\u043A",//пїЅпїЅпїЅпїЅ
+            "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0430\u043A\u0442\u0438\u0432", //"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"
+            "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430",// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ",
+            "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430",// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ",
+            "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440",// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+            "\u0414\u043E\u0445\u043E\u0434\u043D\u043E\u0441\u0442\u044C",// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+            "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F",// "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+            "\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0444\u043E\u0440\u043C\u0430",//"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ",
+            "\u0420\u0430\u0437\u043C\u0435\u0440 \u0432\u044B\u043F\u043B\u0430\u0442\u044B",// "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+            "\u0420\u0438\u0441\u043A\u0438",//"пїЅпїЅпїЅпїЅпїЅ",
+            "\u0412\u0430\u043B\u044E\u0442\u0430",//"пїЅпїЅпїЅпїЅпїЅпїЅ",
+            "\u041F\u0435\u0440\u0438\u043E\u0434\u0438\u0447\u043D\u043E\u0441\u0442\u044C \u0432\u044B\u043F\u043B\u0430\u0442"//"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ",
+    };
+
+    public void convertToDb(InputStreamReader reader) {
         List<ProductBean> productList = null;
         try {
             productList = readCsv(reader);
@@ -65,6 +85,41 @@ public class ProductCsvToDbService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String convertToCsv() throws IOException {
+        List<Product> products = (List<Product>) dbService.getResultList(Product.class);
+
+        StringWriter stringWriter = new StringWriter();
+        CsvMapWriter writer = new CsvMapWriter(stringWriter, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
+        Map<String, Object> map = new HashMap<>();
+        writer.writeHeader(header);
+
+        try {
+            for (Product product : products) {
+                map.put(beanPropertiesToColumnName.get("name"), product.getName());
+                map.put(beanPropertiesToColumnName.get("description"), product.getDescription());
+                map.put(beanPropertiesToColumnName.get("productType"), product.getProductType().getName());
+                map.put(beanPropertiesToColumnName.get("term"), product.getTerm().getMax());
+                map.put(beanPropertiesToColumnName.get("underlying"), product.getUnderlaying().getName());
+                map.put(beanPropertiesToColumnName.get("minInvestment"), product.getInvestment().getMin());
+                map.put(beanPropertiesToColumnName.get("maxInvestment"), product.getInvestment().getMax());
+                map.put(beanPropertiesToColumnName.get("issuer"), product.getIssuer().getName());
+                map.put(beanPropertiesToColumnName.get("return"), product.getReturnValue().getCount());
+                map.put(beanPropertiesToColumnName.get("strategy"), product.getStrategy().getName());
+                map.put(beanPropertiesToColumnName.get("legalType"), product.getLegalType().getName());
+                map.put(beanPropertiesToColumnName.get("payoff"), product.getPayoff().getName());
+                map.put(beanPropertiesToColumnName.get("risks"), product.getRisks().getName());
+                map.put(beanPropertiesToColumnName.get("currency"), product.getCurrency().getName());
+                map.put(beanPropertiesToColumnName.get("periodicity"), product.getPaymentPeriodicity().getName());
+                writer.write(map, header, ProductService.PRODUCTS_PROCESSORS);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            writer.close();
+        }
+        return stringWriter.toString();
     }
 
     private List<ProductBean> readCsv(InputStreamReader reader) throws IOException {
@@ -93,9 +148,7 @@ public class ProductCsvToDbService {
                 bean.setCurrency((String) productsMap.get(beanPropertiesToColumnName.get("currency")));
                 bean.setPeriodicity((String) productsMap.get(beanPropertiesToColumnName.get("periodicity")));
                 result.add(bean);
-
             }
-
         } finally {
             if (mapReader != null) {
                 mapReader.close();

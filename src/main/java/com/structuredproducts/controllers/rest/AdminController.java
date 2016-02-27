@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
@@ -73,11 +75,26 @@ public class AdminController {
 
         try {
             InputStreamReader reader = new InputStreamReader(file.getInputStream(), "UTF-8");
-            converter.convert(reader);
+            converter.convertToDb(reader);
         } catch (IOException e) {
             return new ResponseEntity<Message>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "instrument/download",
+        method = RequestMethod.GET)
+    public void getCsv(HttpServletResponse response) {
+        try {
+            String productsCsv = converter.convertToCsv();
+
+            response.getOutputStream().write(productsCsv.getBytes(Charset.forName("UTF-8")));
+            response.flushBuffer();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping(path = "/instrumentType/delete",
