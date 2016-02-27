@@ -2,13 +2,7 @@ package com.structuredproducts.persistence;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.structuredproducts.persistence.entities.instrument.Investment;
-import com.structuredproducts.persistence.entities.instrument.Issuer;
-import com.structuredproducts.persistence.entities.instrument.ProductType;
-import com.structuredproducts.persistence.entities.instrument.Return;
-import com.structuredproducts.persistence.entities.instrument.Term;
-import com.structuredproducts.persistence.entities.instrument.Underlaying;
-import com.structuredproducts.persistence.entities.instrument.UnderlayingType;
+import com.structuredproducts.persistence.entities.instrument.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,17 +19,18 @@ public class Main {
 
     public static void main(String[] args) {
 
-        DBService dbService = new DBService();
-
-        //List<ProductType> list = (List<ProductType>) dbService.getResultList(ProductType.class);
-
-        ProductType p = new ProductType();
-        p.setName("qwerty!!");
-        List<ProductType> list = Lists.newArrayList(p);
-
-        dbService.saveList(list);
-
-        dbService.destroy();
+        System.out.println(Currency.class.getSimpleName());
+//        DBService dbService = new DBService();
+//
+//        //List<ProductType> list = (List<ProductType>) dbService.getResultList(ProductType.class);
+//
+//        ProductType p = new ProductType();
+//        p.setName("qwerty!!");
+//        List<ProductType> list = Lists.newArrayList(p);
+//
+//        dbService.saveList(list);
+//
+//        dbService.destroy();
     }
 
 }

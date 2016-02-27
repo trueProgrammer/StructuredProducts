@@ -2,26 +2,14 @@ package com.structuredproducts.sevices;
 
 import com.google.common.collect.ImmutableMap;
 import com.structuredproducts.persistence.DBManager;
-import com.structuredproducts.persistence.entities.instrument.Currency;
-import com.structuredproducts.persistence.entities.instrument.Investment;
-import com.structuredproducts.persistence.entities.instrument.Issuer;
-import com.structuredproducts.persistence.entities.instrument.LegalType;
-import com.structuredproducts.persistence.entities.instrument.PayOff;
-import com.structuredproducts.persistence.entities.instrument.PaymentPeriodicity;
-import com.structuredproducts.persistence.entities.instrument.Product;
-import com.structuredproducts.persistence.entities.instrument.ProductType;
-import com.structuredproducts.persistence.entities.instrument.Return;
-import com.structuredproducts.persistence.entities.instrument.Risks;
-import com.structuredproducts.persistence.entities.instrument.Strategy;
-import com.structuredproducts.persistence.entities.instrument.Term;
-import com.structuredproducts.persistence.entities.instrument.Underlaying;
-import com.structuredproducts.persistence.entities.instrument.UnderlayingType;
+import com.structuredproducts.persistence.entities.instrument.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PreDestroy;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
 
@@ -84,18 +72,18 @@ public class DBService {
         logger.debug("Transaction " + transaction.getRollbackOnly());
         try {
             products.forEach(product -> {
-                product.setCurrency(dbManager.getEntityManager().merge(product.getCurrency()));
-                product.setInvestment(dbManager.getEntityManager().merge(product.getInvestment()));
-                product.setIssuer(dbManager.getEntityManager().merge(product.getIssuer()));
-                product.setLegalType(dbManager.getEntityManager().merge(product.getLegalType()));
-                product.setPaymentPeriodicity(dbManager.getEntityManager().merge(product.getPaymentPeriodicity()));
-                product.setProductType(dbManager.getEntityManager().merge(product.getProductType()));
-                product.setPayoff(dbManager.getEntityManager().merge(product.getPayoff()));
-                product.setReturnValue(dbManager.getEntityManager().merge(product.getReturnValue()));
-                product.setRisks(dbManager.getEntityManager().merge(product.getRisks()));
-                product.setStrategy(dbManager.getEntityManager().merge(product.getStrategy()));
-                product.setTerm(dbManager.getEntityManager().merge(product.getTerm()));
-                product.setUnderlaying(dbManager.getEntityManager().merge(product.getUnderlaying()));
+                product.setCurrency(saveOrUpdateNameable(product.getCurrency()));
+                product.setInvestment(saveOrUpdateUniqueWithMinMax(product.getInvestment()));
+                product.setIssuer(saveOrUpdateNameable(product.getIssuer()));
+                product.setLegalType(saveOrUpdateNameable(product.getLegalType()));
+                product.setPaymentPeriodicity(saveOrUpdateNameable(product.getPaymentPeriodicity()));
+                product.setProductType(saveOrUpdateNameable(product.getProductType()));
+                product.setPayoff(saveOrUpdateNameable(product.getPayoff()));
+                product.setReturnValue(saveOrUpdateUniqueWithInt(product.getReturnValue()));
+                product.setRisks(saveOrUpdateNameable(product.getRisks()));
+                product.setStrategy(saveOrUpdateNameable(product.getStrategy()));
+                product.setTerm(saveOrUpdateUniqueWithMinMax(product.getTerm()));
+                product.setUnderlaying(saveOrUpdateNameable(product.getUnderlaying()));
                 logger.debug("save all product contains");
                 dbManager.getEntityManager().merge(product);
                 logger.debug("save product ");
@@ -108,6 +96,44 @@ public class DBService {
                 transaction.rollback();
             }
         }
+    }
+
+    private <E extends UniqueWithName> E saveOrUpdateNameable(E obj) {
+        String queryStr = String.format("Select id from %s where name = :name", obj.getClass().getSimpleName());
+        TypedQuery<Integer> query = dbManager.getEntityManager().createQuery(queryStr, Integer.class);
+        query.setParameter("name", obj.getName());
+        List<Integer> ids = query.getResultList();
+        if (ids.size() > 0) {
+            obj.setId(ids.get(0));
+            return obj;
+        }
+        return dbManager.getEntityManager().merge(obj);
+    }
+
+    private <E extends UniqueWithInt> E saveOrUpdateUniqueWithInt(E obj) {
+        String queryStr = String.format("Select id from %s t where t.count = :count", obj.getClass().getSimpleName());
+        TypedQuery<Integer> query = dbManager.getEntityManager().createQuery(queryStr, Integer.class);
+        query.setParameter("count", obj.getCount());
+        List<Integer> ids = query.getResultList();
+        if (ids.size() > 0) {
+            obj.setId(ids.get(0));
+            return obj;
+        }
+        return dbManager.getEntityManager().merge(obj);
+    }
+
+    private <E extends UniqueWithMinMax> E saveOrUpdateUniqueWithMinMax(E obj) {
+        String queryStr = String.format("Select id from %s t where t.min = :min and t.max = :max", obj.getClass().getSimpleName());
+        TypedQuery<Integer> query = dbManager.getEntityManager().createQuery(queryStr, Integer.class);
+        query.setParameter("min", obj.getMin());
+        query.setParameter("max", obj.getMax());
+        List<Integer> ids = query.getResultList();
+        if (ids.size() > 0) {
+            obj.setId(ids.get(0));
+            return obj;
+        }
+        return dbManager.getEntityManager().merge(obj);
+
     }
 
     public void remove(List<?> list) {

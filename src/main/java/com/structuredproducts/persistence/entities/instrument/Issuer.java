@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
 @Table(name="ISSUER", schema = "INSTRUMENT")
-public class Issuer implements Serializable {
+public class Issuer implements Serializable, UniqueWithName{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
