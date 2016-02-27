@@ -13,14 +13,11 @@ public class ProductBean {
     private String payoff;
     private String risk;
     private String currency;
-    private int term;
     private String periodicity;
     private String productType;
     private int maxInvestment;
-
-    public int getTerm() {
-        return term;
-    }
+    private int maxTerm;
+    private int minTerm;
 
     public String getDescription() {
         return description;
@@ -28,10 +25,6 @@ public class ProductBean {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setTerm(int term) {
-        this.term = term;
     }
 
     public long getId() {
@@ -144,5 +137,21 @@ public class ProductBean {
 
     public int getMaxInvestment() {
         return maxInvestment;
+    }
+
+    public int getMaxTerm() {
+        return maxTerm;
+    }
+
+    public int getMinTerm() {
+        return minTerm;
+    }
+
+    public void setMaxTerm(int maxTerm) {
+        this.maxTerm = maxTerm;
+    }
+
+    public void setMinTerm(int minTerm) {
+        this.minTerm = minTerm;
     }
 }

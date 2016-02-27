@@ -23,7 +23,8 @@ public class ProductService extends AbstractCSVService {
             new NotNull(),   //name
             new NotNull(),   //description
             new NotNull(),   //product type
-            new ParseInt(),  //term
+            new ParseInt(),  //minTerm
+            new ParseInt(),  //maxTerm
             new NotNull(),   //base active/underlying
             new ParseInt(),  //min investment
             new ParseInt(),  //max investment

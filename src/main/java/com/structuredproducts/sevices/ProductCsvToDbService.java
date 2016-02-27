@@ -27,7 +27,8 @@ public class ProductCsvToDbService {
         beanPropertiesToColumnName.put("name", "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435");//��������
         beanPropertiesToColumnName.put("description", "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435");//��������
         beanPropertiesToColumnName.put("productType", "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430");//��� ��������
-        beanPropertiesToColumnName.put("term","\u0421\u0440\u043E\u043A");//����
+        beanPropertiesToColumnName.put("minTerm","\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A");//����
+        beanPropertiesToColumnName.put("maxTerm", "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A");//����
         beanPropertiesToColumnName.put("underlying", "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0430\u043A\u0442\u0438\u0432"); //"������� �����"
         beanPropertiesToColumnName.put("minInvestment","\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "����������� �����");
         beanPropertiesToColumnName.put("maxInvestment","\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "������������ �����");
@@ -45,7 +46,8 @@ public class ProductCsvToDbService {
             "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435",//��������
             "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435",//��������
             "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430",//��� ��������
-            "\u0421\u0440\u043E\u043A",//����
+            "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A",//����
+            "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A",
             "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0430\u043A\u0442\u0438\u0432", //"������� �����"
             "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430",// "����������� �����",
             "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430",// "������������ �����",
@@ -76,7 +78,7 @@ public class ProductCsvToDbService {
                 product.setLegalType(new LegalType(productBean.getLegalType()));
                 product.setPayoff(new PayOff(productBean.getPayoff()));
                 product.setRisks(new Risks(productBean.getRisk()));
-                product.setTerm(new Term(productBean.getTerm(), productBean.getTerm()));
+                product.setTerm(new Term(productBean.getMinTerm(), productBean.getMaxTerm()));
                 product.setProductType(new ProductType(productBean.getProductType()));
                 product.setPaymentPeriodicity(new PaymentPeriodicity(productBean.getPeriodicity()));
                 return product;
@@ -90,6 +92,7 @@ public class ProductCsvToDbService {
     public String convertToCsv() throws IOException {
         List<Product> products = (List<Product>) dbService.getResultList(Product.class);
 
+//        String[] header = beanPropertiesToColumnName.values().toArray(new String[beanPropertiesToColumnName.size()]);
         StringWriter stringWriter = new StringWriter();
         CsvMapWriter writer = new CsvMapWriter(stringWriter, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
         Map<String, Object> map = new HashMap<>();
@@ -100,7 +103,8 @@ public class ProductCsvToDbService {
                 map.put(beanPropertiesToColumnName.get("name"), product.getName());
                 map.put(beanPropertiesToColumnName.get("description"), product.getDescription());
                 map.put(beanPropertiesToColumnName.get("productType"), product.getProductType().getName());
-                map.put(beanPropertiesToColumnName.get("term"), product.getTerm().getMax());
+                map.put(beanPropertiesToColumnName.get("minTerm"), product.getTerm().getMin());
+                map.put(beanPropertiesToColumnName.get("maxTerm"), product.getTerm().getMax());
                 map.put(beanPropertiesToColumnName.get("underlying"), product.getUnderlaying().getName());
                 map.put(beanPropertiesToColumnName.get("minInvestment"), product.getInvestment().getMin());
                 map.put(beanPropertiesToColumnName.get("maxInvestment"), product.getInvestment().getMax());
@@ -135,7 +139,8 @@ public class ProductCsvToDbService {
                 bean.setName((String) productsMap.get(beanPropertiesToColumnName.get("name")));
                 bean.setDescription((String) productsMap.get(beanPropertiesToColumnName.get("description")));
                 bean.setProductType((String) productsMap.get(beanPropertiesToColumnName.get("productType")));
-                bean.setTerm((Integer)productsMap.get(beanPropertiesToColumnName.get("term")));
+                bean.setMinTerm((Integer)productsMap.get(beanPropertiesToColumnName.get("minTerm")));
+                bean.setMaxTerm((Integer)productsMap.get(beanPropertiesToColumnName.get("maxTerm")));
                 bean.setUnderlying((String) productsMap.get(beanPropertiesToColumnName.get("underlying")));
                 bean.setMinInvestment((Integer) productsMap.get(beanPropertiesToColumnName.get("minInvestment")));
                 bean.setMaxInvestment((Integer) productsMap.get(beanPropertiesToColumnName.get("maxInvestment")));
