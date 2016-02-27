@@ -83,7 +83,7 @@
             </button>
 
             <!-- ng-change doesn't work for input type file-->
-            <input type="file" class="hidden" id="uploadFile" accept=".csv" onchange="angular.element(this).scope().uploadCsv(this.files[0])"/>
+            <input type="file" class="hidden" id="uploadFile" accept=".csv" onchange="angular.element(this).scope().uploadCsv(this.files[0], $(this))"/>
 
             <button type="button" class="btn-u btn-u-sea rounded" ng-click="clickUploadButton()">
                 Загрузить из CSV

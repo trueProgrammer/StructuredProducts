@@ -636,7 +636,7 @@ app.controller('admin', [ '$scope', '$log', 'restService', '$rootScope', '$locat
             }
         };
 
-        $scope.uploadCsv = function(file) {
+        $scope.uploadCsv = function(file, e) {
             restService.uploadProductsCsv(file,
                 function(){
                     console.log('Successfully load csv');
@@ -645,6 +645,9 @@ app.controller('admin', [ '$scope', '$log', 'restService', '$rootScope', '$locat
                 },
                 function(){console.log('Error occurs during load csv')}
             );
+            e.wrap('<form>').closest('form').get(0).reset();
+            e.unwrap();
+
         };
 
         $scope.clickUploadButton = function() {
