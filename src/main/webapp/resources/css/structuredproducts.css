@@ -1,0 +1,15 @@
+.frame {
+    border: 2px solid;
+    border-color: #2ea0d9;
+    padding: 10px;
+    background: #d8e3f1;
+    margin-top: 10px;
+}
+
+.white {
+    color: white !important;
+}
+
+.black{
+    color: #555 !important;
+}

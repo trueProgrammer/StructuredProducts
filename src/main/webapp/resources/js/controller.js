@@ -228,6 +228,14 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
             var blueButton = angular.element(document.getElementById("blue-button"));
             var redButton = angular.element(document.getElementById("red-button"));
 
+            var greenButtonCircle = angular.element(document.getElementById("green-button-circle"));
+            var blueButtonCircle = angular.element(document.getElementById("blue-button-circle"));
+            var redButtonCircle = angular.element(document.getElementById("red-button-circle"));
+
+            var greenButtonText = angular.element(document.getElementById("green-button-text"));
+            var blueButtonText = angular.element(document.getElementById("blue-button-text"));
+            var redButtonText = angular.element(document.getElementById("red-button-text"));
+
             var green = $("#green-ellipse");
             var red = $("#red-ellipse");
             var blue = $("#blue-ellipse");
@@ -240,7 +248,8 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
             function mouseOverLine(type, line, arc, button) {
                 line.css("visibility", "visible");
                 arc.attr("stroke-width", "9");
-                button.css("box-shadow", "0px 0px 5px 3px #aead95");
+                //button.css("box-shadow", "0px 0px 5px 3px #aead95");
+                button.attr("stroke-width", "9");
                 ellipsesFill();
             };
             function mouseOutLine(type, line, arc, button) {
@@ -249,7 +258,8 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 }
                 line.css("visibility", "hidden");
                 arc.attr("stroke-width", "5");
-                button.css("box-shadow", "none");
+                //button.css("box-shadow", "none");
+                button.attr("stroke-width", "3");
                 ellipsesUnfill();
             };
             function ellipsesFill() {
@@ -392,6 +402,18 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
             greenButton.on("mouseout", function() {
                 mouseOutGreen();
             });
+            greenButtonCircle.on("mouseover", function(){
+                mouseOverGreen();
+            });
+            greenButtonCircle.on("mouseout", function() {
+                mouseOutGreen();
+            });
+            greenButtonText.on("mouseover", function(){
+                mouseOverGreen();
+            });
+            greenButtonText.on("mouseout", function() {
+                mouseOutGreen();
+            });
 
             var redLine = $("#red-line");
             var redArc = $("#red-arc");
@@ -428,6 +450,18 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
             redButton.on("mouseout", function() {
                 mouseOutRed();
             });
+            redButtonCircle.on("mouseover", function(){
+                mouseOverRed();
+            });
+            redButtonCircle.on("mouseout", function() {
+                mouseOutRed();
+            });
+            redButtonText.on("mouseover", function(){
+                mouseOverRed();
+            });
+            redButtonText.on("mouseout", function() {
+                mouseOutRed();
+            });
 
             var blueLine = $("#blue-line");
             var blueArc = $("#blue-arc");
@@ -462,6 +496,18 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 mouseOverBlue();
             });
             blueButton.on("mouseout", function(){
+                mouseOutBlue();
+            });
+            blueButtonCircle.on("mouseover", function(){
+                mouseOverBlue();
+            });
+            blueButtonCircle.on("mouseout", function(){
+                mouseOutBlue();
+            });
+            blueButtonText.on("mouseover", function(){
+                mouseOverBlue();
+            });
+            blueButtonText.on("mouseout", function(){
                 mouseOutBlue();
             });
 
