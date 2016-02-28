@@ -250,7 +250,6 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 arc.attr("stroke-width", "9");
                 //button.css("box-shadow", "0px 0px 5px 3px #aead95");
                 button.attr("stroke-width", "9");
-                ellipsesFill();
             };
             function mouseOutLine(type, line, arc, button) {
                 if(clicked[type]) {
@@ -260,30 +259,7 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 arc.attr("stroke-width", "5");
                 //button.css("box-shadow", "none");
                 button.attr("stroke-width", "3");
-                ellipsesUnfill();
             };
-            function ellipsesFill() {
-                /*main.attr("fill", "#8DCFF3");
-                green.attr("fill", "#8DCFF3");
-                red.attr("fill", "#8DCFF3");
-                blue.attr("fill", "#8DCFF3");*/
-            };
-            function ellipsesUnfill() {
-                /*if(clicked['green'] === true || clicked['red'] === true || clicked['blue'] === true) {
-                    return;
-                }
-                main.attr("fill", "white");
-                green.attr("fill", "white");
-                red.attr("fill", "white");
-                blue.attr("fill", "white");*/
-            };
-
-            mainEllipse.on("mouseover", function(event) {
-                ellipsesFill();
-            });
-            mainEllipse.on("mouseout", function(event) {
-                ellipsesUnfill();
-            });
 
             function mouseOverGreen() {
                 mouseOverLine('green',greenLine, greenArc, greenButton);
