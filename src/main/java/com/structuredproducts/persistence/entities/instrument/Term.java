@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
-@Table(name="TERM", schema = "INSTRUMENT", uniqueConstraints = @UniqueConstraint(columnNames = {"min", "max"}))
+@Table(name="TERM", schema = "INSTRUMENT")
 public class Term implements Serializable, Nameble, UniqueWithMinMax {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

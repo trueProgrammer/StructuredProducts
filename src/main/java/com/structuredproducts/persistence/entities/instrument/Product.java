@@ -21,10 +21,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
+    @Column
     private String name;
 
-    @Column(unique = true)
+    @Column
     private String description;
 
     @ManyToOne(targetEntity = ProductType.class)

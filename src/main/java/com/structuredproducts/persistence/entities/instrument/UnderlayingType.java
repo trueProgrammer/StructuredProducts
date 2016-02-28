@@ -13,7 +13,7 @@ public class UnderlayingType implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true)
+    @Column
     private String name;
 
     public UnderlayingType() {

@@ -13,7 +13,7 @@ public class LegalType implements Serializable, UniqueWithName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true, nullable = false)
+    @Column
     private String name;
 
     public LegalType() {

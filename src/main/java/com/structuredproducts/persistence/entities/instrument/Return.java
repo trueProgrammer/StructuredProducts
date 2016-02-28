@@ -13,7 +13,7 @@ public class Return implements Serializable, UniqueWithInt {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true)
+    @Column
     private Integer count;
 
     public Return(Integer count) {

@@ -8,16 +8,14 @@ import java.io.Serializable;
 
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
-@Table(name="INVESTMENT", schema = "INSTRUMENT", uniqueConstraints = @UniqueConstraint(columnNames = {"min", "max"}))
+@Table(name="INVESTMENT", schema = "INSTRUMENT")
 public class Investment implements Serializable, Nameble, UniqueWithMinMax{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true)
     private Integer min;
 
-    @Column(unique = true)
     private Integer max;
 
     @Transient

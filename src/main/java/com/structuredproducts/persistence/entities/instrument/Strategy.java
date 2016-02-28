@@ -13,7 +13,7 @@ public class Strategy implements Serializable, UniqueWithName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(unique = true)
+    @Column
     private String name;
 
     public Strategy() {
