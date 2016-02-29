@@ -36,17 +36,21 @@ public class DBService {
             put(Product.class, "INSTRUMENT.PRODUCT").
             build();
 
-    public List<?> getProductsByType(String type) {
-        Query query = dbManager.getEntityManager().createNativeQuery(
-                "SELECT * from INSTRUMENT.PRODUCT p WHERE p.risks = (SELECT id FROM INSTRUMENT.PRODUCT_TYPE r WHERE r.name = '" + type +"')",
+    public List<?> getProductsByType(List<String> types) {
+        Query query = createCacheableQuery("SELECT * from INSTRUMENT.PRODUCT p WHERE p.productType in (SELECT id FROM INSTRUMENT.PRODUCT_TYPE t WHERE t.name IN (:types))",
                 Product.class);
-        query.setHint("org.hibernate.cacheable", Boolean.TRUE);
+        query.setParameter("types", types);
         return query.getResultList();
     }
     public List<?> getResultList(Class<?> clazz) {
-        Query query = dbManager.getEntityManager().createNativeQuery("SELECT * from " + TABLE_TO_TYPE_MAPPING.get(clazz), clazz);
+        return createCacheableQuery("SELECT * from " + TABLE_TO_TYPE_MAPPING.get(clazz), clazz)
+                .getResultList();
+    }
+
+    private Query createCacheableQuery(String select, Class<?> clazz) {
+        Query query = dbManager.getEntityManager().createNativeQuery(select, clazz);
         query.setHint("org.hibernate.cacheable", Boolean.TRUE);
-        return query.getResultList();
+        return query;
     }
 
     public void save(List<?> list) {
