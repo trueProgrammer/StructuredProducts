@@ -1,0 +1,58 @@
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">Страница Администратора</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="">Страница Администратора</a></li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+
+
+<!--=== Content ===-->
+<div class="container content-sm">
+    <ul class="nav nav-tabs">
+        <li><a href="#/admin">Продукты</a></li>
+        <li class="active"><a href="#/admin-investidea">Инвестиционные идеи</a></li>
+        <li><a href="#/admin-topproducts">Топ продуктов</a></li>
+    </ul>
+
+    <form role="form" id="invest-idea-form">
+        <div class="form-group">
+            <label for="title">Заголовок</label>
+            <input type="text" class="form-control" id="title">
+        </div>
+        <div class="form-group">
+            <label for="content">Текст идеи</label>
+            <textarea id="content" form="invest-idea-form" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="brokers-dropdown">Брокеры</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <select class="form-control" id="brokers-dropdown">
+                        <option>Банк открытие</option>
+                        <option>Альпари</option>
+                        <option>Банк закрытие</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <img src="resources/img/partners/finam.png"/>
+                </div>
+            </div>
+            <a>Добавить брокера</a>
+            <div class="form-group">
+                <label for="broker-name">Имя брокера</label>
+                <input type="text" id="broker-name"/>
+            </div>
+            <div class="form-group">
+                <label for="broker-logo">Логотип брокера</label>
+                <input type="file" id="broker-logo"/>
+            </div>
+        </div>
+    </form>
+
+</div>

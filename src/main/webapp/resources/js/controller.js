@@ -30,7 +30,15 @@ app.config(['$routeProvider', '$httpProvider',
                 controller: 'investideas'
             }).
             when('/admin', {
-                templateUrl: 'views/template/admin.html',
+                templateUrl: 'views/template/admin-products.html',
+                controller: 'admin'
+            }).
+            when('/admin-investidea', {
+                templateUrl: 'views/template/admin-investidea.html',
+                controller: 'admin'
+            }).
+            when('/admin-topproducts', {
+                templateUrl: 'views/template/admin-topproducts.html',
                 controller: 'admin'
             }).
             when('/partners', {
