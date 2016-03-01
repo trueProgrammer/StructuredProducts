@@ -3,6 +3,7 @@ package com.structuredproducts.controllers.rest;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.structuredproducts.controllers.data.*;
+import com.structuredproducts.controllers.data.InvestIdea;
 import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TopProduct;
 import com.structuredproducts.persistence.entities.instrument.*;
@@ -30,8 +31,6 @@ public class DataController {
 
     private final static Logger logger = Logger.getLogger(DataController.class);
 
-    @Autowired
-    private ProductService productService;
     @Autowired
     private NewsService newsService;
     @Autowired

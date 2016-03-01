@@ -16,9 +16,9 @@ public class TopProduct{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(targetEntity = ProductType.class)
-    @JoinColumn(name = "type")
-    TopType type;
+    @ManyToOne(targetEntity = Product.class)
+    @JoinColumn(name = "product")
+    Product product;
 
     public TopProduct() {}
 
@@ -30,11 +30,11 @@ public class TopProduct{
         this.id = id;
     }
 
-    public TopType getType() {
-        return type;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setType(TopType type) {
-        this.type = type;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }
