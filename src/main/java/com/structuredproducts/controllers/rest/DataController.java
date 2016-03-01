@@ -1,7 +1,6 @@
 package com.structuredproducts.controllers.rest;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
+import com.google.common.collect.*;
 import com.structuredproducts.controllers.data.*;
 import com.structuredproducts.controllers.data.InvestIdea;
 import com.structuredproducts.controllers.data.ProductType;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Vlad on 23.11.2015.
@@ -88,34 +86,52 @@ public class DataController {
         }
     }
 
+    //stupid RiskTypeToProductType for association button type and product type by risk....
+    private static BiMap<String, RiskType> RiskTypeToProductType = ImmutableBiMap.<String, RiskType>builder().
+            put("100% защита капитала без гарантированной доходности", RiskType.High).
+            put("С участием (ограниченный риск)", RiskType.Medium).
+            put("100% защита капитала плюс гарантированная доходность", RiskType.Low).build();
+
     @RequestMapping(path = "/allproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object[]> getAllProducts() {
-        List<?> list =  dbService.getResultList(com.structuredproducts.persistence.entities.instrument.Product.class);
+        List<Product> list = (List<Product>) dbService.getResultList(Product.class);
+        setRiskType(list);
         return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
     }
 
-    //stupid map for association button type and product type....
-    private static Map<String, String> map = ImmutableMap.<String, String>builder().
-            put("Высокий", "100% защита капитала без гарантированной доходности").
-            put("Средний", "С участием (ограниченный риск)").
-            put("Низкий", "100% защита капитала плюс гарантированная доходность").build();
 
     @RequestMapping(path = "/productsbytype", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object[]>getProductsByType(@RequestParam("types")String[] types) {
         if (types == null) {
             return getAllProducts();
-        }
-        List<Product> result = Lists.newArrayList();
+        } else {
+            List<String> productTypes = Lists.newArrayList();
+            for(String type : types) {
+                RiskType riskType = RiskType.getRiskType(type);
+                if(riskType != null) {
+                    productTypes.add(RiskTypeToProductType.inverse().get(riskType));
+                } else {
+                    logger.error("Unknown risk type: " + type);
+                }
+            }
+            List<Product> result = (List<Product>) dbService.getProductsByType(productTypes);
+            setRiskType(result);
+        /*List<Product> result = Lists.newArrayList();
         List<com.structuredproducts.persistence.entities.instrument.Product> list = (List<Product>) dbService.getResultList(Product.class);
         for(Product product : list) {
             for(String type : types) {
-                if(product.getProductType().getName().equals(map.get(type))) {
+                if(product.getProductType().getName().equals(RiskTypeToProductType.get(type))) {
                     result.add(product);
                     break;
                 }
             }
+        }*/
+            return new ResponseEntity<>(result.toArray(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(result.toArray(), HttpStatus.OK);
+    }
+
+    private static void setRiskType(List<Product> products) {
+        products.parallelStream().forEach(a -> a.setRiskType(RiskTypeToProductType.get(a.getProductType().getName())));
     }
 
     @RequestMapping(path = "/investideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

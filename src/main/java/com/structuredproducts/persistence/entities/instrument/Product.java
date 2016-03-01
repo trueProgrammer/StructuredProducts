@@ -3,14 +3,7 @@ package com.structuredproducts.persistence.entities.instrument;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
@@ -29,51 +22,54 @@ public class Product {
 
     @ManyToOne(targetEntity = ProductType.class)
     @JoinColumn(name = "productType")
-    ProductType productType;
+    private ProductType productType;
 
     @ManyToOne(targetEntity = Term.class)
     @JoinColumn(name = "term")
-    Term term;
+    private Term term;
 
     @ManyToOne(targetEntity = Underlaying.class)
     @JoinColumn(name = "underlaying")
-    Underlaying underlaying;
+    private Underlaying underlaying;
 
     @ManyToOne(targetEntity = Investment.class)
     @JoinColumn(name = "investment")
-    Investment investment;
+    private Investment investment;
 
     @ManyToOne(targetEntity = Issuer.class)
     @JoinColumn(name = "issuer")
-    Issuer issuer;
+    private Issuer issuer;
 
     @ManyToOne(targetEntity = Return.class)
     @JoinColumn(name = "return")
-    Return returnValue;
+    private Return returnValue;
 
     @ManyToOne(targetEntity = Strategy.class)
     @JoinColumn(name = "strategy")
-    Strategy strategy;
+    private Strategy strategy;
 
     @ManyToOne(targetEntity = LegalType.class)
     @JoinColumn(name = "legalType")
-    LegalType legalType;
+    private LegalType legalType;
 
     @ManyToOne(targetEntity = PayOff.class)
     @JoinColumn(name = "payoff")
-    PayOff payoff;
+    private PayOff payoff;
 
     @ManyToOne(targetEntity = Risks.class)
     @JoinColumn(name = "risks")
-    Risks risks;
+    private Risks risks;
 
     @ManyToOne(targetEntity = Currency.class)
     @JoinColumn(name = "currency")
-    Currency currency;
+    private Currency currency;
 
     @ManyToOne(targetEntity = PaymentPeriodicity.class)
     @JoinColumn(name = "paymentPeriodicity")
-    PaymentPeriodicity paymentPeriodicity;
+    private PaymentPeriodicity paymentPeriodicity;
+
+    @Transient
+    private RiskType riskType;
 
     public Product() {
     }
@@ -196,5 +192,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public RiskType getRiskType() {
+        return riskType;
+    }
+
+    public void setRiskType(RiskType riskType) {
+        this.riskType = riskType;
     }
 }

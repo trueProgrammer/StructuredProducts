@@ -358,24 +358,21 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 }
             };
             function greenClick() {
-                $scope.filterByType('Низкий');
-                //$scope.click('green',mouseOverGreen, mouseOutGreen);
+                $scope.filterByType('Low');
             };
             function redClick() {
-                $scope.filterByType('Средний');
-                //$scope.click('green',mouseOverGreen, mouseOutGreen);
+                $scope.filterByType('High');
             };
             function blueClick() {
-                $scope.filterByType('Высокий');
-                //$scope.click('green',mouseOverGreen, mouseOutGreen);
+                $scope.filterByType('Medium');
             };
             $scope.filterByType = function(risk, event) {
-                if(risk === 'Низкий') {
+                if(risk === 'Low') {
                     $scope.click('green', mouseOverGreen, mouseOutGreen);
-                } else if(risk === 'Средний') {
-                    $scope.click('red',mouseOverRed, mouseOutRed);
-                } else if(risk === 'Высокий') {
+                } else if(risk === 'Medium') {
                     $scope.click('blue',mouseOverBlue, mouseOutBlue);
+                } else if(risk === 'High') {
+                    $scope.click('red',mouseOverRed, mouseOutRed);
                 }
 
                 var index = typesList.indexOf(risk);
@@ -404,7 +401,7 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                     );
                 } else {
                     restService.getProductsByType(typesList, function (response) {
-                            $log.info("Get products by risk success.");
+                            $log.info("Get products by risk " + typesList + " success.");
                             $scope.products = response;
                         },
                         function () {
