@@ -17,7 +17,7 @@ public class Broker {
     private String name;
 
     @Column
-    private String logoLink;
+    private String logo;
 
     public Broker() {
 
@@ -39,11 +39,11 @@ public class Broker {
         this.name = name;
     }
 
-    public String getLogoLink() {
-        return logoLink;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setLogoLink(String logoLink) {
-        this.logoLink = logoLink;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }

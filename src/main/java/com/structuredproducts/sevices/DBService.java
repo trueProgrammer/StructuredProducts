@@ -34,6 +34,7 @@ public class DBService {
             put(Currency.class, "INSTRUMENT.CURRENCY").
             put(PaymentPeriodicity.class, "INSTRUMENT.PAYMENT_PERIODICITY").
             put(Product.class, "INSTRUMENT.PRODUCT").
+            put(Broker.class, "INSTRUMENT.BROKER").
             build();
 
     public List<?> getProductsByType(String type) {
@@ -49,6 +50,20 @@ public class DBService {
         return query.getResultList();
     }
 
+    public void save (Object object) {
+        EntityTransaction transaction = dbManager.getEntityManager().getTransaction();
+        transaction.begin();
+        try {
+            dbManager.getEntityManager().merge(object);
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Can not save list of entities.", e);
+        } finally {
+            if(transaction.isActive()) {
+                transaction.rollback();
+            }
+        }
+    }
     public void save(List<?> list) {
         EntityTransaction transaction = dbManager.getEntityManager().getTransaction();
         transaction.begin();

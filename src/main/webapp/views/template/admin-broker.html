@@ -1,0 +1,41 @@
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">Страница Администратора</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="">Страница Администратора</a></li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+
+
+<!--=== Content ===-->
+<div class="container content-sm">
+    <ul class="nav nav-tabs">
+        <li><a href="#/admin">Продукты</a></li>
+        <li><a href="#/admin/investidea">Инвестиционные идеи</a></li>
+        <li class="active"><a href="#/admin/broker">Брокеры</a></li>
+        <li><a href="#/admin-topproducts">Топ продуктов</a></li>
+    </ul>
+
+    <form id="broker-form">
+        <div class="form-group">
+            <label for="broker-name">Имя брокера</label>
+            <input type="text" class="form-control" id="broker-name"/>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="broker-logo">Логотип брокера</label>
+                <input type="file" id="broker-logo" class="form-control" onchange="angular.element(this).scope().onImgChanged(this)"/>
+            </div>
+            <div class="form-group col-md-4">
+                <img id="broker-logo-preview" src=""/>
+            </div>
+        </div>
+    </form>
+    <button class="btn-primary" ng-click="onAddClick()">Добавить</button>
+
+</div>

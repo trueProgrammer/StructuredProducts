@@ -33,9 +33,13 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'views/template/admin-products.html',
                 controller: 'admin'
             }).
-            when('/admin-investidea', {
+            when('/admin/investidea', {
                 templateUrl: 'views/template/admin-investidea.html',
-                controller: 'admin'
+                controller: 'admin-investidea'
+            }).
+            when('/admin/broker', {
+                templateUrl: 'views/template/admin-broker.html',
+                controller: 'admin-broker'
             }).
             when('/admin-topproducts', {
                 templateUrl: 'views/template/admin-topproducts.html',
@@ -170,6 +174,63 @@ services.factory('UserService', function($resource) {
 app.controller('empty', [ '$scope',
     function($scope) {
 }]);
+
+app.controller('admin-broker', [ '$scope', '$log', 'restService', '$rootScope', '$location',
+    function($scope, $log, restService, $rootScope, $location) {
+        $scope.onImgChanged = function(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $("#broker-logo-preview").attr('src', e.target.result);
+                    $scope.logo = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+        $scope.onAddClick = function() {
+            var img = $scope.logo;
+            var name = $('#broker-name').val();
+            restService.addBroker(name, img, function(data) {$('broker-form').reset()}, function(error) {$('broker-form').reset()});
+        }
+    }]);
+
+app.controller('admin-investidea', [ '$scope', '$log', 'restService', '$rootScope', '$location',
+    function($scope, $log, restService, $rootScope, $location) {
+        var loadBrokers = function() {
+            restService.getAllBrokers(function(data) {
+                $scope.brokersData = data;
+            }, function () {
+                $log.error("Can't load brokers");
+            });
+        };
+        loadBrokers();
+
+        $scope.updateBrokerImg = function() {
+            if($scope.selectedBroker){
+                $("#broker-logo").attr("src", $scope.selectedBroker.logo);
+            } else{
+                $("#broker-logo").attr("src", "");
+            }
+        };
+
+        $scope.addIdea = function() {
+
+            if ($scope.selectedBroker) {
+                var obj = {
+                    title: $('#title').val(),
+                    content: $('textarea#content').val(),
+                    broker: $scope.selectedBroker.id
+                };
+                restService.addIdea(obj, function(data) {
+                    console.log("idea successfully saved");
+                }, function(data) {
+                    console.log("idea not saved")
+                    $('#investidea-form').reset();
+                })
+            }
+        }
+    }]);
 
 app.controller('investproduct', ['$scope', '$log', 'restService',
     function($scope, $log, restService) {

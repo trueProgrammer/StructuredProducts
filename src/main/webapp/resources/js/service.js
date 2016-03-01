@@ -208,6 +208,51 @@ app.service('restService', [
             );
         },
 
+        addBroker: function(name, img, onSuccess, onFail){
+            $log.info("Add broker");
+            var json = JSON.stringify({
+                name: name,
+                img: img
+            });
+            $http.post(
+                adminUri + "brokerAdd",
+                json
+            ).then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            );
+        },
+
+        getAllBrokers: function(onSuccess, onFail) {
+            $log.info("Get brokers");
+            $http.get(
+                adminUri + "brokerGet"
+            ).then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            );
+        },
+
+        addIdea: function(ideaJson, onSuccess, onFail) {
+            $log.info("Save idea");
+            $http.post(
+                adminUri + "investIdeaAdd",
+                ideaJson
+            ).then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            );
+        },
+
         getInstrumentType: function (entityType, onSuccess, onFail) {
             $log.info("Get instrument type");
             $http.get(

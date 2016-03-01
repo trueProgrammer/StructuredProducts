@@ -112,6 +112,65 @@ public class AdminController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @RequestMapping(path="/brokerAdd",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Message> addBroker(@RequestBody String json) {
+        logger.debug("Got json " + json);
+        try {
+            Map<String, Object> map = ServiceUtils.getObjectMapping(json);
+            String name = (String) map.get("name");
+            String img = (String) map.get("img");
+
+            Broker broker = new Broker();
+            broker.setName(name);
+            broker.setLogo(img);
+
+            dbService.save(broker);
+        } catch (IOException e) {
+            logger.error("can't handle json " + json, e);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path="/brokerGet",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<Object[]> getBrokers() {
+        List<?> list = dbService.getResultList(Broker.class);
+        return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
+    }
+
+    @RequestMapping(path="/investIdeaAdd",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<Message> addInvestIdea(@RequestBody String json) {
+        logger.debug("Got json for save " + json);
+        try {
+            Map<String, Object> map = ServiceUtils.getObjectMapping(json);
+            String title = (String) map.get("title");
+            String content = (String) map.get("content");
+            Integer brokerId = (Integer) map.get("broker");
+
+            Broker broker = new Broker();
+            broker.setId(brokerId);
+
+            InvestIdea idea = new InvestIdea();
+            idea.setBroker(broker);
+            idea.setTitle(title);
+            idea.setContent(content);
+
+            dbService.save(idea);
+        } catch (IOException e) {
+            logger.error("can't handle json " + json, e);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @RequestMapping(path = "/instrumentType", method = RequestMethod.GET, produces = MediaType
             .APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object[]> getValues(@RequestParam("entityType")String entityType) {
