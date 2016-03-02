@@ -1099,11 +1099,11 @@ app.controller('main', [ '$scope', '$log', 'restService', '$anchorScroll', '$doc
             }
         }
         return false;
-    }
+    };
 
     $scope.topProductsChange = function () {
-        restService.getTopProducts(
-            $scope.data.timeType,
+        restService.getTopProductsByTimeAndType(
+            $scope.data.timeType.value,
             $scope.data.productType,
             function(response) {
                 $log.info("Get top products success.");

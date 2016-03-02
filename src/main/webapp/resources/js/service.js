@@ -91,20 +91,6 @@ app.service('restService', [
             );
         },
 
-        getProductTypes: function (timeType, productType, onSuccess, onFail) {
-            $log.info("Get product types");
-            $http.get(
-                dataUri + "topproducts"
-            )
-                .then(
-                function (response) {
-                    onSuccess(response.data);
-                }, function (response) {
-                    onFail(response.data);
-                }
-            );
-        },
-
         getTopProducts: function (time, onSuccess, onFail) {
             $log.info("Get top products");
             $http.get(
@@ -167,6 +153,22 @@ app.service('restService', [
             )
         },
 
+        getTopProductsByTimeAndType: function(time, type, onSuccess, onFail) {
+            $log.info("Get top products by time " + time + " and type " + type);
+            $http.get(dataUri + "topproducts", {
+                params: {
+                    time: time,
+                    type: type
+                }
+            })
+                .then(
+                function(response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                }
+            )
+        },
         getProductsByType: function(types, onSuccess, onFail) {
             $log.info("Get products by type");
             $http

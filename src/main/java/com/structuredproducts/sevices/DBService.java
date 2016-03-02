@@ -1,8 +1,12 @@
 package com.structuredproducts.sevices;
 
 import com.google.common.collect.ImmutableMap;
+import com.structuredproducts.controllers.data.*;
 import com.structuredproducts.persistence.DBManager;
 import com.structuredproducts.persistence.entities.instrument.*;
+import com.structuredproducts.persistence.entities.instrument.Currency;
+import com.structuredproducts.persistence.entities.instrument.ProductType;
+import com.structuredproducts.persistence.entities.instrument.TopProduct;
 import org.apache.log4j.Logger;
 import org.hibernate.jpa.criteria.CriteriaBuilderImpl;
 import org.hibernate.jpa.criteria.CriteriaDeleteImpl;
@@ -15,6 +19,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class DBService {
 
@@ -201,5 +206,24 @@ public class DBService {
     @PreDestroy
     public void destroy() {
         dbManager.close();
+    }
+
+    public List<Product> getTopProductsByTimeTypeAndProductType(String time, String productType) {
+        TypedQuery<Product> productByTime;
+        if (time == null) {
+            productByTime = dbManager.getEntityManager().createQuery("SELECT distinct product from TopProduct", Product.class);
+        } else {
+            productByTime = dbManager.getEntityManager().createQuery("SELECT distinct product from TopProduct where time = :time", Product.class);
+            productByTime.setParameter("time", time);
+        }
+        List<Product> topProducts = productByTime.getResultList();
+
+        if (productType == null || productType.equals("\u0412\u0441\u0435")) {
+            return topProducts;
+        } else {
+            return topProducts.stream()
+                    .filter(p -> p.getProductType().getName().equals(productType))
+                    .collect(Collectors.toList()); //filter by product type
+        }
     }
 }

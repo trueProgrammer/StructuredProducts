@@ -4,9 +4,9 @@ package com.structuredproducts.controllers.data;
  * Created by Vlad on 08.01.2016.
  */
 public enum TimeType {
-    WEEK("За неделю"),
-    MONTH("За Месяц"),
-    NEW("Новые");
+    WEEK("week"),
+    MONTH("month"),
+    NEW("new");
 
     private final String name;
 
@@ -24,5 +24,14 @@ public enum TimeType {
                 return v;
             }
         throw new IllegalArgumentException();
+    }
+
+    public static String getName(TimeType name) {
+        switch (name) {
+            case WEEK: return "Неделя";
+            case MONTH: return "Месяц";
+            case NEW: return "Новые";
+            default: return null;
+        }
     }
 }

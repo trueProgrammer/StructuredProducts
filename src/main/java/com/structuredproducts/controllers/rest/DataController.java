@@ -4,7 +4,6 @@ import com.google.common.collect.*;
 import com.structuredproducts.controllers.data.*;
 import com.structuredproducts.controllers.data.InvestIdea;
 import com.structuredproducts.controllers.data.ProductType;
-import com.structuredproducts.controllers.data.TopProduct;
 import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.sevices.*;
@@ -32,8 +31,6 @@ public class DataController {
     @Autowired
     private NewsService newsService;
     @Autowired
-    private TopProductsService topProductsService;
-    @Autowired
     private InvestIdeasService investIdeasService;
     @Autowired
     private DBService dbService;
@@ -46,12 +43,12 @@ public class DataController {
     }
 
     @RequestMapping(path = "/timetypes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<String[]> getTimeTypes() {
+    public ResponseEntity<Tuple[]> getTimeTypes() {
         TimeType[] timeTypes = TimeType.values();
-        String[] values = new String[timeTypes.length];
+        Tuple[] values = new Tuple[timeTypes.length];
         int i = 0;
         for(TimeType timeType : timeTypes) {
-            values[i++] = timeType.getName();
+            values[i++] = new Tuple(TimeType.getName(timeType), timeType.getName());
         }
 
         return new ResponseEntity<>(values, HttpStatus.OK);
@@ -76,14 +73,11 @@ public class DataController {
     }
 
     @RequestMapping(path = "/topproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<TopProduct[]> getTopProducts(String timeType, String productType) {
-        if(timeType != null && productType != null) {
-            List<TopProduct> list = topProductsService
-                    .getTopProductsByTimeTypeAndProductType(TimeType.getEnum(timeType), ProductType.getEnum(productType));
-            return new ResponseEntity<>(list.toArray(new TopProduct[list.size()]), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new TopProduct[0], HttpStatus.OK);
-        }
+    public ResponseEntity<Product[]> getTopProducts(@RequestParam(name="time") String timeType, @RequestParam(name="type")String productType) {
+        logger.debug("Time " + timeType + " productType " + productType);
+        List<Product> list = dbService.getTopProductsByTimeTypeAndProductType(timeType, productType);
+        list.forEach(product -> product.getInvestment().setName());
+        return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
     }
 
     //stupid RiskTypeToProductType for association button type and product type by risk....

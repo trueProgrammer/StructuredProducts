@@ -78,8 +78,8 @@
                     <div class="panel-body select-table-body">
                         <div class="col-md-4">
                             <label for="byTimeType"> Лучшие продукты: </label><br>
-                            <select id="byTimeType" ng-model="data.timeType" ng-change="topProductsChange()">
-                                <option ng-repeat="val in data.timeTypes" value="{{val}}">{{val}}</option>
+                            <select id="byTimeType" ng-model="data.timeType" ng-change="topProductsChange()"
+                                    ng-options="timeType as timeType.name for timeType in data.timeTypes track by timeType.value">
                             </select>
                         </div>
                         <div class="col-md-4">
@@ -101,20 +101,20 @@
                                 <a href="" ng-click="order('name')">Название</a>
                                 <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
                             </th>-->
-                            <th>Вложения</th>
-                            <th>Доля</th>
-                            <th>Срок</th>
-                            <th>Тип продукта</th>
+                            <th>Актив</th>
+                            <th>Минимальная сумма</th>
+                            <th>Доходность</th>
+                            <th>Стратегия</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ng-repeat="val in topProducts | orderBy:predicate:reverse">
                             <td>{{$index + 1}}</td>
                             <td>{{val.name}}</td>
-                            <td>{{val.invest}}</td>
-                            <td>{{val.participation}}</td>
-                            <td>{{val.date}}</td>
-                            <td>{{val.productType}}</td>
+                            <td>{{val.underlaying.name}}</td>
+                            <td>{{val.investment.name}}</td>
+                            <td>{{val.returnValue.count}}</td>
+                            <td>{{val.strategy.name}}</td>
                         </tr>
                         </tbody>
                     </table>
