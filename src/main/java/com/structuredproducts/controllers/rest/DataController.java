@@ -110,16 +110,6 @@ public class DataController {
             }
             List<Product> result = (List<Product>) dbService.getProductsByType(productTypes);
             setRiskType(result);
-        /*List<Product> result = Lists.newArrayList();
-        List<com.structuredproducts.persistence.entities.instrument.Product> list = (List<Product>) dbService.getResultList(Product.class);
-        for(Product product : list) {
-            for(String type : types) {
-                if(product.getProductType().getName().equals(RiskTypeToProductType.get(type))) {
-                    result.add(product);
-                    break;
-                }
-            }
-        }*/
             return new ResponseEntity<>(result.toArray(), HttpStatus.OK);
         }
     }

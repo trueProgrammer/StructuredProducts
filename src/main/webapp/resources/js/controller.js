@@ -240,7 +240,7 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                 $scope.products = response;
 
                 $scope.highRiskProducts = 0;
-                $scope.middleRiskProducts = 0;
+                $scope.mediumRiskProducts = 0;
                 $scope.lowRiskProducts = 0;
 
                 response.forEach(function(item) {
@@ -248,11 +248,15 @@ app.controller('investproduct', ['$scope', '$log', 'restService',
                         $scope.highRiskProducts++;
                     }
                     else if(item.productType.name === 'С участием (ограниченный риск)') {
-                        $scope.middleRiskProducts++;
+                        $scope.mediumRiskProducts++;
                     } else {
                         $scope.lowRiskProducts++;
                     }
                 });
+
+                $("#red-value").text($scope.highRiskProducts);
+                $("#blue-value").text($scope.mediumRiskProducts);
+                $("#green-value").text($scope.lowRiskProducts);
             },
             function () {
                 $log.error("Get all products failure.");

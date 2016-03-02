@@ -23,7 +23,7 @@
 }
 
 .side-text-num {
-    font-size: 20px;
+    font-size: 21px;
     line-height: 27px;
 }
 
@@ -55,14 +55,11 @@
     margin-bottom: 10px;
 }
 
-.main-button {
-    width: 100%;
-    background: none;
-}
-
 .list-unstyled {
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
 }
 
 @media only screen and (min-width: 992px) and (min-height: 542px) {
@@ -95,7 +92,7 @@
     height: 100%;
 }
 
-@media only screen and (min-width: 565px) {
+@media only screen and (min-width: 700px) {
     .full {
         visibility: visible;
         height: 100%;
@@ -110,3 +107,13 @@
     height: 50%;
 }
 
+.mobile-button {
+    width: 100%;
+    background: #fafafa;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.mobile-button:hover {
+    box-shadow: 0px 0px 5px 3px #aead95;
+}

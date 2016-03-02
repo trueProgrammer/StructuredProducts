@@ -19,3 +19,33 @@ h3 {
 .right {
     text-align: right;
 }
+
+@media only screen and (min-width:992px) {
+    .or-style {
+        margin-top: 30px;
+    }
+}
+
+.list-text {
+    margin-left: 35%
+}
+
+@media only screen and (max-width:850px) {
+    .list-text {
+        margin-left: 20%;
+    }
+}
+
+/*@media only screen and (max-width:450px) {
+    .list-text {
+        margin-left: 5%;
+    }
+}*/
+
+
+
+@media only screen and (min-width:992px) {
+    .or-style {
+        margin-top: 30px;
+    }
+}

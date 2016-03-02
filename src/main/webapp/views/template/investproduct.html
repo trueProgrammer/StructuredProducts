@@ -67,13 +67,13 @@
                     <text transform="matrix(1 0 0 1 643.0002 607)" font-family="'MicrosoftSansSerif'" font-size="30" letter-spacing="6">УРОВЕНЬ РИСКА</text>
                     <text transform="matrix(1 0 0 1 283.8098 535.7119)" font-family="'MicrosoftSansSerif'" font-size="27">ДЕПОЗИТЫ</text>
                     <text transform="matrix(1 0 0 1 1028.0002 230)" font-family="'MicrosoftSansSerif'" font-size="27">АКЦИИ</text>
-                    <text id="green-text"  ng-click="filterByType('Low', $event)" class="cursor-type" transform="matrix(1 0 0 1 365.385 418.9961)" enable-background="new">
+                    <text id="green-text"  class="cursor-type" transform="matrix(1 0 0 1 365.385 418.9961)" enable-background="new">
                         <tspan x="0" y="0" font-family="'MicrosoftSansSerif'" font-size="22">100% </tspan>
                         <tspan x="-11.575" y="26.4" font-family="'MicrosoftSansSerif'" font-size="22">защиты </tspan>
                         <tspan x="-16.382" y="52.8" font-family="'MicrosoftSansSerif'" font-size="22">капитала</tspan>
                     </text>
-                    <text id="blue-text" ng-click="filterByType('Medium', $event)" class="cursor-type" transform="matrix(1 0 0 1 539.2268 326.1182)" font-family="'MicrosoftSansSerif'" font-size="22">С участием</text>
-                    <text id="red-text" ng-click="filterByType('High', $event)" class="cursor-type" transform="matrix(1 0 0 1 803.6707 257.7998)" font-family="'MicrosoftSansSerif'" font-size="22">Рисковые</text>
+                    <text id="blue-text" class="cursor-type" transform="matrix(1 0 0 1 539.2268 326.1182)" font-family="'MicrosoftSansSerif'" font-size="22">С участием</text>
+                    <text id="red-text" class="cursor-type" transform="matrix(1 0 0 1 803.6707 257.7998)" font-family="'MicrosoftSansSerif'" font-size="22">Рисковые</text>
                     <text transform="matrix(0.9867 -0.3605 0.3432 0.9393 501.9524 429.5771)" font-family="'MicrosoftSansSerif'" font-size="24.0016">СТРУКТУРНЫЕ ПРОДУКТЫ</text>
                     <g>
                         <path id="red-button" type="button" ng-click="filterByType('High', $event)" class="cursor-type" fill="white" stroke="#EA1808" stroke-width="3" stroke-miterlimit="10" d="M1724.015,272.01
@@ -102,9 +102,9 @@
                         <tspan x="0" y="0" font-family="'MicrosoftSansSerif'" font-size="26.5">100% ЗАЩИТЫ</tspan>
                         <tspan x="28.628" y="32.399" font-family="'MicrosoftSansSerif'" font-size="26.5">КАПИТАЛА</tspan>
                     </text>
-                    <text transform="matrix(1 0 0 1 1690.5676 236.373)" font-family="'ArialMT'" font-size="31">1</text>
-                    <text transform="matrix(1 0 0 1 1614.7786 359.832)" font-family="'ArialMT'" font-size="31">1</text>
-                    <text transform="matrix(1 0 0 1 1532.259 485.6387)" font-family="'ArialMT'" font-size="31">1</text>
+                    <text id="red-value" transform="matrix(1 0 0 1 1690.5676 236.373)" font-family="'ArialMT'" font-size="31"></text>
+                    <text id="blue-value" transform="matrix(1 0 0 1 1614.7786 359.832)" font-family="'ArialMT'" font-size="31"></text>
+                    <text id="green-value" transform="matrix(1 0 0 1 1532.259 485.6387)" font-family="'ArialMT'" font-size="31"></text>
                     <ellipse fill="none" stroke="#306ED4" stroke-width="7" stroke-miterlimit="10" cx="439.293" cy="351.256" rx="7.063" ry="6.105"/>
                     <g>
                         <line fill="none" stroke="#306ED4" stroke-width="6" stroke-miterlimit="10" x1="1012.729" y1="199.555" x2="1004.272" y2="212.543"/>
@@ -119,11 +119,11 @@
             <div class="mobile">
                 <ul class="list-unstyled">
                     <li class="margin-bottom-10">
-                        <button id="red-button" class="red-button rounded-2x main-button" ng-click="filterByType('High', $event)">
+                        <button id="red-button" class="red-button rounded-2x mobile-button" ng-click="filterByType('High', $event)">
+                            <img alt="" src="resources/img/icons/dollar.png">
                             <div class="side-text-title">
-                                Структурные продукты с участием
-                                <br>
-                                <span class="side-text-num num-red">{{middleRiskProducts}}</span>
+                                <h2>Рисковые структурные продукты</h2>
+                                <span class="side-text-num num-red">{{highRiskProducts}}</span>
                                 <br>
                                 <!--<a href="">
                                     <span class="side-text-more">подробнее</span>
@@ -132,11 +132,11 @@
                         </button>
                     </li>
                     <li class="margin-bottom-10">
-                        <button id="blue-button" class="blue-button rounded-2x main-button" type="button" ng-click="filterByType('Medium', $event)">
+                        <button id="blue-button" class="blue-button rounded-2x mobile-button" type="button" ng-click="filterByType('Medium', $event)">
+                            <img alt="" src="resources/img/icons/portfel.png">
                             <div class="side-text-title">
-                                Рисковые структурные продукты
-                                <br>
-                                <span class="side-text-num num-blue">{{highRiskProducts}}</span>
+                                <h2>Структурные продукты с участием</h2>
+                                <span class="side-text-num num-blue">{{mediumRiskProducts}}</span>
                                 <br>
                                 <!--<a href="">
                                     <span class="side-text-more">подробнее</span>
@@ -145,10 +145,10 @@
                         </button>
                     </li>
                     <li class="margin-bottom-10">
-                        <button id="green-button" class="green-button rounded-2x main-button" ng-click="filterByType('Low', $event)">
+                        <button id="green-button" class="green-button rounded-2x mobile-button" ng-click="filterByType('Low', $event)">
+                            <img alt="" src="resources/img/icons/bank dollar protected.png">
                             <div class="side-text-title">
-                                Структурные продукты со 100% защиты капитала
-                                <br>
+                                <h2>Структурные продукты со 100% защиты капитала</h2>
                                 <span class="side-text-num num-green">{{lowRiskProducts}}</span>
                                 <br>
                                 <!--<a href="">

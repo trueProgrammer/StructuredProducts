@@ -1,0 +1,12 @@
+.clients-rows {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 50px;
+    margin-top: 10px;
+    padding-bottom: 30px;
+}
+
+@media only screen and (max-width: 991px) {
+    .partners-icon {
+        width: 120px;
+    }
+}
