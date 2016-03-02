@@ -18,7 +18,30 @@
         <li><a href="#/admin">Продукты</a></li>
         <li><a href="#/admin/investidea">Инвестиционные идеи</a></li>
         <li><a href="#/admin/broker">Брокеры</a></li>
-        <li class="active"><a href="#/admin-topproducts">Топ продуктов</a></li>
+        <li class="active"><a href="#/admin/topproducts">Топ продуктов</a></li>
     </ul>
+
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group sidebar-nav-v1">
+                <li class="list-group-item"><a href="" ng-click="loadTop('week')" ng-class="{'blue-style': selectedTime == 'week'}">
+                    За неделю
+                </a></li>
+                <li class="list-group-item"><a href="" ng-click="loadTop('month')" ng-class="{'blue-style': selectedTime == 'month'}">
+                    За месяц
+                </a></li>
+                <li class="list-group-item"><a href="" ng-click="loadTop('new')" ng-class="{'blue-style': selectedTime == 'new'}">
+                    Новые
+                </a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-blue margin-bottom-10">
+                <div ui-grid="table" ui-grid-selection></div>
+            </div>
+            <button class="btn-u btn-u-sea rounded disabled-button" ng-click="addToTop()" ng-disabled="selection.length === 0">Добавить в лучшие</button>
+            <button class="btn-u btn-u-sea rounded disabled-button" ng-click="removeFromTop()" ng-disabled="selection.length === 0">Удалить из лучших</button>
+        </div>
+    </div>
 
 </div>

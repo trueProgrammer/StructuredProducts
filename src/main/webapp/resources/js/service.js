@@ -105,14 +105,13 @@ app.service('restService', [
             );
         },
 
-        getTopProducts: function (timeType, productType, onSuccess, onFail) {
+        getTopProducts: function (time, onSuccess, onFail) {
             $log.info("Get top products");
             $http.get(
-                dataUri + "topproducts",
+                adminUri + "getTopProducts",
                 {
                     params: {
-                        timeType: timeType,
-                        productType: productType,
+                        time: time,
                     }
                 }
             )
@@ -123,6 +122,34 @@ app.service('restService', [
                     onFail(response.data);
                 }
             );
+        },
+
+        addToTop: function(ids, time, onSuccess, onFail) {
+            $log.info("Add to top ids " + ids);
+            $http.post(
+                adminUri + "addToTop",
+                {ids: ids, time: time}
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                });
+        },
+
+        removeFromTop: function(ids, time, onSuccess, onFail) {
+            $log.info("Remove from top ids " + ids);
+            $http.post(
+                adminUri + "removeFromTop",
+                {ids: ids, time: time}
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                });
         },
 
         getAllProducts: function(onSuccess, onFail) {

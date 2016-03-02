@@ -4,6 +4,9 @@ import com.google.common.collect.ImmutableMap;
 import com.structuredproducts.persistence.DBManager;
 import com.structuredproducts.persistence.entities.instrument.*;
 import org.apache.log4j.Logger;
+import org.hibernate.jpa.criteria.CriteriaBuilderImpl;
+import org.hibernate.jpa.criteria.CriteriaDeleteImpl;
+import org.hibernate.jpa.criteria.CriteriaUpdateImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PreDestroy;
@@ -35,6 +38,7 @@ public class DBService {
             put(PaymentPeriodicity.class, "INSTRUMENT.PAYMENT_PERIODICITY").
             put(Product.class, "INSTRUMENT.PRODUCT").
             put(Broker.class, "INSTRUMENT.BROKER").
+            put(TopProduct.class, "INSTRUMENT.TOP_PRODUCT").
             build();
 
     public List<?> getProductsByType(List<String> types) {
@@ -171,6 +175,27 @@ public class DBService {
                 transaction.rollback();
             }
         }
+    }
+
+    public void removeTopProductByProduct(List<TopProduct> topProducts) {
+        Query query = dbManager.getEntityManager().createQuery("delete from TopProduct where product = :product_id");
+
+        EntityTransaction transaction = dbManager.getEntityManager().getTransaction();
+        transaction.begin();
+        try {
+            for (TopProduct topProduct : topProducts) {
+                query.setParameter("product_id", topProduct.getProduct());
+                query.executeUpdate();
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Can not remove list of entities.", e);
+        } finally {
+            if(transaction.isActive()) {
+                transaction.rollback();
+            }
+        }
+
     }
 
     @PreDestroy

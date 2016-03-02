@@ -20,6 +20,9 @@ public class TopProduct{
     @JoinColumn(name = "product")
     Product product;
 
+    @Column
+    private String time;
+
     public TopProduct() {}
 
     public Integer getId() {
@@ -36,5 +39,13 @@ public class TopProduct{
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
