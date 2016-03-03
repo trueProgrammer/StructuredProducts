@@ -5,6 +5,60 @@
  * Author: @htmlstream
  * Website: http://htmlstream.com
 */
+angular.module('App',
+    ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ngCookies', 'App.services',
+        'ui.grid', 'ui.grid.edit', 'ui.grid.selection',
+        'App.main', 'App.about', 'App.investidea', 'App.investideas', 'App.investproduct', 'App.partners', 'App.structuredproducts',
+        'App.login', 'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts'
+    ]).config(['$httpProvider',
+        function($httpProvider){
+            $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
+                    return {
+                        'request': function(config) {
+                            var isRestCall = config.url.indexOf('api') == 0;
+                            if (isRestCall && angular.isDefined($rootScope.authToken)) {
+                                var authToken = $rootScope.authToken;
+                                //if (exampleAppConfig.useAuthTokenHeader) {
+                                config.headers['X-Auth-Token'] = authToken;
+                                /*                            } else {
+                                 config.url = config.url + "?token=" + authToken;
+                                 }*/
+                            }
+                            return config || $q.when(config);
+                        }
+                    };
+                }
+            );
+        }])
+.run(function($rootScope, $location, $cookieStore, UserService) {
+
+    /!* Try getting valid user from cookie or go to login page *!/
+    var originalPath = $location.path();
+    //$location.path("/login");
+
+    var authToken = $cookieStore.get('authToken');
+    if (authToken !== undefined && originalPath.match(/\/admin\/?.*/)) {
+        $rootScope.authToken = authToken;
+        UserService.get(function(user) {
+            $rootScope.user = user;
+            //$location.path(originalPath);
+        });
+    }
+
+});
+angular.module('App.main', []);
+angular.module('App.about', []);
+angular.module('App.investidea', []);
+angular.module('App.investideas', []);
+angular.module('App.investproduct', []);
+angular.module('App.partners', []);
+angular.module('App.structuredproducts', []);
+angular.module('App.login', []);
+angular.module('App.admin', []);
+angular.module('App.admin.products', []);
+angular.module('App.admin.broker', []);
+angular.module('App.admin.investidea', []);
+angular.module('App.admin.topproducts', []);
 
 var App = function () {
 

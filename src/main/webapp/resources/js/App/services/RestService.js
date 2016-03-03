@@ -1,4 +1,4 @@
-app.service('restService', [
+angular.module('App.services', ['ngResource']).service('restService', [
     '$http', '$log',
     function ($http, $log) {
         var dataUri = 'api/v1/data/',

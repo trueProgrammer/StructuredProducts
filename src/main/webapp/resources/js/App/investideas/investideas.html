@@ -27,11 +27,11 @@
     <div ng-repeat="val in investideas">
         <!-- Begin Inner Results -->
         <div class="inner-results">
-            <h3><a href="#/investidea?id={{val.id}}">{{val.header}}</a></h3>
+            <h3><a href="#/investidea?id={{val.id}}">{{val.title}}</a></h3>
             <p>{{val.preview}}</p>
             <ul class="list-inline down-ul">
-                <li>{{val.date | date:'dd, MMMM yyyy'}}</li>
-                <li>{{val.company}}</li>
+                <li>{{val.addDate | date:'dd, MMMM yyyy'}}</li>
+                <li>{{val.broker.name}}</li>
             </ul>
         </div>
         <!-- Begin Inner Results -->
