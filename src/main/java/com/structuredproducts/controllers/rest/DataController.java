@@ -119,7 +119,9 @@ public class DataController {
     @RequestMapping(path = "/investideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<InvestIdea[]> getInvestIdeas(Boolean showOnMainPage) {
         List<InvestIdea> list = (List<InvestIdea>) dbService.getResultList(InvestIdea.class);
-        list.forEach(idea -> idea.setPreview());
+        if (list != null) {
+            list.forEach(idea -> idea.setPreview());
+        }
         return new ResponseEntity<>(list.toArray(new InvestIdea[list.size()]), HttpStatus.OK);
     }
 

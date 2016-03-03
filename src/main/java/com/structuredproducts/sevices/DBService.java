@@ -14,9 +14,11 @@ import org.hibernate.jpa.criteria.CriteriaUpdateImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PreDestroy;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transaction;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -199,6 +201,22 @@ public class DBService {
         } finally {
             if(transaction.isActive()) {
                 transaction.rollback();
+            }
+        }
+    }
+
+    public void removeInvestIdea(InvestIdea idea) {
+        EntityManager em = dbManager.getEntityManager();
+        EntityTransaction tr = em.getTransaction();
+        tr.begin();
+        try {
+            em.remove(dbManager.getEntityManager().contains(idea) ? idea : dbManager.getEntityManager().merge(idea));
+            tr.commit();
+        } catch (Exception e) {
+            logger.error("Can not remove list of entities.", e);
+        } finally {
+            if (tr.isActive()) {
+                tr.rollback();
             }
         }
     }

@@ -22,30 +22,73 @@
     </ul>
 
     <form id="investidea-form">
-        <div class="form-group">
-            <label for="title">Заголовок</label>
-            <input type="text" class="form-control" id="title">
-        </div>
-        <div class="form-group">
-            <label for="content">Текст идеи</label>
-            <textarea id="content"  class="form-control"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="brokers-dropdown">Брокеры</label>
-            <div class="row">
-                <div class="col-md-6">
-                    <select class="form-control"  ng-model="selectedBroker"
-                            ng-options="broker as broker.name for broker in brokersData track by broker.id" id="brokers-dropdown"
-                            ng-change="updateBrokerImg()">
-                        <option value="">Выберите значение</option>
-                    </select>
+        <div class="row">
+            <div class="col-md-6">
+                <h2 ng-show="mode === 'add'">Добавить:</h2>
+                <h2 ng-show="mode === 'modify'">Редактировать:</h2>
+                <div class="form-group">
+                    <label for="title">Заголовок</label>
+                    <input type="text" class="form-control" id="title">
                 </div>
-                <div class="col-md-4">
-                    <img id="broker-logo" src=""/>
+                <div class="form-group">
+                    <label for="content">Текст идеи</label>
+                    <textarea id="content" class="form-control"></textarea>
                 </div>
+                <div class="form-group">
+                    <label for="brokers-dropdown">Брокеры</label>
+
+                    <div class="row">
+                        <div class="col-md-5">
+                            <select class="form-control" ng-model="selectedBroker"
+                                    ng-options="broker as broker.name for broker in brokersData track by broker.id"
+                                    id="brokers-dropdown"
+                                    ng-change="updateBrokerImg()">
+                                <option value="">Выберите значение</option>
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <img id="broker-logo" src=""/>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary" id="actionbtn" ng-click="addIdea()">Добавить</button>
+                <button class="btn-primary" ng-show="mode === 'modify'" id="cancelbtn" ng-click="cancel()">Отмена</button>
             </div>
+            <div class="col-md-6">
+                <h2>Список существующих идей:</h2>
+
+                <div class="md-margin-bottom-40">
+
+
+                    <!-- Accordion -->
+                    <div id="accordion-v1" class="panel-group acc-v1">
+
+                        <div ng-repeat="val in data.investideas">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a href="" ng-click="accordion.select('accordion-v1', 'collapse' + $index)"
+                                           data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">
+                                            <b>{{val.title}}</b><span class="results-number invest-idea-header">{{val.addDate | date:'dd.MM.yyyy'}}, {{val.broker.name}}</span>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse">
+                                    <div class="panel-body">
+                                        {{val.preview}}
+                                        <br>
+                                        <button class="btn-primary" ng-click="modifyIdea(val)">Редактировать</button>
+                                        <button class="btn-primary" ng-click="removeIdea(val)">Удалить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- End Accordion -->
+                </div>
+        </div>
         </div>
     </form>
-    <button class="btn-primary" ng-click="addIdea()">Добавить</button>
 
 </div>

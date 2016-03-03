@@ -145,7 +145,21 @@ public class AdminController {
         return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
     }
 
-    @RequestMapping(path="/investIdeaAdd",
+    @RequestMapping(path = "/removeIdea", method = RequestMethod.POST,
+                           produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+                           consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Message> removeInvestIdea(@RequestBody() String json) {
+        try {
+            Map<String, Object> map = ServiceUtils.getObjectMapping(json);
+            InvestIdea idea = new InvestIdea();
+            idea.setId((Integer) map.get("id"));
+            dbService.removeInvestIdea(idea);
+        } catch (IOException e) {
+            logger.error("can't handle json " + json);
+        }
+        return new ResponseEntity<Message>(HttpStatus.OK);
+    }
+    @RequestMapping(path="/investIdeaAddOrUpdate",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
@@ -154,6 +168,7 @@ public class AdminController {
         logger.debug("Got json for save " + json);
         try {
             Map<String, Object> map = ServiceUtils.getObjectMapping(json);
+            Integer id = (Integer) map.get("id");
             String title = (String) map.get("title");
             String content = (String) map.get("content");
             Integer brokerId = (Integer) map.get("broker");
@@ -162,6 +177,7 @@ public class AdminController {
             broker.setId(brokerId);
 
             InvestIdea idea = new InvestIdea();
+            idea.setId(id);
             idea.setBroker(broker);
             idea.setTitle(title);
             idea.setContent(content);

@@ -72,6 +72,21 @@ app.service('restService', [
             );
         },
 
+        removeIdea: function(id, onSuccess, onFail) {
+            $log.info("Remove idea " + id);
+            $http.post(
+                adminUri + "removeIdea",
+                {
+                    id: id
+                }
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                });
+        },
         getInvestIdeaById: function (id, onSuccess, onFail) {
             $log.info("Get invest idea by id");
             $http.get(
@@ -271,7 +286,7 @@ app.service('restService', [
         addIdea: function(ideaJson, onSuccess, onFail) {
             $log.info("Save idea");
             $http.post(
-                adminUri + "investIdeaAdd",
+                adminUri + "investIdeaAddOrUpdate",
                 ideaJson
             ).then(
                 function (response) {
