@@ -21,21 +21,50 @@
         <li><a href="#/admin/topproducts">Топ продуктов</a></li>
     </ul>
 
-    <form id="broker-form">
-        <div class="form-group">
-            <label for="broker-name">Имя брокера</label>
-            <input type="text" class="form-control" id="broker-name"/>
+    <div class="row">
+        <div class="col-md-6">
+            <h2 ng-show="mode === 'add'">Добавить:</h2>
+            <h2 ng-show="mode === 'modify'">Редактировать:</h2>
+            <form id="broker-form">
+                <div class="form-group">
+                    <label for="broker-name">Имя брокера</label>
+                    <input type="text" class="form-control" id="broker-name"/>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="broker-logo">Логотип брокера</label>
+                        <input type="file" id="broker-logo" class="form-control" onchange="angular.element(this).scope().onImgChanged(this)"/>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <img id="broker-logo-preview" width="250" src=""/>
+                    </div>
+                </div>
+            </form>
+            <button class="btn-primary" id="actionbtn" ng-click="onAddClick()">Добавить</button>
+            <button class="btn-primary" ng-show="mode === 'modify'" id="cancelbtn" ng-click="cancel()">Отмена</button>
         </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label for="broker-logo">Логотип брокера</label>
-                <input type="file" id="broker-logo" class="form-control" onchange="angular.element(this).scope().onImgChanged(this)"/>
-            </div>
-            <div class="form-group col-md-4">
-                <img id="broker-logo-preview" src=""/>
+        <div class="col-md-4">
+            <div id="accordion-v1" class="panel-group acc-v1">
+                <div ng-repeat="broker in brokers">
+                    <div class="panel panel-default">
+                        <div class="panel-collapse">
+                            <div class="panel-body">
+                                <b>Имя брокера:</b>
+                                {{broker.name}}
+                                <br/>
+                                <b>Логотип:</b>
+                                <br/>
+                                <img width="250" src="{{broker.logo}}">
+                                <br>
+                                <button class="btn-primary" ng-click="modifyBroker(broker)">Редактировать</button>
+                                <button class="btn-primary" ng-click="removeBroker(broker)">Удалить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </form>
-    <button class="btn-primary" ng-click="onAddClick()">Добавить</button>
+    </div>
 
 </div>

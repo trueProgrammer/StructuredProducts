@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableMap;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.*;
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -122,10 +121,12 @@ public class AdminController {
         logger.debug("Got json " + json);
         try {
             Map<String, Object> map = ServiceUtils.getObjectMapping(json);
+            Integer id = (Integer) map.get("id");
             String name = (String) map.get("name");
             String img = (String) map.get("img");
 
             Broker broker = new Broker();
+            broker.setId(id);
             broker.setName(name);
             broker.setLogo(img);
 
@@ -134,6 +135,26 @@ public class AdminController {
             logger.error("can't handle json " + json, e);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+    @RequestMapping(path="/brokerRemove",
+                           method = RequestMethod.POST,
+                           produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
+                           consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<Message> removeBroker(@RequestBody String json) {
+        logger.debug("Got json " + json);
+        try {
+            Map<String, Object> map = ServiceUtils.getObjectMapping(json);
+            Integer id = (Integer) map.get("id");
+            Broker broker = new Broker();
+            broker.setId(id);
+            dbService.removeObj(broker);
+        } catch (IOException e) {
+            logger.error("can't handle json " + json, e);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @RequestMapping(path="/brokerGet",
@@ -153,7 +174,7 @@ public class AdminController {
             Map<String, Object> map = ServiceUtils.getObjectMapping(json);
             InvestIdea idea = new InvestIdea();
             idea.setId((Integer) map.get("id"));
-            dbService.removeInvestIdea(idea);
+            dbService.removeObj(idea);
         } catch (IOException e) {
             logger.error("can't handle json " + json);
         }

@@ -252,16 +252,29 @@ app.service('restService', [
             );
         },
 
-        addBroker: function(name, img, onSuccess, onFail){
+        removeBroker: function(id, onSuccess, onFail) {
+            $http.post(
+                adminUri + 'brokerRemove',
+                {
+                    id: id
+                }
+            ).then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data);
+                });
+        },
+
+        addBroker: function(id, name, img, onSuccess, onFail){
             $log.info("Add broker");
-            var json = JSON.stringify({
-                name: name,
-                img: img
-            });
             $http.post(
                 adminUri + "brokerAdd",
-                json
-            ).then(
+                {
+                    id: id,
+                    name: name,
+                    img: img
+                }).then(
                 function (response) {
                     onSuccess(response.data);
                 }, function (response) {

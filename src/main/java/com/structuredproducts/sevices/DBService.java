@@ -205,15 +205,15 @@ public class DBService {
         }
     }
 
-    public void removeInvestIdea(InvestIdea idea) {
+    public void removeObj(Object obj) {
         EntityManager em = dbManager.getEntityManager();
         EntityTransaction tr = em.getTransaction();
         tr.begin();
         try {
-            em.remove(dbManager.getEntityManager().contains(idea) ? idea : dbManager.getEntityManager().merge(idea));
+            em.remove(dbManager.getEntityManager().contains(obj) ? obj : dbManager.getEntityManager().merge(obj));
             tr.commit();
         } catch (Exception e) {
-            logger.error("Can not remove list of entities.", e);
+            logger.error("Can not remove entity.", e);
         } finally {
             if (tr.isActive()) {
                 tr.rollback();
