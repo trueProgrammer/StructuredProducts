@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Vlad on 10.01.2016.
  */
-public class InvestIdea {
+public class InvestIdeaBean {
 
     private long id;
     private String company;
@@ -15,7 +15,7 @@ public class InvestIdea {
     private String preview;
     private String content;
 
-    public InvestIdea(){}
+    public InvestIdeaBean(){}
 
     public String getHeader() {
         return header;
@@ -78,7 +78,7 @@ public class InvestIdea {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        InvestIdea that = (InvestIdea) o;
+        InvestIdeaBean that = (InvestIdeaBean) o;
 
         if (id != that.id) return false;
         if (showOnMainPage != that.showOnMainPage) return false;

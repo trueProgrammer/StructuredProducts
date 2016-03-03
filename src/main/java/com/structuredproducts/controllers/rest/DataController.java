@@ -2,7 +2,7 @@ package com.structuredproducts.controllers.rest;
 
 import com.google.common.collect.*;
 import com.structuredproducts.controllers.data.*;
-import com.structuredproducts.controllers.data.InvestIdea;
+import com.structuredproducts.controllers.data.InvestIdeaBean;
 import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.persistence.entities.instrument.Product;
@@ -30,8 +30,6 @@ public class DataController {
 
     @Autowired
     private NewsService newsService;
-    @Autowired
-    private InvestIdeasService investIdeasService;
     @Autowired
     private DBService dbService;
 
@@ -120,19 +118,13 @@ public class DataController {
 
     @RequestMapping(path = "/investideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<InvestIdea[]> getInvestIdeas(Boolean showOnMainPage) {
-        List<InvestIdea> list;
-        if(showOnMainPage) {
-            list = investIdeasService.getInvestIdeasForMainPage();
-        } else {
-            list = investIdeasService.getInvestIdeas();
-        }
+        List<InvestIdea> list = (List<InvestIdea>) dbService.getResultList(InvestIdea.class);
+        list.forEach(idea -> idea.setPreview());
         return new ResponseEntity<>(list.toArray(new InvestIdea[list.size()]), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/investidea", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<InvestIdea> getInvestIdeaById(long id) {
-        List<InvestIdea> list = investIdeasService.getInvestIdeas();
-        InvestIdea result = list.stream().filter(v -> v.getId() == id).findFirst().get();
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<InvestIdea> getInvestIdeaById(int id) {
+        return new ResponseEntity<>(dbService.getInvestIdeaById(id), HttpStatus.OK);
     }
 }

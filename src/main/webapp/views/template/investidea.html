@@ -17,17 +17,18 @@
     <div class="row invoice-header">
         <div class="col-xs-6">
             <img src="resources/assets/img/img.jpg" alt="">
-            <h2 class="pull-left">{{investidea.company}}</h2>
+            <h2 class="pull-left">{{investidea.broker.name}}</h2>
         </div>
         <div class="col-xs-6 invoice-numb">
-            {{investidea.date | date:'dd, MMMM yyyy'}}
+            {{investidea.addDate | date:'dd, MMMM yyyy'}}
         </div>
     </div>
 
     <div class="clearfix margin-bottom-10"></div>
     <div class="shadow-wrapper">
         <div class="tag-box tag-box-v1 box-shadow shadow-effect-2">
-            <h2>{{investidea.header}}</h2>
+            <h2>{{investidea.title}}</h2>
+            <img src="{{investidea.broker.logo}}"/>
             <p>{{investidea.content}}</p>
         </div>
     </div>

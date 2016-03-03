@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -164,6 +165,7 @@ public class AdminController {
             idea.setBroker(broker);
             idea.setTitle(title);
             idea.setContent(content);
+            idea.setAddDate(new Date());
 
             dbService.save(idea);
         } catch (IOException e) {

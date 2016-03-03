@@ -5,11 +5,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "employee")
 @Table(name = "INVEST_IDEA", schema = "INSTRUMENT")
 public class InvestIdea {
+    private static final int MAX_PREVIEW_SIZE = 50;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,6 +21,12 @@ public class InvestIdea {
 
     @Column
     private String content;
+
+    @Column
+    private Date addDate;
+
+    @Transient
+    private String preview;
 
     @ManyToOne(targetEntity = Broker.class)
     @JoinColumn(name = "broker")
@@ -54,5 +62,24 @@ public class InvestIdea {
 
     public void setBroker(Broker broker) {
         this.broker = broker;
+    }
+
+    public Date getAddDate() {
+        return addDate;
+    }
+
+    public void setAddDate(Date addDate) {
+        this.addDate = addDate;
+    }
+
+    public String getPreview() {
+        return preview;
+    }
+
+    public void setPreview() {
+        this.preview = content.substring(0, Math.min(MAX_PREVIEW_SIZE, content.length()));
+        if (preview.length() < content.length()) {
+            preview += "...";
+        }
     }
 }

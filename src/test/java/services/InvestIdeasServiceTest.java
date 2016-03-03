@@ -1,6 +1,6 @@
 package services;
 
-import com.structuredproducts.controllers.data.InvestIdea;
+import com.structuredproducts.controllers.data.InvestIdeaBean;
 import com.structuredproducts.sevices.InvestIdeasService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +16,7 @@ public class InvestIdeasServiceTest {
 
     @Test
     public void test() {
-        List<InvestIdea> list = investIdeasService.getInvestIdeas();
+        List<InvestIdeaBean> list = investIdeasService.getInvestIdeas();
         Assert.assertTrue(list.size() == 2);
 
         list = investIdeasService.getInvestIdeasForMainPage();

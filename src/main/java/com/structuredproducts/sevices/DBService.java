@@ -44,6 +44,7 @@ public class DBService {
             put(Product.class, "INSTRUMENT.PRODUCT").
             put(Broker.class, "INSTRUMENT.BROKER").
             put(TopProduct.class, "INSTRUMENT.TOP_PRODUCT").
+            put(InvestIdea.class, "INSTRUMENT.INVEST_IDEA").
             build();
 
     public List<?> getProductsByType(List<String> types) {
@@ -200,7 +201,10 @@ public class DBService {
                 transaction.rollback();
             }
         }
+    }
 
+    public InvestIdea getInvestIdeaById(int id) {
+        return dbManager.getEntityManager().find(InvestIdea.class, id);
     }
 
     @PreDestroy

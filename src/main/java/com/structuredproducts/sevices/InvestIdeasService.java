@@ -1,6 +1,6 @@
 package com.structuredproducts.sevices;
 
-import com.structuredproducts.controllers.data.InvestIdea;
+import com.structuredproducts.controllers.data.InvestIdeaBean;
 import org.apache.log4j.Logger;
 import org.supercsv.cellprocessor.ParseBool;
 import org.supercsv.cellprocessor.ParseDate;
@@ -31,12 +31,12 @@ public class InvestIdeasService extends AbstractCSVService {
     };
 
 
-    public List<InvestIdea> getInvestIdeas(){
-        return (List<InvestIdea>) getListFromFile(InvestIdea.class, INVESTIDEAS_FILENAME, INVESTIDEAS_PROCESSORS);
+    public List<InvestIdeaBean> getInvestIdeas(){
+        return (List<InvestIdeaBean>) getListFromFile(InvestIdeaBean.class, INVESTIDEAS_FILENAME, INVESTIDEAS_PROCESSORS);
     }
 
-    public List<InvestIdea> getInvestIdeasForMainPage() {
-        List<InvestIdea> list = (List<InvestIdea>) getListFromFile(InvestIdea.class, INVESTIDEAS_FILENAME, INVESTIDEAS_PROCESSORS);
+    public List<InvestIdeaBean> getInvestIdeasForMainPage() {
+        List<InvestIdeaBean> list = (List<InvestIdeaBean>) getListFromFile(InvestIdeaBean.class, INVESTIDEAS_FILENAME, INVESTIDEAS_PROCESSORS);
         return list.stream().filter(v -> v.isShowOnMainPage()).collect(Collectors.toList());
     }
 }
