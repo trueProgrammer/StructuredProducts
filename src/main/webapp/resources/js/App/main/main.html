@@ -131,7 +131,7 @@
                     <div id="accordion-v1" class="panel-group acc-v1">
 
                         <div ng-repeat="val in data.investideas">
-                            <div class="panel panel-default">
+                            <div class="panel panel-default" ng-if="val.mainPage">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a href="" ng-click="accordion.select('accordion-v1', 'collapse' + $index)" data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">

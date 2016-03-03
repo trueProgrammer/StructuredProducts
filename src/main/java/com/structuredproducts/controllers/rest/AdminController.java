@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.*;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -193,6 +194,7 @@ public class AdminController {
             String title = (String) map.get("title");
             String content = (String) map.get("content");
             Integer brokerId = (Integer) map.get("broker");
+            Boolean onMainPage = (Boolean) map.get("onMainPage");
 
             Broker broker = new Broker();
             broker.setId(brokerId);
@@ -203,6 +205,7 @@ public class AdminController {
             idea.setTitle(title);
             idea.setContent(content);
             idea.setAddDate(new Date());
+            idea.setMainPage(onMainPage);
 
             dbService.save(idea);
         } catch (IOException e) {

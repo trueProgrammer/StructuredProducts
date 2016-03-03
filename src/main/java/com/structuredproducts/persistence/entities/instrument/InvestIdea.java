@@ -25,6 +25,9 @@ public class InvestIdea {
     @Column
     private Date addDate;
 
+    @Column
+    private Boolean mainPage;
+
     @Transient
     private String preview;
 
@@ -70,6 +73,14 @@ public class InvestIdea {
 
     public void setAddDate(Date addDate) {
         this.addDate = addDate;
+    }
+
+    public Boolean getMainPage() {
+        return mainPage;
+    }
+
+    public void setMainPage(Boolean mainPage) {
+        this.mainPage = mainPage;
     }
 
     public String getPreview() {

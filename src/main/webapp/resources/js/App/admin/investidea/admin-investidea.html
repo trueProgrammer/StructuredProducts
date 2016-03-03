@@ -42,9 +42,13 @@
                             </select>
                         </div>
                         <div class="col-md-1">
-                            <img id="broker-logo" src=""/>
+                            <img id="broker-logo" src="" width="250"/>
                         </div>
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="mainPage">Показывать на главной</label>
+                    <input class="check-box" id="mainPage" type="checkbox" ng-model="onMainPage"/>
                 </div>
                 <button class="btn-primary" id="actionbtn" ng-click="addIdea()">Добавить</button>
                 <button class="btn-primary" ng-show="mode === 'modify'" id="cancelbtn" ng-click="cancel()">Отмена</button>

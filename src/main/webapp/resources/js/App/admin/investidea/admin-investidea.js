@@ -44,9 +44,10 @@ angular.module('App.admin.investidea')
         $scope.modifyIdea = function(idea) {
             $('#title').val(idea.title);
             $('#content').val(idea.content);
-            $('#brokers-dropdown').val(idea.broker.id);
             $('#broker-logo').attr('src', idea.broker.logo);
             $('#actionbtn').html('Обновить');
+            $scope.selectedBroker = idea.broker;
+            $scope.onMainPage = idea.mainPage;
             $scope.mode = 'modify';
             $scope.ideaId = idea.id;
         };
@@ -54,6 +55,9 @@ angular.module('App.admin.investidea')
         $scope.cancel = function() {
             $('#investidea-form')[0].reset();
             $scope.mode = 'add';
+            $('#broker-logo').attr('src', '');
+            $scope.ideaId = null;
+            $scope.selectedBroker = null;
             $('#actionbtn').html('Добавить');
         };
 
@@ -68,13 +72,23 @@ angular.module('App.admin.investidea')
                     id: $scope.ideaId,
                     title: $('#title').val(),
                     content: $('textarea#content').val(),
-                    broker: $scope.selectedBroker.id
+                    broker: $scope.selectedBroker.id,
+                    onMainPage: $scope.onMainPage
                 };
                 restService.addIdea(obj, function(data) {
                     console.log("idea successfully saved");
-                }, function(data) {
-                    console.log("idea not saved")
                     $('#investidea-form')[0].reset();
+                    $('#broker-logo').attr('src', '');
+                    $scope.ideaId = null;
+                    $scope.selectedBroker = null;
+                    updateInvestIdeas();
+                }, function(data) {
+                    console.log("idea not saved");
+                    $scope.ideaId = null;
+                    $scope.selectedBroker = null;
+                    $('#investidea-form')[0].reset();
+                    $('#broker-logo').attr('src', '');
+                    updateInvestIdeas();
                 })
             }
         }

@@ -32,7 +32,7 @@ angular.module('App.admin.broker')
         $scope.modifyBroker = function(broker) {
             $('#broker-name').val(broker.name);
             $('#broker-logo-preview').attr('src', broker.logo);
-            $('#actionbtn').html('Обновить');
+            $('#actionbtn').html('РћР±РЅРѕРІРёС‚СЊ');
             $scope.brokerForAdd = broker;
             $scope.logo = broker.logo;
             $scope.mode = 'modify';
@@ -42,7 +42,7 @@ angular.module('App.admin.broker')
             $scope.mode = 'add';
             $('#broker-form')[0].reset();
             $('#broker-logo-preview').attr('src', "");
-            $('#actionbtn').html('Добавить');
+            $('#actionbtn').html('Р”РѕР±Р°РІРёС‚СЊ')
             $scope.brokerForAdd = null;
         };
         $scope.removeBroker = function(broker) {
@@ -63,12 +63,12 @@ angular.module('App.admin.broker')
                 $('#broker-form')[0].reset();
                 $scope.mode = 'add';
                 $scope.brokerForAdd = null;
-                $('#actionbtn').html('Добавить');
+                $('#actionbtn').html('Р”РѕР±Р°РІРёС‚СЊ');
                 loadBrokers();
             }, function(error) {
                 $('#broker-form')[0].reset();
                 $scope.brokerForAdd = null;
-                $('#actionbtn').html('Добавить');
+                $('#actionbtn').html('Р”РѕР±Р°РІРёС‚СЊ');
                 loadBrokers();
             });
         }
