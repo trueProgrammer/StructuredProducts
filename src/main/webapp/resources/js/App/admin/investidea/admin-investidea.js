@@ -46,7 +46,7 @@ angular.module('App.admin.investidea')
             $('#content').val(idea.content);
             $('#brokers-dropdown').val(idea.broker.id);
             $('#broker-logo').attr('src', idea.broker.logo);
-            $('#actionbtn').html('Обновить');
+            $('#actionbtn').html('РћР±РЅРѕРІРёС‚СЊ');
             $scope.mode = 'modify';
             $scope.ideaId = idea.id;
         };
@@ -54,11 +54,10 @@ angular.module('App.admin.investidea')
         $scope.cancel = function() {
             $('#investidea-form')[0].reset();
             $scope.mode = 'add';
-            $('#actionbtn').html('Добавить');
+            $('#actionbtn').html('Р”РѕР±Р°РІРёС‚СЊ');
         };
 
         $scope.removeIdea = function(idea) {
-            alert(JSON.stringify(idea));
             restService.removeIdea(idea.id, function () {
                 updateInvestIdeas();
             }, function(data) {console.log(data)});

@@ -254,7 +254,6 @@ angular.module('App.admin.products')
 
         (function() {
             if(typeof $rootScope.user === 'undefined') {
-                alert('undefined')
                 $location.path("/login");
             } else {
                 $scope.selectTable('product');
