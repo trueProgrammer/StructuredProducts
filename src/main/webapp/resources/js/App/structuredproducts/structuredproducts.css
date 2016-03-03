@@ -1,0 +1,33 @@
+.frame {
+    border: 2px solid;
+    border-color: #2ea0d9;
+    padding: 10px;
+    background: #d8e3f1;
+    margin-top: 10px;
+}
+
+.white {
+    background: #fcfcfc;
+}
+
+.one-page h1, .one-page h2 {
+    color: #555 !important;
+}
+
+.one-page p {
+    color: #555 !important;
+}
+
+.grey {
+    background: #efefef;
+}
+
+.content {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.one-page .one-page-inner {
+    padding: 0 !important;
+    min-height: 0 !important;
+}
