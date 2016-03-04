@@ -13,8 +13,6 @@ angular.module('App.admin.broker')
         (function() {
             if(typeof $rootScope.user === 'undefined') {
                 $location.path("/login");
-            } else {
-                $scope.selectTable('product');
             }
         }());
         var loadBrokers = function() {

@@ -12,8 +12,6 @@ angular.module('App.admin.investidea')
         (function() {
             if(typeof $rootScope.user === 'undefined') {
                 $location.path("/login");
-            } else {
-                $scope.selectTable('product');
             }
         }());
         var updateInvestIdeas = function() {
