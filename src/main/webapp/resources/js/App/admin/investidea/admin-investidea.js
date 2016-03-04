@@ -78,7 +78,7 @@ angular.module('App.admin.investidea')
                     title: $('#title').val(),
                     content: $('textarea#content').val(),
                     broker: $scope.selectedBroker.id,
-                    onMainPage: $scope.onMainPage
+                    onMainPage: !!$scope.onMainPage
                 };
                 restService.addIdea(obj, function(data) {
                     console.log("idea successfully saved");
