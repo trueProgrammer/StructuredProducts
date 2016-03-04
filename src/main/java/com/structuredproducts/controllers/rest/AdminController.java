@@ -6,7 +6,8 @@ import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.DBService;
 import com.structuredproducts.sevices.ProductCsvToDbService;
 import com.structuredproducts.sevices.ServiceUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,7 +33,7 @@ import java.util.Map;
 @RequestMapping("/v1/admin")
 public class AdminController {
 
-    private final static Logger logger = Logger.getLogger(DataController.class);
+    private final static Logger logger = LoggerFactory.getLogger(DataController.class);
 
     @Autowired
     private DBService dbService;
@@ -66,7 +67,9 @@ public class AdminController {
             List<?> list = ServiceUtils.getObjects(ENTITY_TYPES.get(entityType), entity);
             dbService.save(list);
         } catch (IOException e) {
-            logger.error("Error while convert from json to object: ["+entityType+"], ["+entity+"]", e);
+
+            logger.error("Error while convert from json to object. Entity type:{} json: {}",entityType,entity);
+            logger.error("", e);
             return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -111,7 +114,8 @@ public class AdminController {
             List<?> list = ServiceUtils.getObjects(ENTITY_TYPES.get(entityType), entity);
             dbService.remove(list);
         } catch (IOException e) {
-            logger.error("Error while convert from json to object: ["+entityType+"], ["+entity+"]", e);
+            logger.error("Error while convert from json to object. Entity type:{} json: {}",entityType,entity);
+            logger.error("", e);
             return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -122,7 +126,7 @@ public class AdminController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Message> addBroker(@RequestBody String json) {
-        logger.debug("Got json " + json);
+        logger.debug("Got json {}", json);
         try {
             Map<String, Object> map = ServiceUtils.getObjectMapping(json);
             Integer id = (Integer) map.get("id");
@@ -147,7 +151,7 @@ public class AdminController {
                            produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
                            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Message> removeBroker(@RequestBody String json) {
-        logger.debug("Got json " + json);
+        logger.debug("Got json {}", json);
         try {
             Map<String, Object> map = ServiceUtils.getObjectMapping(json);
             Integer id = (Integer) map.get("id");
@@ -180,7 +184,7 @@ public class AdminController {
             idea.setId((Integer) map.get("id"));
             dbService.removeObj(idea);
         } catch (IOException e) {
-            logger.error("can't handle json " + json);
+            logger.error("can't handle json " + json, e);
         }
         return new ResponseEntity<Message>(HttpStatus.OK);
     }
@@ -190,7 +194,7 @@ public class AdminController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public ResponseEntity<Message> addInvestIdea(@RequestBody String json) {
-        logger.debug("Got json for save " + json);
+        logger.debug("Got json {} for save ", json);
         try {
             Map<String, Object> map = ServiceUtils.getObjectMapping(json);
             Integer id = (Integer) map.get("id");
@@ -250,7 +254,7 @@ public class AdminController {
                            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
                            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Message> addToTopProducts(@RequestBody String json) {
-        logger.debug("Got json " + json);
+        logger.debug("Got json {}", json);
 
         try {
             List<TopProduct> products = extractTopProductsFromJson(json);
@@ -266,7 +270,7 @@ public class AdminController {
                            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
                            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Message> removeFromTopProducts(@RequestBody String json) {
-        logger.debug("Got json " + json);
+        logger.debug("Got json {}", json);
         try {
             List<TopProduct> products = extractTopProductsFromJson(json);
             dbService.removeTopProductByProduct(products);

@@ -1,6 +1,7 @@
 package com.structuredproducts.sevices;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.mail.*;
@@ -15,7 +16,7 @@ import java.util.Random;
  */
 public class MailService {
 
-    private static final Logger log = Logger.getLogger(MailService.class);
+    private static final Logger log = LoggerFactory.getLogger(MailService.class);
 
     @Value( "${mail.login}" )
     private String login;
@@ -41,7 +42,7 @@ public class MailService {
 
     public void sendMessage(String name, String from, String text) throws ServiceException {
 
-        log.debug(String.format("Email [name:%s, from:%s] will be send.", name, from));
+        log.debug("Email [name:{}, from:{}] will be send.", name, from);
 
         try {
             Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -64,7 +65,7 @@ public class MailService {
 
             Transport.send(msg);
         } catch (MessagingException e) {
-            log.error(String.format("Email [name:%s, from:%s] hasn't send.", name, from), e);
+            log.error("Email [name:{}, from:{}] hasn't send.", name, from, e);
             throw new ServiceException("Email hasn't send.", e);
         }
 

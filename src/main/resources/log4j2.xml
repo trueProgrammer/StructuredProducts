@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="OFF">
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%-5level] [%t] %c{1.} - %msg%n"/>
+        </Console>
+        <File name="file" fileName="./log/structuredproducts.log">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%-5level] [%t] %c{1.} - %msg%n"/>
+        </File>
+</Appenders>
+    <Loggers>
+        <Logger name="com.structuredproducts" level="debug" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </Logger>
+    </Loggers>
+</Configuration>

@@ -16,7 +16,8 @@
         <javax.jstl.version>1.2</javax.jstl.version>
         <jackson.core.version>2.4.1</jackson.core.version>
         <jackson.databind.version>2.4.1.1</jackson.databind.version>
-        <log4j.version>1.2.17</log4j.version>
+        <slf4j.version>1.7.18</slf4j.version>
+        <log4j.version>2.5</log4j.version>
         <javax.mail.version>1.4.7</javax.mail.version>
         <junit.version>4.12</junit.version>
         <guava.version>19.0</guava.version>
@@ -173,9 +174,27 @@
 
 
         <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
             <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- Test -->

@@ -1,16 +1,10 @@
 package com.structuredproducts.sevices;
 
 import com.google.common.collect.ImmutableMap;
-import com.structuredproducts.controllers.data.*;
 import com.structuredproducts.persistence.DBManager;
 import com.structuredproducts.persistence.entities.instrument.*;
-import com.structuredproducts.persistence.entities.instrument.Currency;
-import com.structuredproducts.persistence.entities.instrument.ProductType;
-import com.structuredproducts.persistence.entities.instrument.TopProduct;
-import org.apache.log4j.Logger;
-import org.hibernate.jpa.criteria.CriteriaBuilderImpl;
-import org.hibernate.jpa.criteria.CriteriaDeleteImpl;
-import org.hibernate.jpa.criteria.CriteriaUpdateImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PreDestroy;
@@ -18,14 +12,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transaction;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class DBService {
 
-    private final static Logger logger = Logger.getLogger(DBService.class);
+    private final static Logger logger = LoggerFactory.getLogger(DBService.class);
     @Autowired
     private DBManager dbManager;
 
@@ -100,7 +93,6 @@ public class DBService {
     public void saveProducts(List<Product> products) {
         EntityTransaction transaction = dbManager.getEntityManager().getTransaction();
         transaction.begin();
-        logger.debug("Transaction " + transaction.getRollbackOnly());
         try {
             products.forEach(product -> {
                 product.setCurrency(saveOrUpdateNameable(product.getCurrency()));

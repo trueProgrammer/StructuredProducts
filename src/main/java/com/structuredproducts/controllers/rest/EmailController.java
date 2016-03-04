@@ -3,7 +3,8 @@ package com.structuredproducts.controllers.rest;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.sevices.MailService;
 import com.structuredproducts.sevices.ServiceUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +23,7 @@ import java.util.Map;
 @RequestMapping("v1/service")
 public class EmailController {
 
-    private final static Logger logger = Logger.getLogger(DataController.class);
+    private final static Logger logger = LoggerFactory.getLogger(DataController.class);
 
     @Autowired
     private MailService mailService;
@@ -32,6 +33,7 @@ public class EmailController {
                     produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
                     consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Message> sendMail(@RequestBody String request) {
+        logger.debug("Send main request {} ", request);
         try {
             Map<String, Object> map = ServiceUtils.getObjectMapping(request);
             mailService.sendMessage((String) map.get("name"), (String) map.get("email"), (String) map.get("text"));

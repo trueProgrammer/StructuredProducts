@@ -10,7 +10,8 @@ import com.structuredproducts.persistence.entities.instrument.InvestIdea;
 import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.persistence.entities.instrument.RiskType;
 import com.structuredproducts.sevices.DBService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +30,7 @@ import java.util.List;
 @RequestMapping("/v1/data")
 public class DataController {
 
-    private final static Logger logger = Logger.getLogger(DataController.class);
+    private final static Logger logger = LoggerFactory.getLogger(DataController.class);
 
     @Autowired
     private DBService dbService;
@@ -60,7 +61,7 @@ public class DataController {
 
     @RequestMapping(path = "/topproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Product[]> getTopProducts(@RequestParam(name="time") String timeType, @RequestParam(name="type")String productType) {
-        logger.debug("Time " + timeType + " productType " + productType);
+        logger.debug("Time {}, product type {}", timeType, productType);
         List<Product> list = dbService.getTopProductsByTimeTypeAndProductType(timeType, productType);
         list.forEach(product -> product.getInvestment().setName());
         return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
@@ -91,7 +92,7 @@ public class DataController {
                 if(riskType != null) {
                     productTypes.add(RiskTypeToProductType.inverse().get(riskType));
                 } else {
-                    logger.error("Unknown risk type: " + type);
+                    logger.error("Unknown risk type: {}", type);
                 }
             }
             List<Product> result = (List<Product>) dbService.getProductsByType(productTypes);
