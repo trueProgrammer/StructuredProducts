@@ -37,7 +37,8 @@ angular.module('App',
     //$location.path("/login");
 
     var authToken = $cookieStore.get('authToken');
-    if (authToken !== undefined && originalPath.match(/\/admin\/?.*/)) {
+    var adminUriRegexp = /\/admin\/?.*/;
+    if (authToken !== undefined && originalPath.match(adminUriRegexp)) {
         $rootScope.authToken = authToken;
         UserService.get(function(user) {
             $rootScope.user = user;

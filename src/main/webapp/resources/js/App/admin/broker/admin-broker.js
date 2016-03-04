@@ -6,10 +6,17 @@ angular.module('App.admin.broker')
                 controller: 'admin-broker'
             })
         }])
-.controller('admin-broker', [ '$scope', '$log', 'restService',
-    function($scope, $log, restService) {
+.controller('admin-broker', [ '$scope', '$log', 'restService', '$location', '$rootScope',
+    function($scope, $log, restService, $location, $rootScope) {
         $scope.page = 'broker';
         $scope.mode = 'add';
+        (function() {
+            if(typeof $rootScope.user === 'undefined') {
+                $location.path("/login");
+            } else {
+                $scope.selectTable('product');
+            }
+        }());
         var loadBrokers = function() {
             restService.getAllBrokers(function(data) {
                 $scope.brokers = data;

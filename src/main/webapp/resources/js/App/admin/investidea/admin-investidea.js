@@ -9,6 +9,13 @@ angular.module('App.admin.investidea')
 .controller('admin-investidea', [ '$scope', '$log', 'restService', '$rootScope', '$location',
     function($scope, $log, restService, $rootScope, $location) {
         $scope.page = 'investidea';
+        (function() {
+            if(typeof $rootScope.user === 'undefined') {
+                $location.path("/login");
+            } else {
+                $scope.selectTable('product');
+            }
+        }());
         var updateInvestIdeas = function() {
             restService.getInvestIdeas(
                 true,
