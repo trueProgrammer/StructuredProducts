@@ -72,7 +72,7 @@ public class Product {
     private RiskType riskType;
 
     @Transient
-    private boolean isTop;
+    private boolean top;
 
     public Product() {
     }
@@ -205,11 +205,11 @@ public class Product {
         this.riskType = riskType;
     }
 
-    public boolean isTop() {
-        return isTop;
+    public boolean getTop() {
+        return top;
     }
 
-    public void setIsTop(boolean isTop) {
-        this.isTop = isTop;
+    public void setTop(boolean isTop) {
+        this.top = isTop;
     }
 }

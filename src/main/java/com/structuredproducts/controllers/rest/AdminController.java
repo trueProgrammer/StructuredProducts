@@ -3,8 +3,9 @@ package com.structuredproducts.controllers.rest;
 import com.google.common.collect.ImmutableMap;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.*;
-import com.structuredproducts.sevices.*;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.structuredproducts.sevices.DBService;
+import com.structuredproducts.sevices.ProductCsvToDbService;
+import com.structuredproducts.sevices.ServiceUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -233,9 +236,9 @@ public class AdminController {
         List<TopProduct> topProducts = (List<TopProduct>) dbService.getResultList(TopProduct.class);
         products.forEach(product -> {
             if (topProducts.stream().anyMatch(topProduct -> topProduct.getProduct().getId().equals(product.getId()) && topProduct.getTime().equals(time))) {
-                product.setIsTop(true);
+                product.setTop(true);
             } else {
-                product.setIsTop(false);
+                product.setTop(false);
             }
         });
 
