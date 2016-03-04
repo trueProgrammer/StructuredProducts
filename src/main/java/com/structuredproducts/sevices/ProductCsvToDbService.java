@@ -3,7 +3,9 @@ package com.structuredproducts.sevices;
 import com.structuredproducts.controllers.data.ProductBean;
 import com.structuredproducts.persistence.entities.instrument.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.cellprocessor.ParseInt;
+import org.supercsv.cellprocessor.constraint.NotNull;
+import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvMapReader;
 import org.supercsv.io.CsvMapWriter;
 import org.supercsv.io.ICsvMapReader;
@@ -19,6 +21,24 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ProductCsvToDbService {
+    public final static CellProcessor[] PRODUCTS_PROCESSORS = new CellProcessor[]{
+                                                                                         new NotNull(),   //name
+                                                                                         new NotNull(),   //description
+                                                                                         new NotNull(),   //product type
+                                                                                         new ParseInt(),  //minTerm
+                                                                                         new ParseInt(),  //maxTerm
+                                                                                         new NotNull(),   //base active/underlying
+                                                                                         new ParseInt(),  //min investment
+                                                                                         new ParseInt(),  //max investment
+                                                                                         new NotNull(),   //provider/issuer
+                                                                                         new ParseInt(),  //profit/return
+                                                                                         new NotNull(),   //strategy
+                                                                                         new NotNull(),   //legal type
+                                                                                         new NotNull(),  //payoff
+                                                                                         new NotNull(),   //risks
+                                                                                         new NotNull(),   //currency
+                                                                                         new NotNull(),   //periodicity
+    };
     @Autowired
     DBService dbService;
 
@@ -116,7 +136,7 @@ public class ProductCsvToDbService {
                 map.put(beanPropertiesToColumnName.get("risks"), product.getRisks().getName());
                 map.put(beanPropertiesToColumnName.get("currency"), product.getCurrency().getName());
                 map.put(beanPropertiesToColumnName.get("periodicity"), product.getPaymentPeriodicity().getName());
-                writer.write(map, header, ProductService.PRODUCTS_PROCESSORS);
+                writer.write(map, header, PRODUCTS_PROCESSORS);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -134,7 +154,7 @@ public class ProductCsvToDbService {
         try {
             mapReader = new CsvMapReader(reader, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
             String[] header = mapReader.getHeader(true);
-            while ((productsMap = mapReader.read(header, ProductService.PRODUCTS_PROCESSORS)) != null) {
+            while ((productsMap = mapReader.read(header, PRODUCTS_PROCESSORS)) != null) {
                 ProductBean bean = new ProductBean();
                 bean.setName((String) productsMap.get(beanPropertiesToColumnName.get("name")));
                 bean.setDescription((String) productsMap.get(beanPropertiesToColumnName.get("description")));

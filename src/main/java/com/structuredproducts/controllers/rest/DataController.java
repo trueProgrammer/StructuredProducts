@@ -1,12 +1,15 @@
 package com.structuredproducts.controllers.rest;
 
-import com.google.common.collect.*;
-import com.structuredproducts.controllers.data.*;
-import com.structuredproducts.controllers.data.InvestIdeaBean;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.ImmutableBiMap;
+import com.google.common.collect.Lists;
 import com.structuredproducts.controllers.data.ProductType;
-import com.structuredproducts.persistence.entities.instrument.*;
+import com.structuredproducts.controllers.data.TimeType;
+import com.structuredproducts.controllers.data.Tuple;
+import com.structuredproducts.persistence.entities.instrument.InvestIdea;
 import com.structuredproducts.persistence.entities.instrument.Product;
-import com.structuredproducts.sevices.*;
+import com.structuredproducts.persistence.entities.instrument.RiskType;
+import com.structuredproducts.sevices.DBService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,16 +32,7 @@ public class DataController {
     private final static Logger logger = Logger.getLogger(DataController.class);
 
     @Autowired
-    private NewsService newsService;
-    @Autowired
     private DBService dbService;
-
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Data> getData() {
-        logger.trace("Get data");
-        logger.error("Get data");
-        return new ResponseEntity<>(new Data("test"), HttpStatus.OK);
-    }
 
     @RequestMapping(path = "/timetypes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Tuple[]> getTimeTypes() {
@@ -62,12 +56,6 @@ public class DataController {
         }
 
         return new ResponseEntity<>(values, HttpStatus.OK);
-    }
-
-    @RequestMapping(path = "/news",method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<News[]> getNews() {
-        List<News> list = newsService.getNews();
-        return new ResponseEntity<>(list.toArray(new News[list.size()]), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/topproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -14,10 +14,6 @@
 
     <bean class="com.structuredproducts.sevices.DBService"/>
     <bean class="com.structuredproducts.sevices.MailService"/>
-    <bean class="com.structuredproducts.sevices.NewsService"/>
-    <bean class="com.structuredproducts.sevices.ProductService"/>
     <bean class="com.structuredproducts.sevices.ProductCsvToDbService"/>
-    <bean class="com.structuredproducts.sevices.TopProductsService"/>
-    <bean class="com.structuredproducts.sevices.InvestIdeasService"/>
 
 </beans>
