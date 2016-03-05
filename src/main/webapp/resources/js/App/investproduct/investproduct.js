@@ -18,10 +18,10 @@ angular.module('App.investproduct')
                 $scope.lowRiskProducts = 0;
 
                 response.forEach(function(item) {
-                    if (item.productType.name === '100% защита капитала без гарантированной доходности'){
+                    if (item.productType.name === '100% Р·Р°С‰РёС‚Р° РєР°РїРёС‚Р°Р»Р° Р±РµР· РіР°СЂР°РЅС‚РёСЂРѕРІР°РЅРЅРѕР№ РґРѕС…РѕРґРЅРѕСЃС‚Рё'){
                         $scope.highRiskProducts++;
                     }
-                    else if(item.productType.name === 'С участием (ограниченный риск)') {
+                    else if(item.productType.name === 'РЎ СѓС‡Р°СЃС‚РёРµРј (РѕРіСЂР°РЅРёС‡РµРЅРЅС‹Р№ СЂРёСЃРє)') {
                         $scope.mediumRiskProducts++;
                     } else {
                         $scope.lowRiskProducts++;
