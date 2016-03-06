@@ -8,7 +8,7 @@
 angular.module('App',
     ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ngCookies', 'App.services',
         'ui.grid', 'ui.grid.edit', 'ui.grid.selection',
-        'App.main', 'App.about', 'App.investidea', 'App.investideas', 'App.investproduct', 'App.partners', 'App.structuredproducts',
+        'App.main', 'App.about', 'App.investidea', 'App.investideas', 'App.investproduct', 'App.product', 'App.partners', 'App.structuredproducts',
         'App.login', 'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts'
     ]).config(['$httpProvider',
         function($httpProvider){
@@ -52,6 +52,7 @@ angular.module('App.about', []);
 angular.module('App.investidea', []);
 angular.module('App.investideas', []);
 angular.module('App.investproduct', []);
+angular.module('App.product', []);
 angular.module('App.partners', []);
 angular.module('App.structuredproducts', []);
 angular.module('App.login', []);
