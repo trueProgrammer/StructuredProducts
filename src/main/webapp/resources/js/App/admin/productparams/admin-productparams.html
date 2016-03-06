@@ -1,0 +1,64 @@
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">Страница Администратора</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="">Страница Администратора</a></li>
+        </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
+
+
+
+<!--=== Content ===-->
+<div class="container content-sm">
+    <div ng-include="'views/template/admin-menu.htm'"></div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="md-margin-bottom-40">
+                <h3>Список продуктов</h3>
+                <!-- Accordion -->
+                <div id="accordion-v1" class="panel-group">
+
+                    <div ng-repeat="val in products">
+                        <div class="panel panel-default" ng-click="productClick(val)">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a href=""
+                                       data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">
+                                        <b>{{val.name}}</b><span class="results-number"></span>
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+            <h3>Редактирование продукта <b>{{selectedProduct.name}}</b></h3>
+            <div class="col-md-6" ng-show="selectedProduct">
+                <form id="form">
+                    <div class="form-group">
+                        <label for="description">Описание:</label>
+                        <textarea id="description" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="forecast">Прогноз:</label>
+                        <textarea id="forecast" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control">Загрузить данные для графика</button>
+                    </div>
+                    <div class="form-group">
+                        <button class="form-control">Загрузить изображение</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+</div>
+
+</div>
+

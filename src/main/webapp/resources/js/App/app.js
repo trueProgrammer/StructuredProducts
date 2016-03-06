@@ -9,7 +9,7 @@ angular.module('App',
     ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ngCookies', 'App.services',
         'ui.grid', 'ui.grid.edit', 'ui.grid.selection',
         'App.main', 'App.about', 'App.investidea', 'App.investideas', 'App.investproduct', 'App.product', 'App.partners', 'App.structuredproducts',
-        'App.login', 'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts'
+        'App.login', 'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts', 'App.admin.productparams'
     ]).config(['$httpProvider',
         function($httpProvider){
             $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
@@ -61,6 +61,7 @@ angular.module('App.admin.products', []);
 angular.module('App.admin.broker', []);
 angular.module('App.admin.investidea', []);
 angular.module('App.admin.topproducts', []);
+angular.module('App.admin.productparams', []);
 
 var App = function () {
 
