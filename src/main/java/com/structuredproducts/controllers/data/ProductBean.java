@@ -3,7 +3,6 @@ package com.structuredproducts.controllers.data;
 public class ProductBean {
     private long id;
     private String name;
-    private String description;
     private String underlying;
     private int minInvestment;
     private String issuer;
@@ -18,14 +17,6 @@ public class ProductBean {
     private int maxInvestment;
     private int maxTerm;
     private int minTerm;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public long getId() {
         return id;

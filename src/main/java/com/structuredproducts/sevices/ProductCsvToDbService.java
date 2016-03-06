@@ -88,7 +88,6 @@ public class ProductCsvToDbService {
             List<Product> convertedProducts = productList.stream().<Product>map(productBean -> {
                 Product product = new Product();
                 product.setName(productBean.getName());
-                product.setDescription(productBean.getDescription());
                 product.setCurrency(new Currency(productBean.getCurrency()));
                 product.setUnderlaying(new Underlaying(productBean.getUnderlying()));
                 product.setInvestment(new Investment(productBean.getMinInvestment(), productBean.getMaxInvestment()));
@@ -121,7 +120,6 @@ public class ProductCsvToDbService {
         try {
             for (Product product : products) {
                 map.put(beanPropertiesToColumnName.get("name"), product.getName());
-                map.put(beanPropertiesToColumnName.get("description"), product.getDescription());
                 map.put(beanPropertiesToColumnName.get("productType"), product.getProductType().getName());
                 map.put(beanPropertiesToColumnName.get("minTerm"), product.getTerm().getMin());
                 map.put(beanPropertiesToColumnName.get("maxTerm"), product.getTerm().getMax());
@@ -157,7 +155,6 @@ public class ProductCsvToDbService {
             while ((productsMap = mapReader.read(header, PRODUCTS_PROCESSORS)) != null) {
                 ProductBean bean = new ProductBean();
                 bean.setName((String) productsMap.get(beanPropertiesToColumnName.get("name")));
-                bean.setDescription((String) productsMap.get(beanPropertiesToColumnName.get("description")));
                 bean.setProductType((String) productsMap.get(beanPropertiesToColumnName.get("productType")));
                 bean.setMinTerm((Integer)productsMap.get(beanPropertiesToColumnName.get("minTerm")));
                 bean.setMaxTerm((Integer)productsMap.get(beanPropertiesToColumnName.get("maxTerm")));
