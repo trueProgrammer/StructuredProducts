@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Vlad on 23.11.2015.
@@ -130,5 +131,24 @@ public class DataController {
             }
         });
         return new ResponseEntity<>((ProductParam[]) params.toArray(new ProductParam[params.size()]), HttpStatus.OK);
+    }
+
+    @RequestMapping(path="/productwithparams",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<ProductParam> getProductWithParams(@RequestParam("id")Integer id) {
+        Optional<Product> productOpt = ((List<Product>) dbService.getResultList(Product.class)).stream().filter(p -> p.getId().equals(id)).findAny();
+        List<ProductParam> params = (List<ProductParam>) dbService.getResultList(ProductParam.class);
+        if (!productOpt.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Product product = productOpt.get();
+        product.getTerm().setName();
+        Optional<ProductParam> paramOpt = params.stream().filter(par -> par.getProduct().getId().equals(product.getId())).findAny();
+        if (paramOpt.isPresent()) {
+            return new ResponseEntity<>(paramOpt.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(new ProductParam(product), HttpStatus.OK);
     }
 }

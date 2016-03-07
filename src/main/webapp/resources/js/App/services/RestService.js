@@ -71,6 +71,18 @@ angular.module('App.services', ['ngResource']).service('restService', [
                 .error(onFail);
         },
 
+        getProductWithParams: function(id, onSuccess, onFail) {
+            $log.info("Get product " + id);
+            $http.get(
+                dataUri + "productwithparams",
+                {
+                    params: {
+                        id: id
+                    }
+                }
+            ).success(onSuccess).error(onFail);
+        },
+
         getInvestIdeas: function (showOnMainPage, onSuccess, onFail) {
             $log.info("Get invest ideas");
             $http.get(

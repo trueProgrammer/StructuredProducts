@@ -1,8 +1,8 @@
 <div class="container content">
     <div class="row">
         <div class="col-md-6">
-            <h2>{{product.name}}</h2>
-            <img src="resources/img/18.jpg" width="400" height="300"/>
+            <h2>{{productParams.product.name}}</h2>
+            <img src="{{productParams.img}}" width="400" height="300"/>
             <h3 class="btn-link" ng-click="showChart = !showChart">График цены базового актива</h3>
             <div ng-show="showChart">
                 <canvas id="chart" width="400" height="300"></canvas>
@@ -11,9 +11,7 @@
             <h3 class="btn-link" ng-click="showForecast = !showForecast">Прогноз аналитиков</h3>
             <div ng-show="showForecast">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sit amet venenatis est. Vestibulum nisi est, posuere eget scelerisque eu, luctus a diam. Morbi rhoncus justo a arcu rhoncus, vel ultrices justo pellentesque. Donec et ornare ipsum. Integer orci massa, dignissim vel eros vitae, sollicitudin cursus enim. Fusce in lorem at ligula feugiat dignissim. Praesent id tortor eu arcu venenatis ultricies.
-
-                    Suspendisse pharetra id urna eget suscipit. Aliquam tincidunt rhoncus velit rutrum accumsan. Nunc at consectetur justo. Suspendisse potenti. Ut eu sem sit amet felis venenatis iaculis vel id velit. Integer blandit diam urna, quis ornare ante pellentesque eget. Vivamus tristique velit a lobortis lacinia. Aenean quis magna in velit porttitor rutrum. Maecenas semper maximus nunc, vel accumsan turpis commodo vitae. Mauris tincidunt leo eros, ac porta velit fringilla nec. Ut pellentesque pulvinar commodo. Fusce vitae elementum dui.
+                    {{productParams.forecast}}
                 </p>
             </div>
         </div>
@@ -21,16 +19,15 @@
             <h3 class="btn-link" ng-click="showDescription = !showDescription">Описание</h3>
             <div ng-show="showDescription">
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sit amet venenatis est. Vestibulum nisi est, posuere eget scelerisque eu, luctus a diam. Morbi rhoncus justo a arcu rhoncus, vel ultrices justo pellentesque. Donec et ornare ipsum. Integer orci massa, dignissim vel eros vitae, sollicitudin cursus enim. Fusce in lorem at ligula feugiat dignissim. Praesent id tortor eu arcu venenatis ultricies.
-
-                    Suspendisse pharetra id urna eget suscipit. Aliquam tincidunt rhoncus velit rutrum accumsan. Nunc at consectetur justo. Suspendisse potenti. Ut eu sem sit amet felis venenatis iaculis vel id velit. Integer blandit diam urna, quis ornare ante pellentesque eget. Vivamus tristique velit a lobortis lacinia. Aenean quis magna in velit porttitor rutrum. Maecenas semper maximus nunc, vel accumsan turpis commodo vitae. Mauris tincidunt leo eros, ac porta velit fringilla nec. Ut pellentesque pulvinar commodo. Fusce vitae elementum dui.
+                    {{productParams.description}}
                 </p>
             </div>
             <h3>Уровень риска</h3>
-            <p>{{product.risk}}</p>
+            <p>{{productParams.product.risks.name}}</p>
             <h3>Доходность</h3>
-            <p>{{product.return}}</p>
+            <p>{{productParams.product.returnValue.count}}</p>
             <h3>Срок инвестирования</h3>
+            <p>{{productParams.product.term.name}}</p>
             <h3 class="btn-link" ng-click="otherParams = !otherParams">Другие параметры</h3>
             <div ng-show="otherParams">
                 <p>
