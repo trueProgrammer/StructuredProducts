@@ -42,9 +42,6 @@ angular.module('App.admin.products')
                 { field: 'min', displayName: 'Минимум', width: "47%" },
                 { field: 'max', displayName: 'Максимум', width: "47%" },
             ],
-            issuer : [
-                { field: 'name', displayName: 'Провайдер продукта', width: "94%" },
-            ],
             return : [
                 { field: 'count', displayName: 'Доходность', width: "94%" },
             ],
@@ -94,9 +91,9 @@ angular.module('App.admin.products')
                     cellFilter: "griddropdown:this",
                     editableEntity: 'investment', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
-                { field: 'issuer', displayName: 'Провайдер продукта', width: 200,
+                { field: 'broker', displayName: 'Провайдер продукта', width: 200,
                     cellFilter: "griddropdown:this",
-                    editableEntity: 'issuer', editableCellTemplate: 'ui-grid/dropdownEditor',
+                    editableEntity: 'broker', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'returnValue', displayName: 'Доходность', width: 150,
                     cellFilter: "griddropdown:this",

@@ -26,7 +26,6 @@ public class DBService {
             put(ProductType.class, "INSTRUMENT.PRODUCT_TYPE").
             put(Term.class, "INSTRUMENT.TERM").
             put(Investment.class, "INSTRUMENT.INVESTMENT").
-            put(Issuer.class, "INSTRUMENT.ISSUER").
             put(Return.class, "INSTRUMENT.RETURN").
             put(UnderlayingType.class, "INSTRUMENT.UNDERLAYING_TYPE").
             put(Underlaying.class, "INSTRUMENT.UNDERLAYING").
@@ -98,7 +97,7 @@ public class DBService {
             products.forEach(product -> {
                 product.setCurrency(saveOrUpdateNameable(product.getCurrency()));
                 product.setInvestment(saveOrUpdateUniqueWithMinMax(product.getInvestment()));
-                product.setIssuer(saveOrUpdateNameable(product.getIssuer()));
+                product.setBroker(saveOrUpdateNameable(product.getBroker()));
                 product.setLegalType(saveOrUpdateNameable(product.getLegalType()));
                 product.setPaymentPeriodicity(saveOrUpdateNameable(product.getPaymentPeriodicity()));
                 product.setProductType(saveOrUpdateNameable(product.getProductType()));

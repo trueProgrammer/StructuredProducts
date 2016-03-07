@@ -33,9 +33,9 @@ public class Product {
     @JoinColumn(name = "investment")
     private Investment investment;
 
-    @ManyToOne(targetEntity = Issuer.class)
-    @JoinColumn(name = "issuer")
-    private Issuer issuer;
+    @ManyToOne(targetEntity = Broker.class)
+    @JoinColumn(name = "broker")
+    private Broker broker;
 
     @ManyToOne(targetEntity = Return.class)
     @JoinColumn(name = "return")
@@ -114,12 +114,12 @@ public class Product {
         this.investment = investment;
     }
 
-    public Issuer getIssuer() {
-        return issuer;
+    public Broker getBroker() {
+        return broker;
     }
 
-    public void setIssuer(Issuer issuer) {
-        this.issuer = issuer;
+    public void setBroker(Broker broker) {
+        this.broker = broker;
     }
 
     public Return getReturnValue() {

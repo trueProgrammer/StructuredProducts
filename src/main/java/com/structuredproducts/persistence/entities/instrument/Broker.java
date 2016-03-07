@@ -4,11 +4,12 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "employee")
 @Table(name = "Broker", schema = "INSTRUMENT")
-public class Broker {
+public class Broker implements Serializable, UniqueWithName{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -20,7 +21,10 @@ public class Broker {
     private String logo;
 
     public Broker() {
+    }
 
+    public Broker(String name){
+        this.name = name;
     }
 
     public Integer getId() {

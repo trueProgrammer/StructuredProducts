@@ -5,7 +5,7 @@ public class ProductBean {
     private String name;
     private String underlying;
     private int minInvestment;
-    private String issuer;
+    private String broker;
     private int profit;
     private String strategy;
     private String legalType;
@@ -106,12 +106,12 @@ public class ProductBean {
         this.periodicity = periodicity;
     }
 
-    public String getIssuer() {
-        return issuer;
+    public String getBroker() {
+        return broker;
     }
 
-    public void setIssuer(String issuer) {
-        this.issuer = issuer;
+    public void setBroker(String broker) {
+        this.broker = broker;
     }
 
     public String getProductType() {

@@ -52,7 +52,7 @@ public class ProductCsvToDbService {
         beanPropertiesToColumnName.put("underlying", "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0430\u043A\u0442\u0438\u0432"); //"������� �����"
         beanPropertiesToColumnName.put("minInvestment","\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "����������� �����");
         beanPropertiesToColumnName.put("maxInvestment","\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "������������ �����");
-        beanPropertiesToColumnName.put("issuer","\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440");// "���������");
+        beanPropertiesToColumnName.put("broker","\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440");// "���������");
         beanPropertiesToColumnName.put("return","\u0414\u043E\u0445\u043E\u0434\u043D\u043E\u0441\u0442\u044C");// "����������");
         beanPropertiesToColumnName.put("strategy", "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F");// "���������");
         beanPropertiesToColumnName.put("legalType", "\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0444\u043E\u0440\u043C\u0430");//"����������� �����");
@@ -91,7 +91,7 @@ public class ProductCsvToDbService {
                 product.setCurrency(new Currency(productBean.getCurrency()));
                 product.setUnderlaying(new Underlaying(productBean.getUnderlying()));
                 product.setInvestment(new Investment(productBean.getMinInvestment(), productBean.getMaxInvestment()));
-                product.setIssuer(new Issuer(productBean.getIssuer()));
+                product.setBroker(new Broker(productBean.getBroker()));
                 product.setReturnValue(new Return(productBean.getProfit()));
                 product.setStrategy(new Strategy(productBean.getStrategy()));
                 product.setLegalType(new LegalType(productBean.getLegalType()));
@@ -126,7 +126,7 @@ public class ProductCsvToDbService {
                 map.put(beanPropertiesToColumnName.get("underlying"), product.getUnderlaying().getName());
                 map.put(beanPropertiesToColumnName.get("minInvestment"), product.getInvestment().getMin());
                 map.put(beanPropertiesToColumnName.get("maxInvestment"), product.getInvestment().getMax());
-                map.put(beanPropertiesToColumnName.get("issuer"), product.getIssuer().getName());
+                map.put(beanPropertiesToColumnName.get("broker"), product.getBroker().getName());
                 map.put(beanPropertiesToColumnName.get("return"), product.getReturnValue().getCount());
                 map.put(beanPropertiesToColumnName.get("strategy"), product.getStrategy().getName());
                 map.put(beanPropertiesToColumnName.get("legalType"), product.getLegalType().getName());
@@ -161,7 +161,7 @@ public class ProductCsvToDbService {
                 bean.setUnderlying((String) productsMap.get(beanPropertiesToColumnName.get("underlying")));
                 bean.setMinInvestment((Integer) productsMap.get(beanPropertiesToColumnName.get("minInvestment")));
                 bean.setMaxInvestment((Integer) productsMap.get(beanPropertiesToColumnName.get("maxInvestment")));
-                bean.setIssuer((String) productsMap.get(beanPropertiesToColumnName.get("issuer")));
+                bean.setBroker((String) productsMap.get(beanPropertiesToColumnName.get("broker")));
                 bean.setReturn((Integer) productsMap.get(beanPropertiesToColumnName.get("return")));
                 bean.setStrategy((String) productsMap.get(beanPropertiesToColumnName.get("strategy")));
                 bean.setLegalType((String) productsMap.get(beanPropertiesToColumnName.get("legalType")));
