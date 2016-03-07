@@ -28,7 +28,6 @@ angular.module('App.admin.products')
             );
         };
 
-
         $scope.selected;
         var columns = {
             productType : [
@@ -83,7 +82,7 @@ angular.module('App.admin.products')
                     cellFilter: "griddropdown:this",
                     editableEntity: 'term', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
-                { field: 'underlaying', displayName: 'Базовый актив', width: 100,
+                { field: 'underlaying', displayName: 'Базовый актив', width: 150,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'underlaying', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
