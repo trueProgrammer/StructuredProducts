@@ -11,6 +11,9 @@ import java.io.Serializable;
 @Table(name="product_params", schema = "INSTRUMENT")
 public class ProductParam implements Serializable{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     @JoinColumn(name="product")
     @OneToOne(targetEntity = Product.class)
     private Product product;
@@ -27,6 +30,13 @@ public class ProductParam implements Serializable{
     @Column
     private String forecast;
 
+    public ProductParam() {
+
+    }
+
+    public ProductParam(Product product) {
+        this.product = product;
+    }
     public Product getProduct() {
         return product;
     }
@@ -61,6 +71,14 @@ public class ProductParam implements Serializable{
 
     public String getForecast() {
         return forecast;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setForecast(String forecast) {

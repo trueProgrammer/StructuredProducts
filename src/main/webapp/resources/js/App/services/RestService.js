@@ -53,6 +53,24 @@ angular.module('App.services', ['ngResource']).service('restService', [
             });
         },
 
+        getProductParams: function(onSuccess, onFail) {
+            $http.get(
+                dataUri + "productparams"
+            )
+                .success(onSuccess)
+                .error(onFail);
+        },
+
+        addProductParam: function(param, onSuccess, onFail) {
+            $log.info("add params " + param);
+            $http.post(
+                adminUri + "productparams/add",
+                param
+            )
+                .success(onSuccess)
+                .error(onFail);
+        },
+
         getInvestIdeas: function (showOnMainPage, onSuccess, onFail) {
             $log.info("Get invest ideas");
             $http.get(

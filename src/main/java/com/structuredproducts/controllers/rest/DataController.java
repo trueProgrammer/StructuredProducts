@@ -8,6 +8,7 @@ import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
 import com.structuredproducts.persistence.entities.instrument.InvestIdea;
 import com.structuredproducts.persistence.entities.instrument.Product;
+import com.structuredproducts.persistence.entities.instrument.ProductParam;
 import com.structuredproducts.persistence.entities.instrument.RiskType;
 import com.structuredproducts.sevices.DBService;
 import org.slf4j.Logger;
@@ -117,5 +118,17 @@ public class DataController {
     @RequestMapping(path = "/investidea", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<InvestIdea> getInvestIdeaById(int id) {
         return new ResponseEntity<>(dbService.getInvestIdeaById(id), HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/productparams", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<ProductParam[]> getProductsWithParams() {
+        List<Product> products = (List<Product>) dbService.getResultList(Product.class);
+        List<ProductParam> params = (List<ProductParam>) dbService.getResultList(ProductParam.class);
+        products.forEach(p -> {
+            if (params.stream().noneMatch(param -> param.getProduct().getId().equals(p.getId()))) {
+               params.add(new ProductParam(p));
+            }
+        });
+        return new ResponseEntity<>((ProductParam[]) params.toArray(new ProductParam[params.size()]), HttpStatus.OK);
     }
 }

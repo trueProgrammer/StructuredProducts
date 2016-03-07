@@ -40,6 +40,7 @@ public class DBService {
             put(Broker.class, "INSTRUMENT.BROKER").
             put(TopProduct.class, "INSTRUMENT.TOP_PRODUCT").
             put(InvestIdea.class, "INSTRUMENT.INVEST_IDEA").
+            put(ProductParam.class, "INSTRUMENT.PRODUCT_PARAMS").
             build();
 
     public List<?> getProductsByType(List<String> types) {

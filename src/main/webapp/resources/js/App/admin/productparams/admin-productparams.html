@@ -21,42 +21,44 @@
                 <h3>Список продуктов</h3>
                 <!-- Accordion -->
                 <div id="accordion-v1" class="panel-group">
-
-                    <div ng-repeat="val in products">
+                    <div ng-repeat="val in productParams">
                         <div class="panel panel-default" ng-click="productClick(val)">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a href=""
                                        data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">
-                                        <b>{{val.name}}</b><span class="results-number"></span>
+                                        <b>{{val.product.name}}</b><a target="_blank" href="#/product/?id={{val.product.id}}">Посмотреть</a><span class="results-number"></span>
                                     </a>
                                 </h4>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-            <h3>Редактирование продукта <b>{{selectedProduct.name}}</b></h3>
-            <div class="col-md-6" ng-show="selectedProduct">
-                <form id="form">
-                    <div class="form-group">
-                        <label for="description">Описание:</label>
-                        <textarea id="description" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="forecast">Прогноз:</label>
-                        <textarea id="forecast" class="form-control"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <button class="form-control">Загрузить данные для графика</button>
-                    </div>
-                    <div class="form-group">
-                        <button class="form-control">Загрузить изображение</button>
-                    </div>
-                </form>
-            </div>
+        <div class="col-md-6" ng-show="selectedProduct">
+            <h3>Редактирование продукта <b>{{selectedProduct.product.name}}</b></h3>
+            <form id="form">
+                <div class="form-group">
+                    <label for="description">Описание:</label>
+                    <textarea id="description" class="form-control" ng-model="selectedProduct.description">{{description}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="forecast">Прогноз:</label>
+                    <textarea id="forecast" class="form-control" ng-model="selectedProduct.forecast">{{forecast}}</textarea>
+                </div>
+                <div class="form-group">
+                    <button class="form-control" ng-click="clickChartUpload()">Загрузить данные для графика</button>
+                    <input type="file" class="hidden" id="uploadChart" accept=".json" onchange="angular.element(this).scope().setChartData(this.files[0], $(this))"/>
+                </div>
+                <div class="form-group">
+                    <button class="form-control" ng-click="clickImgUpload()">Загрузить изображение</button>
+                    <input type="file" class="hidden" id="imgUpload" accept="image/*" onchange="angular.element(this).scope().setImgData(this)"/>
+                    <img width="100" height="100" ng-show="selectedProduct.img" id="product-logo-preview" ng-src="{{selectedProduct.img}}"/>
+                </div>
+            </form>
+            <button class="btn-primary" ng-click="addParam()">Обновить</button>
+        </div>
     </div>
 </div>
 
