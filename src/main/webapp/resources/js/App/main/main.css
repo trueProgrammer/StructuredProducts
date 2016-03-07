@@ -1,0 +1,66 @@
+.content-sm {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.height-60 {
+    height: 60%;
+}
+
+@media only screen and (min-width: 992px) and (min-height: 507px) {
+    .screen-height {
+        height: 97vh;
+    }
+}
+
+@media only screen and (min-width: 992px) and (min-height: 542px) {
+    .screen-height-95 {
+        height: 95vh;
+    }
+}
+
+.select-table-body {
+    margin-left: -28px;
+}
+
+.main-page-button {
+    margin-top: 18px;
+    width: 100%;
+    color: #555;
+    background: #fff;
+    border: inherit !important;
+}
+
+.main-page-button:hover {
+    background: #2295b9;
+    color: #fff;
+}
+
+.main-button-with-top {
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+}
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.invest-button {
+    margin:6px 10px;
+    font-size: 20px !important;
+}
+
+.top-five-button {
+    margin-bottom: -3px;
+}
+
+@media only screen and (min-width:1200px) {
+    .button-height {
+        height: 200px;
+    }
+}
+
+.height-80 {
+    height: 80%;
+}

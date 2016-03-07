@@ -1,31 +1,25 @@
 <!DOCTYPE html>
 
 <!--=== Content ===-->
-<div class="content-sm" style="padding-top: 0px;">
+<div class="content-sm">
 
     <div id="page1" class="screen-height-95">
 
         <!--=== Slider ===-->
         <div id="layerslider" style="width: 100%;height: 40%; margin: 0px auto;min-height: 240px;">
-            <!-- First slide -->
             <div class="ls-slide" data-ls="slidedelay:2500;transition2d:25;">
                 <img src="resources/img/bg1.jpg" class="ls-bg" alt="Slide background">
             </div>
-
-            <!--Second Slide-->
             <div class="ls-slide" data-ls="transition2d:93;">
                 <img src="resources/img/18.jpg" class="ls-bg" alt="Slide background">
             </div>
-
-            <!--Third Slide-->
             <div class="ls-slide"style="slidedirection: right;transition2d: 92,93,105;">
                 <img src="resources/img/bg2.jpg" class="ls-bg" alt="Slide background">
             </div>
-            <!--End Third Slide-->
-        </div><!--/layer_slider-->
+        </div>
         <!--=== End Slider ===-->
 
-        <div class="container" style="height: 60%">
+        <div class="container height-60">
             <br/>
             <div class="title-v1 margin-bottom-20">
                 <h2>С помощью <span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span> вы можете</h2>
@@ -41,7 +35,7 @@
                                     <h2  class="heading-sm invest-button">Выбрать свой инвестиционный продукт</h2>
                                 </div>
                             </a>
-                            <button type="button" class="main-page-button" ng-click="gotoAnchorAnimatedWithPageAndOffset('page2', 1, 60)">
+                            <button type="button" class="main-page-button" ng-click="gotoAnchorAnimatedWithPageAndOffset('page2', 1, 40)">
                                 <h3 class="top-five-button">Топ-5</h3>
                                 <i class="fa fa-angle-down"></i>
                             </button>
@@ -69,7 +63,7 @@
     <div id="page2" class="bg-color-light screen-height">
         <div class="container content-lg">
 
-            <div class="row">
+            <div class="row height-80">
 
                 <div class="col-md-6 md-margin-bottom-40">
 
@@ -155,10 +149,21 @@
                 <!-- End Ideas -->
             </div><!--/row-->
 
-            <button class="btn-u btn-brd rounded btn-u-blue btn-u-lg" type="button" ng-click="gotoAnchorAnimatedWithPage('page3', 2)">
-                <h3>Контактная информация</h3>
-            </button>
+            <!--<button class="btn-u btn-u-blue" type="button"><i class="fa fa-cloud"></i> Icon Button</button>-->
 
+            <div>
+                <div>
+                    <button class="btn-u btn-u-blue rounded" type="button" ng-click="showContactForm()">
+                        <i class="fa fa-envelope-o"></i> Задать вопрос
+                    </button>
+                </div>
+                <div>
+                    <ul class="social-icons">
+                        <li><a href="#" data-original-title="Vk" class="rounded-x social_vk"></a></li>
+                        <li><a href="#" data-original-title="Facebook" class="rounded-x social_facebook"></a></li>
+                    </ul>
+                </div>
+            </div>
 <!--            <button type="button" class="btn-u btn-u-sm btn-brd btn-brd-hover btn-u-blue" ng-click="gotoAnchorAnimatedWithPage('page3', 2)">
                 <h3>Контактная информация</h3>
             </button>-->
@@ -167,16 +172,13 @@
     </div>
     <!-- End Info Blokcs -->
 
+    <div id="page3"/>
     <!--=== Contacs Part ===-->
-    <div id="page3" class="container content screen-height">
-        <br/>
-        <div class="title-v1">
-            <h2>Контактная информация</h2>
-        </div>
+    <div  class="container content" ng-show="isContactFormShow()">
 
         <div class="row margin-bottom-30">
             <div class="col-md-9 mb-margin-bottom-30">
-
+                <div class="headline"><h2>Форма отправки сообщений</h2></div>
                 <form name="emailForm" class="sky-form contact-style">
                     <fieldset class="no-padding">
                         <label>Имя <span class="color-red">*</span></label>
@@ -205,8 +207,9 @@
                                 </div>
                             </div>
                         </div>
-
-                        <p><button class="btn-u" ng-click="sendEmail(emailForm)" >Отправить сообщение</button></p>
+                        <div class="margin-top-5">
+                            <button class="btn-u" ng-click="sendEmail(emailForm)" >Отправить сообщение</button>
+                        </div>
                     </fieldset>
 
                     <!--ng-disabled="!validateForm(emailForm)"-->
@@ -224,6 +227,7 @@
             </div><!--/col-md-9-->
 
             <div class="col-md-3">
+                <div class="headline"><h2>Контакты</h2></div>
                 <ul class="list-unstyled">
                     <li class="padding-bottom-10">
                         <i class="icon-custom icon-sm rounded-x icon-color-u fa fa-envelope"></i>
@@ -231,7 +235,7 @@
                         <p><a href="mailto:#" class="link-black">xstrum.service@gmail.com</a></p>
                     </li>
                     <li class="padding-bottom-10">
-                        <ul>
+                        <ul class="social-icons">
                             <li><a href="#" data-original-title="Vk" class="rounded-x social_vk"></a></li>
                             <li><a href="#" data-original-title="Facebook" class="rounded-x social_facebook"></a></li>
                         </ul>
@@ -245,3 +249,4 @@
 
 </div>
 <!--=== End Content ===-->
+<link rel="stylesheet" href="resources/js/App/main/main.css">

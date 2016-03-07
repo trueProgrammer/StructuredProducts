@@ -17,10 +17,6 @@
 	bottom: -14px;
 }
 
-.social-icons {
-    margin-top: -2.1em;
-}
-
 .footer-v1 .footer {
     padding: 15px 0;
 }
@@ -34,14 +30,6 @@
     font-size: 110%;
 }
 
-.news-list-date {
-	color: #4169e1;
-}
-
-.col-md-3-custom {
-    width: 33.3333%;
-}
-
 .header-fixed .header.header-fixed-shrink .logo img {
     max-width: 100%;
     /*margin: 45px 0 -4px;*/
@@ -49,33 +37,6 @@
 
 .service-block-default:hover {
     box-shadow: 0px 0px 5px 3px #aead95;
-}
-
-.select-table-body {
-    margin-left: -28px;
-}
-
-.page-divider {
-    margin: 60px 0;
-}
-
-.main-page-button {
-    margin-top: 18px;
-    width: 100%;
-    color: #555;
-    background: #fff;
-    border: inherit !important;
-}
-
-.main-page-button:hover {
-    background: #2295b9;
-    color: #fff;
-}
-
-.main-button-with-top {
-    padding-right: 0 !important;
-    padding-bottom: 0 !important;
-    padding-left: 0 !important;
 }
 
 .panel-title {
@@ -112,23 +73,10 @@ fieldset {
     -moz-box-sizing: border-box;
 }
 
-.col-4 {
-    width: 33.33%;
-}
-
 .slider-style {
     width: 100%;
     height: 500px;
     margin: 0px auto;
-}
-
-.invest-button {
-    margin:6px 10px;
-    font-size: 20px !important;
-}
-
-.top-five-button {
-    margin-bottom: -3px;
 }
 
 .invest-idea-header {
@@ -153,34 +101,18 @@ fieldset {
 }
 
 .content-lg {
-    padding-top: 70px;
+    padding-top: 30px;
     padding-bottom: 10px;
+    position: relative;
+    height: 100%;
 }
 
 .title-v1 {
     margin-bottom: 50px;
 }
 
-@media only screen and (min-width: 992px) and (min-height: 507px) {
-    .screen-height {
-        height: 100vh;
-    }
-}
-
-@media only screen and (min-width: 992px) and (min-height: 542px) {
-    .screen-height-95 {
-        height: 95vh;
-    }
-}
-
 .margin-bottom-20 {
     margin-bottom: 20px;
-}
-
-@media only screen and (min-width:1200px) {
-    .button-height {
-        height: 200px;
-    }
 }
 
 .sky-form {

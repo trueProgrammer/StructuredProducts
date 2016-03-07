@@ -10,6 +10,17 @@ angular.module('App.main')
 .controller('mainCtrl', [ '$scope', '$log', 'restService', '$anchorScroll', '$document',
     function($scope, $log, restService, $anchorScroll, $document) {
 
+        var contactShow = false;
+
+        $scope.isContactFormShow = function() {
+            return contactShow;
+        };
+
+        $scope.showContactForm = function() {
+            contactShow = true;
+            $scope.gotoAnchorAnimatedWithPageAndOffset('page3', 2, 30)
+        }
+
         $scope.data = {};
         $scope.accordion = {};
         $scope.topProducts = [];
@@ -49,6 +60,8 @@ angular.module('App.main')
                     $log.info("Email success sent.");
                     $scope.showSuccessAlert("Message sent successfully.");
                     $scope.email = '';
+                    contactShow = false;
+                    $scope.gotoAnchorAnimatedWithOffset('page1', 55);
                 },
                 function(response) {
                     $log.error("Email sending failed.");
@@ -146,8 +159,6 @@ angular.module('App.main')
             )
         }());
 
-        //get product types
-
         var selected = {};
         var currentPage = 0;
         var pages = ['page1','page2','page3', 'footer'];
@@ -187,12 +198,13 @@ angular.module('App.main')
                 lastScrollTime = now;
 
                 var direction = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-
                 if (direction < 0) {
                     if(currentPage < pages.length - 1) {
                         currentPage++;
                         if(currentPage == 1) {
-                            $scope.gotoAnchorAnimatedWithOffset(pages[currentPage], 60);
+                            $scope.gotoAnchorAnimatedWithOffset(pages[currentPage], 110);
+                        } else if(currentPage == 2){
+                            $scope.gotoAnchorAnimatedWithOffset(pages[currentPage], 30);
                         } else {
                             $scope.gotoAnchorAnimated(pages[currentPage]);
                         }
@@ -200,7 +212,11 @@ angular.module('App.main')
                 } else {
                     if(currentPage > 0) {
                         currentPage--;
-                        $scope.gotoAnchorAnimated(pages[currentPage]);
+                        if(currentPage == 1) {
+                            $scope.gotoAnchorAnimatedWithOffset(pages[currentPage], 55);
+                        } else {
+                            $scope.gotoAnchorAnimated(pages[currentPage]);
+                        }
                     }
                 }
 
@@ -234,8 +250,5 @@ angular.module('App.main')
             document.removeEventListener("DOMMouseScroll", handler, false);
             document.removeEventListener("mousewheel", handler, false);
         });
-
-        /*        $scope.$on('mousewheel', MouseWheelHandler());
-         $scope.$on('DOMMouseScroll', MouseWheelHandler());*/
 
     }]).value('duScrollOffset', 0).value("duScrollDuration",100);

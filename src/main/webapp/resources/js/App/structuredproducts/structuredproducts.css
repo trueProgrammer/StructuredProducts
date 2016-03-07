@@ -31,3 +31,29 @@
     padding: 0 !important;
     min-height: 0 !important;
 }
+
+.custom-h3 {
+    color: #555;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-shadow: none;
+    font-weight: normal;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 20px;
+    line-height: 27px;
+}
+
+.hr-style {
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.cursor-type {
+    cursor: pointer;
+}
+
+.row {
+    margin-top: 15px;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
