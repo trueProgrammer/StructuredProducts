@@ -52,7 +52,12 @@ public class ProductAdminController extends AbstractAdminController{
 
         try {
             InputStreamReader reader = new InputStreamReader(file.getInputStream(), "UTF-8");
-            converter.convertToDb(reader);
+            if ((char)reader.read() == '\uFEFF') {//Skip BOM symbol
+                converter.convertToDb(reader);
+            } else {
+                reader = new InputStreamReader(file.getInputStream(), "UTF-8");
+                converter.convertToDb(reader);
+            }
         } catch (IOException e) {
             return new ResponseEntity<Message>(HttpStatus.BAD_REQUEST);
         }

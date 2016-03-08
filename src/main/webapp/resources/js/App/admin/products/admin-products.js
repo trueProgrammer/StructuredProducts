@@ -22,7 +22,7 @@ angular.module('App.admin.products')
                     if(entity === "underlaying") {
                         for(var value in values) {
                             var underlaying = values[value];
-                            underlaying.dropDownName = underlaying.name + ' ' + underlaying.type.name;
+                            underlaying.dropDownName = underlaying.name /*+ ' ' + underlaying.type.name*/;
                         }
                     }
                     dropDownValues[entity] = values;
