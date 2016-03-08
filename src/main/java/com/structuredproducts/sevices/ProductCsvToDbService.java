@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 public class ProductCsvToDbService {
     public final static CellProcessor[] PRODUCTS_PROCESSORS = new CellProcessor[]{
                                                                                          new NotNull(),   //name
-                                                                                         new NotNull(),   //description
                                                                                          new NotNull(),   //product type
                                                                                          new ParseInt(),  //minTerm
                                                                                          new ParseInt(),  //maxTerm
@@ -44,8 +43,7 @@ public class ProductCsvToDbService {
 
     private Map<String, String> beanPropertiesToColumnName = new HashMap<>();
     {
-        beanPropertiesToColumnName.put("name", "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435");//��������
-        beanPropertiesToColumnName.put("description", "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435");//��������
+        beanPropertiesToColumnName.put("name", "Название");//��������
         beanPropertiesToColumnName.put("productType", "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430");//��� ��������
         beanPropertiesToColumnName.put("minTerm","\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A");//����
         beanPropertiesToColumnName.put("maxTerm", "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A");//����
@@ -63,8 +61,7 @@ public class ProductCsvToDbService {
     }
 
     private String header[] = new String[]{
-            "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435",//��������
-            "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435",//��������
+            "Название",
             "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430",//��� ��������
             "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A",//����
             "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A",
