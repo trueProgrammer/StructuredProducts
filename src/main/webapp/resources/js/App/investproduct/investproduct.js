@@ -8,6 +8,15 @@ angular.module('App.investproduct')
         }])
 .controller('investproduct', ['$scope', '$log', 'restService',
     function($scope, $log, restService) {
+
+        $scope.isFullShow = function() {
+            return $( window ).width() > 700;
+        };
+
+        $scope.isMobileShow = function() {
+            return !$scope.isFullShow();
+        };
+
         restService.getAllProducts(
             function (response) {
                 $log.info("Get all products success.");

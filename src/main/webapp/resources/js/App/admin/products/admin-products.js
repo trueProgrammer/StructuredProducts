@@ -18,13 +18,6 @@ angular.module('App.admin.products')
             restService.getInstrumentType(
                 entity,
                 function(values) {
-                    //process underlaying entities for correct display in drop down menu of table
-                    if(entity === "underlaying") {
-                        for(var value in values) {
-                            var underlaying = values[value];
-                            underlaying.dropDownName = underlaying.name /*+ ' ' + underlaying.type.name*/;
-                        }
-                    }
                     dropDownValues[entity] = values;
                     array.editDropdownOptionsArray = values;
                 },
@@ -92,7 +85,7 @@ angular.module('App.admin.products')
                 { field: 'underlaying', displayName: 'Базовый актив', width: 200,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'underlaying', editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'dropDownName', editDropdownOptionsArray: []},
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'investment', displayName: 'Минимальная сумма инвестиций', width: 250,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'investment', editableCellTemplate: 'ui-grid/dropdownEditor',
