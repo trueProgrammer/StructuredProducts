@@ -12,7 +12,7 @@
 <div class="container content">
     <div class="screen-height">
         <div class="height-50">
-            <div class="height-100 no-padding-column" ng-show="isFullShow()">
+            <div class="height-100 no-padding-column" ng-if="isDesktopShow()">
                 <svg class="graphic" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                  width="1557px" height="471px" viewBox="192.621 147.453 1557 471"
                  enable-background="new 192.621 147.453 1556.4 470.892" xml:space="preserve">
@@ -116,15 +116,15 @@
                     </g>
                 </svg>
             </div>
-            <div ng-show="isMobileShow()">
+            <div ng-if="isMobileShow()">
                 <ul class="list-unstyled">
                     <li class="margin-bottom-10">
                         <button id="red-button" class="red-button rounded-2x mobile-button" ng-click="filterByType('High', $event)">
-                            <img alt="" src="resources/img/icons/dollar.png">
+                            <img alt="" src="resources/img/icons/dollar32.png">
                             <div class="side-text-title">
-                                <h2>Рисковые структурные продукты</h2>
+                                <h3>Рисковые структурные <br/>продукты</h3>
                                 <span class="side-text-num num-red">{{highRiskProducts}}</span>
-                                <br>
+                                <br/>
                                 <!--<a href="">
                                     <span class="side-text-more">подробнее</span>
                                 </a>-->
@@ -133,9 +133,9 @@
                     </li>
                     <li class="margin-bottom-10">
                         <button id="blue-button" class="blue-button rounded-2x mobile-button" type="button" ng-click="filterByType('Medium', $event)">
-                            <img alt="" src="resources/img/icons/portfel.png">
+                            <img alt="" src="resources/img/icons/keyboard_machine32.png">
                             <div class="side-text-title">
-                                <h2>Структурные продукты с участием</h2>
+                                <h3>Структурные продукты <br/>с участием</h3>
                                 <span class="side-text-num num-blue">{{mediumRiskProducts}}</span>
                                 <br>
                                 <!--<a href="">
@@ -146,9 +146,9 @@
                     </li>
                     <li class="margin-bottom-10">
                         <button id="green-button" class="green-button rounded-2x mobile-button" ng-click="filterByType('Low', $event)">
-                            <img alt="" src="resources/img/icons/bank dollar protected.png">
+                            <img alt="" src="resources/img/icons/bank_dollar_protected32.png">
                             <div class="side-text-title">
-                                <h2>Структурные продукты со 100% защиты капитала</h2>
+                                <h3>Структурные продукты со 100% защиты капитала</h3>
                                 <span class="side-text-num num-green">{{lowRiskProducts}}</span>
                                 <br>
                                 <!--<a href="">
@@ -161,7 +161,7 @@
             </div>
         </div>
         <div class="height-50">
-            <div class="table-full" ng-show="isFullShow()">
+            <div class="table-full" ng-show="isDesktopShow()">
                 <table class="table main-table">
                     <thead>
                     <tr>
