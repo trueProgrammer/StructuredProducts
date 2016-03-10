@@ -73,7 +73,8 @@ angular.module('App.admin.products')
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
             ],
             product: [
-                { field: 'name', displayName: 'Название', width: 200 },
+                { field: 'name', notNull: true, displayName: 'Название', width: 200,
+                cellTemplate: "<div id={{($index+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field]}}</div>"},
                 { field: 'productType', displayName: 'Тип структурного продукта', width: 250,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'productType', editableCellTemplate: 'ui-grid/dropdownEditor',
@@ -214,19 +215,45 @@ angular.module('App.admin.products')
 
         $scope.saveData = function() {
             $scope.saveButtonsDisabled = true;
-            restService.updateInstrumentType(
-                $scope.table.data,
-                $scope.selected,
-                function(response) {
-                    $log.info("Update " + $scope.selected + " success.");
-                    getValues($scope.selected);
-                },
-                function(response) {
-                    $scope.showFailAlert(response);
-                    getValues($scope.selected);
-                    $log.error("Update " + $scope.selected + " failed.");
+
+            if (validate()) {
+                restService.updateInstrumentType(
+                    $scope.table.data,
+                    $scope.selected,
+                    function(response) {
+                        $log.info("Update " + $scope.selected + " success.");
+                        getValues($scope.selected);
+                    },
+                    function(response) {
+                        $scope.showFailAlert(response);
+                        getValues($scope.selected);
+                        $log.error("Update " + $scope.selected + " failed.");
+                    }
+                );
+            }
+        };
+
+        var validate = function() {
+            var invalidColumns = [];
+            for (var i in $scope.table.columnDefs) {
+                var columnDef = $scope.table.columnDefs[i];
+                if (columnDef.notNull) {
+                    for (var j in $scope.table.data) {
+                        var data = $scope.table.data[j];
+                        if (!data[columnDef.name] || data[columnDef.name] === '') {
+                            invalidColumns.push({row: j, name: columnDef.name});
+                        }
+                    }
                 }
-            );
+            }
+
+            for (var i in invalidColumns) {
+                var invalidColumn = invalidColumns[i];
+                var invalidElem = $('#' + invalidColumn.row + '-' + invalidColumn.name);
+            }
+
+            return invalidColumns.length === 0;
+
         };
 
         $scope.removeData = function() {

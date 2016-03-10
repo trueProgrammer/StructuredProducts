@@ -73,7 +73,7 @@ public class DBService {
             }
         }
     }
-    public void save(List<?> list) {
+    public boolean save(List<?> list) {
         EntityTransaction transaction = dbManager.getEntityManager().getTransaction();
         transaction.begin();
         try {
@@ -81,8 +81,10 @@ public class DBService {
                 dbManager.getEntityManager().merge(obj);
             }
             transaction.commit();
+            return true;
         } catch (Exception e) {
             logger.error("Can not save list of entities.", e);
+            return false;
         } finally {
             if(transaction.isActive()) {
                 transaction.rollback();

@@ -34,14 +34,16 @@ public class ProductAdminController extends AbstractAdminController{
     public ResponseEntity<Message> updateValues(@RequestParam("entityType")String entityType, @RequestBody String entity) {
         try {
             List<?> list = ServiceUtils.getObjects(ENTITY_TYPES.get(entityType), entity);
-            dbService.save(list);
+            if (dbService.save(list)) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new Message("Ошибка при сохранении продукта. Возможно, вы заполнили не все поля."), HttpStatus.BAD_REQUEST);
+            }
         } catch (IOException e) {
-
             logger.error("Error while convert from json to object. Entity type:{} json: {}",entityType,entity);
             logger.error("", e);
             return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(path = "/products/csv",
