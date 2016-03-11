@@ -32,6 +32,32 @@ angular.module('App',
         }])
 .run(function($rootScope, $location, $cookieStore, UserService) {
 
+
+        var desktop = 992;
+        var desktopShow = false;
+
+        resize();
+        function resize() {
+            if(jQuery(window).width() >= desktop) {
+                desktopShow = true;
+            } else {
+                desktopShow = false;
+            }
+        };
+
+        $rootScope.isDesktopShow = function() {
+            return desktopShow;
+        }
+        $rootScope.isMobileShow = function() {
+            return !$rootScope.isDesktopShow();
+        }
+
+        jQuery(window).resize(function() {
+            resize();
+            $rootScope.$apply();
+        });
+
+
     /!* Try getting valid user from cookie or go to login page *!/
     var originalPath = $location.path();
     //$location.path("/login");
@@ -290,6 +316,8 @@ var App = function () {
           SidebarMenuDropdown();
         },
 
+
+
         //Animate Dropdown
         initAnimateDropdown: function() {
           function MenuMode() {
@@ -312,7 +340,5 @@ var App = function () {
           }
         },
 
-
     };
-
 }();

@@ -9,13 +9,7 @@ angular.module('App.investproduct')
 .controller('investproduct', ['$scope', '$log', 'restService',
     function($scope, $log, restService) {
 
-        $scope.isFullShow = function() {
-            return $( window ).width() > 700;
-        };
 
-        $scope.isMobileShow = function() {
-            return !$scope.isFullShow();
-        };
 
         restService.getAllProducts(
             function (response) {
@@ -49,25 +43,6 @@ angular.module('App.investproduct')
         var typesList = [];
 
         angular.element(document).ready(function () {
-            (function() {
-                var height = 33;var addition = 15;
-                var blueOffset = $("#blue-line").offset().top;
-                var redOffset = $("#red-line").offset().top;
-                if(redOffset - blueOffset < 10) {
-                    return;
-                }
-                var greenOffset = $("#green-line").offset().top;
-                if(redOffset - blueOffset < 70) {
-                    $("#red-button").offset({top: redOffset - height});
-                    $("#blue-button").offset({top: redOffset - height*2 - height - addition});
-                    $("#green-button").offset({top: redOffset + height*2 - height + addition});
-                } else {
-                    $("#green-button").offset({top: greenOffset - height});
-                    $("#blue-button").offset({top: blueOffset - height});
-                    $("#red-button").offset({top: blueOffset + (greenOffset - blueOffset) / 2 - height});
-                }
-            }());
-
             var greenEllipse = angular.element(document.getElementById("green-ellipse"));
             var redEllipse = angular.element(document.getElementById("red-ellipse"));
             var blueEllipse = angular.element(document.getElementById("blue-ellipse"));
