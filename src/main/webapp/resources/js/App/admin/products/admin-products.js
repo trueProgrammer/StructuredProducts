@@ -29,73 +29,98 @@ angular.module('App.admin.products')
         };
 
         $scope.selected;
+        var defaultStrCellTemplate = "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field]}}</div>";
         var columns = {
             productType : [
-                { field: 'name', displayName: 'Тип структурного продукта', width: "94%" },
+                { field: 'name', displayName: 'Тип структурного продукта', width: "94%",
+                    notNull: true,
+                    cellTemplate: defaultStrCellTemplate
+                }
             ],
             term : [
-                { field: 'min', displayName: 'Минимум', width: "47%" },
-                { field: 'max', displayName: 'Максимум', width: "47%" },
+                { field: 'min', displayName: 'Минимум', width: "47%",
+                    notNull: true,
+                    cellTemplate: defaultStrCellTemplate
+                },
+                { field: 'max', displayName: 'Максимум', width: "47%",
+                    notNull: true,
+                    cellTemplate: defaultStrCellTemplate
+                },
             ],
             investment : [
-                { field: 'min', displayName: 'Минимум', width: "47%" },
-                { field: 'max', displayName: 'Максимум', width: "47%" },
+                { field: 'min', displayName: 'Минимум', width: "47%",
+                    notNull: true,
+                    cellTemplate: defaultStrCellTemplate
+
+                },
+                { field: 'max', displayName: 'Максимум', width: "47%", notNull: true, cellTemplate: defaultStrCellTemplate},
             ],
             return : [
-                { field: 'count', displayName: 'Доходность', width: "94%" },
+                { field: 'count', displayName: 'Доходность', width: "94%" , notNull: true, cellTemplate: defaultStrCellTemplate},
             ],
             strategy : [
-                { field: 'name', displayName: 'Стратегия', width: "94%" },
+                { field: 'name', displayName: 'Стратегия', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate },
             ],
             legalType: [
-                { field: 'name', displayName: 'Юридическая форма', width: "94%" },
+                { field: 'name', displayName: 'Юридическая форма', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate },
             ],
             payoff: [
-                { field: 'name', displayName: 'Размер выплаты', width: "94%" },
+                { field: 'name', displayName: 'Размер выплаты', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate },
             ],
             risks: [
-                { field: 'name', displayName: 'Риски', width: "94%" },
+                { field: 'name', displayName: 'Риски', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate },
             ],
             currency: [
-                { field: 'name', displayName: 'Валюта', width: "94%" },
+                { field: 'name', displayName: 'Валюта', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate },
             ],
             paymentPeriodicity: [
-                { field: 'name', displayName: 'Периодичность выплаты дохода', width: "94%" },
+                { field: 'name', displayName: 'Периодичность выплаты дохода', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate  },
             ],
             underlayingType: [
-                { field: 'name', displayName: 'Тип базового актива', width: "94%" },
+                { field: 'name', displayName: 'Тип базового актива', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate  },
             ],
             underlaying: [
-                { field: 'name', displayName: 'Базовый актив', width: "47%" },
+                { field: 'name', displayName: 'Базовый актив', width: "47%", notNull: true, cellTemplate: defaultStrCellTemplate  },
                 { field: 'type', displayName: 'Тип базового актива', width: "47%",
                     cellFilter: "griddropdown:this",
+                    notNull: true,
+                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
                     editableEntity: 'underlayingType', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
             ],
             product: [
-                { field: 'name', notNull: true, displayName: 'Название', width: 200,
-                cellTemplate: "<div id={{($index+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field]}}</div>"},
+                { field: 'name',  displayName: 'Название', width: 200, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'productType', displayName: 'Тип структурного продукта', width: 250,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'productType', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'term', displayName: 'Срок', width: 150,
+                    notNull: true,
+                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
                     cellFilter: "griddropdown:this",
                     editableEntity: 'term', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'underlaying', displayName: 'Базовый актив', width: 200,
+                    notNull: true,
+                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
                     cellFilter: "griddropdown:this",
                     editableEntity: 'underlaying', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'investment', displayName: 'Минимальная сумма инвестиций', width: 250,
+                    notNull: true,
+                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
                     cellFilter: "griddropdown:this",
                     editableEntity: 'investment', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'broker', displayName: 'Провайдер продукта', width: 200,
+                    notNull: true,
+                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
                     cellFilter: "griddropdown:this",
                     editableEntity: 'broker', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'returnValue', displayName: 'Доходность', width: 150,
+                    notNull: true,
+                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].count}}</div>",
                     cellFilter: "griddropdown:this",
                     editableEntity: 'return', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'count', editDropdownOptionsArray: []},
@@ -144,8 +169,23 @@ angular.module('App.admin.products')
             enableColumnMenus : false,
             onRegisterApi : function(gridApi) {
                 $scope.gridApi = gridApi;
-                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                gridApi.edit.on.beginCellEdit($scope, function(rowEntity, colDef, event) {
+                    var elem = $(event.toElement);
+                    $scope.closeAlert();
+                    if (elem.children().length == 0) {
+                        $scope.currentEditElement = elem.parent();
+                    } else {
+                        $scope.currentEditElement = elem;
+                    }
+                });
+                gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue, row) {
                     $scope.saveButtonsDisabled = false;
+                    if (validateColumn(colDef, newValue)) {
+                        $scope.currentEditElement.removeClass('invalid');
+                    } else {
+                        $scope.currentEditElement.addClass('invalid');
+                    }
+                    $scope.currentEditElement = null;
                 });
                 gridApi.selection.on.rowSelectionChanged($scope,function(row){
                     if(row.isSelected) {
@@ -156,6 +196,15 @@ angular.module('App.admin.products')
                     }
                 });
             }
+        };
+
+        var validateColumn = function(colDef, newVal) {
+            if (colDef.notNull) {
+                if (!newVal || (newVal.trim && (newVal === '' || newVal.trim() === ''))) {
+                    return false;
+                }
+            }
+            return true;
         };
 
         $scope.uploadCsv = function(file, e) {
@@ -233,6 +282,7 @@ angular.module('App.admin.products')
             }
         };
 
+
         var validate = function() {
             var invalidColumns = [];
             for (var i in $scope.table.columnDefs) {
@@ -240,7 +290,13 @@ angular.module('App.admin.products')
                 if (columnDef.notNull) {
                     for (var j in $scope.table.data) {
                         var data = $scope.table.data[j];
-                        if (!data[columnDef.name] || data[columnDef.name] === '') {
+                        if (data[columnDef.name]) {
+                            if (data[columnDef.name].trim) {
+                                if(data[columnDef.name] === '' || data[columnDef.name].trim() === '') {
+                                    invalidColumns.push({row: j, name: columnDef.name});
+                                }
+                            }
+                        } else {
                             invalidColumns.push({row: j, name: columnDef.name});
                         }
                     }
@@ -250,10 +306,11 @@ angular.module('App.admin.products')
             for (var i in invalidColumns) {
                 var invalidColumn = invalidColumns[i];
                 var invalidElem = $('#' + invalidColumn.row + '-' + invalidColumn.name);
+                invalidElem.parent().addClass('invalid');
+                $scope.showFailAlert('Не все необходимые поля заполнены')
             }
 
             return invalidColumns.length === 0;
-
         };
 
         $scope.removeData = function() {
