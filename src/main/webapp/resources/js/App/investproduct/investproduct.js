@@ -6,8 +6,8 @@ angular.module('App.investproduct')
                 controller: 'investproduct'
             })
         }])
-.controller('investproduct', ['$scope', '$log', 'restService',
-    function($scope, $log, restService) {
+.controller('investproduct', ['$scope', '$log', 'restService', '$document',
+    function($scope, $log, restService, $document) {
 
 
 
@@ -127,6 +127,11 @@ angular.module('App.investproduct')
             };
             function blueClick() {
                 $scope.filterByType('Medium');
+            };
+            $scope.filterByMobileType = function(risk, event){
+                var section = angular.element(document.getElementById('table'));
+                $document.scrollToElementAnimated(section);
+                $scope.filterByType(risk, event);
             };
             $scope.filterByType = function(risk, event) {
                 if(risk === 'Low') {
@@ -329,4 +334,5 @@ angular.module('App.investproduct')
             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
             $scope.predicate = predicate;
         };
-    }]);
+
+    }]).value("duScrollDuration",100);

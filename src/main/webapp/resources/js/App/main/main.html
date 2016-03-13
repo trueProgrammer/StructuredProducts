@@ -69,7 +69,8 @@
 
                     <div class="headline"><h2>Топ 5 структурных продуктов</h2></div>
 
-                    <div class="panel-body select-table-body">
+
+                    <div class="panel-body select-table-body" ng-show="isDesktopShow()">
                         <div class="col-md-4">
                             <label for="byTimeType"> Лучшие продукты: </label><br>
                             <select id="byTimeType" ng-model="data.timeType" ng-change="topProductsChange()"
@@ -153,9 +154,16 @@
                             <div class="panel panel-default" ng-if="val.mainPage">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a href="" ng-click="accordion.select('accordion-v1', 'collapse' + $index)" data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">
-                                            <b>{{val.title}}</b><span class="results-number invest-idea-header">{{val.addDate | date:'dd.MM.yyyy'}}, {{val.broker.name}}</span>
-                                        </a>
+                                        <div ng-show="isDesktopShow()">
+                                            <a href="" ng-click="accordion.select('accordion-v1', 'collapse' + $index)" data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">
+                                                <b>{{val.title}}</b><span class="results-number invest-idea-header">{{val.addDate | date:'dd.MM.yyyy'}}, {{val.broker.name}}</span>
+                                            </a>
+                                        </div>
+                                        <div ng-show="isMobileShow()">
+                                            <a href="" ng-click="accordion.select('accordion-v1', 'collapse' + $index)" data-parent="#accordion-v1" data-toggle="collapse" class="accordion-toggle">
+                                                <b>{{val.title}}</b><span class="results-number invest-idea-header"></span>
+                                            </a>
+                                        </div>
                                     </h4>
                                 </div>
                                 <div class="panel-collapse collapse in" ng-if="accordion.isSelected('accordion-v1', 'collapse' + $index)">

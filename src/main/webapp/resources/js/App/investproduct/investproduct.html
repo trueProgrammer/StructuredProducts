@@ -127,48 +127,39 @@
             <div ng-if="isMobileShow()">
                 <ul class="list-unstyled">
                     <li class="margin-bottom-10">
-                        <button id="green-button" class="green-button rounded-2x mobile-button" ng-click="filterByType('Low', $event)">
+                        <button id="green-button" class="green-button rounded-2x mobile-button" ng-click="filterByMobileType('Low', $event)">
                             <img alt="" src="resources/img/icons/bank_dollar_protected32.png">
                             <div class="side-text-title">
-                                <h3>Структурные продукты со 100% защиты капитала</h3>
+                                <h4>100% защиты капитала</h4>
                                 <span class="side-text-num num-green">{{lowRiskProducts}}</span>
                                 <br>
-                                <!--<a href="">
-                                    <span class="side-text-more">подробнее</span>
-                                </a>-->
                             </div>
                         </button>
                     </li>
                     <li class="margin-bottom-10">
-                        <button id="blue-button" class="blue-button rounded-2x mobile-button" type="button" ng-click="filterByType('Medium', $event)">
+                        <button id="blue-button" class="blue-button rounded-2x mobile-button" type="button" ng-click="filterByMobileType('Medium', $event)">
                             <img alt="" src="resources/img/icons/keyboard_machine32.png">
                             <div class="side-text-title">
-                                <h3>Структурные продукты с частичной завщитой капитала</h3>
+                                <h4>Частичная защита капитала</h4>
                                 <span class="side-text-num num-blue">{{mediumRiskProducts}}</span>
                                 <br>
-                                <!--<a href="">
-                                    <span class="side-text-more">подробнее</span>
-                                </a>-->
                             </div>
                         </button>
                     </li>
                     <li class="margin-bottom-10">
-                        <button id="red-button" class="red-button rounded-2x mobile-button" ng-click="filterByType('High', $event)">
+                        <button id="red-button" class="red-button rounded-2x mobile-button" ng-click="filterByMobileType('High', $event)">
                             <img alt="" src="resources/img/icons/dollar32.png">
                             <div class="side-text-title">
-                                <h3>Рисковые структурные <br/>продукты</h3>
+                                <h4>Рисковые</h4>
                                 <span class="side-text-num num-red">{{highRiskProducts}}</span>
                                 <br/>
-                                <!--<a href="">
-                                    <span class="side-text-more">подробнее</span>
-                                </a>-->
                             </div>
                         </button>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="height-50">
+        <div id="table" class="height-50">
             Кликните на название поля в таблице и выберете структурный продукт по интересующему Вас параметру
             <div class="table-full" ng-show="isDesktopShow()">
                 <table class="table main-table">

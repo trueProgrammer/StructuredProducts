@@ -27,7 +27,7 @@
                 <div class="title-v1 margin-bottom-20">
                     <h2>С помощью <span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span> вы можете</h2>
                 </div>
-                <div class="row main-buttons">
+                <div class="row main-buttons" ng-show="isDesktopShow()">
                     <div class="col-md-4 col-sm-6">
                         <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button"><i class="fa"></i>
                             <h3>Выбрать из<br>предложенных</h3>
@@ -39,9 +39,20 @@
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6">
-                        <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button"><i class="fa"></i>
+                        <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button">
                             <h3>Сконструировать<br>самостоятельно</h3>
                         </div>
+                    </div>
+                </div>
+                <div class="row" ng-show="isMobileShow()">
+                    <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button">
+                        <h3>Выбрать из<br>предложенных</h3>
+                    </div>
+                    <div class="or-style">
+                        <h2><b>ИЛИ</b></h2>
+                    </div>
+                    <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button">
+                        <h3>Сконструировать<br>самостоятельно</h3>
                     </div>
                 </div>
                 <br>
