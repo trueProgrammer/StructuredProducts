@@ -10,7 +10,7 @@ angular.module('App.structuredproducts')
     function($scope,  $anchorScroll, $document) {
 
         var selected = {
-            0 : true,
+            0 : false,
             1 : false,
             2 : false,
             3 : false,
