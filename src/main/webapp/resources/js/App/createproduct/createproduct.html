@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">Создать индивидуальный структурный продукт</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="#/">Главная страница</a></li>
+            <li class="active">Создать индивидуальный структурный продукт</li>
+        </ul>
+    </div>
+</div>
+<div class="container">
+    <div class="screen-height">
+        <div class="col-md-6 col-sm-6">
+            <img src="resources/img/pages/rombs.png" alt="" style="width: 100%"/>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="headline"><h2>Основные параметры</h2></div>
+                <p><h4><span class="parameter">Доходность:</span><span class="h4-style">{{profitLine}}</span></h4></p>
+                <div ng-if="!profitSaved">
+                    <div class="btn-group" uib-dropdown>
+                        <span class="h4-style">От </span>
+                        <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;">
+                            {{fromProfit}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li ng-repeat="prof in profits"><a ng-click="setFromProfit(prof)">{{prof}}</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group left-margin" uib-dropdown>
+                        <span class="h4-style">До </span>
+                        <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;">
+                            {{toProfit}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li ng-repeat="prof in profits"><a ng-click="setToProfit(prof)">{{prof}}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveProfit()" ng-if="!profitSaved">Применить доходность</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="resources/js/App/createproduct/createproduct.css">
