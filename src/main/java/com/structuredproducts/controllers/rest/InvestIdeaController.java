@@ -52,20 +52,25 @@ public class InvestIdeaController extends AbstractAdminController{
             Integer brokerId = (Integer) map.get("broker");
             Boolean onMainPage = (Boolean) map.get("onMainPage");
 
-            Broker broker = new Broker();
-            broker.setId(brokerId);
 
             InvestIdea idea = new InvestIdea();
             idea.setId(id);
-            idea.setBroker(broker);
+            if (brokerId != null) {
+                Broker broker = new Broker();
+                broker.setId(brokerId);
+                idea.setBroker(broker);
+            }
             idea.setTitle(title);
             idea.setContent(content);
             idea.setAddDate(new Date());
             idea.setMainPage(onMainPage);
 
-            dbService.save(idea);
+            if (!dbService.save(idea)) {
+                return new ResponseEntity<>(new Message("При сохранении идеи произошла ошибка. Обратитесь к администратору."), HttpStatus.BAD_REQUEST);
+            }
         } catch (IOException e) {
             logger.error("can't handle json " + json, e);
+            return new ResponseEntity<>(new Message("При сохранении идеи произошла ошибка. Обратитесь к администратору."), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

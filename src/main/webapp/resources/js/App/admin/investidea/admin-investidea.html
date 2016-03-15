@@ -15,43 +15,49 @@
 <!--=== Content ===-->
 <div class="container content-sm">
     <div ng-include="'views/template/admin-menu.htm'"></div>
-
-    <form id="investidea-form">
         <div class="row">
             <div class="col-md-6">
                 <h2 ng-show="mode === 'add'">Добавить:</h2>
                 <h2 ng-show="mode === 'modify'">Редактировать:</h2>
-                <div class="form-group">
-                    <label for="title">Заголовок</label>
-                    <input type="text" class="form-control" id="title">
+                <div name="alertDiv">
+                    <alert close="closeAlert()" type="danger"
+                           ng-if="alert.visible">{{alert.msg}}</alert>
                 </div>
-                <div class="form-group">
-                    <label for="content">Текст идеи</label>
-                    <textarea id="content" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="brokers-dropdown">Брокеры</label>
+                <form id="investidea-form" name="ideaForm" class="investidea-form">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="title">Заголовок <span class="color-red">*</span></label>
+                            <input type="text" name='title' class="form-control" id="title" ng-model="idea.title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">Текст идеи <span class="color-red">*</span></label>
+                            <textarea id="content" name='content' class="form-control" ng-model="idea.content" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="brokers-dropdown">Брокеры</label>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <select class="form-control" ng-model="selectedBroker"
+                                            ng-options="broker as broker.name for broker in brokersData track by broker.id"
+                                            id="brokers-dropdown"
+                                            ng-change="updateBrokerImg()">
+                                        <option value="" defaultSelected="true">Выберите значение</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1">
+                                    <img id="broker-logo" src="" width="250"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mainPage">Показывать на главной</label>
+                            <input class="check-box" id="mainPage" type="checkbox" ng-model="onMainPage"/>
+                        </div>
 
-                    <div class="row">
-                        <div class="col-md-5">
-                            <select class="form-control" ng-model="selectedBroker"
-                                    ng-options="broker as broker.name for broker in brokersData track by broker.id"
-                                    id="brokers-dropdown"
-                                    ng-change="updateBrokerImg()">
-                                <option value="">Выберите значение</option>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            <img id="broker-logo" src="" width="250"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="mainPage">Показывать на главной</label>
-                    <input class="check-box" id="mainPage" type="checkbox" ng-model="onMainPage"/>
-                </div>
-                <button class="btn-primary" id="actionbtn" ng-click="addIdea()">Добавить</button>
-                <button class="btn-primary" ng-show="mode === 'modify'" id="cancelbtn" ng-click="cancel()">Отмена</button>
+                        <button class="btn-primary" id="actionbtn" ng-click="addIdea(ideaForm)">Добавить</button>
+                        <button class="btn-primary" ng-show="mode === 'modify'" id="cancelbtn" ng-click="cancel()">Отмена</button>
+                    </fieldset>
+                </form>
             </div>
             <div class="col-md-6">
                 <h2>Список существующих идей:</h2>
@@ -86,6 +92,5 @@
                 </div>
         </div>
         </div>
-    </form>
 
 </div>

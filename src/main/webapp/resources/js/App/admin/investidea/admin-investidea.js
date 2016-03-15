@@ -9,6 +9,7 @@ angular.module('App.admin.investidea')
 .controller('admin-investidea', [ '$scope', '$log', 'restService', '$rootScope', '$location',
     function($scope, $log, restService, $rootScope, $location) {
         $scope.page = 'investidea';
+        $scope.alert = {};
         (function() {
             if(typeof $rootScope.user === 'undefined') {
                 $location.path("/login");
@@ -49,7 +50,11 @@ angular.module('App.admin.investidea')
         $scope.modifyIdea = function(idea) {
             $('#title').val(idea.title);
             $('#content').val(idea.content);
-            $('#broker-logo').attr('src', idea.broker.logo);
+            if (idea.broker) {
+                $('#broker-logo').attr('src', idea.broker.logo);
+            } else {
+                $('#broker-logo').attr('src', '');
+            }
             $('#actionbtn').html('Обновить');
             $scope.selectedBroker = idea.broker;
             $scope.onMainPage = idea.mainPage;
@@ -71,31 +76,54 @@ angular.module('App.admin.investidea')
                 updateInvestIdeas();
             }, function(data) {console.log(data)});
         };
-        $scope.addIdea = function() {
-            if ($scope.selectedBroker) {
-                var obj = {
-                    id: $scope.ideaId,
-                    title: $('#title').val(),
-                    content: $('textarea#content').val(),
-                    broker: $scope.selectedBroker.id,
-                    onMainPage: !!$scope.onMainPage
-                };
+        var isFormValid = function (form) {
+            return form.$dirty
+                && form.$valid;
+        };
+        $scope.addIdea = function(form) {
+            var obj = {};
+            if (isFormValid(form)) {
+                if ($scope.selectedBroker) {
+                    obj = {
+                        id: $scope.ideaId,
+                        title: $('#title').val(),
+                        content: $('textarea#content').val(),
+                        broker: $scope.selectedBroker.id,
+                        onMainPage: !!$scope.onMainPage
+                    };
+                } else {
+                    obj = {
+                        id: $scope.ideaId,
+                        title: $('#title').val(),
+                        content: $('textarea#content').val(),
+                        onMainPage: !!$scope.onMainPage
+                    }
+                }
                 restService.addIdea(obj, function(data) {
                     console.log("idea successfully saved");
                     $('#investidea-form')[0].reset();
+                    $scope.mode='add';
+                    $('#actionbtn').html('Добавить');
                     $('#broker-logo').attr('src', '');
                     $scope.ideaId = null;
                     $scope.selectedBroker = null;
                     updateInvestIdeas();
                 }, function(data) {
-                    console.log("idea not saved");
                     $scope.ideaId = null;
                     $scope.selectedBroker = null;
+                    $('#actionbtn').html('Добавить');
+                    $scope.mode='add';
                     $('#investidea-form')[0].reset();
                     $('#broker-logo').attr('src', '');
+                    $scope.showFailAlert(data.message);
                     updateInvestIdeas();
                 })
+
             }
-        }
+        };
+        $scope.showFailAlert = function(msg) {
+            $scope.alert.msg = msg;
+            $scope.alert.visible = true;
+        };
     }]);
 
