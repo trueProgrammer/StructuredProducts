@@ -37,7 +37,9 @@ angular.module('App.createproduct')
                 stroke: '#FDBF01'
             },{
                 text: '+ параметр',
-                stroke: '#BEBEBE'
+                stroke: '#BEBEBE',
+                id: 'addParam1',
+                onclick: 'onParamClick()'
             }, {
                 text: 'Сумма вложений',
                 stroke: '#FD0001'
@@ -46,9 +48,14 @@ angular.module('App.createproduct')
                 stroke: '#4774AA'
             }, {
                 text: '+ параметр',
-                stroke: '#BEBEBE'
+                stroke: '#BEBEBE',
+                id: 'addParam2'
             }];
 
-            hexParams.createParams({radius: 70, hexData: hexData});
+            window.sampleOnClick = function() {
+                alert('tbd');
+            };
+
+            new hexParams({radius: 70, hexData: hexData});
 
 }]);
