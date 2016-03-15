@@ -76,10 +76,6 @@ angular.module('App.createproduct')
                 stroke: '#4774AA',
             }];
 
-            window.sampleOnClick = function() {
-                alert('tbd');
-            };
-
             new hexParams({radius: 70, defaultParams: defaultParams, optParams: optParams});
 
 }]);
