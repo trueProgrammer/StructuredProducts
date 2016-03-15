@@ -32,3 +32,16 @@
 .parameter {
     color: #333333
 }
+
+.hex-style {
+    cursor: pointer;
+    fill: white;
+}
+
+.hex-text {
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+    color: #333333;
+    text-anchor: middle;
+}

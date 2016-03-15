@@ -29,53 +29,54 @@ angular.module('App.createproduct')
             $scope.profitLine = " от " + $scope.fromProfit + "   до " + $scope.toProfit;
         }
     };
-            var defaultParams = [{
-                text: 'Доходность',
-                stroke: '#91CF50'
-            }, {
-                text: 'Уровень риска',
-                stroke: '#FDBF01'
-            },{
-                text: '+ параметр',
-                stroke: '#BEBEBE',
-                id: 'addParam1',
-                onclick: 'onParamClick()'
-            }, {
-                text: 'Сумма вложений',
-                stroke: '#FD0001'
-            },{
-                text: 'Срок вложений',
-                stroke: '#4774AA'
-            }, {
-                text: '+ параметр',
-                stroke: '#BEBEBE',
-                id: 'addParam2',
-                onclick: 'onParamClick()'
-            }];
 
-            var optParams = [{
-                text: 'Тип продукта',
-                stroke: '#91CF50'
-            }, {
-                text: 'Валюта',
-                stroke: '#FDBF01'
-            },{
-                text: 'Размер выплат',
-                stroke: '#4774AA',
-            }, {
-                text: 'Тип базового актива',
-                stroke: '#FDBF01'
-            },{
-                text: 'Риски',
-                stroke: '#4774AA'
-            }, {
-                text: 'Периодичность выплат',
-                stroke: '#FDBF01',
-            }, {
-                text: 'Стратегия',
-                stroke: '#4774AA',
-            }];
+    var defaultParams = [{
+        text: 'Доходность',
+        stroke: '#91CF50'
+    }, {
+        text: 'Уровень риска',
+        stroke: '#FDBF01'
+    },{
+        text: '+ параметр',
+        stroke: '#BEBEBE',
+        id: 'addParam1',
+        onclick: 'onParamClick()'
+    }, {
+        text: 'Сумма вложений',
+        stroke: '#FD0001'
+    },{
+        text: 'Срок вложений',
+        stroke: '#4774AA'
+    }, {
+        text: '+ параметр',
+        stroke: '#BEBEBE',
+        id: 'addParam2',
+        onclick: 'onParamClick()'
+    }];
 
-            new hexParams({radius: 70, defaultParams: defaultParams, optParams: optParams});
+    var optParams = [{
+        text: 'Тип продукта',
+        stroke: '#91CF50'
+    }, {
+        text: 'Валюта',
+        stroke: '#FDBF01'
+    },{
+        text: 'Размер выплат',
+        stroke: '#4774AA',
+    }, {
+        text: 'Тип базового актива',
+        stroke: '#FDBF01'
+    },{
+        text: 'Риски',
+        stroke: '#4774AA'
+    }, {
+        text: 'Периодичность выплат',
+        stroke: '#FDBF01',
+    }, {
+        text: 'Стратегия',
+        stroke: '#4774AA',
+    }];
+
+    new hexParams({radius: 72, defaultParams: defaultParams, optParams: optParams});
 
 }]);

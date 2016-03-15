@@ -76,8 +76,8 @@
                     return d.id;
                 })
                 .attr("stroke-width", "5px")
-                .style("fill", "white")
                 .attr('stroke', 'white')
+                .attr("class","hex-style")
                 .transition()
                 .attr("stroke", function (d) {
                     return d.stroke
@@ -96,15 +96,15 @@
                 .attr("y", function (d) {
                     return d.y;
                 })
-                .attr('text-anchor', 'middle')
-                .attr("font-size", 15)
-                .attr("fill", "white")
-                .attr("font-family", "MicrosoftSansSerif")
+                .attr("class","hex-style")
+                .attr("class","hex-text")
                 .text(function (d) {
                     return d.text;
                 })
+                .attr('onclick', function (d) {
+                    return d.onclick;
+                })
                 .transition()
-                .attr("fill", "grey")
                 .duration(1000);
 
         };
