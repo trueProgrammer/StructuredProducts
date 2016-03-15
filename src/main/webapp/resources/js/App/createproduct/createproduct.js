@@ -28,6 +28,27 @@ angular.module('App.createproduct')
             $scope.profitSaved = true;
             $scope.profitLine = " от " + $scope.fromProfit + "   до " + $scope.toProfit;
         }
-    }
+    };
+            var hexData = [{
+                text: 'Доходность',
+                stroke: '#91CF50'
+            }, {
+                text: 'Уровень риска',
+                stroke: '#FDBF01'
+            },{
+                text: '+ параметр',
+                stroke: '#BEBEBE'
+            }, {
+                text: 'Сумма вложений',
+                stroke: '#FD0001'
+            },{
+                text: 'Срок вложений',
+                stroke: '#4774AA'
+            }, {
+                text: '+ параметр',
+                stroke: '#BEBEBE'
+            }];
+
+            hexParams.createParams({radius: 70, hexData: hexData});
 
 }]);
