@@ -147,6 +147,11 @@
                 .attr('id', function (d) {
                     return d.id;
                 })
+                .text(function(d) {
+                    if (d.value) {
+                        return d.value();
+                    }
+                })
                 .attr("class","hex-style")
                 .attr("class","hex-text")
                 .attr('onclick', function (d) {
@@ -157,6 +162,5 @@
         };
         prepareData(self.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
         this.drawHex(this.defaultParams, mainGroup, onParamClick);
-
     }
 })();

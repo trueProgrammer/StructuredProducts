@@ -35,7 +35,10 @@ angular.module('App.createproduct')
             var defaultParams = [{
                 text: 'Доходность',
                 stroke: '#91CF50',
-                id: 'profit'
+                id: 'profit',
+                value: function() {
+                    return 'От ' + $scope.fromProfit + ' до ' + $scope.toProfit;
+                }
             }, {
                 text: 'Уровень риска',
                 stroke: '#FDBF01',
@@ -89,6 +92,4 @@ angular.module('App.createproduct')
             }];
 
             new hexParams({radius: 72, defaultParams: defaultParams, optParams: optParams});
-
-            $('#profit').text('От ' + $scope.fromProfit + ' до ' + $scope.toProfit);
         }]);
