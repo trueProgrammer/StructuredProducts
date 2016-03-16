@@ -45,3 +45,20 @@
     color: #333333;
     text-anchor: middle;
 }
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.col-sm-6 {
+    margin-top: 15px;
+}
+
+.hr-style {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.opacity-style {
+    opacity: 0.1;
+}
