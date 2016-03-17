@@ -69,6 +69,25 @@
         this.drawHex(this.optParams, addGroup, onAddParamClick);
     }
 
+    var extendControl = function(control) {
+        var id = this.id;
+        control.mode = 'disabled';
+        control.turnOn = function() {
+            if (this.mode === 'disabled') {
+                this.active();
+            }
+        };
+        control.active = function() {
+            this.mode = 'active';
+            $('#'+id+'-shadow').attr('visibility', 'visible');
+            $('#' + id).attr('opacity', '1');
+        };
+        control.inactive = function() {
+            this.mode = 'enabled';
+            $('#'+id+'-shadow').attr('visibility', 'hidden');
+        };
+    };
+
     hexParams = function (config) {
         hexbin = d3.hexbin().radius(config.radius);
         svg = d3.select('#svg');
@@ -77,6 +96,16 @@
             .attr("id", "blur")
             .append("feGaussianBlur")
             .attr("stdDeviation", 0);
+        svg.append("defs")
+            .append("filter")
+            .attr("id", "shadow")
+            .attr('x', '-2')
+            .attr('y', '-2')
+            .attr('width', '160')
+            .attr('height', '160')
+            .append("feGaussianBlur")
+            .attr("stdDeviation", 2);
+
         mainGroup = svg.append('g')
             .attr('id', 'main')
             .attr('filter', 'url(#blur)');
@@ -87,6 +116,17 @@
         this.defaultParams = config.defaultParams;
         this.optParams = config.optParams;
 
+        this.defaultParams.forEach(function(param) {
+            if (param.boundedControl) {
+                extendControl.call(param, param.boundedControl);
+            }
+        });
+        this.optParams.forEach(function(param) {
+            if (param.boundedControl) {
+                extendControl.call(param, param.boundedControl);
+            }
+        });
+
         var self = this;
 
 
@@ -95,7 +135,23 @@
                 .append('g')
                 .selectAll('.hexagon')
                 .data(params, function(d) {return d.id})
-                .enter();
+                .enter()
+                .append('g')
+                .attr('id', function(d) {return d.id;})
+                .attr('opacity', '0.1');
+
+            innerGroups.append("path")
+                .attr("d", function (d) {
+                    return "M" + d.x + "," + d.y + hexbin.hexagon();
+                })
+                .attr('id', function(d) {return d.id + '-shadow'})
+                .attr('visibility', 'hidden')
+                .attr('filter', 'url(#shadow)')
+                .attr('fill', 'white')
+                .attr("stroke-width", "15")
+                .attr("stroke", function (d) {
+                    return d.stroke
+                });
 
             var paths = innerGroups.append("path")
                 .attr("d", function (d) {
@@ -126,7 +182,6 @@
                 .attr("y", function (d) {
                     return d.y;
                 })
-                .attr("class","hex-style")
                 .attr("class","hex-text")
                 .text(function (d) {
                     return d.text;
@@ -145,7 +200,7 @@
                     return d.y + 20;
                 })
                 .attr('id', function (d) {
-                    return d.id;
+                    return d.id + '-text';
                 })
                 .text(function(d) {
                     if (d.value) {

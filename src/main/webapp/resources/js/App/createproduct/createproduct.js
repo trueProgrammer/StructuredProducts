@@ -10,6 +10,19 @@ angular.module('App.createproduct')
     .controller('createproduct', ['$scope',
         function ($scope) {
 
+            var profitControl = {
+                id: 'profitBlock'
+            };
+            var riskControl = {
+                id: 'riskBlock'
+            };
+            var termControl = {
+                id: 'timeBlock'
+            };
+            var sumControl = {
+                id: 'subBlock'
+            };
+
             $scope.profitDisabled = false;
             $scope.timeDisabled = true;
             $scope.sumDisabled = true;
@@ -29,14 +42,16 @@ angular.module('App.createproduct')
                 $scope.toSum = value;
             };
             $scope.saveSum = function () {
-                if ($scope.sums[$scope.fromSum] <= $scope.sums[$scope.toSum]) {
+                //if ($scope.sums[$scope.fromSum] <= $scope.sums[$scope.toSum]) {
                     $scope.sumSaved = true;
                     $scope.sumLine = " от " + $scope.fromSum + "   до " + $scope.toSum + "  ";
-                }
+                    sumControl.inactive();
+                //}
             };
             $scope.editSum = function () {
                 $scope.sumSaved = false;
                 $scope.sumLine = "";
+                sumControl.active();
             };
 
 
@@ -60,11 +75,14 @@ angular.module('App.createproduct')
                     $scope.timeLine = " от " + $scope.fromTime + "   до " + $scope.toTime + "  ";
                     $scope.sumDisabled = false;
                     $("#sumBlock").css("opacity","1");
+                    termControl.inactive();
+                    sumControl.turnOn();
                 }
             };
             $scope.editTime = function () {
                 $scope.timeSaved = false;
                 $scope.timeLine = "";
+                termControl.active();
             };
 
             $scope.profitSaved = false;
@@ -73,11 +91,11 @@ angular.module('App.createproduct')
             $scope.fromProfit = $scope.profits[0];
             $scope.toProfit = $scope.profits[1];
             $scope.setFromProfit = function (value) {
-                $('#profit').text('От ' + value + ' до ' + $scope.toProfit);
+                $('#profit-text').text('От ' + value + ' до ' + $scope.toProfit);
                 $scope.fromProfit = value;
             };
             $scope.setToProfit = function (value) {
-                $('#profit').text('От ' + $scope.fromProfit + ' до ' + value);
+                $('#profit-text').text('От ' + $scope.fromProfit + ' до ' + value);
                 $scope.toProfit = value;
             };
             $scope.saveProfit = function () {
@@ -86,11 +104,14 @@ angular.module('App.createproduct')
                     $scope.profitLine = " от " + $scope.fromProfit + "   до " + $scope.toProfit + "  ";
                     $scope.riskDisabled = false;
                     $("#riskBlock").css("opacity","1");
+                    profitControl.inactive();
+                    riskControl.turnOn();
                 }
             };
             $scope.editProfit = function () {
                 $scope.profitSaved = false;
                 $scope.profitLine = "";
+                profitControl.active();
             };
 
             $scope.riskSaved = false;
@@ -98,11 +119,11 @@ angular.module('App.createproduct')
             $scope.fromRisk = $scope.profits[0];
             $scope.toRisk = $scope.profits[1];
             $scope.setFromRisk = function (value) {
-                $('#risk').text('От ' + value + ' до ' + $scope.toRisk);
+                $('#risk-text').text('От ' + value + ' до ' + $scope.toRisk);
                 $scope.fromRisk = value;
             };
             $scope.setToRisk = function (value) {
-                $('#risk').text('От ' + $scope.fromRisk + ' до ' + value);
+                $('#risk-text').text('От ' + $scope.fromRisk + ' до ' + value);
                 $scope.toRisk = value;
             };
             $scope.saveRisk = function () {
@@ -111,24 +132,30 @@ angular.module('App.createproduct')
                     $scope.riskLine = " от " + $scope.fromRisk + "   до " + $scope.toRisk + "  ";
                     $scope.timeDisabled = false;
                     $("#timeBlock").css("opacity","1");
+                    riskControl.inactive();
+                    termControl.turnOn();
                 }
             };
             $scope.editRisk = function () {
                 $scope.riskSaved = false;
                 $scope.riskLine = "";
+                riskControl.active();
             };
+
 
             var defaultParams = [{
                 text: 'Доходность',
                 stroke: '#91CF50',
                 id: 'profit',
+                boundedControl: profitControl,
                 value: function() {
                     return 'От ' + $scope.fromProfit + ' до ' + $scope.toProfit;
                 }
             }, {
                 text: 'Уровень риска',
                 stroke: '#FDBF01',
-                id: 'riskLevel'
+                id: 'risk',
+                boundedControl: riskControl,
             }, {
                 text: '+ параметр',
                 stroke: '#BEBEBE',
@@ -136,19 +163,17 @@ angular.module('App.createproduct')
             }, {
                 text: 'Сумма вложений',
                 stroke: '#FD0001',
+                boundedControl: sumControl,
                 id: 'sum'
             }, {
                 text: 'Срок вложений',
                 stroke: '#4774AA',
+                boundedControl: termControl,
                 id: 'term'
             }, {
                 text: '+ параметр',
                 stroke: '#BEBEBE',
                 id: 'addParam2'
-            }, {
-                text: 'Валюта',
-                stroke: '#FDBF01',
-                id: 'currency'
             }];
 
             var optParams = [ {
@@ -175,7 +200,12 @@ angular.module('App.createproduct')
                 text: 'Стратегия',
                 stroke: '#4774AA',
                 id: 'strategy'
+            }, {
+                text: 'Валюта',
+                stroke: '#FDBF01',
+                id: 'currency'
             }];
 
             new hexParams({radius: 72, defaultParams: defaultParams, optParams: optParams});
+            profitControl.active();
         }]);
