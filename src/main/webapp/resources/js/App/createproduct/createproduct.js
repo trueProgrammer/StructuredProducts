@@ -10,18 +10,6 @@ angular.module('App.createproduct')
     .controller('createproduct', ['$scope',
         function ($scope) {
 
-            var profitControl = {
-                id: 'profitBlock'
-            };
-            var riskControl = {
-                id: 'riskBlock'
-            };
-            var termControl = {
-                id: 'timeBlock'
-            };
-            var sumControl = {
-                id: 'subBlock'
-            };
 
             $scope.profitDisabled = false;
             $scope.timeDisabled = true;
@@ -34,11 +22,11 @@ angular.module('App.createproduct')
             $scope.fromSum = $scope.sums[0];
             $scope.toSum = $scope.sums[1];
             $scope.setFromSum = function (value) {
-                $('#sum').text('От ' + value + ' до ' + $scope.toSum);
+                $('#sum-text').text('От ' + value + ' до ' + $scope.toSum);
                 $scope.fromSum = value;
             };
             $scope.setToSum = function (value) {
-                $('#sum').text('От ' + $scope.fromSum + ' до ' + value);
+                $('#sum-text').text('От ' + $scope.fromSum + ' до ' + value);
                 $scope.toSum = value;
             };
             $scope.saveSum = function () {
@@ -55,6 +43,7 @@ angular.module('App.createproduct')
             };
 
 
+
             $scope.timeSaved = false;
             $scope.timeLine = "";
             $scope.times = ['2 мес', '3 мес', '4 мес', '5 мес', '6 мес', '8 мес',
@@ -62,22 +51,22 @@ angular.module('App.createproduct')
             $scope.fromTime = $scope.times[0];
             $scope.toTime = $scope.times[1];
             $scope.setFromTime = function (value) {
-                $('#time').text('От ' + value + ' до ' + $scope.toTime);
+                $('#term-text').text('От ' + value + ' до ' + $scope.toTime);
                 $scope.fromTime = value;
             };
             $scope.setToTime = function (value) {
-                $('#time').text('От ' + $scope.fromTime + ' до ' + value);
+                $('#term-text').text('От ' + $scope.fromTime + ' до ' + value);
                 $scope.toTime = value;
             };
             $scope.saveTime = function () {
-                if ($scope.fromTime <= $scope.toTime) {
+                //if ($scope.fromTime <= $scope.toTime) {
                     $scope.timeSaved = true;
                     $scope.timeLine = " от " + $scope.fromTime + "   до " + $scope.toTime + "  ";
                     $scope.sumDisabled = false;
                     $("#sumBlock").css("opacity","1");
                     termControl.inactive();
                     sumControl.turnOn();
-                }
+                //}
             };
             $scope.editTime = function () {
                 $scope.timeSaved = false;
@@ -142,6 +131,22 @@ angular.module('App.createproduct')
                 riskControl.active();
             };
 
+            var profitControl = {
+                id: 'profitBlock',
+                edit: $scope.editProfit
+            };
+            var riskControl = {
+                id: 'riskBlock',
+                edit: $scope.editRisk
+            };
+            var termControl = {
+                id: 'timeBlock',
+                edit: $scope.editTime
+            };
+            var sumControl = {
+                id: 'sumBlock',
+                edit: $scope.editSum
+            };
 
             var defaultParams = [{
                 text: 'Доходность',
@@ -156,16 +161,25 @@ angular.module('App.createproduct')
                 stroke: '#FDBF01',
                 id: 'risk',
                 boundedControl: riskControl,
+                value: function() {
+                    return 'От ' + $scope.fromRisk + ' до ' + $scope.toRisk;
+                }
             }, {
                 text: 'Сумма вложений',
                 stroke: '#FD0001',
                 boundedControl: sumControl,
-                id: 'sum'
+                id: 'sum',
+                value: function() {
+                    return 'От ' + $scope.fromSum + ' до ' + $scope.toSum;
+                }
             }, {
                 text: 'Срок вложений',
                 stroke: '#4774AA',
                 boundedControl: termControl,
-                id: 'term'
+                id: 'term',
+                value: function() {
+                    return 'От ' + $scope.fromTime + ' до ' + $scope.toTime;
+                }
             }, ];
 
             var optParams = [ {

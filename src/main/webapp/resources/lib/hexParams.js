@@ -16,29 +16,6 @@
         var angles = hexAngles;
         var radiusPow = 2;
 
-        var addParamsAtFirstRow = 8 - params.length;
-        if (addParamsAtFirstRow > 0) {
-            while (addParamsAtFirstRow > 1) {
-                params.push({
-                text: '+ параметр',
-                stroke: '#BEBEBE',
-                addParam: true,
-                id: 'addParam1' + addParamsAtFirstRow--
-            });
-            }
-        } else if (!Math.abs(addParamsAtFirstRow)){
-            var addParamsAtSecondRow = 8 - Math.abs(addParamsAtFirstRow);
-            while (addParamsAtSecondRow > 1) {
-                params.push({
-                    text: '+ параметр',
-                    stroke: '#BEBEBE',
-                    addParam: true,
-                    id: 'addParam2' + addParamsAtSecondRow--
-                });
-
-            }
-        }
-
         for (var i = 1; i < params.length; i++) {
             if (i == 7) {
                 angles = hexAngles2;
@@ -69,16 +46,25 @@
         }
     };
 
+    function onActiveParamClick(control) {
+        if (control.mode === 'active') {
+            $('#' + control.id + ' > button').click();
+        } else {
+            $('#'+control.id + ' > h4 > i').click();//По идее должен работать control.edit, но у меня отображение срабатывает только после ресайза страницы
+        }
+    }
 
     function onAddParamClick(data) {
         var removeIndex = this.optParams.map(function(item) { return item.id; })
             .indexOf(data.id);
         var forAdd = this.optParams.splice(removeIndex, 1)[0];
-        forAdd.x = onAddParamClick.clickedParam.x;
-        forAdd.y = onAddParamClick.clickedParam.y;
-        var clickedParamIndex = this.defaultParams.map(function(item) {return item.id;}).indexOf(onAddParamClick.clickedParam.id);
-        this.defaultParams.splice(clickedParamIndex, 1);
-        this.defaultParams.push(forAdd);
+        var x = onAddParamClick.clickedParam.x;
+        var y = onAddParamClick.clickedParam.y;
+        this.defaultParams.splice(this.defaultParams.length - 1, 0, forAdd);
+        prepareData(this.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
+        forAdd.x = x;
+        forAdd.y = y;
+        forAdd.boundedControl.mode = 'disabled';
 
         addGroup
             .selectAll("*")
@@ -87,8 +73,7 @@
             .selectAll("*")
             .remove();
         filter.attr('stdDeviation', 0);
-        //prepareData(this.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
-        this.drawHex(this.defaultParams, mainGroup, onParamClick);
+        this.drawHex(this.defaultParams, mainGroup);
     }
 
     function onParamClick(data) {
@@ -158,6 +143,11 @@
         this.optParams.forEach(function(param) {
             if (param.boundedControl) {
                 extendControl.call(param, param.boundedControl);
+                param.boundedControl.mode = 'enabled';
+            } else {
+                param.boundedControl = {};
+                extendControl.call(param, param.boundedControl);
+                param.boundedControl.mode = 'enabled';
             }
         });
 
@@ -210,8 +200,8 @@
                 pathDiv.on('click', function(path) {
                     if (path.addParam) {
                         onParamClick.call(self, path);
-                    } else {
-                        onClick.call(self, path);
+                    } else if(onClick){
+                        onClick.call(self, path.boundedControl);
                     }
                 });
             });
@@ -268,7 +258,15 @@
                 }
             })
         };
+        if (this.optParams.length > 0) {
+            this.defaultParams.push({
+                text: '+ параметр',
+                stroke: '#BEBEBE',
+                addParam: true,
+                id: 'addParam'
+            });
+        }
         prepareData(self.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
-        this.drawHex(this.defaultParams, mainGroup, onParamClick);
+        this.drawHex(this.defaultParams, mainGroup, onActiveParamClick);
     }
 })();
