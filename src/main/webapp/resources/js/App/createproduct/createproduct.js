@@ -157,10 +157,6 @@ angular.module('App.createproduct')
                 id: 'risk',
                 boundedControl: riskControl,
             }, {
-                text: '+ параметр',
-                stroke: '#BEBEBE',
-                id: 'addParam1'
-            }, {
                 text: 'Сумма вложений',
                 stroke: '#FD0001',
                 boundedControl: sumControl,
@@ -170,11 +166,7 @@ angular.module('App.createproduct')
                 stroke: '#4774AA',
                 boundedControl: termControl,
                 id: 'term'
-            }, {
-                text: '+ параметр',
-                stroke: '#BEBEBE',
-                id: 'addParam2'
-            }];
+            }, ];
 
             var optParams = [ {
                 text: 'Размер выплат',

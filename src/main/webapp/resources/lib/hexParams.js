@@ -16,6 +16,29 @@
         var angles = hexAngles;
         var radiusPow = 2;
 
+        var addParamsAtFirstRow = 8 - params.length;
+        if (addParamsAtFirstRow > 0) {
+            while (addParamsAtFirstRow > 1) {
+                params.push({
+                text: '+ параметр',
+                stroke: '#BEBEBE',
+                addParam: true,
+                id: 'addParam1' + addParamsAtFirstRow--
+            });
+            }
+        } else if (!Math.abs(addParamsAtFirstRow)){
+            var addParamsAtSecondRow = 8 - Math.abs(addParamsAtFirstRow);
+            while (addParamsAtSecondRow > 1) {
+                params.push({
+                    text: '+ параметр',
+                    stroke: '#BEBEBE',
+                    addParam: true,
+                    id: 'addParam2' + addParamsAtSecondRow--
+                });
+
+            }
+        }
+
         for (var i = 1; i < params.length; i++) {
             if (i == 7) {
                 angles = hexAngles2;
@@ -50,7 +73,12 @@
     function onAddParamClick(data) {
         var removeIndex = this.optParams.map(function(item) { return item.id; })
             .indexOf(data.id);
-        this.defaultParams.push(this.optParams.splice(removeIndex, 1)[0]);
+        var forAdd = this.optParams.splice(removeIndex, 1)[0];
+        forAdd.x = onAddParamClick.clickedParam.x;
+        forAdd.y = onAddParamClick.clickedParam.y;
+        var clickedParamIndex = this.defaultParams.map(function(item) {return item.id;}).indexOf(onAddParamClick.clickedParam.id);
+        this.defaultParams.splice(clickedParamIndex, 1);
+        this.defaultParams.push(forAdd);
 
         addGroup
             .selectAll("*")
@@ -59,13 +87,14 @@
             .selectAll("*")
             .remove();
         filter.attr('stdDeviation', 0);
-        prepareData(this.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
+        //prepareData(this.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
         this.drawHex(this.defaultParams, mainGroup, onParamClick);
     }
 
-    function onParamClick() {
+    function onParamClick(data) {
         filter.attr('stdDeviation', 5);
         prepareDataForLinear(this.optParams, radius + 10, radius + 10, radius);
+        onAddParamClick.clickedParam = data;
         this.drawHex(this.optParams, addGroup, onAddParamClick);
     }
 
@@ -86,6 +115,11 @@
             this.mode = 'enabled';
             $('#'+id+'-shadow').attr('visibility', 'hidden');
         };
+        control.enable = function() {
+            this.mode = 'enabled';
+            $('#'+id+'-shadow').attr('visibility', 'hidden');
+            $('#' + id).attr('opacity', '1');
+        }
     };
 
     hexParams = function (config) {
@@ -138,7 +172,12 @@
                 .enter()
                 .append('g')
                 .attr('id', function(d) {return d.id;})
-                .attr('opacity', '0.1');
+                .attr('opacity', function(d) {
+                    if (d.addParam) {
+                        return '1';
+                    }
+                    return '0.1';
+                });
 
             innerGroups.append("path")
                 .attr("d", function (d) {
@@ -169,8 +208,12 @@
             paths.each(function(path) {
                 var pathDiv = d3.select(this);
                 pathDiv.on('click', function(path) {
-                    onClick.call(self, path);
-                })
+                    if (path.addParam) {
+                        onParamClick.call(self, path);
+                    } else {
+                        onClick.call(self, path);
+                    }
+                });
             });
 
             //Draw texts
@@ -214,6 +257,16 @@
                 })
                 .transition()
                 .duration(1000);
+
+            params.forEach(function(param) {
+                if (param.boundedControl) {
+                    if (param.boundedControl.mode === 'active') {
+                        param.boundedControl.active();
+                    } else if (param.boundedControl.mode === 'enabled') {
+                        param.boundedControl.enable();
+                    }
+                }
+            })
         };
         prepareData(self.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
         this.drawHex(this.defaultParams, mainGroup, onParamClick);
