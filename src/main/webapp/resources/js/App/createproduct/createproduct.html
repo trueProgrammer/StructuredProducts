@@ -14,7 +14,7 @@
         <div class="col-md-8 col-sm-6">
             <svg id='svg' width="100%" height="800px"></svg>
         </div>
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6" id="paramsContainer">
             <div class="headline"><h2>Основные параметры</h2></div>
                 <!--START PROFIT-->
                 <div id="profitBlock" class="top-margin">
@@ -163,5 +163,31 @@
         </div>
     </div>
 </div>
+
+<!--START CURRENCY-->
+<div id="currencyBlock" class="top-margin" ng-show="currencyShow">
+    <hr class="hr-style"/>
+    <p>
+    <h4>
+        <span class="parameter">Валюта:</span><span class="h4-style">{{currencyLine}}</span>
+        <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="editCurrency()" ng-if="currencySaved"></i>
+    </h4>
+    </p>
+    <div ng-if="!currencySaved">
+        <div class="btn-group" uib-dropdown>
+            <span class="h4-style">Валюта</span>
+            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                    ng-disabled="currencyDisabled">
+                {{currency}} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+                <li ng-repeat="currency in currencies"><a ng-click="setCurrency(currency)">{{currency}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveCurrency()" ng-if="!currencySaved" ng-disabled="currencyDisabled">Применить валюту</button>
+</div>
+<!--END CURRENCY-->
 
 <link rel="stylesheet" href="resources/js/App/createproduct/createproduct.css">

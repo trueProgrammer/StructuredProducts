@@ -130,6 +130,24 @@ angular.module('App.createproduct')
                 $scope.riskLine = "";
                 riskControl.active();
             };
+            $scope.currencies = ['Рубль', 'Евро', 'Доллар'];
+            $scope.currency = $scope.currencies[0];
+            $scope.currencySaved = false;
+            $scope.currencyLine = "";
+            $scope.setCurrency = function (value) {
+                $('#currency-text').text(value);
+                $scope.currency = value;
+            };
+            $scope.saveCurrency = function () {
+                $scope.currencySaved = true;
+                $scope.currencyLine = $scope.currency;
+                currencyControl.inactive();
+            };
+            $scope.editCurrency = function () {
+                $scope.currencySaved = false;
+                $scope.currencyLine = "";
+                currencyControl.active();
+            };
 
             var profitControl = {
                 id: 'profitBlock',
@@ -146,6 +164,15 @@ angular.module('App.createproduct')
             var sumControl = {
                 id: 'sumBlock',
                 edit: $scope.editSum
+            };
+            var currencyControl = {
+                id: 'currencyBlock',
+                show: function() {
+                    $('#' + this.id).appendTo('#paramsContainer');
+                    $scope.$apply(function(){
+                        $scope.currencyShow = true;
+                    });
+                }
             };
 
             var defaultParams = [{
@@ -209,7 +236,12 @@ angular.module('App.createproduct')
             }, {
                 text: 'Валюта',
                 stroke: '#FDBF01',
-                id: 'currency'
+                boundedControl: currencyControl,
+                id: 'currency',
+                value: function() {
+                    return $scope.currency;
+                }
+
             }];
 
             new hexParams({radius: 72, defaultParams: defaultParams, optParams: optParams});

@@ -34,6 +34,8 @@
     var prepareDataForLinear = function(params, startX, startY, radius) {
         params[0].x = startX;
         params[0].y = startY;
+        params[0].valueHided = params[0].value;
+        params[0].value = undefined;
 
         for (var i = 1; i < params.length; i++) {
             if (i % 3 === 0) {
@@ -43,6 +45,8 @@
                 params[i].x = params[i-1].x + radius * 2;
                 params[i].y = params[i-1].y;
             }
+            params[i].valueHided = params[i].value;
+            params[i].value = undefined;
         }
     };
 
@@ -54,7 +58,7 @@
         }
     }
 
-    function onAddParamClick(data) {
+    function onAddParamClick(boundedControl, data) {
         var removeIndex = this.optParams.map(function(item) { return item.id; })
             .indexOf(data.id);
         var forAdd = this.optParams.splice(removeIndex, 1)[0];
@@ -64,7 +68,7 @@
         prepareData(this.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
         forAdd.x = x;
         forAdd.y = y;
-        forAdd.boundedControl.mode = 'disabled';
+        forAdd.boundedControl.mode = 'active';
 
         addGroup
             .selectAll("*")
@@ -73,14 +77,20 @@
             .selectAll("*")
             .remove();
         filter.attr('stdDeviation', 0);
-        this.drawHex(this.defaultParams, mainGroup);
+        if (forAdd.boundedControl.show) {
+            forAdd.boundedControl.show();
+        }
+        forAdd.value = forAdd.valueHided;
+        this.drawHex(this.defaultParams, mainGroup, onActiveParamClick);
     }
 
     function onParamClick(data) {
-        filter.attr('stdDeviation', 5);
-        prepareDataForLinear(this.optParams, radius + 10, radius + 10, radius);
-        onAddParamClick.clickedParam = data;
-        this.drawHex(this.optParams, addGroup, onAddParamClick);
+        if (this.optParams.length) {
+            filter.attr('stdDeviation', 5);
+            prepareDataForLinear(this.optParams, radius + 10, radius + 10, radius);
+            onAddParamClick.clickedParam = data;
+            this.drawHex(this.optParams, addGroup, onAddParamClick);
+        }
     }
 
     var extendControl = function(control) {
@@ -197,11 +207,11 @@
 
             paths.each(function(path) {
                 var pathDiv = d3.select(this);
-                pathDiv.on('click', function(path) {
+                pathDiv.on('click', function() {
                     if (path.addParam) {
                         onParamClick.call(self, path);
                     } else if(onClick){
-                        onClick.call(self, path.boundedControl);
+                        onClick.call(self, path.boundedControl, path);
                     }
                 });
             });
