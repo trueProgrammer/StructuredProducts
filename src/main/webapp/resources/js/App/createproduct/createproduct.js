@@ -151,22 +151,68 @@ angular.module('App.createproduct')
 
             var profitControl = {
                 id: 'profitBlock',
-                edit: $scope.editProfit
+                edit: function() {
+                    $scope.$apply(function() {
+                        $scope.editProfit();
+                    });
+                },
+                save: function() {
+                    $scope.$apply(function() {
+                        $scope.saveProfit();
+                    });
+                }
             };
             var riskControl = {
                 id: 'riskBlock',
-                edit: $scope.editRisk
+                edit: function() {
+                    $scope.$apply(function() {
+                        $scope.editRisk();
+                    });
+                },
+                save: function() {
+                    $scope.$apply(function() {
+                        $scope.saveRisk();
+                    });
+                }
             };
             var termControl = {
                 id: 'timeBlock',
-                edit: $scope.editTime
+                edit: function() {
+                    $scope.$apply(function() {
+                        $scope.editTime();
+                    });
+                },
+                save: function() {
+                    $scope.$apply(function() {
+                        $scope.saveTime();
+                    });
+                }
             };
             var sumControl = {
                 id: 'sumBlock',
-                edit: $scope.editSum
+                edit: function() {
+                    $scope.$apply(function() {
+                        $scope.editSum();
+                    });
+                },
+                save: function() {
+                    $scope.$apply(function() {
+                        $scope.saveSum();
+                    });
+                }
             };
             var currencyControl = {
                 id: 'currencyBlock',
+                edit: function() {
+                    $scope.$apply(function() {
+                        $scope.editCurrency();
+                    });
+                },
+                save: function() {
+                    $scope.$apply(function() {
+                        $scope.saveCurrency();
+                    });
+                },
                 show: function() {
                     $('#' + this.id).appendTo('#paramsContainer');
                     $scope.$apply(function(){

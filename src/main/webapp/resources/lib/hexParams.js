@@ -52,9 +52,9 @@
 
     function onActiveParamClick(control) {
         if (control.mode === 'active') {
-            $('#' + control.id + ' > button').click();
+            control.save();
         } else {
-            $('#'+control.id + ' > h4 > i').click();//По идее должен работать control.edit, но у меня отображение срабатывает только после ресайза страницы
+            control.edit();
         }
     }
 
@@ -205,7 +205,7 @@
                 })
                 .duration(1000);
 
-            paths.each(function(path) {
+            innerGroups.each(function(path) {
                 var pathDiv = d3.select(this);
                 pathDiv.on('click', function() {
                     if (path.addParam) {
