@@ -192,7 +192,7 @@
                     return d.stroke
                 });
 
-            var paths = innerGroups.append("path")
+            innerGroups.append("path")
                 .attr("d", function (d) {
                     return "M" + d.x + "," + d.y + hexbin.hexagon();
                 })
@@ -225,7 +225,7 @@
                 .attr("y", function (d) {
                     return d.y;
                 })
-                .attr("class","hex-text")
+                .attr("class","hex-text unselectable")
                 .text(function (d) {
                     return d.text;
                 })
@@ -250,8 +250,7 @@
                         return d.value();
                     }
                 })
-                .attr("class","hex-style")
-                .attr("class","hex-text")
+                .attr("class","hex-text unselectable")
                 .attr('onclick', function (d) {
                     return d.onclick;
                 })
