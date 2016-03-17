@@ -10,6 +10,7 @@ angular.module('App.createproduct')
     .controller('createproduct', ['$scope',
         function ($scope) {
 
+            $scope.outParams = [];
 
             $scope.profitDisabled = false;
             $scope.timeDisabled = true;
@@ -130,7 +131,7 @@ angular.module('App.createproduct')
                 $scope.riskLine = "";
                 riskControl.active();
             };
-            $scope.currencies = ['Рубль', 'Евро', 'Доллар'];
+            $scope.currencies = ['RUR', 'EUR', 'USD'];
             $scope.currency = $scope.currencies[0];
             $scope.currencySaved = false;
             $scope.currencyLine = "";
@@ -142,6 +143,14 @@ angular.module('App.createproduct')
                 $scope.currencySaved = true;
                 $scope.currencyLine = $scope.currency;
                 currencyControl.inactive();
+                $scope.currencyShow = false;
+                $scope.copyOptParams.splice(0, 1);
+                $scope.outParams.push(
+                    {
+                        text: 'Валюта',
+                        value: $scope.currency
+                    }
+                );
             };
             $scope.editCurrency = function () {
                 $scope.currencySaved = false;
@@ -255,7 +264,19 @@ angular.module('App.createproduct')
                 }
             }, ];
 
-            var optParams = [ {
+            //made copy till there's no addition form
+            $scope.copyOptParams = [{
+                text: 'Валюта',
+                stroke: '#FDBF01',
+                boundedControl: currencyControl,
+                id: 'currency',
+                value: function() {
+                    return $scope.currency;
+                }
+
+            }];
+
+            $scope.optParams = [ {
                 text: 'Размер выплат',
                 stroke: '#4774AA',
                 id: 'returnValue'
@@ -290,6 +311,14 @@ angular.module('App.createproduct')
 
             }];
 
-            new hexParams({radius: 72, defaultParams: defaultParams, optParams: optParams});
+            new hexParams({radius: 72, defaultParams: defaultParams, optParams: $scope.optParams});
             profitControl.active();
+
+            $scope.addOptParam = function(optParam) {
+                //$scope.outParams.push(optParam);
+                if(optParam.id === 'currency') {
+                    $scope.currencyShow = true;
+                }
+            }
+
         }]);

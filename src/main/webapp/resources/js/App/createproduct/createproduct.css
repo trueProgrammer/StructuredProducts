@@ -75,3 +75,12 @@
 .opacity-style {
     opacity: 0.1;
 }
+
+.font-style {
+    font-size: 17px;
+    line-height: 25px;
+}
+
+.list-style {
+    list-style-type: none;
+}

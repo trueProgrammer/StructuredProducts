@@ -159,36 +159,54 @@
                     <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveSum()" ng-if="!sumSaved" ng-disabled="sumDisabled">Применить сумму инвестирования</button>
                 </div>
                 <!--END SUM-->
-
+                <!--START OUTPUT PARAMS-->
+                <hr class="hr-style"/>
+                <li ng-repeat="outParam in outParams" class="list-style">
+                    <h4>
+                        <span class="parameter">{{outParam.text}}: </span><span class="h4-style">{{outParam.value}}</span>
+                        <i class="fa fa-pencil-square-o fa-2 cursor-pointer"></i>
+                    </h4>
+                </li>
+                <!--END OUTPUT PARAMS-->
+                <!--START OTHER PARAMS-->
+                <div id="otherParams">
+                    <hr class="hr-style"/>
+                    <span uib-dropdown>
+                      <a href uib-dropdown-toggle>
+                          <span class="font-style">Добавить параметр <i class="fa fa-plus fa-3"></i></span>
+                      </a>
+                      <ul uib-dropdown-menu>
+                          <li ng-repeat="param in copyOptParams">
+                              <a href ng-click="addOptParam(param)">{{param.text}}</a>
+                          </li>
+                      </ul>
+                    </span>
+                </div>
+                <!--END OTHER PARAMS-->
+                <!--START CURRENCY-->
+                <div id="currencyBlock" class="top-margin" ng-if="currencyShow">
+                    <hr class="hr-style"/>
+                    <div ng-if="!currencySaved">
+                        <div class="btn-group" uib-dropdown>
+                            <span class="h4-style">Выбрать валюту:</span>
+                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                    ng-disabled="currencyDisabled">
+                                {{currency}} <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu>
+                                <li ng-repeat="currency in currencies"><a ng-click="setCurrency(currency)">{{currency}}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveCurrency()" ng-if="!currencySaved" ng-disabled="currencyDisabled">Применить валюту</button>
+                </div>
+                <!--END CURRENCY-->
             </div>
         </div>
     </div>
 </div>
 
-<!--START CURRENCY-->
-<div id="currencyBlock" class="top-margin" ng-show="currencyShow">
-    <hr class="hr-style"/>
-    <p>
-    <h4>
-        <span class="parameter">Валюта:</span><span class="h4-style">{{currencyLine}}</span>
-        <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="editCurrency()" ng-if="currencySaved"></i>
-    </h4>
-    </p>
-    <div ng-if="!currencySaved">
-        <div class="btn-group" uib-dropdown>
-            <span class="h4-style">Валюта</span>
-            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                    ng-disabled="currencyDisabled">
-                {{currency}} <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" uib-dropdown-menu>
-                <li ng-repeat="currency in currencies"><a ng-click="setCurrency(currency)">{{currency}}</a></li>
-            </ul>
-        </div>
-    </div>
-    <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveCurrency()" ng-if="!currencySaved" ng-disabled="currencyDisabled">Применить валюту</button>
-</div>
-<!--END CURRENCY-->
+
 
 <link rel="stylesheet" href="resources/js/App/createproduct/createproduct.css">
