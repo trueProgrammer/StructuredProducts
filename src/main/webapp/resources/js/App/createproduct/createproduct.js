@@ -143,14 +143,6 @@ angular.module('App.createproduct')
                 $scope.currencySaved = true;
                 $scope.currencyLine = $scope.currency;
                 currencyControl.inactive();
-                $scope.currencyShow = false;
-                $scope.copyOptParams.splice(0, 1);
-                $scope.outParams.push(
-                    {
-                        text: 'Валюта',
-                        value: $scope.currency
-                    }
-                );
             };
             $scope.editCurrency = function () {
                 $scope.currencySaved = false;
@@ -317,6 +309,7 @@ angular.module('App.createproduct')
             $scope.addOptParam = function(optParam) {
                 //$scope.outParams.push(optParam);
                 if(optParam.id === 'currency') {
+                    $('#currencyBlock').appendTo('#paramsContainer');
                     $scope.currencyShow = true;
                 }
             }
