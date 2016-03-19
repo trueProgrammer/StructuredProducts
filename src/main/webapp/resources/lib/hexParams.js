@@ -5,6 +5,7 @@
     var filter;
     var mainGroup;
     var addGroup;
+    var $scope;
     var hexAngles = d3.range(Math.PI / 6, 2 * Math.PI + Math.PI / 6, Math.PI / 3);
     var hexAngles2 = d3.range(Math.PI / 3, 2 * Math.PI + Math.PI / 3, Math.PI / 3);
 
@@ -34,8 +35,10 @@
     var prepareDataForLinear = function(params, startX, startY, radius) {
         params[0].x = startX;
         params[0].y = startY;
-        params[0].valueHided = params[0].value;
-        params[0].value = undefined;
+        if (params[0].boundedControl) {
+            params[0].boundedControl.valueHided = params[0].boundedControl.value;
+            params[0].boundedControl.value = undefined;
+        }
 
         for (var i = 1; i < params.length; i++) {
             if (i % 3 === 0) {
@@ -45,16 +48,22 @@
                 params[i].x = params[i-1].x + radius * 2;
                 params[i].y = params[i-1].y;
             }
-            params[i].valueHided = params[i].value;
-            params[i].value = undefined;
+            if (params[i].boundedControl) {
+                params[i].boundedControl.valueHided = params[i].boundedControl.value;
+                params[i].boundedControl.value = undefined;
+            }
         }
     };
 
-    function onActiveParamClick(control) {
+    function onActiveParamClick(boundedControl, control) {
         if (control.mode === 'active') {
-            control.save();
+            $scope.$apply(function() {
+                boundedControl.save();
+            });
         } else {
-            control.edit();
+            $scope.$apply(function() {
+                boundedControl.edit();
+            });
         }
     }
 
@@ -68,7 +77,7 @@
         prepareData(this.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
         forAdd.x = x;
         forAdd.y = y;
-        forAdd.boundedControl.mode = 'active';
+        forAdd.mode = 'active';
 
         addGroup
             .selectAll("*")
@@ -77,10 +86,10 @@
             .selectAll("*")
             .remove();
         filter.attr('stdDeviation', 0);
-        if (forAdd.boundedControl.show) {
-            forAdd.boundedControl.show();
+        forAdd.show();
+        if (forAdd.boundedControl) {
+            forAdd.boundedControl.value = forAdd.boundedControl.valueHided;
         }
-        forAdd.value = forAdd.valueHided;
         this.drawHex(this.defaultParams, mainGroup, onActiveParamClick);
     }
 
@@ -114,10 +123,14 @@
             this.mode = 'enabled';
             $('#'+id+'-shadow').attr('visibility', 'hidden');
             $('#' + id).attr('opacity', '1');
+        };
+        control.show = function() {
+            $('#' + this.boundedControl.id).appendTo('#paramsContainer');
         }
     };
 
     hexParams = function (config) {
+        $scope = config.$scope;
         hexbin = d3.hexbin().radius(config.radius);
         svg = d3.select('#svg');
         filter = svg.append("defs")
@@ -146,19 +159,11 @@
         this.optParams = config.optParams;
 
         this.defaultParams.forEach(function(param) {
-            if (param.boundedControl) {
-                extendControl.call(param, param.boundedControl);
-            }
+            extendControl.call(param, param);
         });
         this.optParams.forEach(function(param) {
-            if (param.boundedControl) {
-                extendControl.call(param, param.boundedControl);
-                param.boundedControl.mode = 'enabled';
-            } else {
-                param.boundedControl = {};
-                extendControl.call(param, param.boundedControl);
-                param.boundedControl.mode = 'enabled';
-            }
+            extendControl.call(param, param);
+            param.mode = 'enabled';
         });
 
         var self = this;
@@ -246,8 +251,8 @@
                     return d.id + '-text';
                 })
                 .text(function(d) {
-                    if (d.value) {
-                        return d.value();
+                    if (d.boundedControl) {
+                        return d.boundedControl.value;
                     }
                 })
                 .attr("class","hex-text unselectable")
@@ -258,12 +263,10 @@
                 .duration(1000);
 
             params.forEach(function(param) {
-                if (param.boundedControl) {
-                    if (param.boundedControl.mode === 'active') {
-                        param.boundedControl.active();
-                    } else if (param.boundedControl.mode === 'enabled') {
-                        param.boundedControl.enable();
-                    }
+                if (param.mode === 'active') {
+                    param.active();
+                } else if (param.mode === 'enabled') {
+                    param.enable();
                 }
             })
         };

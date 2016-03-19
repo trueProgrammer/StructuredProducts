@@ -202,25 +202,24 @@ angular.module('App.createproduct')
                     });
                 }
             };
-            var currencyControl = {
-                id: 'currencyBlock',
-                edit: function() {
-                    $scope.$apply(function() {
-                        $scope.editCurrency();
-                    });
-                },
-                save: function() {
-                    $scope.$apply(function() {
-                        $scope.saveCurrency();
-                    });
-                },
-                show: function() {
-                    $('#' + this.id).appendTo('#paramsContainer');
-                    $scope.$apply(function(){
-                        $scope.currencyShow = true;
-                    });
-                }
-            };
+            //var currencyControl = {
+            //    id: 'currencyBlock',
+            //    edit: function() {
+            //        var self = this;
+            //        $scope.$apply(function() {
+            //            self.control.edit();
+            //        });
+            //    },
+            //    save: function() {
+            //        var self = this;
+            //        $scope.$apply(function() {
+            //            self.control.save();
+            //        });
+            //    },
+            //    show: function() {
+            //        $('#' + this.id).appendTo('#paramsContainer');
+            //    }
+            //};
 
             var defaultParams = [{
                 text: 'Доходность',
@@ -256,18 +255,6 @@ angular.module('App.createproduct')
                 }
             }, ];
 
-            //made copy till there's no addition form
-            $scope.copyOptParams = [{
-                text: 'Валюта',
-                stroke: '#FDBF01',
-                boundedControl: currencyControl,
-                id: 'currency',
-                value: function() {
-                    return $scope.currency;
-                }
-
-            }];
-
             $scope.optParams = [ {
                 text: 'Размер выплат',
                 stroke: '#4774AA',
@@ -295,23 +282,60 @@ angular.module('App.createproduct')
             }, {
                 text: 'Валюта',
                 stroke: '#FDBF01',
-                boundedControl: currencyControl,
                 id: 'currency',
-                value: function() {
-                    return $scope.currency;
-                }
-
             }];
 
-            new hexParams({radius: 72, defaultParams: defaultParams, optParams: $scope.optParams});
-            profitControl.active();
 
-            $scope.addOptParam = function(optParam) {
-                //$scope.outParams.push(optParam);
-                if(optParam.id === 'currency') {
-                    $('#currencyBlock').appendTo('#paramsContainer');
-                    $scope.currencyShow = true;
-                }
+            var mapControls = function(controls, hexControls) {
+                var controlsIds = controls.map(function(control) {
+                    return control.id.substr(0, control.id.length - 5);
+                });
+                var hexControlsIds = hexControls.map(function(hexControl) {return hexControl.id;});
+                controlsIds.forEach(function(controlId, index) {
+                    var hexIndex = hexControlsIds.indexOf(controlId);
+                    if (hexIndex != -1) {
+                        controls[index].hexControl = hexControls[hexIndex];
+                        hexControls[hexIndex].boundedControl = controls[index];
+                    }
+                });
             }
+
+            var extendControls = function (controls) {
+                controls.forEach(function(control){
+                    control.setValue = function(value) {
+                        this.value = value;
+                        $('#' + this.hexControl.id + '-text').text(value);
+                    };
+                    control.save = function() {
+                        this.isSaved = true;
+                        this.line = this.lineFormat.format(this.value);
+                        this.hexControl.inactive();
+                    };
+                    control.edit = function() {
+                        this.isSaved = false;
+                        this.line = '';
+                        this.hexControl.active();
+                    }
+                });
+            };
+
+            $scope.controls = [{
+                id: 'currencyBlock',
+                header: 'Валюта',
+                buttonText: 'Применить валюту',
+                values: ['RUB', 'USD', 'EUR'],
+                value: 'RUB',
+                lineFormat: '{0}'
+            }];
+
+            mapControls($scope.controls, $scope.optParams);
+            extendControls($scope.controls);
+
+
+            new hexParams({$scope: $scope, radius: 72, defaultParams: defaultParams, optParams: $scope.optParams});
+            defaultParams[0].active();
+            //generateControls([{id: 'currencyBlock'}]);
+
+
 
         }]);
