@@ -114,6 +114,7 @@
             this.mode = 'active';
             $('#'+id+'-shadow').attr('visibility', 'visible');
             $('#' + id).attr('opacity', '1');
+            $('#' + id + 'Block').css('opacity', '1');
         };
         control.inactive = function() {
             this.mode = 'enabled';

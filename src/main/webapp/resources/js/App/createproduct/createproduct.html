@@ -16,149 +16,40 @@
         </div>
         <div class="col-md-4 col-sm-6" id="paramsContainer">
             <div class="headline"><h2>Основные параметры</h2></div>
-                <!--START PROFIT-->
-                <div id="profitBlock" class="top-margin">
+                <div ng-repeat="control in defaultControls" id="{{control.id}}" ng-class="$first ? 'top-margin' : 'top-margin opacity-style'">
                     <p>
                         <h4>
-                            <span class="parameter">Доходность:</span><span class="h4-style">{{profitLine}}</span>
-                            <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="editProfit()" ng-if="profitSaved"></i>
+                            <span class="parameter">{{control.header}}</span><span class="h4-style">{{control.line}}</span>
+                            <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="control.edit()" ng-if="control.isSaved"></i>
                         </h4>
                     </p>
-                    <div ng-if="!profitSaved">
+                    <div ng-if="!control.isSaved">
                         <div class="btn-group" uib-dropdown>
                             <span class="h4-style">От </span>
                             <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
                                     style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
                                     ng-disabled="profitDisabled">
-                                {{fromProfit}} <span class="caret"></span>
+                                {{control.fromValue}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu>
-                                <li ng-repeat="prof in profits"><a ng-click="setFromProfit(prof)">{{prof}}</a></li>
+                                <li ng-repeat="fromValue in control.fromValues"><a ng-click="control.setFromValue(fromValue)">{{fromValue}}</a></li>
                             </ul>
                         </div>
                         <div class="btn-group left-margin" uib-dropdown>
                             <span class="h4-style">До </span>
                             <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
                                     style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="profitDisabled">
-                                {{toProfit}} <span class="caret"></span>
+                                    ng-disabled="control.isDisabled">
+                                {{control.toValue}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu>
-                                <li ng-repeat="prof in profits"><a ng-click="setToProfit(prof)">{{prof}}</a></li>
+                                <li ng-repeat="toValue in control.toValues"><a ng-click="control.setToValue(toValue)">{{toValue}}</a></li>
                             </ul>
                         </div>
                     </div>
-                    <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveProfit()" ng-if="!profitSaved" ng-disabled="profitDisabled">Применить доходность</button>
+                    <button class="btn-u btn-u-blue top-margin" type="button" ng-click="control.save()" ng-if="!control.isSaved" ng-disabled="control.isDisabled">{{control.buttonText}}</button>
                 </div>
                 <!--END PROFIT-->
-                <!--START RISK-->
-                <div id="riskBlock" class="top-margin opacity-style">
-                    <hr class="hr-style"/>
-                    <p>
-                    <h4>
-                        <span class="parameter">Уровень защиты:</span><span class="h4-style">{{riskLine}}</span>
-                        <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="editRisk()" ng-if="riskSaved"></i>
-                    </h4>
-                    </p>
-                    <div ng-if="!riskSaved">
-                        <div class="btn-group" uib-dropdown>
-                            <span class="h4-style">От </span>
-                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="riskDisabled">
-                                {{fromRisk}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu>
-                                <li ng-repeat="risk in profits"><a ng-click="setFromRisk(risk)">{{risk}}</a></li>
-                            </ul>
-                        </div>
-                        <div class="btn-group left-margin" uib-dropdown>
-                            <span class="h4-style">До </span>
-                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="riskDisabled">
-                                {{toRisk}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu>
-                                <li ng-repeat="risk in profits"><a ng-click="setToRisk(risk)">{{risk}}</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveRisk()" ng-if="!riskSaved" ng-disabled="riskDisabled">Применить уровень защиты</button>
-                </div>
-                <!--END RISK-->
-                <!--START TIME-->
-                <div id="timeBlock" class="top-margin opacity-style">
-                    <hr class="hr-style"/>
-                    <p>
-                    <h4>
-                        <span class="parameter">Срок инвестирования:</span><span class="h4-style">{{timeLine}}</span>
-                        <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="editTime()" ng-if="timeSaved"></i>
-                    </h4>
-                    </p>
-                    <div ng-if="!timeSaved">
-                        <div class="btn-group" uib-dropdown>
-                            <span class="h4-style">От </span>
-                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="timeDisabled">
-                                {{fromTime}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu>
-                                <li ng-repeat="time in times"><a ng-click="setFromTime(time)">{{time}}</a></li>
-                            </ul>
-                        </div>
-                        <div class="btn-group left-margin" uib-dropdown>
-                            <span class="h4-style">До </span>
-                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="timeDisabled">
-                                {{toTime}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu>
-                                <li ng-repeat="time in times"><a ng-click="setToTime(time)">{{time}}</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveTime()" ng-if="!timeSaved" ng-disabled="timeDisabled">Применить срок инвестирования</button>
-                </div>
-                <!--END TIME-->
-                <!--START SUM-->
-                <div id="sumBlock" class="top-margin opacity-style">
-                    <hr class="hr-style"/>
-                    <p>
-                    <h4>
-                        <span class="parameter">Сумма инвестирования:</span><span class="h4-style">{{sumLine}}</span>
-                        <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="editSum()" ng-if="sumSaved"></i>
-                    </h4>
-                    </p>
-                    <div ng-if="!sumSaved">
-                        <div class="btn-group" uib-dropdown>
-                            <span class="h4-style">От </span>
-                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="sumDisabled">
-                                {{fromSum}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu>
-                                <li ng-repeat="sum in sums"><a ng-click="setFromSum(sum)">{{sum}}</a></li>
-                            </ul>
-                        </div>
-                        <div class="btn-group left-margin" uib-dropdown>
-                            <span class="h4-style">До </span>
-                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="sumDisabled">
-                                {{toSum}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu>
-                                <li ng-repeat="sum in sums"><a ng-click="setToSum(sum)">{{sum}}</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <button class="btn-u btn-u-blue top-margin" type="button" ng-click="saveSum()" ng-if="!sumSaved" ng-disabled="sumDisabled">Применить сумму инвестирования</button>
-                </div>
-                <!--END SUM-->
                 <!--START OTHER PARAMS-->
                 <div id="otherParams">
                     <hr class="hr-style"/>

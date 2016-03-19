@@ -90,12 +90,6 @@ angular.module('App.createproduct')
             };
             $scope.saveProfit = function () {
                 if ($scope.fromProfit <= $scope.toProfit) {
-                    $scope.profitSaved = true;
-                    $scope.profitLine = " от " + $scope.fromProfit + "   до " + $scope.toProfit + "  ";
-                    $scope.riskDisabled = false;
-                    $("#riskBlock").css("opacity","1");
-                    profitControl.inactive();
-                    riskControl.turnOn();
                 }
             };
             $scope.editProfit = function () {
@@ -131,38 +125,7 @@ angular.module('App.createproduct')
                 $scope.riskLine = "";
                 riskControl.active();
             };
-            $scope.currencies = ['RUR', 'EUR', 'USD'];
-            $scope.currency = $scope.currencies[0];
-            $scope.currencySaved = false;
-            $scope.currencyLine = "";
-            $scope.setCurrency = function (value) {
-                $('#currency-text').text(value);
-                $scope.currency = value;
-            };
-            $scope.saveCurrency = function () {
-                $scope.currencySaved = true;
-                $scope.currencyLine = $scope.currency;
-                currencyControl.inactive();
-            };
-            $scope.editCurrency = function () {
-                $scope.currencySaved = false;
-                $scope.currencyLine = "";
-                currencyControl.active();
-            };
 
-            var profitControl = {
-                id: 'profitBlock',
-                edit: function() {
-                    $scope.$apply(function() {
-                        $scope.editProfit();
-                    });
-                },
-                save: function() {
-                    $scope.$apply(function() {
-                        $scope.saveProfit();
-                    });
-                }
-            };
             var riskControl = {
                 id: 'riskBlock',
                 edit: function() {
@@ -202,33 +165,11 @@ angular.module('App.createproduct')
                     });
                 }
             };
-            //var currencyControl = {
-            //    id: 'currencyBlock',
-            //    edit: function() {
-            //        var self = this;
-            //        $scope.$apply(function() {
-            //            self.control.edit();
-            //        });
-            //    },
-            //    save: function() {
-            //        var self = this;
-            //        $scope.$apply(function() {
-            //            self.control.save();
-            //        });
-            //    },
-            //    show: function() {
-            //        $('#' + this.id).appendTo('#paramsContainer');
-            //    }
-            //};
 
             var defaultParams = [{
                 text: 'Доходность',
                 stroke: '#91CF50',
                 id: 'profit',
-                boundedControl: profitControl,
-                value: function() {
-                    return 'От ' + $scope.fromProfit + ' до ' + $scope.toProfit;
-                }
             }, {
                 text: 'Уровень риска',
                 stroke: '#FDBF01',
@@ -249,7 +190,7 @@ angular.module('App.createproduct')
                 text: 'Срок вложений',
                 stroke: '#4774AA',
                 boundedControl: termControl,
-                id: 'term',
+                id: 'time',
                 value: function() {
                     return 'От ' + $scope.fromTime + ' до ' + $scope.toTime;
                 }
@@ -319,6 +260,77 @@ angular.module('App.createproduct')
                 });
             };
 
+            var extendDefaultControls = function (controls) {
+                controls.forEach(function(control, index){
+                    control.value = control.lineFormat.format(control.fromValue, control.toValue);
+                    control.setFromValue = function(fromValue) {
+                        control.fromValue = fromValue;
+                        this.value = this.lineFormat.format(this.fromValue, this.toValue);
+                        $('#' + this.hexControl.id + '-text').text(this.value);
+                    };
+                    control.setToValue = function(toValue) {
+                        control.toValue = toValue;
+                        this.value = this.lineFormat.format(this.fromValue, this.toValue);
+                        $('#' + this.hexControl.id + '-text').text(this.value);
+                    };
+                    control.save = function() {
+                        this.isSaved = true;
+                        this.line = this.lineFormat.format(this.fromValue, this.toValue);
+                        this.hexControl.inactive();
+                        if(this.next) this.next.hexControl.turnOn();
+                    };
+                    control.edit = function() {
+                        this.isSaved = false;
+                        this.line = '';
+                        this.hexControl.active();
+                    };
+                    if (index > 0) {
+                        controls[index - 1].next = control;
+                    }
+                });
+            };
+
+
+            $scope.defaultControls = [{
+                id: 'profitBlock',
+                header: 'Доходность',
+                buttonText: 'Применить доходность',
+                fromValues: ['10%', '20%', '30%', '40%'],
+                toValues: ['10%', '20%', '30%', '40%'],
+                fromValue: '10%',
+                toValue: '20%',
+                lineFormat: 'От {0} до {1}'
+            },{
+                id: 'riskBlock',
+                header: 'Уровень риска',
+                buttonText: 'Применить уровень риска',
+                fromValues: ['10%', '20%', '30%', '40%'],
+                toValues: ['10%', '20%', '30%', '40%'],
+                fromValue: '10%',
+                toValue: '20%',
+                lineFormat: 'От {0} до {1}'
+            },{
+                id: 'sumBlock',
+                header: 'Сумма вложений',
+                buttonText: 'Применить сумму вложений',
+                fromValues: ['200 тыс','300 тыс','500 тыс','1 млн','и больше'],
+                toValues: ['200 тыс','300 тыс','500 тыс','1 млн','и больше'],
+                fromValue: '200 тыс',
+                toValue: '300 тыс',
+                lineFormat: 'От {0} до {1}'
+            },{
+                id: 'timeBlock',
+                header: 'Срок вложений',
+                buttonText: 'Применить срок вложений',
+                fromValues: ['2 мес', '3 мес', '4 мес', '5 мес', '6 мес', '8 мес',
+                '10 мес', '1 год', '1 год и 3 мес', '1 год и 6 мес'],
+                toValues: ['2 мес', '3 мес', '4 мес', '5 мес', '6 мес', '8 мес',
+                '10 мес', '1 год', '1 год и 3 мес', '1 год и 6 мес'],
+                fromValue: '2 мес',
+                toValue: '3 мес',
+                lineFormat: 'От {0} до {1}'
+            }];
+
             $scope.controls = [{
                 id: 'currencyBlock',
                 header: 'Валюта',
@@ -328,6 +340,8 @@ angular.module('App.createproduct')
                 lineFormat: '{0}'
             }];
 
+            mapControls($scope.defaultControls, defaultParams);
+            extendDefaultControls($scope.defaultControls);
             mapControls($scope.controls, $scope.optParams);
             extendControls($scope.controls);
 
