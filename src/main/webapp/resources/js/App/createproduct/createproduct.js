@@ -169,7 +169,10 @@ angular.module('App.createproduct')
                         this.isSaved = false;
                         this.line = '';
                         this.hexControl.active();
-                    }
+                    };
+                    control.show = function() {
+                        $('#' + this.id).appendTo('#paramsContainer');
+                    };
                 });
             };
 
@@ -203,6 +206,14 @@ angular.module('App.createproduct')
                 });
             };
 
+            $scope.controlFilter = function(item) {
+                return !item.added;
+            };
+            $scope.addHex = function(control) {
+                control.hexControl.show();
+                control.show();
+                $scope.controls[$scope.controls.map(function(control) {return control.id;}).indexOf(control.id)].added = true;
+            };
 
             mapControls($scope.defaultControls, defaultParams);
             extendDefaultControls($scope.defaultControls);

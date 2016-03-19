@@ -58,8 +58,8 @@
                           <span class="font-style">Добавить параметр <i class="fa fa-plus fa-3"></i></span>
                       </a>
                       <ul uib-dropdown-menu>
-                          <li ng-repeat="param in copyOptParams">
-                              <a href ng-click="addOptParam(param)">{{param.text}}</a>
+                          <li ng-repeat="control in controls | filter: controlFilter">
+                              <a href ng-click="addHex(control)">{{control.header}}</a>
                           </li>
                       </ul>
                     </span>

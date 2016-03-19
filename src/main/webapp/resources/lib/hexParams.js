@@ -86,10 +86,10 @@
             .selectAll("*")
             .remove();
         filter.attr('stdDeviation', 0);
-        forAdd.show();
-        if (forAdd.boundedControl) {
+        if (forAdd.boundedControl.valueHided) {
             forAdd.boundedControl.value = forAdd.boundedControl.valueHided;
         }
+        forAdd.boundedControl.show();
         this.drawHex(this.defaultParams, mainGroup, onActiveParamClick);
     }
 
@@ -102,7 +102,7 @@
         }
     }
 
-    var extendControl = function(control) {
+    var extendControl = function(control, context) {
         var id = this.id;
         control.mode = 'disabled';
         control.turnOn = function() {
@@ -126,7 +126,8 @@
             $('#' + id).attr('opacity', '1');
         };
         control.show = function() {
-            $('#' + this.boundedControl.id).appendTo('#paramsContainer');
+            onAddParamClick.clickedParam = context.defaultParams[context.defaultParams.length - 1];
+            onAddParamClick.call(context, this.boundedControl, this);
         }
     };
 
@@ -159,15 +160,15 @@
         this.defaultParams = config.defaultParams;
         this.optParams = config.optParams;
 
+        var self = this;
         this.defaultParams.forEach(function(param) {
-            extendControl.call(param, param);
+            extendControl.call(param, param, self);
         });
         this.optParams.forEach(function(param) {
-            extendControl.call(param, param);
+            extendControl.call(param, param, self);
             param.mode = 'enabled';
         });
 
-        var self = this;
 
 
         this.drawHex = function(params, group, onClick) {
