@@ -42,10 +42,6 @@ angular.module('App.createproduct')
                 stroke: '#91CF50',
                 id: 'type'
             }, {
-                text: 'Риски',
-                stroke: '#4774AA',
-                id: 'risks'
-            }, {
                 text: 'Периодичность выплат',
                 stroke: '#FDBF01',
                 id: 'paymentsPeriod'
@@ -106,6 +102,41 @@ angular.module('App.createproduct')
                 values: ['RUB', 'USD', 'EUR'],
                 value: 'RUB',
                 lineFormat: '{0}'
+            },{
+                id: 'returnValueBlock',
+                header: 'Размер выплат',
+                buttonText: 'Применить размер выплат',
+                values: ['Купон', 'Без ограничения', 'С ограничением'],
+                value: 'Купон',
+                lineFormat: '{0}'
+            },{
+                id: 'typeBlock',
+                header: 'Тип продукта',
+                buttonText: 'Применить тип продукта',
+                values: ['100% защита капитала с гарантированной доходностью', '100% защита капитала без гарантированной доходности', 'С участием', 'Рисковый'],
+                value: '100% защита капитала с гарантированной доходностью',
+                lineFormat: '{0}'
+            },{
+                id: 'baseActiveTypeBlock',
+                header: 'Тип базового актива',
+                buttonText: 'Применить тип базового актива',
+                values: ['Акции', 'Индексы', 'Валюта'],
+                value: 'Акции',
+                lineFormat: '{0}'
+            },{
+                id: 'paymentsPeriodBlock',
+                header: 'Периодичность выплат',
+                buttonText: 'Применить периодичность выплат',
+                values: ['1 месяц', '6 месяцев', 'год'],
+                value: '6 месяцев',
+                lineFormat: '{0}'
+            },{
+                id: 'strategyBlock',
+                header: 'Стратегия',
+                buttonText: 'Применить применить стратегию',
+                values: ['Рост цены', 'Падение цены', 'Барьерная стратегия', 'Диапазонная стратегия'],
+                value: 'Рост цены',
+                lineFormat: '{0}'
             }];
 
 
@@ -121,7 +152,7 @@ angular.module('App.createproduct')
                         hexControls[hexIndex].boundedControl = controls[index];
                     }
                 });
-            }
+            };
 
             var extendControls = function (controls) {
                 controls.forEach(function(control){

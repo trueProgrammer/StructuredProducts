@@ -35,7 +35,7 @@
     var prepareDataForLinear = function(params, startX, startY, radius) {
         params[0].x = startX;
         params[0].y = startY;
-        if (params[0].boundedControl) {
+        if (params[0].boundedControl.value) {
             params[0].boundedControl.valueHided = params[0].boundedControl.value;
             params[0].boundedControl.value = undefined;
         }
@@ -48,7 +48,7 @@
                 params[i].x = params[i-1].x + radius * 2;
                 params[i].y = params[i-1].y;
             }
-            if (params[i].boundedControl) {
+            if (params[i].boundedControl.value) {
                 params[i].boundedControl.valueHided = params[i].boundedControl.value;
                 params[i].boundedControl.value = undefined;
             }

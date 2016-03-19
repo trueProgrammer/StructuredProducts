@@ -49,22 +49,6 @@
                     </div>
                     <button class="btn-u btn-u-blue top-margin" type="button" ng-click="control.save()" ng-if="!control.isSaved" ng-disabled="control.isDisabled">{{control.buttonText}}</button>
                 </div>
-                <!--END PROFIT-->
-                <!--START OTHER PARAMS-->
-                <div id="otherParams">
-                    <hr class="hr-style"/>
-                    <span uib-dropdown>
-                      <a href uib-dropdown-toggle>
-                          <span class="font-style">Добавить параметр <i class="fa fa-plus fa-3"></i></span>
-                      </a>
-                      <ul uib-dropdown-menu>
-                          <li ng-repeat="param in copyOptParams">
-                              <a href ng-click="addOptParam(param)">{{param.text}}</a>
-                          </li>
-                      </ul>
-                    </span>
-                </div>
-                <!--END OTHER PARAMS-->
             </div>
         </div>
     </div>
