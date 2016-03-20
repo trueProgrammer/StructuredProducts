@@ -7,8 +7,8 @@ angular.module('App.createproduct')
                 controller: 'createproduct'
             })
         }])
-    .controller('createproduct', ['$scope',
-        function ($scope) {
+    .controller('createproduct', ['$scope', '$uibModal',
+        function ($scope, $uibModal) {
 
             $scope.optParamsControl = {
                 isDisabled : true
@@ -237,5 +237,22 @@ angular.module('App.createproduct')
             //generateControls([{id: 'currencyBlock'}]);
 
 
+            $scope.openModal = function () {
+
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'sendingRequestModal.html',
+                    controller: 'sendRequestCtrl',
+                });
+
+                modalInstance.rendered.then(function () {
+                    /*$("#phone").mask("(999) 999-9999");*/
+                }, function () {
+                });
+
+            };
+
+        }])
+        .controller('sendRequestCtrl', ['$scope',
+        function ($scope) {
 
         }]);

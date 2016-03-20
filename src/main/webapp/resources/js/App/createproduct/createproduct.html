@@ -64,6 +64,7 @@
                       </li>
                   </ul>
                 </span>
+                <button type="button" class="btn btn-default" ng-click="openModal()">Open me!</button>
             </div>
             <!--END OTHER PARAMS-->
         </div>
@@ -96,6 +97,31 @@
     </div>
 </div>
 
-
+<script type="text/ng-template" id="sendingRequestModal.html">
+    <div class="body-style">
+        <form role="form">
+            <div class="form-group">
+                <label for="name">Имя</label>
+                <input type="text" class="form-control input-style" id="name" placeholder="Введите Ваше имя" class="input-style"/>
+            </div>
+            <div class="form-group">
+                <label for="secondName">Фамилия</label>
+                <input type="text" class="form-control input-style" id="secondName" placeholder="Введите Вашу фамилию" class="input-style"/>
+            </div>
+            <div class="form-group">
+                <label for="phone">Контактный номер телефон</label>
+                <input type="text" class="form-control input-style" id="phone" placeholder="Введите Ваш номер телефона"/>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control input-style" id="email" placeholder="Введите Ваш email"/>
+            </div>
+            <button type="submit" class="btn btn-default">Отправить заявку</button>
+        </form>
+    </div>
+    <link rel="stylesheet" href="resources/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/js/App/createproduct/sendingRequestModal.css">
+    <script type="text/javascript" src="resources/lib/bootstrap.min.js"></script>
+</script>
 
 <link rel="stylesheet" href="resources/js/App/createproduct/createproduct.css">
