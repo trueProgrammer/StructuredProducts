@@ -10,6 +10,9 @@ angular.module('App.createproduct')
     .controller('createproduct', ['$scope',
         function ($scope) {
 
+            $scope.optParamsControl = {
+                isDisabled : true
+            };
 
             var defaultParams = [{
                 text: 'Доходность',
@@ -193,7 +196,15 @@ angular.module('App.createproduct')
                         this.isSaved = true;
                         this.line = this.lineFormat.format(this.fromValue, this.toValue);
                         this.hexControl.inactive();
-                        if(this.next) this.next.hexControl.turnOn();
+                        if(this.next) {
+                            this.next.hexControl.turnOn();
+                        } else {
+                            $scope.optParamsControl.isDisabled = false;
+                            $('#optParamsControlBlock').css('opacity', '1');
+                            /*this.mode = 'active';
+                            $('#addParam-shadow').attr('visibility', 'visible');
+                            $('#addParam').attr('opacity', '1');*/
+                        }
                     };
                     control.edit = function() {
                         this.isSaved = false;

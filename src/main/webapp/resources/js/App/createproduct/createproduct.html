@@ -15,20 +15,21 @@
             <svg id='svg' width="100%" height="800px"></svg>
         </div>
         <div class="col-md-4 col-sm-6" id="paramsContainer">
-            <div class="headline"><h2>Основные параметры</h2></div>
+            <div class="headline">
+                <h2>Основные параметры</h2>
                 <div ng-repeat="control in defaultControls" id="{{control.id}}" ng-class="$first ? 'top-margin' : 'top-margin opacity-style'">
                     <p>
-                        <h4>
-                            <span class="parameter">{{control.header}}</span><span class="h4-style">{{control.line}}</span>
+                        <div class="h4-style">
+                            <span class="parameter">{{control.header}}:</span><span class="h4-style">{{control.line}}</span>
                             <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="control.edit()" ng-if="control.isSaved"></i>
-                        </h4>
+                        </div>
                     </p>
                     <div ng-if="!control.isSaved">
                         <div class="btn-group" uib-dropdown>
                             <span class="h4-style">От </span>
                             <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
                                     style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="profitDisabled">
+                                    ng-disabled="control.isDisabled">
                                 {{control.fromValue}} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" uib-dropdown-menu>
@@ -48,30 +49,29 @@
                         </div>
                     </div>
                     <button class="btn-u btn-u-blue top-margin" type="button" ng-click="control.save()" ng-if="!control.isSaved" ng-disabled="control.isDisabled">{{control.buttonText}}</button>
+                    <hr class="hr-style"/>
                 </div>
             </div>
-        <!--START OTHER PARAMS-->
-        <div id="otherParams">
-            <hr class="hr-style"/>
-                    <span uib-dropdown>
-                      <a href uib-dropdown-toggle>
-                          <span class="font-style">Добавить параметр <i class="fa fa-plus fa-3"></i></span>
-                      </a>
-                      <ul uib-dropdown-menu>
-                          <li ng-repeat="control in controls | filter: controlFilter">
-                              <a href ng-click="addHex(control)">{{control.header}}</a>
-                          </li>
-                      </ul>
-                    </span>
-        </div>
-        <!--END OTHER PARAMS-->
+            <!--START OTHER PARAMS-->
+            <div id="optParamsControlBlock" class="opacity-style">
+                <span uib-dropdown>
+                  <a href uib-dropdown-toggle ng-disabled="optParamsControl.isDisabled">
+                      <span class="font-style">Добавить параметр <i class="fa fa-plus fa-3"></i></span>
+                  </a>
+                  <ul uib-dropdown-menu>
+                      <li ng-repeat="control in controls | filter: controlFilter">
+                          <a href ng-click="addHex(control)">{{control.header}}</a>
+                      </li>
+                  </ul>
+                </span>
+            </div>
+            <!--END OTHER PARAMS-->
         </div>
 
     </div>
 </div>
-<div id="optParamsContainer" ng-show="false">
+<div id="optParamsContainer" ng-if="false">
     <div ng-repeat="control in controls" id="{{control.id}}"  class="top-margin">
-        <hr class="hr-style"/>
         <p>
         <h4>
             <span class="parameter">{{control.header}}:</span><span class="h4-style">{{control.line}}</span>
@@ -92,6 +92,7 @@
             </div>
         </div>
         <button class="btn-u btn-u-blue top-margin" type="button" ng-click="control.save()" ng-if="!control.isSaved">{{control.buttonText}}</button>
+        <hr class="hr-style"/>
     </div>
 </div>
 

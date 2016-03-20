@@ -18,7 +18,11 @@
 
 .h4-style {
     line-height: 27px;
-    font-size: 16px;
+    font-size: 20px;
+    margin-right: 5px;
+    text-shadow: none;
+    font-weight: normal;
+    font-family: "Open Sans", Arial, sans-serif;
 }
 
 .left-margin {
@@ -30,7 +34,7 @@
 }
 
 .parameter {
-    color: #333333
+    color: #2e2e2e
 }
 
 .hex-style {
