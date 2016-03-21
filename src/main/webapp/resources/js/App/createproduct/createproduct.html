@@ -20,7 +20,7 @@
                 <div ng-repeat="control in defaultControls" id="{{control.id}}" ng-class="$first ? 'top-margin' : 'top-margin opacity-style'">
                     <p>
                         <div class="h4-style">
-                            <span class="parameter">{{control.header}}:</span><span class="h4-style">{{control.line}}</span>
+                            <span class="parameter">{{control.header}}:</span><span class="h4-style blue-style">{{control.line}}</span>
                             <i class="fa fa-pencil-square-o fa-2 cursor-pointer" ng-click="control.edit()" ng-if="control.isSaved"></i>
                         </div>
                     </p>

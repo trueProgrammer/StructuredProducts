@@ -8,11 +8,45 @@
          }])
 .controller('product', ['$scope', '$log', 'restService', '$routeParams',
          function($scope, $log, restService, $routeParams) {
+
+             var selected = {
+                 desc : false,
+             };
+
+             var show = {
+                desc: false,
+                mainParams: true,
+                otherParams: false,
+             };
+
+             $scope.click = function(section) {
+                 selected[section] = !selected[section];
+             };
+             $scope.isSelected = function(section) {
+                 return selected[section];
+             };
+             $scope.isNotSelected = function(section) {
+                 return !selected[section];
+             };
+             $scope.isShow = function(section) {
+                 return show[section];
+             };
+             $scope.click = function(section) {
+                 selected[section] = !selected[section];
+                 if(show[section]) {
+                     show.mainParams = true;
+                     show[section] = false;
+                 } else {
+                     show.mainParams = false;
+                     show[section] = true;
+                 }
+             };
+             (function() {
              restService.getProductWithParams(
-                 $routeParams.id,
+                 /*$routeParams.id,*/
+                 '2',
                  function(result) {
                      $scope.productParams = result;
-
                      if (result.chart) {
                          var chartJson = JSON.parse(result.chart);
                          var data = {
@@ -36,4 +70,5 @@
                  },
                  function() {$log.error("error while get product with params")}
              );
+             }());
          }]);
