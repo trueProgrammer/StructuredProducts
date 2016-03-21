@@ -71,7 +71,7 @@
 
     </div>
 </div>
-<div id="optParamsContainer" ng-if="false">
+<div id="optParamsContainer" ng-show="false">
     <div ng-repeat="control in controls" id="{{control.id}}"  class="top-margin">
         <p>
         <h4>
@@ -81,7 +81,6 @@
         </p>
         <div ng-if="!control.isSaved">
             <div class="btn-group" uib-dropdown>
-                <span class="h4-style">{{control.header}}</span>
                 <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
                         style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
                         ng-disabled="control.isDisabled">

@@ -174,7 +174,7 @@ angular.module('App.createproduct')
                         this.hexControl.active();
                     };
                     control.show = function() {
-                        $('#' + this.id).appendTo('#paramsContainer');
+                        $('#' + this.id).appendTo('#optParamsControlBlock');
                     };
                 });
             };
