@@ -201,9 +201,7 @@ angular.module('App.createproduct')
                         } else {
                             $scope.optParamsControl.isDisabled = false;
                             $('#optParamsControlBlock').css('opacity', '1');
-                            /*this.mode = 'active';
-                            $('#addParam-shadow').attr('visibility', 'visible');
-                            $('#addParam').attr('opacity', '1');*/
+                            hex.switchAddParams();
                         }
                     };
                     control.edit = function() {
@@ -232,7 +230,7 @@ angular.module('App.createproduct')
             extendControls($scope.controls);
 
 
-            new hexParams({$scope: $scope, radius: 72, defaultParams: defaultParams, optParams: $scope.optParams});
+            var hex = new hexParams({$scope: $scope, radius: 72, defaultParams: defaultParams, optParams: $scope.optParams});
             defaultParams[0].active();
             //generateControls([{id: 'currencyBlock'}]);
 

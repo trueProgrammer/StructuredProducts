@@ -94,7 +94,7 @@
     }
 
     function onParamClick(data) {
-        if (this.optParams.length) {
+        if (this.optParams.length && this.addParamsTurnOn){
             filter.attr('stdDeviation', 5);
             prepareDataForLinear(this.optParams, radius + 10, radius + 10, radius);
             onAddParamClick.clickedParam = data;
@@ -159,6 +159,7 @@
 
         this.defaultParams = config.defaultParams;
         this.optParams = config.optParams;
+        this.addParamsTurnOn = false;
 
         var self = this;
         this.defaultParams.forEach(function(param) {
@@ -169,6 +170,15 @@
             param.mode = 'enabled';
         });
 
+        this.switchAddParams = function() {
+            this.addParamsTurnOn = !this.addParamsTurnOn;
+            if (this.addParamsTurnOn) {
+                //turn on
+                $('#addParam').attr('opacity', '1');
+            } else {
+                //turn off
+            }
+        };
 
 
         this.drawHex = function(params, group, onClick) {
@@ -180,7 +190,7 @@
                 .append('g')
                 .attr('id', function(d) {return d.id;})
                 .attr('opacity', function(d) {
-                    if (d.addParam) {
+                    if (self.addParamsTurnOn) {
                         return '1';
                     }
                     return '0.1';
