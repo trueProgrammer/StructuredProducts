@@ -34,7 +34,7 @@
                     <i class="fa fa-chevron-down" ng-show="isNotSelected('desc')"></i>
                     <i class="fa fa-chevron-up" ng-show="isSelected('desc')"></i>
                     &nbsp;&nbsp;
-                    <span class="custom-h3">Описание</span>
+                    <span class="custom-h2 red-style">Описание</span>
                 </div>
             </div>
             <div class="row" ng-if="isShow('desc')">
@@ -54,29 +54,39 @@
         <!--END MAIN PARAMS-->
         <!--START OTHER PARAMS-->
         <div>
-            <div class="table-full" ng-show="isDesktopShow()">
-                <table class="table main-table">
-                    <thead>
-                    <tr>
-                        <th>
-                            Название
-                        </th>
-                        <th>
-                            Базовый актив
-                        </th>
-                        <th>
-                            Cумма инвестиций
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div>
+                <div ng-click="click('otherParams')" class="cursor-type">
+                    <i class="fa fa-chevron-down" ng-show="isNotSelected('otherParams')"></i>
+                    <i class="fa fa-chevron-up" ng-show="isSelected('otherParams')"></i>
+                    &nbsp;&nbsp;
+                    <span class="custom-h2 red-style">Другие параметры</span>
+                </div>
+            </div>
+            <div class="row" ng-if="isShow('otherParams')">
+                <div class="table-full">
+                    <table class="table main-table">
+                        <thead>
                         <tr>
-                            <td>{{productParams.product.name}}</td>
-                            <td>{{productParams.product.underlaying.name}}</td>
-                            <td>от {{productParams.product.investment.min}} до {{productParams.product.investment.max}} тысяч рублей</td>
+                            <th>
+                                Название
+                            </th>
+                            <th>
+                                Базовый актив
+                            </th>
+                            <th>
+                                Cумма инвестиций
+                            </th>
                         </tr>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{productParams.product.name}}</td>
+                                <td>{{productParams.product.underlaying.name}}</td>
+                                <td>от {{productParams.product.investment.min}} до {{productParams.product.investment.max}} тысяч рублей</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <!--END OTHER PARAMS-->

@@ -207,32 +207,6 @@ angular.module('App.admin.products')
             return true;
         };
 
-        $scope.uploadCsv = function(file, e) {
-            restService.uploadProductsCsv(file,
-                function(){
-                    console.log('Successfully load csv');
-                    getValues("product");
-                    $scope.selectTable("product");
-                },
-                function(){console.log('Error occurs during load csv')}
-            );
-            e.wrap('<form>').closest('form').get(0).reset();
-            e.unwrap();
-
-        };
-
-        $scope.clickUploadButton = function() {
-            $('#uploadFile').trigger('click');
-        };
-
-        $scope.clickDownloadButton = function() {
-            restService.downloadCsv(function(data) {
-                var blob = new Blob([data], {type: "text/plain; charset=utf-8"});
-                saveAs(blob, "product.csv");
-            }, function() {
-                $log.error("error");
-            });
-        };
         $scope.selectTable = function(id) {
             $scope.selected = id;
             $scope.selection = [];
@@ -245,7 +219,6 @@ angular.module('App.admin.products')
             $scope.table.columnDefs = columns[id];
             getValues(id);
         };
-
         $scope.alert = { visible: false };
 
         $scope.closeAlert = function() {

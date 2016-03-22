@@ -1,0 +1,39 @@
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">Страница Администратора</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="">Страница Администратора</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container content-sm">
+    <div ng-include="'views/template/admin-menu.htm'" onload=""></div>
+    <div class="row">
+
+        <!-- ng-change doesn't work for input type file-->
+        <input type="file" class="hidden" id="uploadFile" accept=".csv" onchange="angular.element(this).scope().uploadCsv(this.files[0], $(this))"/>
+
+        <div>
+            <h3>Указать брокера, если необходимо</h3>
+            <div class="col-md-4">
+                <label for="broker"> Брокеры: </label><br>
+                <select id="broker" ng-model="broker" ng-options="broker as broker.name for broker in brokers track by borker.id">
+                </select>
+            </div>
+        </div>
+        <br/>
+        <div name="alertDiv" class="col-lg-12">
+            <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="7000" type="error"
+                   ng-if="alert.visible">{{alert.msg}}</alert>
+        </div>
+        <div>
+            <button type="button" class="btn-u btn-u-sea rounded" ng-click="clickUploadButton()">
+                Загрузить из CSV
+            </button>
+            <button type="button" class="btn-u btn-u-sea rounded" ng-click="clickDownloadButton()">
+                Выгрузить в CSV
+            </button>
+        </div>
+    </div>
+</div>

@@ -10,7 +10,8 @@ angular.module('App',
         'ui.grid', 'ui.grid.edit', 'ui.grid.selection',
         'App.main', 'App.about', 'App.investidea', 'App.investideas', 'App.investproduct', 'App.product', 'App.partners', 'App.structuredproducts',
         'App.createproduct',
-        'App.login', 'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts', 'App.admin.productparams'
+        'App.login',
+        'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts', 'App.admin.productparams', 'App.admin.csv'
     ]).config(['$httpProvider',
         function($httpProvider){
             $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
@@ -100,6 +101,7 @@ angular.module('App.admin.broker', []);
 angular.module('App.admin.investidea', []);
 angular.module('App.admin.topproducts', []);
 angular.module('App.admin.productparams', []);
+angular.module('App.admin.csv', []);
 angular.module('App.createproduct', []);
 
 var App = function () {

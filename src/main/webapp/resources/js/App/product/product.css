@@ -2,10 +2,6 @@
     padding: 15px;
 }
 
-.red-style {
-    background: #EEBDA7;
-}
-
 .table-full {
     font-size: 15px;
     width: 94%;
@@ -20,6 +16,17 @@
 .hr-style {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.custom-h2 {
+    color: #555;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-shadow: none;
+    font-weight: normal;
+    font-family: "Open Sans", Arial, sans-serif;
+    font-size: 22px;
+    line-height: 31px;
 }
 
 .custom-h3 {

@@ -11,6 +11,7 @@
 
              var selected = {
                  desc : false,
+                 otherParams: false
              };
 
              var show = {

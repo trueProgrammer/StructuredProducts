@@ -44,38 +44,38 @@ public class ProductCsvToDbService {
     private Map<String, String> beanPropertiesToColumnName = new HashMap<>();
     {
         beanPropertiesToColumnName.put("name", "Название");//��������
-        beanPropertiesToColumnName.put("productType", "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430");//��� ��������
-        beanPropertiesToColumnName.put("minTerm","\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A");//����
-        beanPropertiesToColumnName.put("maxTerm", "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A");//����
-        beanPropertiesToColumnName.put("underlying", "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0430\u043A\u0442\u0438\u0432"); //"������� �����"
-        beanPropertiesToColumnName.put("minInvestment","\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "����������� �����");
-        beanPropertiesToColumnName.put("maxInvestment","\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430");// "������������ �����");
-        beanPropertiesToColumnName.put("broker","\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440");// "���������");
-        beanPropertiesToColumnName.put("return","\u0414\u043E\u0445\u043E\u0434\u043D\u043E\u0441\u0442\u044C");// "����������");
-        beanPropertiesToColumnName.put("strategy", "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F");// "���������");
-        beanPropertiesToColumnName.put("legalType", "\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0444\u043E\u0440\u043C\u0430");//"����������� �����");
-        beanPropertiesToColumnName.put("payoff","\u0420\u0430\u0437\u043C\u0435\u0440 \u0432\u044B\u043F\u043B\u0430\u0442\u044B");// "������ �������");
-        beanPropertiesToColumnName.put("risks", "\u0420\u0438\u0441\u043A\u0438");//"�����");
-        beanPropertiesToColumnName.put("currency", "\u0412\u0430\u043B\u044E\u0442\u0430");//"������");
-        beanPropertiesToColumnName.put("periodicity", "\u041F\u0435\u0440\u0438\u043E\u0434\u0438\u0447\u043D\u043E\u0441\u0442\u044C \u0432\u044B\u043F\u043B\u0430\u0442");//"������������� ������");
+        beanPropertiesToColumnName.put("productType", "Тип продукта");
+        beanPropertiesToColumnName.put("minTerm","Минимальный срок");
+        beanPropertiesToColumnName.put("maxTerm", "Максимальный срок");
+        beanPropertiesToColumnName.put("underlying", "Базовый актив");
+        beanPropertiesToColumnName.put("minInvestment","Минимальная сумма");
+        beanPropertiesToColumnName.put("maxInvestment","Максимальная сумма");
+        beanPropertiesToColumnName.put("broker","Провайдер");
+        beanPropertiesToColumnName.put("return","Доходность");
+        beanPropertiesToColumnName.put("strategy", "Стратегия");
+        beanPropertiesToColumnName.put("legalType", "Юридическая форма");
+        beanPropertiesToColumnName.put("payoff","Размер выплаты");
+        beanPropertiesToColumnName.put("risks", "Риски");
+        beanPropertiesToColumnName.put("currency", "Валюта");
+        beanPropertiesToColumnName.put("periodicity", "Периодичность выплат");
     }
 
     private String header[] = new String[]{
             "Название",
-            "\u0422\u0438\u043F \u043F\u0440\u043E\u0434\u0443\u043A\u0442\u0430",//��� ��������
-            "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A",//����
-            "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u044B\u0439 \u0441\u0440\u043E\u043A",
-            "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0430\u043A\u0442\u0438\u0432", //"������� �����"
-            "\u041C\u0438\u043D\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430",// "����������� �����",
-            "\u041C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0430\u044F \u0441\u0443\u043C\u043C\u0430",// "������������ �����",
-            "\u041F\u0440\u043E\u0432\u0430\u0439\u0434\u0435\u0440",// "���������",
-            "\u0414\u043E\u0445\u043E\u0434\u043D\u043E\u0441\u0442\u044C",// "����������",
-            "\u0421\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044F",// "���������",
-            "\u042E\u0440\u0438\u0434\u0438\u0447\u0435\u0441\u043A\u0430\u044F \u0444\u043E\u0440\u043C\u0430",//"����������� �����",
-            "\u0420\u0430\u0437\u043C\u0435\u0440 \u0432\u044B\u043F\u043B\u0430\u0442\u044B",// "������ �������",
-            "\u0420\u0438\u0441\u043A\u0438",//"�����",
-            "\u0412\u0430\u043B\u044E\u0442\u0430",//"������",
-            "\u041F\u0435\u0440\u0438\u043E\u0434\u0438\u0447\u043D\u043E\u0441\u0442\u044C \u0432\u044B\u043F\u043B\u0430\u0442"//"������������� ������",
+            "Тип продукта",
+            "Минимальный срок",
+            "Максимальный срок",
+            "Базовый актив",
+            "Минимальная сумма",
+            "Максимальная сумма",
+            "Провайдер",
+            "Доходность",
+            "Стратегия",
+            "Юридическая форма",
+            "Размер выплаты",
+            "Риски",
+            "Валюта",
+            "Периодичность выплат"
     };
 
     public void convertToDb(InputStreamReader reader) {

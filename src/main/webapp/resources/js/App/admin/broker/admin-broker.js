@@ -47,7 +47,7 @@ angular.module('App.admin.broker')
             $scope.mode = 'add';
             $('#broker-form')[0].reset();
             $('#broker-logo-preview').attr('src', "");
-            $('#actionbtn').html('Добавить')
+            $('#actionbtn').html('Добавить');
             $scope.brokerForAdd = null;
         };
         $scope.removeBroker = function(broker) {
@@ -64,13 +64,13 @@ angular.module('App.admin.broker')
             if ($scope.brokerForAdd) {
                 id = $scope.brokerForAdd.id;
             }
-            restService.addBroker(id, name, img, function(data) {
+            restService.addBroker(id, name, img, function() {
                 $('#broker-form')[0].reset();
                 $scope.mode = 'add';
                 $scope.brokerForAdd = null;
                 $('#actionbtn').html('Добавить');
                 loadBrokers();
-            }, function(error) {
+            }, function() {
                 $('#broker-form')[0].reset();
                 $scope.brokerForAdd = null;
                 $('#actionbtn').html('Добавить');
