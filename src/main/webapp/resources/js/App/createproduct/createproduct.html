@@ -32,7 +32,7 @@
                                     ng-disabled="control.isDisabled">
                                 {{control.fromValue}} <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu>
+                            <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
                                 <li ng-repeat="fromValue in control.fromValues"><a ng-click="control.setFromValue(fromValue)">{{fromValue}}</a></li>
                             </ul>
                         </div>
@@ -43,7 +43,7 @@
                                     ng-disabled="control.isDisabled">
                                 {{control.toValue}} <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" uib-dropdown-menu>
+                            <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
                                 <li ng-repeat="toValue in control.toValues"><a ng-click="control.setToValue(toValue)">{{toValue}}</a></li>
                             </ul>
                         </div>

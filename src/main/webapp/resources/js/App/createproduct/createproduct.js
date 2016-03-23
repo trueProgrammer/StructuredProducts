@@ -183,31 +183,39 @@ angular.module('App.createproduct')
                 controls.forEach(function(control, index){
                     control.value = control.lineFormat.format(control.fromValue, control.toValue);
                     control.setFromValue = function(fromValue) {
-                        control.fromValue = fromValue;
-                        this.value = this.lineFormat.format(this.fromValue, this.toValue);
-                        $('#' + this.hexControl.id + '-text').text(this.value);
+                        if (control.active) {
+                            control.fromValue = fromValue;
+                            this.value = this.lineFormat.format(this.fromValue, this.toValue);
+                            $('#' + this.hexControl.id + '-text').text(this.value);
+                        }
                     };
                     control.setToValue = function(toValue) {
-                        control.toValue = toValue;
-                        this.value = this.lineFormat.format(this.fromValue, this.toValue);
-                        $('#' + this.hexControl.id + '-text').text(this.value);
+                        if (control.active) {
+                            control.toValue = toValue;
+                            this.value = this.lineFormat.format(this.fromValue, this.toValue);
+                            $('#' + this.hexControl.id + '-text').text(this.value);
+                        }
                     };
                     control.save = function() {
-                        this.isSaved = true;
-                        this.line = this.lineFormat.format(this.fromValue, this.toValue);
-                        this.hexControl.inactive();
-                        if(this.next) {
-                            this.next.hexControl.turnOn();
-                        } else {
-                            $scope.optParamsControl.isDisabled = false;
-                            $('#optParamsControlBlock').css('opacity', '1');
-                            hex.switchAddParams();
+                        if (control.active) {
+                            this.isSaved = true;
+                            this.line = this.lineFormat.format(this.fromValue, this.toValue);
+                            this.hexControl.inactive();
+                            if(this.next) {
+                                this.next.hexControl.turnOn();
+                            } else {
+                                $scope.optParamsControl.isDisabled = false;
+                                $('#optParamsControlBlock').css('opacity', '1');
+                                hex.switchAddParams();
+                            }
                         }
                     };
                     control.edit = function() {
-                        this.isSaved = false;
-                        this.line = '';
-                        this.hexControl.active();
+                        if (control.active) {
+                            this.isSaved = false;
+                            this.line = '';
+                            this.hexControl.active();
+                        }
                     };
                     if (index > 0) {
                         controls[index - 1].next = control;

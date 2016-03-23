@@ -56,6 +56,9 @@
     };
 
     function onActiveParamClick(boundedControl, control) {
+        if (control.mode === 'disabled') {
+            return;
+        }
         if (control.mode === 'active') {
             $scope.$apply(function() {
                 boundedControl.save();
@@ -114,7 +117,8 @@
             this.mode = 'active';
             $('#'+id+'-shadow').attr('visibility', 'visible');
             $('#' + id).attr('opacity', '1');
-            $('#' + id + 'Block').css('opacity', '1');
+            $('#' + this.boundedControl.id).css('opacity', '1');
+            this.boundedControl.active = true;
         };
         control.inactive = function() {
             this.mode = 'enabled';
