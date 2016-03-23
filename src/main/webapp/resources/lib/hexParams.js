@@ -56,6 +56,9 @@
     };
 
     function onActiveParamClick(boundedControl, control) {
+        if (this.showAddParam) {
+            return this.showMainView();
+        }
         if (control.mode === 'disabled') {
             return;
         }
@@ -93,15 +96,22 @@
             forAdd.boundedControl.value = forAdd.boundedControl.valueHided;
         }
         forAdd.boundedControl.show();
+        this.showAddParam = false;
+        $('#add-param-header').css('visibility', 'hidden');
         this.drawHex(this.defaultParams, mainGroup, onActiveParamClick);
     }
 
     function onParamClick(data) {
+        if (this.showAddParam) {
+            return this.showMainView();
+        }
         if (this.optParams.length && this.addParamsTurnOn){
             filter.attr('stdDeviation', 5);
-            prepareDataForLinear(this.optParams, radius + 10, radius + 10, radius);
+            prepareDataForLinear(this.optParams, radius + 10, radius + 50, radius);
             onAddParamClick.clickedParam = data;
             this.drawHex(this.optParams, addGroup, onAddParamClick);
+            this.showAddParam = true;
+            $('#add-param-header').css('visibility', 'visible');
         }
     }
 
@@ -166,6 +176,12 @@
         this.addParamsTurnOn = false;
 
         var self = this;
+
+        svg.on('click', function () {
+            if (self.showAddParam) {
+                self.showMainView();
+            }
+        });
         this.defaultParams.forEach(function(param) {
             extendControl.call(param, param, self);
         });
@@ -184,6 +200,13 @@
             }
         };
 
+        this.showMainView = function() {
+            addGroup.selectAll("*").remove();
+            filter.attr('stdDeviation', 0);
+            this.showAddParam = false;
+            $('#add-param-header').css('visibility', 'hidden');
+            this.showAddParam = false;
+        };
 
         this.drawHex = function(params, group, onClick) {
             var innerGroups = group
@@ -234,6 +257,7 @@
                     } else if(onClick){
                         onClick.call(self, path.boundedControl, path);
                     }
+                    d3.event.stopPropagation()
                 });
             });
 
@@ -249,9 +273,6 @@
                 .attr("class","hex-text unselectable")
                 .text(function (d) {
                     return d.text;
-                })
-                .attr('onclick', function (d) {
-                    return d.onclick;
                 })
                 .transition()
                 .duration(1000);
@@ -272,9 +293,6 @@
                     }
                 })
                 .attr("class","hex-text unselectable")
-                .attr('onclick', function (d) {
-                    return d.onclick;
-                })
                 .transition()
                 .duration(1000);
 

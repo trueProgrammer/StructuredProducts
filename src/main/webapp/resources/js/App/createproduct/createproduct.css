@@ -37,6 +37,13 @@
     color: #2e2e2e
 }
 
+.header-text-style {
+    font-size: 25px;
+    text-anchor: center;
+    fill: #666;
+    visibility: hidden;
+}
+
 .hex-style {
     cursor: pointer;
     fill: white;
