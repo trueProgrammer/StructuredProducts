@@ -230,7 +230,7 @@ angular.module('App.createproduct')
             extendControls($scope.controls);
 
 
-            var hex = new hexParams({$scope: $scope, radius: 72, defaultParams: defaultParams, optParams: $scope.optParams});
+            var hex = new hexParams({$scope: $scope, radius: 88, defaultParams: defaultParams, optParams: $scope.optParams});
             defaultParams[0].active();
             //generateControls([{id: 'currencyBlock'}]);
 
