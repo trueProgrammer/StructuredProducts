@@ -1,12 +1,15 @@
 package com.structuredproducts.controllers.data;
 
+import java.util.List;
+
 public class ProductBean {
     private long id;
     private String name;
-    private String underlying;
+    private List<String> underlying;
+    private String underlying2;
     private int minInvestment;
     private String broker;
-    private int profit;
+    private double profit;
     private String strategy;
     private String legalType;
     private String payoff;
@@ -14,6 +17,7 @@ public class ProductBean {
     private String currency;
     private String periodicity;
     private String productType;
+    private String description;
     private int maxInvestment;
     private int maxTerm;
     private int minTerm;
@@ -82,19 +86,15 @@ public class ProductBean {
         this.currency = currency;
     }
 
-    public String getUnderlying() {
+    public List<String> getUnderlying() {
         return underlying;
     }
 
-    public void setUnderlying(String underlying) {
-        this.underlying = underlying;
-    }
-
-    public int getProfit() {
+    public double getProfit() {
         return profit;
     }
 
-    public void setReturn(int profit) {
+    public void setReturn(double profit) {
         this.profit = profit;
     }
 
@@ -144,5 +144,29 @@ public class ProductBean {
 
     public void setMinTerm(int minTerm) {
         this.minTerm = minTerm;
+    }
+
+    public void setProfit(int profit) {
+        this.profit = profit;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUnderlying2() {
+        return underlying2;
+    }
+
+    public void setUnderlying2(String underlying2) {
+        this.underlying2 = underlying2;
+    }
+
+    public void setUnderlying(List<String> underlying) {
+        this.underlying = underlying;
     }
 }

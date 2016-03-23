@@ -61,7 +61,7 @@ public class ProductAdminController extends AbstractAdminController{
                 converter.convertToDb(reader);
             }
         } catch (IOException e) {
-            return new ResponseEntity<Message>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Message>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
