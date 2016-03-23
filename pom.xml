@@ -27,9 +27,17 @@
         <hibernate.jpa.version>1.0.0.Final</hibernate.jpa.version>
         <hibernate.version>5.0.7.Final</hibernate.version>
         <postgresl.driver.version>9.4.1207</postgresl.driver.version>
+        <apache.client.version>4.5.1</apache.client.version>
     </properties>
 
     <dependencies>
+
+        <!-- Apache -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${apache.client.version}</version>
+        </dependency>
 
         <!-- Spring dependencies-->
         <dependency>

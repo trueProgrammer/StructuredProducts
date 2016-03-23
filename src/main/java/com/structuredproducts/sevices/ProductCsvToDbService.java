@@ -189,6 +189,7 @@ public class ProductCsvToDbService {
 
     private static final Pattern FROM_TO_TERM_PATTERN = Pattern.compile("от (\\d+) до (\\d+) мес.*");
     private static final Pattern YEAR_PATTERN = Pattern.compile("([\\d\\.\\,]+)\\sгод.*");
+    private static final Pattern MONTH_PATTERN = Pattern.compile("([d+)\\sмес.*");
     private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(\\w+)\\s*\\(([\\w\\S\\s])\\)+");
     private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
     private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до (\\d+) тыс.*");
@@ -236,6 +237,11 @@ public class ProductCsvToDbService {
                                     Matcher yearPatter = YEAR_PATTERN.matcher(tuple.getValue().toLowerCase());
                                     if(yearPatter.matches()) {
                                         bean.setMaxTerm((int) (Double.parseDouble(yearPatter.group(1).replace(",",".")) * 12));
+                                        break;
+                                    }
+                                    Matcher monthPatter = MONTH_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    if(yearPatter.matches()) {
+                                        bean.setMaxTerm(Integer.parseInt(monthPatter.group(1)));
                                         break;
                                     }
                                     throw new RuntimeException("Unknown term:" + tuple.getValue());
