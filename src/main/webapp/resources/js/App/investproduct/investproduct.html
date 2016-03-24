@@ -191,9 +191,9 @@
                         <td>{{$index + 1}}</td>
                         <td>{{val.name}}</td>
                         <td>{{val.underlaying.name}}</td>
-                        <td>{{val.returnValue.count}}%</td>
+                        <td>{{val.returnValue}}%</td>
                         <td>от {{val.investment.min}} до {{val.investment.max}} тысяч рублей</td>
-                        <td>от {{val.term.min}} до {{val.term.max}} месяцев</td>
+                        <td>от {{val.termMin}} до {{val.termMax}} месяцев</td>
                         <td>{{val.issuer.name}}</td>
                     </tr>
                     </tbody>
@@ -221,7 +221,7 @@
                     <tr ng-repeat="val in products | orderBy:predicate:reverse">
                         <td>{{$index + 1}}</td>
                         <td>{{val.name}}</td>
-                        <td>{{val.returnValue.count}}%</td>
+                        <td>{{val.returnValue}}%</td>
                         <td>от {{val.investment.min}} до {{val.investment.max}} тысяч рублей</td>
                     </tr>
                     </tbody>

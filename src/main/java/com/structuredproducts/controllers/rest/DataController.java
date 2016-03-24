@@ -146,7 +146,6 @@ public class DataController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Product product = productOpt.get();
-        product.getTerm().setName();
         Optional<ProductParam> paramOpt = params.stream().filter(par -> par.getProduct().getId().equals(product.getId())).findAny();
         if (paramOpt.isPresent()) {
             return new ResponseEntity<>(paramOpt.get(), HttpStatus.OK);

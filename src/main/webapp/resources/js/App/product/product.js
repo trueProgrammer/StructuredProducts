@@ -47,6 +47,17 @@
                  /*$routeParams.id,*/
                  '2',
                  function(result) {
+                     var termName;
+                     var minTerm = result.product.minTerm;
+                     var maxTerm = result.product.maxTerm;
+                     if(minTerm != 0 && maxTerm != 0) {
+                         termName = "От " + minTerm + " до " + maxTerm + " месяцев";
+                     } else if(minTerm == 0 && maxTerm != 0) {
+                         termName = "До " +  maxTerm + " месяцев";
+                     } else if (minTerm != 0 && maxTerm == 0) {
+                         termName = "Свыше " + minTerm + " месяцев";
+                     }
+                     result.product.termName = termName;
                      $scope.productParams = result;
                      if (result.chart) {
                          var chartJson = JSON.parse(result.chart);

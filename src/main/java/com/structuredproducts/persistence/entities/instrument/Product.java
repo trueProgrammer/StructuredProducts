@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
@@ -21,13 +22,13 @@ public class Product {
     @JoinColumn(name = "productType")
     private ProductType productType;
 
-    @ManyToOne(targetEntity = Term.class)
-    @JoinColumn(name = "term")
-    private Term term;
-
-    @ManyToOne(targetEntity = Underlaying.class)
-    @JoinColumn(name = "underlaying")
-    private Underlaying underlaying;
+    @ManyToMany
+    @JoinTable(
+        name = "INSTRUMENT.UNDERLAYINGS",
+        joinColumns=@JoinColumn(name="product", referencedColumnName="id"),
+        inverseJoinColumns=@JoinColumn(name="underlaying", referencedColumnName="id")
+    )
+    private List<Underlaying> underlaying;
 
     @ManyToOne(targetEntity = Investment.class)
     @JoinColumn(name = "investment")
@@ -37,9 +38,8 @@ public class Product {
     @JoinColumn(name = "broker")
     private Broker broker;
 
-    @ManyToOne(targetEntity = Return.class)
-    @JoinColumn(name = "return")
-    private Return returnValue;
+    @Column(name = "return")
+    private float returnValue;
 
     @ManyToOne(targetEntity = Strategy.class)
     @JoinColumn(name = "strategy")
@@ -64,6 +64,15 @@ public class Product {
     @ManyToOne(targetEntity = PaymentPeriodicity.class)
     @JoinColumn(name = "paymentPeriodicity")
     private PaymentPeriodicity paymentPeriodicity;
+
+    @Column
+    private String description;
+
+    @Column
+    private int minTerm;
+
+    @Column
+    private int maxTerm;
 
     @Transient
     private RiskType riskType;
@@ -90,19 +99,11 @@ public class Product {
         this.productType = productType;
     }
 
-    public Term getTerm() {
-        return term;
-    }
-
-    public void setTerm(Term term) {
-        this.term = term;
-    }
-
-    public Underlaying getUnderlaying() {
+    public List<Underlaying> getUnderlaying() {
         return underlaying;
     }
 
-    public void setUnderlaying(Underlaying underlaying) {
+    public void setUnderlaying(List<Underlaying> underlaying) {
         this.underlaying = underlaying;
     }
 
@@ -122,11 +123,11 @@ public class Product {
         this.broker = broker;
     }
 
-    public Return getReturnValue() {
+    public float getReturnValue() {
         return returnValue;
     }
 
-    public void setReturnValue(Return returnValue) {
+    public void setReturnValue(float returnValue) {
         this.returnValue = returnValue;
     }
 
@@ -201,4 +202,29 @@ public class Product {
     public void setTop(boolean isTop) {
         this.top = isTop;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getMinTerm() {
+        return minTerm;
+    }
+
+    public void setMinTerm(int minTerm) {
+        this.minTerm = minTerm;
+    }
+
+    public int getMaxTerm() {
+        return maxTerm;
+    }
+
+    public void setMaxTerm(int maxTerm) {
+        this.maxTerm = maxTerm;
+    }
+
 }

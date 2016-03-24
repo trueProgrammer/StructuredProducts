@@ -259,14 +259,14 @@ angular.module('App.services', ['ngResource']).service('restService', [
             );
         },
 
-        uploadProductsCsv: function(file, onSuccess, onFail) {
+        uploadProductsCsv: function(file, broker, onSuccess, onFail) {
             $log.info("Get time types");
             var formData = new FormData();
             formData.append('file', file);
             $http(
                 {
                     method: 'POST',
-                    url: adminUri + "products/csv",
+                    url: adminUri + "products/csv?broker=" + broker,
                     headers: {
                         'Content-Type': undefined
                     },
@@ -414,7 +414,7 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         createProductRequest: function(data, onSuccess, onFail) {
-            $log.info("Download csv");
+            $log.info("Create Product");
             $http.post(
                 dataUri + "createProductRequest",
                 data

@@ -1,15 +1,17 @@
 package com.structuredproducts.controllers.data;
 
+import com.structuredproducts.persistence.entities.instrument.Underlaying;
+
 import java.util.List;
 
 public class ProductBean {
     private long id;
     private String name;
-    private List<String> underlying;
+    private List<Underlaying> underlying;
     private String underlying2;
     private int minInvestment;
     private String broker;
-    private double profit;
+    private float profit;
     private String strategy;
     private String legalType;
     private String payoff;
@@ -86,15 +88,15 @@ public class ProductBean {
         this.currency = currency;
     }
 
-    public List<String> getUnderlying() {
+    public List<Underlaying> getUnderlying() {
         return underlying;
     }
 
-    public double getProfit() {
+    public float getProfit() {
         return profit;
     }
 
-    public void setReturn(double profit) {
+    public void setReturn(float profit) {
         this.profit = profit;
     }
 
@@ -166,7 +168,7 @@ public class ProductBean {
         this.underlying2 = underlying2;
     }
 
-    public void setUnderlying(List<String> underlying) {
+    public void setUnderlying(List<Underlaying> underlying) {
         this.underlying = underlying;
     }
 }

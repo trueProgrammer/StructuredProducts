@@ -15,15 +15,17 @@ angular.module('App.admin.csv')
             }
         }());
 
+        $scope.broker;
         var loadBrokers = function() {
             restService.getAllBrokers(function(data) {
                 $scope.brokers = data;
+                $scope.broker = data[0];
             }, function () {
                 $log.error("Can't load brokers");
             });
         };
         loadBrokers();
-        $scope.broker;
+
 
         $scope.clickUploadButton = function() {
             $('#uploadFile').trigger('click');
@@ -38,9 +40,11 @@ angular.module('App.admin.csv')
         };
         $scope.uploadCsv = function(file, e) {
             restService.uploadProductsCsv(file,
+                $scope.broker.name,
                 function(){
                     console.log('Successfully load csv');
-                    $scope.selectTable("product");
+                    /*$scope.selectTable("product");*/
+                    $location.path("/admin");
                 },
                 function(data){
                     var msg = 'Error occurs during load csv:' + data;

@@ -31,24 +31,6 @@ public class ProductCsvToDbService {
 
     private final static Logger logger = LoggerFactory.getLogger(ProductCsvToDbService.class);
 
-    /*public final static CellProcessor[] PRODUCTS_PROCESSORS = new CellProcessor[]{
-         new NotNull(),   //name
-         new NotNull(),   //product type
-         new ParseInt(),  //minTerm
-         new ParseInt(),  //maxTerm
-         new NotNull(),   //base active/underlying
-         new ParseInt(),  //min investment
-         new ParseInt(),  //max investment
-         new NotNull(),   //provider/issuer
-         new ParseInt(),  //profit/return
-         new NotNull(),   //strategy
-         new NotNull(),   //legal type
-         new NotNull(),  //payoff
-         new NotNull(),   //risks
-         new NotNull(),   //currency
-         new NotNull(),   //periodicity
-    };*/
-
     private static final Map<String, String> currencyMap =
             ImmutableMap.<String, String>builder()
             .put("рубли", "RUR")
@@ -120,10 +102,15 @@ public class ProductCsvToDbService {
             "Периодичность выплат"
     };
 
-    public void convertToDb(InputStreamReader reader) {
+    public void convertToDb(InputStreamReader reader, String broker) {
         try {
             List<ProductBean> productList = readCsv(reader);
             List<Product> convertedProducts = convertToProdutsList(productList);
+            if(broker != null) {
+                convertedProducts.parallelStream().forEach(
+                        product -> product.setBroker(new Broker(broker))
+                );
+            }
             dbService.saveProducts(convertedProducts);
         } catch (IOException e) {
             logger.error("Error while import csv.", e);
@@ -136,17 +123,19 @@ public class ProductCsvToDbService {
             Product product = new Product();
             product.setName(productBean.getName());
             product.setCurrency(new Currency(productBean.getCurrency()));
-            //product.setUnderlaying(new Underlaying(productBean.getUnderlying()));
+            product.setUnderlaying(productBean.getUnderlying());
             product.setInvestment(new Investment(productBean.getMinInvestment(), productBean.getMaxInvestment()));
             product.setBroker(new Broker(productBean.getBroker()));
-            //product.setReturnValue(new Return(productBean.getProfit()));
+            product.setReturnValue(productBean.getProfit());
             product.setStrategy(new Strategy(productBean.getStrategy()));
             product.setLegalType(new LegalType(productBean.getLegalType()));
             product.setPayoff(new PayOff(productBean.getPayoff()));
             product.setRisks(new Risks(productBean.getRisk()));
-            product.setTerm(new Term(productBean.getMinTerm(), productBean.getMaxTerm()));
+            product.setMinTerm(productBean.getMinTerm());
+            product.setMaxTerm(productBean.getMaxTerm());
             product.setProductType(new ProductType(productBean.getProductType()));
             product.setPaymentPeriodicity(new PaymentPeriodicity(productBean.getPeriodicity()));
+            product.setDescription(productBean.getDescription());
             return product;
         }).collect(Collectors.toList());
     }
@@ -160,7 +149,7 @@ public class ProductCsvToDbService {
         Map<String, Object> map = new HashMap<>();
         writer.writeHeader(header);
 
-        try {
+ /*       try {
             for (Product product : products) {
                 map.put(beanPropertiesToColumnName.get("name"), product.getName());
                 map.put(beanPropertiesToColumnName.get("productType"), product.getProductType().getName());
@@ -170,7 +159,7 @@ public class ProductCsvToDbService {
                 map.put(beanPropertiesToColumnName.get("minInvestment"), product.getInvestment().getMin());
                 map.put(beanPropertiesToColumnName.get("maxInvestment"), product.getInvestment().getMax());
                 map.put(beanPropertiesToColumnName.get("broker"), product.getBroker().getName());
-                map.put(beanPropertiesToColumnName.get("return"), product.getReturnValue().getCount());
+                map.put(beanPropertiesToColumnName.get("return"), product.getReturnValue());
                 map.put(beanPropertiesToColumnName.get("strategy"), product.getStrategy().getName());
                 map.put(beanPropertiesToColumnName.get("legalType"), product.getLegalType().getName());
                 map.put(beanPropertiesToColumnName.get("payoff"), product.getPayoff().getName());
@@ -183,7 +172,7 @@ public class ProductCsvToDbService {
             e.printStackTrace();
         } finally {
             writer.close();
-        }
+        }*/
         return stringWriter.toString();
     }
 
@@ -246,21 +235,20 @@ public class ProductCsvToDbService {
                                     }
                                     throw new RuntimeException("Unknown term:" + tuple.getValue());
                                 case "базовый актив":
+                                case "базовые актив":
+                                case "underlayings":
                                 case "Underlying-1":
                                 case "Underlying":
-                                    Matcher underlayingPattern = UNDERLAYING_PATTERN.matcher(tuple.getValue().toLowerCase());
-                                    if(underlayingPattern.matches()) {
-                                        bean.setUnderlying2(underlayingPattern.group(1));
-                                        Iterable<String> underlayings = Splitter.on(",").split(underlayingPattern.group(2));
-                                        bean.setUnderlying(Lists.newArrayList(underlayings));
-                                    } else {
-                                        Iterable<String> underlayings = Splitter.on(",").split(tuple.getValue());
-                                        bean.setUnderlying(Lists.newArrayList(underlayings));
-                                    }
+                                    Iterable<String> underlayings = Splitter.on(",").split(tuple.getValue());
+                                    List<Underlaying> underObjList = Lists.newArrayList();
+                                    underlayings.forEach(
+                                            str -> underObjList.add(new Underlaying(str))
+                                    );
+                                    bean.setUnderlying(underObjList);
                                     break;
                                 case "доходность":
                                 case "return":
-                                    bean.setReturn(Double.parseDouble(tuple.getValue().replace("%", "").replace(",", ".")));
+                                    bean.setReturn(Float.parseFloat(tuple.getValue().replace("%", "").replace(",", ".")));
                                     break;
                                 case "стратегия":
                                 case "strategy":

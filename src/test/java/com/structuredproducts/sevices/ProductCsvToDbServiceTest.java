@@ -31,7 +31,7 @@ public class ProductCsvToDbServiceTest {
 
         Product product = products.get(0);
         Assert.assertThat(product.getName(), Matchers.is("Alpari"));
-        Assert.assertThat(product.getTerm().getMin(), Matchers.is(1));
+        Assert.assertThat(product.getMinTerm(), Matchers.is(1));
         Assert.assertThat(product.getInvestment().getMin(), Matchers.is(100));
     }
 
@@ -44,13 +44,19 @@ public class ProductCsvToDbServiceTest {
         Assert.assertThat(csvBeans, Matchers.notNullValue());
         Assert.assertThat(csvBeans, Matchers.hasSize(6));
 
-        /*List<Product> products = service.convertToProdutsList(csvBeans);
+        List<Product> products = service.convertToProdutsList(csvBeans);
         Assert.assertThat(products, Matchers.notNullValue());
-        Assert.assertThat(csvBeans, Matchers.hasSize(2));*/
+        Assert.assertThat(csvBeans, Matchers.hasSize(6));
 
-        /*Product product = products.get(0);
-        Assert.assertThat(product.getName(), Matchers.is("Alpari"));
-        Assert.assertThat(product.getTerm().getMin(), Matchers.is(1));
-        Assert.assertThat(product.getInvestment().getMin(), Matchers.is(100));*/
+        Product product = products.get(0);
+        Assert.assertThat(product.getName(), Matchers.is("Нота №2"));
+        Assert.assertThat(product.getProductType().getName(), Matchers.is("С участием (ограниченный риск)"));
+        Assert.assertThat(product.getDescription(), Matchers.notNullValue());
+        Assert.assertThat(product.getMaxTerm(), Matchers.is(30));
+        Assert.assertThat(product.getMinTerm(), Matchers.is(0));
+        Assert.assertThat(product.getUnderlaying(), Matchers.hasSize(4));
+        Assert.assertThat(product.getReturnValue(), Matchers.is(25.0F));
+        Assert.assertThat(product.getStrategy().getName(), Matchers.is("Барьерные стратегии"));
+        Assert.assertThat(product.getCurrency().getName(), Matchers.is("RUR"));
     }
 }

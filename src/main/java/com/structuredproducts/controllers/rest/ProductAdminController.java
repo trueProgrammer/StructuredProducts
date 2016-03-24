@@ -50,18 +50,16 @@ public class ProductAdminController extends AbstractAdminController{
                            method = RequestMethod.POST,
                            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<Message> uploadCsv(@RequestBody MultipartFile file) {
+    public ResponseEntity<Message> uploadCsv(@RequestParam(value="broker") String broker, @RequestBody MultipartFile file) {
 
         try {
             InputStreamReader reader = new InputStreamReader(file.getInputStream(), "UTF-8");
-            if ((char)reader.read() == '\uFEFF') {//Skip BOM symbol
-                converter.convertToDb(reader);
-            } else {
+            if ((char)reader.read() != '\uFEFF') {//Skip BOM symbol
                 reader = new InputStreamReader(file.getInputStream(), "UTF-8");
-                converter.convertToDb(reader);
             }
+            converter.convertToDb(reader, broker);
         } catch (IOException e) {
-            return new ResponseEntity<Message>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

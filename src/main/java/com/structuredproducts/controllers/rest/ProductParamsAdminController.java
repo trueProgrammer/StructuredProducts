@@ -34,7 +34,6 @@ public class ProductParamsAdminController extends AbstractAdminController{
             map = ServiceUtils.getObjectMapping(json);
             Integer id = (Integer) map.get("id");
             Integer productId = (Integer) map.get("product_id");
-            String description = (String) map.get("description");
             String forecast = (String) map.get("forecast");
             String img = (String) map.get("img");
             String chart = (String) map.get("chart");
@@ -47,7 +46,6 @@ public class ProductParamsAdminController extends AbstractAdminController{
             productParam.setChart(chart);
             productParam.setImg(img);
             productParam.setForecast(forecast);
-            productParam.setDescription(description);
 
             dbService.save(productParam);
         } catch (IOException e) {

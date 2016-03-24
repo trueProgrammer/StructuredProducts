@@ -25,9 +25,6 @@ public class ProductParam implements Serializable{
     private String img;
 
     @Column
-    private String description;
-
-    @Column
     private String forecast;
 
     public ProductParam() {
@@ -59,14 +56,6 @@ public class ProductParam implements Serializable{
 
     public void setImg(String img) {
         this.img = img;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getForecast() {

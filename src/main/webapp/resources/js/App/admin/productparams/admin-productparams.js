@@ -26,7 +26,6 @@ angular.module('App.admin.productparams')
             restService.addProductParam({
                 id: $scope.selectedProduct.id,
                 product_id: $scope.selectedProduct.product.id,
-                description: $scope.selectedProduct.description,
                 forecast: $scope.selectedProduct.forecast,
                 img: $scope.selectedProduct.img,
                 chart: $scope.selectedProduct.chart

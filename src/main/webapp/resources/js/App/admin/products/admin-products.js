@@ -37,16 +37,6 @@ angular.module('App.admin.products')
                     cellTemplate: defaultStrCellTemplate
                 }
             ],
-            term : [
-                { field: 'min', displayName: 'Минимум', width: "47%",
-                    notNull: true,
-                    cellTemplate: defaultStrCellTemplate
-                },
-                { field: 'max', displayName: 'Максимум', width: "47%",
-                    notNull: true,
-                    cellTemplate: defaultStrCellTemplate
-                },
-            ],
             investment : [
                 { field: 'min', displayName: 'Минимум', width: "47%",
                     notNull: true,
@@ -54,9 +44,6 @@ angular.module('App.admin.products')
 
                 },
                 { field: 'max', displayName: 'Максимум', width: "47%", notNull: true, cellTemplate: defaultStrCellTemplate},
-            ],
-            return : [
-                { field: 'count', displayName: 'Доходность', width: "94%" , notNull: true, cellTemplate: defaultStrCellTemplate},
             ],
             strategy : [
                 { field: 'name', displayName: 'Стратегия', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate },
@@ -90,16 +77,13 @@ angular.module('App.admin.products')
             ],
             product: [
                 { field: 'name',  displayName: 'Название', width: 200, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'description',  displayName: 'Описание', width: 200, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'productType', displayName: 'Тип структурного продукта', width: 250,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'productType', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
-                { field: 'term', displayName: 'Срок', width: 150,
-                    notNull: true,
-                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
-                    cellFilter: "griddropdown:this",
-                    editableEntity: 'term', editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'minTerm',  displayName: 'Минимальный срок', width: 50, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'maxTerm',  displayName: 'Максимальный срок', width: 50, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'underlaying', displayName: 'Базовый актив', width: 200,
                     notNull: true,
                     cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
@@ -118,12 +102,7 @@ angular.module('App.admin.products')
                     cellFilter: "griddropdown:this",
                     editableEntity: 'broker', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
-                { field: 'returnValue', displayName: 'Доходность', width: 150,
-                    notNull: true,
-                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].count}}</div>",
-                    cellFilter: "griddropdown:this",
-                    editableEntity: 'return', editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'count', editDropdownOptionsArray: []},
+                { field: 'returnValue',  displayName: 'Доходность', width: 50, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'strategy', displayName: 'Стратегия', width: 150,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'strategy', editableCellTemplate: 'ui-grid/dropdownEditor',

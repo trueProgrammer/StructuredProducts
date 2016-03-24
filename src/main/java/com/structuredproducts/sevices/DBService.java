@@ -1,6 +1,7 @@
 package com.structuredproducts.sevices;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.structuredproducts.persistence.DBManager;
 import com.structuredproducts.persistence.entities.instrument.*;
 import org.slf4j.Logger;
@@ -24,9 +25,7 @@ public class DBService {
 
     private static final Map<Class<?>, String> TABLE_TO_TYPE_MAPPING = ImmutableMap.<Class<?>, String>builder().
             put(ProductType.class, "INSTRUMENT.PRODUCT_TYPE").
-            put(Term.class, "INSTRUMENT.TERM").
             put(Investment.class, "INSTRUMENT.INVESTMENT").
-            put(Return.class, "INSTRUMENT.RETURN").
             put(UnderlayingType.class, "INSTRUMENT.UNDERLAYING_TYPE").
             put(Underlaying.class, "INSTRUMENT.UNDERLAYING").
             put(Strategy.class, "INSTRUMENT.STRATEGY").
@@ -106,14 +105,18 @@ public class DBService {
                 product.setPaymentPeriodicity(saveOrUpdateNameable(product.getPaymentPeriodicity()));
                 product.setProductType(saveOrUpdateNameable(product.getProductType()));
                 product.setPayoff(saveOrUpdateNameable(product.getPayoff()));
-                product.setReturnValue(saveOrUpdateUniqueWithInt(product.getReturnValue()));
+                product.setReturnValue(product.getReturnValue());
                 product.setRisks(saveOrUpdateNameable(product.getRisks()));
                 product.setStrategy(saveOrUpdateNameable(product.getStrategy()));
-                product.setTerm(saveOrUpdateUniqueWithMinMax(product.getTerm()));
-                product.setUnderlaying(saveOrUpdateNameable(product.getUnderlaying()));
-                logger.debug("save all product contains");
+
+                List<Underlaying> underlayings = Lists.newArrayList();
+                product.getUnderlaying().forEach(val -> underlayings.add(saveOrUpdateNameable(val)));
+                product.getUnderlaying().clear();
+                product.setUnderlaying(underlayings);
+
+                logger.debug("Save all product contains.");
                 dbManager.getEntityManager().merge(product);
-                logger.debug("save product ");
+                logger.debug("Products saved");
             });
             transaction.commit();
         } catch (Exception e) {
@@ -126,6 +129,9 @@ public class DBService {
     }
 
     private <E extends UniqueWithName> E saveOrUpdateNameable(E obj) {
+        if(obj == null || obj.getName() == null) {
+            return null;
+        }
         String queryStr = String.format("Select id from %s where name = :name", obj.getClass().getSimpleName());
         TypedQuery<Integer> query = dbManager.getEntityManager().createQuery(queryStr, Integer.class);
         query.setParameter("name", obj.getName());
