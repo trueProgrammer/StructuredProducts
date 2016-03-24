@@ -44,6 +44,10 @@
     visibility: hidden;
 }
 
+input.invalid-control {
+    border-color: red;
+}
+
 .hex-style {
     cursor: pointer;
     fill: white;
