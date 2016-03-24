@@ -1,5 +1,7 @@
-angular.module('App.createproduct')
+var savedControls = {
 
+};
+angular.module('App.createproduct')
     .config(['$routeProvider',
         function ($routeProvider) {
             $routeProvider.when('/createproduct', {
@@ -66,7 +68,7 @@ angular.module('App.createproduct')
                 toValues: ['10%', '20%', '30%', '40%'],
                 fromValue: '10%',
                 toValue: '20%',
-                lineFormat: 'От {0} до {1}'
+                lineFormat: 'От {0} до {1}',
             },{
                 id: 'riskBlock',
                 header: 'Уровень риска',
@@ -167,11 +169,13 @@ angular.module('App.createproduct')
                         this.isSaved = true;
                         this.line = this.lineFormat.format(this.value);
                         this.hexControl.inactive();
+                        savedControls[this.id] = {header: this.header, value: this.line};
                     };
                     control.edit = function() {
                         this.isSaved = false;
                         this.line = '';
                         this.hexControl.active();
+                        delete savedControls[this.id];
                     };
                     control.show = function() {
                         $('#' + this.id).appendTo('#optParamsControlBlock');
@@ -208,6 +212,7 @@ angular.module('App.createproduct')
                                 $('#optParamsControlBlock').css('opacity', '1');
                                 hex.switchAddParams();
                             }
+                            savedControls[this.id] = {header: this.header, value: this.line};
                         }
                     };
                     control.edit = function() {
@@ -215,6 +220,7 @@ angular.module('App.createproduct')
                             this.isSaved = false;
                             this.line = '';
                             this.hexControl.active();
+                            delete savedControls[this.id];
                         }
                     };
                     if (index > 0) {
@@ -254,11 +260,29 @@ angular.module('App.createproduct')
                     /*$("#phone").mask("(999) 999-9999");*/
                 }, function () {
                 });
-
             };
 
+            $scope.sendParams = function() {
+                if ($scope.sendform.$valid) {
+
+                    alert(JSON.stringify(savedControls));
+                }
+            }
+
         }])
-        .controller('sendRequestCtrl', ['$scope',
-        function ($scope) {
+        .controller('sendRequestCtrl', ['$scope', 'restService',
+        function ($scope, restService) {
+            $scope.sendParams = function() {
+                if ($scope.sendform.$valid) {
+                    $scope.user.controls = savedControls;
+                    restService.createProductRequest($scope.user,
+                    function() {
+                        $scope.msg = "Ваша заявка успешно отправлена. Ожидайте звонка от брокера.";
+                    },
+                        function() {
+                            $scope.msg = "Проблема при обработке заявки."
+                        })
+                }
+            }
 
         }]);

@@ -413,6 +413,21 @@ angular.module('App.services', ['ngResource']).service('restService', [
             );
         },
 
+        createProductRequest: function(data, onSuccess, onFail) {
+            $log.info("Download csv");
+            $http.post(
+                dataUri + "createProductRequest",
+                data
+            )
+                .then(
+                function (response) {
+                    onSuccess(response.data);
+                }, function (response) {
+                    onFail(response.data.message);
+                }
+            );
+        },
+
         login: function (name, pass, onSuccess, onFail) {
             $log.info("LOGIN");
             $http.post(

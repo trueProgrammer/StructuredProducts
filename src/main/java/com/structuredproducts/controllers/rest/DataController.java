@@ -3,6 +3,7 @@ package com.structuredproducts.controllers.rest;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
+import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -150,5 +152,14 @@ public class DataController {
             return new ResponseEntity<>(paramOpt.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ProductParam(product), HttpStatus.OK);
+    }
+
+    @RequestMapping(path="/createProductRequest",
+                           method = RequestMethod.POST,
+                           consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<Message> sendCreateProductRequest( @RequestBody String productRequest) {
+        logger.debug("Got create product request {} ", productRequest);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
