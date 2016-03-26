@@ -14,6 +14,7 @@ angular.module('App.investproduct')
         restService.getAllProducts(
             function (response) {
                 $log.info("Get all products success.");
+                $scope.allProducts = response;
                 $scope.products = response;
 
                 $scope.highRiskProducts = 0;
@@ -160,6 +161,7 @@ angular.module('App.investproduct')
                     restService.getAllProducts(
                         function (response) {
                             $log.info("Get all products success.");
+                            $scope.allProducts = response;
                             $scope.products = response;
                         },
                         function () {
@@ -169,6 +171,7 @@ angular.module('App.investproduct')
                 } else {
                     restService.getProductsByType(typesList, function (response) {
                             $log.info("Get products by risk " + typesList + " success.");
+                            $scope.allProducts = response;
                             $scope.products = response;
                         },
                         function () {
@@ -334,5 +337,10 @@ angular.module('App.investproduct')
             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
             $scope.predicate = predicate;
         };
+
+
+        $scope.filterName = function() {
+            $scope.products = $scope.allProducts.filter(function(p) {return p.name.toLowerCase().indexOf($scope.nameFilter.toLowerCase()) !== -1;})
+        }
 
     }]).value("duScrollDuration",100);

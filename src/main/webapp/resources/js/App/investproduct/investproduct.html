@@ -13,7 +13,7 @@
     <div class="screen-height">
         <div class="height-50">
             <div class="height-100 no-padding-column" ng-if="isDesktopShow()">
-                <svg class="graphic" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                <svg class="graphic" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px"
                  width="1557px" height="471px" viewBox="192.621 147.453 1557 471"
                  enable-background="new 192.621 147.453 1556.4 470.892" xml:space="preserve">
                     <style type="text/css"><![CDATA[
@@ -169,6 +169,8 @@
                         <th>
                             <a href="" ng-click="order('name')">Название</a>
                             <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
+                            <button ng-click="showNameFilter = !showNameFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
+                            <input type="text" class="filter-input" ng-show="showNameFilter" ng-model="nameFilter" ng-change="filterName(newValue)"/>
                         </th>
                         <th>
                             Базовый актив

@@ -102,3 +102,13 @@
 .height-100 {
     height: 100%;
 }
+
+.filter-button {
+    background: white;
+    border: none;
+}
+
+.filter-input {
+    border-radius: 15px;
+
+}
