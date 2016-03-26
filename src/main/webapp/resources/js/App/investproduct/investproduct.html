@@ -192,8 +192,24 @@
                         </th>
                         <th>
                             Cумма инвестиций
+                            <button ng-click="showsumFilter = !showsumFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
+                            <div ng-show="showsumFilter">
+                                От
+                                <input type="number" class="filter-input-small" ng-model="sumFilter.from" ng-change="filterProducts()"/>
+                                До
+                                <input type="number" class="filter-input-small" ng-model="sumFilter.to" ng-change="filterProducts()"/>
+                            </div>
                         </th>
-                        <th>Срок</th>
+                        <th>
+                            Срок
+                            <button ng-click="showtermsFilter = !showtermsFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
+                            <div ng-show="showtermsFilter">
+                                От
+                                <input type="number" class="filter-input-small" ng-model="termsFilter.from" ng-change="filterProducts()"/>
+                                До
+                                <input type="number" class="filter-input-small" ng-model="termsFilter.to" ng-change="filterProducts()"/>
+                            </div>
+                        </th>
                         <th>Провайдер</th>
                     </tr>
                     </thead>
@@ -205,7 +221,7 @@
                         <td>{{val.returnValue}}%</td>
                         <td>от {{val.investment.min}} до {{val.investment.max}} тысяч рублей</td>
                         <td>от {{val.minTerm}} до {{val.maxTerm}} месяцев</td>
-                        <td>{{val.issuer.name}}</td>
+                        <td>{{val.broker.name}}</td>
                     </tr>
                     </tbody>
                 </table>

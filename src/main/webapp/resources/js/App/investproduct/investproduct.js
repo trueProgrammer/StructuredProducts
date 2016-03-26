@@ -340,11 +340,14 @@ angular.module('App.investproduct')
 
 
         $scope.filterName = function(products) {
-            return products.filter(function(p) {return p.name.toLowerCase().indexOf($scope.nameFilter.toLowerCase()) !== -1;})
+            if ($scope.nameFilter) {
+                return products.filter(function(p) {return p.name.toLowerCase().indexOf($scope.nameFilter.toLowerCase()) !== -1;})
+            }
+            return products;
         };
         $scope.filterProfit = function(products) {
-            return products.filter(function(p) {
-                if ($scope.profitFilter) {
+            if ($scope.profitFilter) {
+                return products.filter(function(p) {
                     if ($scope.profitFilter.from && $scope.profitFilter.to) {
                         return p.returnValue >= $scope.profitFilter.from && p.returnValue <= $scope.profitFilter.to;
                     }
@@ -354,14 +357,48 @@ angular.module('App.investproduct')
                     if ($scope.profitFilter.to) {
                         return p.returnValue <= $scope.profitFilter.to ;
                     }
-                }
-
-                return products;
-            })
+                    return true;
+                });
+            }
+            return products;
+        };
+        $scope.filterSum = function(products) {
+            if ($scope.sumFilter) {
+                return products.filter(function(p) {
+                    if ($scope.sumFilter.from && $scope.sumFilter.to) {
+                        return p.investment.min >= $scope.sumFilter.from && p.investment.max <= $scope.sumFilter.to;
+                    }
+                    if ($scope.sumFilter.from) {
+                        return p.investment.min >= $scope.sumFilter.from ;
+                    }
+                    if ($scope.sumFilter.to) {
+                        return p.investment.max <= $scope.sumFilter.to ;
+                    }
+                    return true;
+                });
+            }
+            return products;
+        };
+        $scope.filterTerms = function(products) {
+            if ($scope.termsFilter) {
+                return products.filter(function(p) {
+                    if ($scope.termsFilter.from && $scope.termsFilter.to) {
+                        return p.minTerm >= $scope.termsFilter.from && p.maxTerm <= $scope.termsFilter.to;
+                    }
+                    if ($scope.termsFilter.from) {
+                        return p.minTerm >= $scope.termsFilter.from ;
+                    }
+                    if ($scope.termsFilter.to) {
+                        return p.maxTerm <= $scope.termsFilter.to ;
+                    }
+                    return true;
+                });
+            }
+            return products;
         };
         
         $scope.filterProducts = function() {
-            $scope.products = $scope.filterProfit($scope.filterName($scope.allProducts));
+            $scope.products = $scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.allProducts))));
         };
         
         
