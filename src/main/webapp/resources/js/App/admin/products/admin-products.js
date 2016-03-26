@@ -77,7 +77,7 @@ angular.module('App.admin.products')
             ],
             product: [
                 { field: 'name',  displayName: 'Название', width: 200, notNull: true, cellTemplate: defaultStrCellTemplate},
-                { field: 'description',  displayName: 'Описание', width: 200, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'description',  displayName: 'Описание', width: 350, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'productType', displayName: 'Тип структурного продукта', width: 250,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'productType', editableCellTemplate: 'ui-grid/dropdownEditor',
@@ -295,7 +295,7 @@ angular.module('App.admin.products')
     }])
     .filter('griddropdown', function() {
         return function (input, context) {
-            if(typeof input === 'undefined') {
+            if((typeof input === 'undefined') || (input === null)) {
                 return '';
             }
             var map = context.col.colDef.editDropdownOptionsArray;

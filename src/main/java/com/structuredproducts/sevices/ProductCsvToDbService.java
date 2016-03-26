@@ -183,7 +183,7 @@ public class ProductCsvToDbService {
     private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
     private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до (\\d+) тыс.*");
 
-    List<ProductBean> readCsv(InputStreamReader reader) throws IOException {
+    public List<ProductBean> readCsv(InputStreamReader reader) throws IOException {
         List<ProductBean> result = new ArrayList<>();
 
         try(ICsvMapReader mapReader = new CsvMapReader(reader, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE)) {
