@@ -217,7 +217,7 @@
                     <tr ng-repeat="val in products | orderBy:predicate:reverse">
                         <td>{{$index + 1}}</td>
                         <td>{{val.name}}</td>
-                        <td>{{val.underlaying.name}}</td>
+                        <td><span ng-repeat="baseActive in val.underlaying">{{baseActive.name}}<span ng-if="!$last">,</span></span></td>
                         <td>{{val.returnValue}}%</td>
                         <td>от {{val.investment.min}} до {{val.investment.max}} тысяч рублей</td>
                         <td>от {{val.minTerm}} до {{val.maxTerm}} месяцев</td>
