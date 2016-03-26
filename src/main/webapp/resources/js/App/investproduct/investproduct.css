@@ -110,5 +110,10 @@
 
 .filter-input {
     border-radius: 15px;
+    width: 100px;
+}
 
+.filter-input-small {
+    border-radius: 5px;
+    width:45px;
 }

@@ -170,15 +170,24 @@
                             <a href="" ng-click="order('name')">Название</a>
                             <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
                             <button ng-click="showNameFilter = !showNameFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
-                            <input type="text" class="filter-input" ng-show="showNameFilter" ng-model="nameFilter" ng-change="filterName(newValue)"/>
+                            <div>
+                                <input type="text" class="filter-input" ng-show="showNameFilter" ng-model="nameFilter" ng-change="filterProducts()"/>
+                            </div>
                         </th>
                         <th>
                             Базовый актив
                         </th>
                         <th>
                             <div>
-                                <a href="" ng-click="order('profit')">Доходность</a>
+                                <a href="" ng-click="order('profit')">Доходность         </a>
                                 <span class="sortorder" ng-show="predicate === 'profit'" ng-class="{reverse:reverse}"></span>
+                                <button ng-click="showProfitFilter = !showProfitFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
+                                <div ng-show="showProfitFilter">
+                                    От
+                                    <input type="number" class="filter-input-small" ng-model="profitFilter.from" ng-change="filterProducts()"/>
+                                    До
+                                    <input type="number" class="filter-input-small" ng-model="profitFilter.to" ng-change="filterProducts()"/>
+                                </div>
                             </div>
                         </th>
                         <th>
@@ -195,7 +204,7 @@
                         <td>{{val.underlaying.name}}</td>
                         <td>{{val.returnValue}}%</td>
                         <td>от {{val.investment.min}} до {{val.investment.max}} тысяч рублей</td>
-                        <td>от {{val.termMin}} до {{val.termMax}} месяцев</td>
+                        <td>от {{val.minTerm}} до {{val.maxTerm}} месяцев</td>
                         <td>{{val.issuer.name}}</td>
                     </tr>
                     </tbody>

@@ -339,8 +339,31 @@ angular.module('App.investproduct')
         };
 
 
-        $scope.filterName = function() {
-            $scope.products = $scope.allProducts.filter(function(p) {return p.name.toLowerCase().indexOf($scope.nameFilter.toLowerCase()) !== -1;})
-        }
+        $scope.filterName = function(products) {
+            return products.filter(function(p) {return p.name.toLowerCase().indexOf($scope.nameFilter.toLowerCase()) !== -1;})
+        };
+        $scope.filterProfit = function(products) {
+            return products.filter(function(p) {
+                if ($scope.profitFilter) {
+                    if ($scope.profitFilter.from && $scope.profitFilter.to) {
+                        return p.returnValue >= $scope.profitFilter.from && p.returnValue <= $scope.profitFilter.to;
+                    }
+                    if ($scope.profitFilter.from) {
+                        return p.returnValue >= $scope.profitFilter.from ;
+                    }
+                    if ($scope.profitFilter.to) {
+                        return p.returnValue <= $scope.profitFilter.to ;
+                    }
+                }
+
+                return products;
+            })
+        };
+        
+        $scope.filterProducts = function() {
+            $scope.products = $scope.filterProfit($scope.filterName($scope.allProducts));
+        };
+        
+        
 
     }]).value("duScrollDuration",100);
