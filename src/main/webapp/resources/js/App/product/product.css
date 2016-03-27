@@ -44,3 +44,8 @@
     cursor: pointer;
     display: inline-block;
 }
+
+.under-style {
+    margin-left: 45px;
+    margin-top: 5px;
+}

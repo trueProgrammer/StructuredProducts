@@ -71,3 +71,11 @@
         margin: auto;
     }
 }
+
+.row {
+    cursor: pointer;
+}
+
+.row:hover {
+    background-color: #D4E4E9;
+}

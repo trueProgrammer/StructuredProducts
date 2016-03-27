@@ -7,8 +7,8 @@ angular.module('App.main')
             controller: 'mainCtrl'
         })
     }])
-.controller('mainCtrl', [ '$scope', '$log', 'restService', '$anchorScroll', '$document',
-    function($scope, $log, restService, $anchorScroll, $document) {
+.controller('mainCtrl', [ '$scope', '$log', 'restService', '$anchorScroll', '$document', '$location',
+    function($scope, $log, restService, $anchorScroll, $document, $location) {
 
         var contactShow = false;
 
@@ -222,6 +222,10 @@ angular.module('App.main')
 
             }
         }
+
+        $scope.goToProductPage = function(id) {
+            $location.path("/product").search("id",id);
+        };
 
         var handler = MouseWheelHandler();
 

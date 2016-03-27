@@ -58,7 +58,7 @@
             <div id="optParamsControlBlock" class="opacity-style">
                 <span uib-dropdown>
                   <a href uib-dropdown-toggle ng-disabled="optParamsControl.isDisabled">
-                      <span class="font-style">Добавить параметр <i class="fa fa-plus fa-3"></i></span>
+                      <span class="font-style">Задать дополнительные параметры <i class="fa fa-plus fa-3"></i></span>
                   </a>
                   <ul uib-dropdown-menu>
                       <li ng-repeat="control in controls | filter: controlFilter">
@@ -66,6 +66,8 @@
                       </li>
                   </ul>
                 </span>
+                <br/>
+                <h3>Отправить заявку на создание продукта</h3>
                 <button type="button" style="border:0; background: white" ng-click="openModal()"><img src="resources/img/send_bid.png"/></button>
             </div>
             <!--END OTHER PARAMS-->

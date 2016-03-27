@@ -105,7 +105,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="val in topProducts | orderBy:predicate:reverse">
+                            <tr ng-repeat="val in topProducts | orderBy:predicate:reverse" ng-click="goToProductPage(val.id)" class="row">
                                 <td>{{$index + 1}}</td>
                                 <td>{{val.name}}</td>
                                 <td>{{val.underlayings}}</td>
@@ -132,7 +132,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="val in topProducts | orderBy:predicate:reverse">
+                            <tr ng-repeat="val in topProducts | orderBy:predicate:reverse" ng-click="goToProductPage(val.id)" class="row">
                                 <td>{{$index + 1}}</td>
                                 <td>{{val.name}}</td>
                                 <td>{{val.broker.name}}</td>

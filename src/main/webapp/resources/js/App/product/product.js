@@ -6,8 +6,8 @@
                  controller: 'product'
              })
          }])
-.controller('product', ['$scope', '$log', 'restService', '$routeParams',
-         function($scope, $log, restService, $routeParams) {
+.controller('product', ['$scope', '$log', 'restService', '$routeParams', '$uibModal',
+         function($scope, $log, restService, $routeParams, $uibModal) {
 
              var selected = {
                  desc : false,
@@ -44,8 +44,8 @@
              };
              (function() {
              restService.getProductWithParams(
-                 /*$routeParams.id,*/
-                 '20',
+                 $routeParams.id,
+                 /*'20',*/
                  function(result) {
                      var termName;
                      var minTerm = result.product.minTerm;
@@ -83,4 +83,18 @@
                  function() {$log.error("error while get product with params")}
              );
              }());
+
+             $scope.openModal = function () {
+
+                 var modalInstance = $uibModal.open({
+                     templateUrl: 'sendingRequestModal.html',
+                     controller: 'sendRequestCtrl',
+                 });
+
+                 modalInstance.rendered.then(function () {
+                     $("#phone").mask("+7 (999) 999-9999");
+                 }, function () {
+                 });
+             };
+
          }]);
