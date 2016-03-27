@@ -65,8 +65,8 @@
                     <line id="red-line" class="line" fill="none" stroke="#000000" stroke-width="3" stroke-miterlimit="10" stroke-dasharray="11.7007,11.7007" x1="998.059" y1="238.374" x2="1441.547" y2="238.374"/>
                     <text transform="matrix(4.489659e-011 -1 1 4.489659e-011 224.3557 510.6572)" fill="#636B6F"  font-size="30" letter-spacing="5">ДОХОДНОСТЬ</text>
                     <text transform="matrix(1 0 0 1 643.0002 607)" fill="#636B6F" font-size="30" letter-spacing="5">УРОВЕНЬ РИСКА</text>
-                    <text transform="matrix(1 0 0 1 283.8098 535.7119)" fill="#636B6F" font-size="27">ДЕПОЗИТЫ</text>
-                    <text transform="matrix(1 0 0 1 1028.0002 230)" fill="#636B6F" font-size="27">АКЦИИ</text>
+                    <text transform="matrix(1 0 0 1 283.8098 535.7119)" fill="#636B6F" font-size="27" letter-spacing="1">ДЕПОЗИТЫ</text>
+                    <text transform="matrix(1 0 0 1 1028.0002 230)" fill="#636B6F" font-size="27" letter-spacing="1">АКЦИИ</text>
                     <text id="green-text"  class="cursor-type" transform="matrix(1 0 0 1 365.385 418.9961)" enable-background="new">
                         <tspan x="0" y="0"  font-size="22">100% </tspan>
                         <tspan x="-11.575" y="26.4"  font-size="22">защита </tspan>
@@ -78,7 +78,7 @@
                         <tspan x="6.956" y="52.8"  font-size="22">капитала</tspan>
                     </text>
                     <text id="red-text" class="cursor-type" transform="matrix(1 0 0 1 803.6707 257.7998)"  font-size="22">Рисковые</text>
-                    <text transform="matrix(0.9867 -0.3605 0.3432 0.9393 506.9524 460.5762)" font-size="25" letter-spacing="3">СТРУКТУРНЫЕ ПРОДУКТЫ</text>
+                    <text transform="matrix(0.9867 -0.3605 0.3432 0.9393 493.9529 459.5776)" font-size="23" letter-spacing="2">СТРУКТУРНЫЕ ПРОДУКТЫ</text>
                     <g>
                         <path id="red-button" type="button" ng-click="filterByType('High', $event)" class="cursor-type" fill="white" stroke="#EA1808" stroke-width="3" stroke-miterlimit="10" d="M1724.015,272.01
                             c-8.313,6.004-20.04,8.84-23.618,8.85c-68.306,0-136.611,0-204.917,0c-3.581-0.01-15.309-2.846-23.619-8.85
@@ -169,7 +169,7 @@
                         <th>
                             <a href="" ng-click="order('name')">Название</a>
                             <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
-                            <button ng-click="showNameFilter = !showNameFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
+                            <button ng-click="showNameFilter = !showNameFilter" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
                             <div>
                                 <input type="text" class="filter-input" ng-show="showNameFilter" ng-model="nameFilter" ng-change="filterProducts()"/>
                             </div>
@@ -181,7 +181,7 @@
                             <div>
                                 <a href="" ng-click="order('profit')">Доходность         </a>
                                 <span class="sortorder" ng-show="predicate === 'profit'" ng-class="{reverse:reverse}"></span>
-                                <button ng-click="showProfitFilter = !showProfitFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
+                                <button ng-click="showProfitFilter = !showProfitFilter" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
                                 <div ng-show="showProfitFilter">
                                     От
                                     <input type="number" class="filter-input-small" ng-model="profitFilter.from" ng-change="filterProducts()"/>
@@ -192,7 +192,7 @@
                         </th>
                         <th>
                             Cумма инвестиций
-                            <button ng-click="showsumFilter = !showsumFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
+                            <button ng-click="showsumFilter = !showsumFilter" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
                             <div ng-show="showsumFilter">
                                 От
                                 <input type="number" class="filter-input-small" ng-model="sumFilter.from" ng-change="filterProducts()"/>
@@ -202,7 +202,7 @@
                         </th>
                         <th>
                             Срок
-                            <button ng-click="showtermsFilter = !showtermsFilter" class="filter-button"><img src="resources/img/icons/filter.ico" width="20" height="20"/></button>
+                            <button ng-click="showtermsFilter = !showtermsFilter" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
                             <div ng-show="showtermsFilter">
                                 От
                                 <input type="number" class="filter-input-small" ng-model="termsFilter.from" ng-change="filterProducts()"/>
@@ -219,8 +219,8 @@
                         <td>{{val.name}}</td>
                         <td>{{val.underlayings}}</td>
                         <td>{{val.returnValue}}%</td>
-                        <td>от {{val.investment.min}} до {{val.investment.max}} тысяч рублей</td>
-                        <td>от {{val.minTerm}} до {{val.maxTerm}} месяцев</td>
+                        <td>{{getPeriodValue(val.investment)}} тысяч рублей</td>
+                        <td>{{getPeriodValue({min: val.minTerm, max: val.maxTerm})}} месяцев</td>
                         <td>{{val.broker.name}}</td>
                     </tr>
                     </tbody>

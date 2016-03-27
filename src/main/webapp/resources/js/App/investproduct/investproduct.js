@@ -399,6 +399,12 @@ angular.module('App.investproduct')
             $scope.products = $scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.allProducts))));
         };
         
-        
+        $scope.getPeriodValue = function(val) {
+            if (val.min == 0) {
+                return val.max;
+            } else {
+                return "от " + val.min + " до" + val.max;
+            }
+        }
 
     }]).value("duScrollDuration",100);
