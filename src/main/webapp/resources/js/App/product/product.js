@@ -45,7 +45,7 @@
              (function() {
              restService.getProductWithParams(
                  /*$routeParams.id,*/
-                 '2',
+                 '20',
                  function(result) {
                      var termName;
                      var minTerm = result.product.minTerm;

@@ -36,7 +36,7 @@ public class TopProductAdminController extends AbstractAdminController{
                 product.setTop(false);
             }
         });
-        return new ResponseEntity<Object[]>(products.toArray(), HttpStatus.OK);
+        return new ResponseEntity<>(products.toArray(), HttpStatus.OK);
     }
 
     @RequestMapping(path="/addToTop",

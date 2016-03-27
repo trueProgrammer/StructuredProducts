@@ -1,5 +1,6 @@
 package com.structuredproducts.controllers.rest;
 
+import com.google.common.base.Joiner;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by Vlad on 23.11.2015.
@@ -38,6 +40,8 @@ public class DataController {
 
     @Autowired
     private DBService dbService;
+
+    private static final Joiner joiner = Joiner.on(", ");
 
     @RequestMapping(path = "/timetypes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Tuple[]> getTimeTypes() {
@@ -66,7 +70,7 @@ public class DataController {
     @RequestMapping(path = "/topproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Product[]> getTopProducts(@RequestParam(name="time") String timeType, @RequestParam(name="type")String productType) {
         logger.debug("Time {}, product type {}", timeType, productType);
-        List<Product> list = dbService.getTopProductsByTimeTypeAndProductType(timeType, productType);
+        List<Product> list = getProducts(dbService.getTopProductsByTimeTypeAndProductType(timeType, productType));
         list.forEach(product -> product.getInvestment().setName());
         return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
     }
@@ -79,9 +83,7 @@ public class DataController {
 
     @RequestMapping(path = "/allproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object[]> getAllProducts() {
-        List<Product> list = (List<Product>) dbService.getResultList(Product.class);
-        setRiskType(list);
-        return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
+        return new ResponseEntity<>(getProducts().toArray(), HttpStatus.OK);
     }
 
 
@@ -99,14 +101,32 @@ public class DataController {
                     logger.error("Unknown risk type: {}", type);
                 }
             }
-            List<Product> result = (List<Product>) dbService.getProductsByType(productTypes);
-            setRiskType(result);
-            return new ResponseEntity<>(result.toArray(), HttpStatus.OK);
+            return new ResponseEntity<>( getProductsByType(productTypes).toArray(), HttpStatus.OK);
         }
+    }
+
+    private List<Product> getProductsByType(List<String> productTypes) {
+        return getProducts((List<Product>) dbService.getProductsByType(productTypes));
+    }
+
+    private List<Product> getProducts() {
+        return getProducts((List<Product>) dbService.getResultList(Product.class));
+    }
+
+    private List<Product> getProducts(List<Product> result) {
+        setRiskType(result);
+        setUnderlayings(result);
+        return result;
     }
 
     private static void setRiskType(List<Product> products) {
         products.parallelStream().forEach(a -> a.setRiskType(RiskTypeToProductType.get(a.getProductType().getName())));
+    }
+
+    private static void setUnderlayings(List<Product> products) {
+        products.parallelStream().forEach(
+                a -> a.setUnderlayings(joiner.join(a.getUnderlaying().parallelStream().map(b -> b.getName()).collect(Collectors.toList())))
+        );
     }
 
     @RequestMapping(path = "/investideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -140,7 +160,7 @@ public class DataController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public ResponseEntity<ProductParam> getProductWithParams(@RequestParam("id")Integer id) {
-        Optional<Product> productOpt = ((List<Product>) dbService.getResultList(Product.class)).stream().filter(p -> p.getId().equals(id)).findAny();
+        Optional<Product> productOpt = (getProducts((List<Product>) dbService.getResultList(Product.class))).stream().filter(p -> p.getId().equals(id)).findAny();
         List<ProductParam> params = (List<ProductParam>) dbService.getResultList(ProductParam.class);
         if (!productOpt.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

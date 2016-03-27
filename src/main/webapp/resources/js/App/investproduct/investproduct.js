@@ -9,8 +9,6 @@ angular.module('App.investproduct')
 .controller('investproduct', ['$scope', '$log', 'restService', '$document',
     function($scope, $log, restService, $document) {
 
-
-
         restService.getAllProducts(
             function (response) {
                 $log.info("Get all products success.");

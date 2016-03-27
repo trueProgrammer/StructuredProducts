@@ -30,6 +30,9 @@ public class Product {
     )
     private List<Underlaying> underlaying;
 
+    @Transient
+    private String underlayings;
+
     @ManyToOne(targetEntity = Investment.class)
     @JoinColumn(name = "investment")
     private Investment investment;
@@ -227,4 +230,11 @@ public class Product {
         this.maxTerm = maxTerm;
     }
 
+    public String getUnderlayings() {
+        return underlayings;
+    }
+
+    public void setUnderlayings(String underlayings) {
+        this.underlayings = underlayings;
+    }
 }

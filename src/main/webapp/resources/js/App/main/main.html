@@ -108,7 +108,7 @@
                             <tr ng-repeat="val in topProducts | orderBy:predicate:reverse">
                                 <td>{{$index + 1}}</td>
                                 <td>{{val.name}}</td>
-                                <td>{{val.underlaying.name}}</td>
+                                <td>{{val.underlayings}}</td>
                                 <td>{{val.investment.name}}</td>
                                 <td>{{val.returnValue}}</td>
                                 <td>{{val.strategy.name}}</td>
