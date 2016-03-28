@@ -180,7 +180,7 @@ angular.module('App.admin.products')
 
         var validateColumn = function(colDef, newVal) {
             if (colDef.notNull) {
-                if (!newVal || (newVal.trim && (newVal === '' || newVal.trim() === ''))) {
+                if (newVal === undefined || newVal === null || (newVal.trim && (newVal === '' || newVal.trim() === ''))) {
                     return false;
                 }
             }
@@ -243,7 +243,7 @@ angular.module('App.admin.products')
                 if (columnDef.notNull) {
                     for (var j in $scope.table.data) {
                         var data = $scope.table.data[j];
-                        if (data[columnDef.name]) {
+                        if (data[columnDef.name] !== undefined || data[columnDef.name] !== null) {
                             if (data[columnDef.name].trim) {
                                 if(data[columnDef.name] === '' || data[columnDef.name].trim() === '') {
                                     invalidColumns.push({row: j, name: columnDef.name});
