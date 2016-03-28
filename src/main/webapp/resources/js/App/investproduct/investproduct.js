@@ -6,8 +6,8 @@ angular.module('App.investproduct')
                 controller: 'investproduct'
             })
         }])
-.controller('investproduct', ['$scope', '$log', 'restService', '$document',
-    function($scope, $log, restService, $document) {
+.controller('investproduct', ['$scope', '$log', 'restService', '$document', '$location',
+    function($scope, $log, restService, $document, $location) {
 
         restService.getAllProducts(
             function (response) {

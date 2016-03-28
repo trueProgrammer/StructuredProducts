@@ -19,7 +19,7 @@ public class YahooUnderlayingPriceServiceTest {
     @Test
     public void yahooServiceTest() throws IOException {
 
-        Map<String, String > quotes = YahooUnderlayingPriceService.getYearHistoricalQuotes("MSFT");
+        Map<String, String > quotes = YahooUnderlayingPriceService.getYearHistoricalQuotes("LUKOY");
 
         Assert.assertThat(quotes, Matchers.notNullValue());
 

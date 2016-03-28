@@ -36,19 +36,20 @@ public class YahooUnderlayingPriceService {
 
     private final static Logger logger = LoggerFactory.getLogger(YahooUnderlayingPriceService.class);
 
+    // http://finance.yahoo.com/d/quotes.csv?e=.csv&f=c4l1&s=EURUSD=X,GBPUSD=X
     //private static final String URL = "http://ichart.yahoo.com/table.csv?s=MSFT&a=01&b=12&c=2007&d=10&e=1&f=2015&g=d&ignore=.csv";
     //private static final String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=m&ignore=.csv";
 
     public static final LoadingCache<String, Map<String, String>> cache = CacheBuilder
-                                                                            .newBuilder()
-                                                                            .maximumSize(CACHE_SIZE)
-                                                                            .expireAfterAccess(24, TimeUnit.HOURS)
-                                                                            .build(new CacheLoader<String, Map<String, String>>() {
-                                                                                @Override
-                                                                                public Map<String, String> load(String baseActive) throws Exception {
-                                                                                    return getYearHistoricalQuotes(baseActive);
-                                                                                }
-                                                                            });
+            .newBuilder()
+            .maximumSize(CACHE_SIZE)
+            .expireAfterAccess(24, TimeUnit.HOURS)
+            .build(new CacheLoader<String, Map<String, String>>() {
+                @Override
+                public Map<String, String> load(String baseActive) throws Exception {
+                    return getYearHistoricalQuotes(baseActive);
+                }
+            });
 
     public static Map<String, String> getYearHistoricalQuotes(String product) throws IOException {
         Date date = new Date();
@@ -84,7 +85,8 @@ public class YahooUnderlayingPriceService {
         HttpResponse response = client.execute(get);
 
         if (HttpStatus.SC_OK != response.getStatusLine().getStatusCode()) {
-            throw new RuntimeException("Client: status code is not OK : " + response.getStatusLine().getStatusCode());
+            throw new RuntimeException("Client: status code is not OK : " + response.getStatusLine().getStatusCode()
+            + " .Instrumen=" + instrument + " URL=" + url);
         }
 
         return parseCsvQuotesByDayToMap(response.getEntity().getContent());
