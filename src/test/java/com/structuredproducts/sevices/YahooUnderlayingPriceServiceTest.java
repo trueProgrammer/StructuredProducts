@@ -17,20 +17,15 @@ import static org.hamcrest.Matchers.is;
 public class YahooUnderlayingPriceServiceTest {
 
     @Test
-    public void testMSFT() throws IOException {
-        Calendar from = Calendar.getInstance();
-        from.set(Calendar.MONTH, Calendar.JANUARY);
-        from.set(Calendar.DAY_OF_MONTH, 1);
-        from.set(Calendar.YEAR, 2005);
+    public void yahooServiceTest() throws IOException {
 
-        Calendar to = Calendar.getInstance();
-        to.set(Calendar.MONTH, Calendar.DECEMBER);
-        to.set(Calendar.DAY_OF_MONTH, 31);
-        to.set(Calendar.YEAR, 2009);
+        Map<String, String > quotes = YahooUnderlayingPriceService.getYearHistoricalQuotes("MSFT");
 
-        Map<Date, Double> quotes = YahooUnderlayingPriceService.getHistoricalQuotes("MSFT", from.getTime(), to.getTime());
+        Assert.assertThat(quotes, Matchers.notNullValue());
 
-        Assert.assertThat(quotes, Matchers.aMapWithSize(1259));
+        quotes = YahooUnderlayingPriceService.getYearHistoricalQuotes("FB");
+
+        Assert.assertThat(quotes, Matchers.notNullValue());
     }
 
 }

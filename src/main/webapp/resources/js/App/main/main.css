@@ -72,10 +72,10 @@
     }
 }
 
-.row {
+.table-row {
     cursor: pointer;
 }
 
-.row:hover {
+.table-row:hover {
     background-color: #D4E4E9;
 }

@@ -428,6 +428,17 @@ angular.module('App.services', ['ngResource']).service('restService', [
             );
         },
 
+        getUnderlayingHistoricalQuotes: function(id, onSuccess, onFail) {
+            $http.get(
+                dataUri + "historicalquotes",
+                {
+                    params: {
+                        id: id
+                    }
+                }
+            ).success(onSuccess).error(onFail);
+        },
+
         login: function (name, pass, onSuccess, onFail) {
             $log.info("LOGIN");
             $http.post(

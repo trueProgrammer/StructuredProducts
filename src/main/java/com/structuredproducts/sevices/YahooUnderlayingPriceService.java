@@ -5,6 +5,8 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ParseInt;
@@ -16,20 +18,40 @@ import org.supercsv.prefs.CsvPreference;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Vlad on 24.03.2016.
  */
 public class YahooUnderlayingPriceService {
 
-    //private static final String URL = "http://ichart.yahoo.com/table.csv?s=MSFT&a=01&b=12&c=2007&d=10&e=1&f=2015&g=d&ignore=.csv";
-    private static final String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=d&ignore=.csv";
+    private static final String[] MONTH_NAMES = { "January", "February", "March", "April", "May", "June", "July",
+            "August", "September", "October", "November", "December" };
 
-    public static Map<Date, Double> getHistoricalQuotes(String instrument, Date from, Date to) throws IOException {
+    private final static Logger logger = LoggerFactory.getLogger(YahooUnderlayingPriceService.class);
+
+    //private static final String URL = "http://ichart.yahoo.com/table.csv?s=MSFT&a=01&b=12&c=2007&d=10&e=1&f=2015&g=d&ignore=.csv";
+    //private static final String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=m&ignore=.csv";
+
+    public static Map<String, String> getYearHistoricalQuotes(String product) throws IOException {
+        Date date = new Date();
+        Calendar to = Calendar.getInstance();
+        to.setTime(date);
+        Calendar from = Calendar.getInstance();
+        from.setTime(date);
+        from.set(Calendar.YEAR, to.get(Calendar.YEAR) - 1);
+        String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=m&ignore=.csv";
+        Map<String, String> result = new LinkedHashMap<>();
+        Map<Date, Double> quotes = getHistoricalQuotes(product, from.getTime(), to.getTime(), URL);
+        for(Map.Entry<Date, Double> quote : quotes.entrySet()) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(quote.getKey());
+            result.putIfAbsent(MONTH_NAMES[calendar.get(Calendar.MONTH)], quote.getValue().toString());
+        }
+        return result;
+    }
+
+    public static Map<Date, Double> getHistoricalQuotes(String instrument, Date from, Date to, String URL) throws IOException {
 
         Calendar fromCalendar = Calendar.getInstance();
         fromCalendar.setTime(from);
@@ -69,12 +91,11 @@ public class YahooUnderlayingPriceService {
             final String[] headers = mapReader.getHeader(true);
 
             Map<String, Object> map;
-
             while( (map = mapReader.read(headers, DAY_PROCESSORS)) != null) {
                 result.put((Date) map.get("Date"), (Double) map.get("Close"));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+           logger.error("Error while parse quotes from yahoo service.", e);
         }
 
         return result;

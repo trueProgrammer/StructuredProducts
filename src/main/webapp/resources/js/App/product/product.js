@@ -59,7 +59,53 @@
                      }
                      result.product.termName = termName;
                      $scope.productParams = result;
-                     if (result.chart) {
+                     restService.getUnderlayingHistoricalQuotes(result.product.id,
+                         function(result) {
+                             var data = {
+                                 datasets: []
+                             };
+
+                             result.forEach(function(hist){
+                                if(!data.labels) {
+                                    data.labels = hist.labels;
+                                }
+                                 var dataset = {
+                                     label: hist.name,
+                                     fillColor: "rgba(220,220,220,0.2)",
+                                     strokeColor: "rgba(220,220,220,1)",
+                                     pointColor: "rgba(220,220,220,1)",
+                                     pointStrokeColor: "#fff",
+                                     pointHighlightFill: "#fff",
+                                     pointHighlightStroke: "rgba(220,220,220,1)",
+                                     data: hist.dataset
+                                 };
+                                 data.datasets.push(dataset);
+                             });
+
+                             /*var data = {
+                                 labels: ["January", "February", "March", "April", "May", "June", "July"],
+                                 datasets: [
+                                     {
+                                         label: "My First dataset",
+                                         fillColor: "rgba(220,220,220,0.2)",
+                                         strokeColor: "rgba(220,220,220,1)",
+                                         pointColor: "rgba(220,220,220,1)",
+                                         pointStrokeColor: "#fff",
+                                         pointHighlightFill: "#fff",
+                                         pointHighlightStroke: "rgba(220,220,220,1)",
+                                         data: [65, 59, 80, 81, 56, 55, 40]
+                                     },
+                                 ]
+                             };*/
+                             var ctx = document.getElementById("chart").getContext("2d");
+                             var chart = new Chart(ctx).Line(data);
+                         },
+                         function(error) {
+
+                         }
+                     );
+
+                     /*if (result.chart) {
                          var chartJson = JSON.parse(result.chart);
                          var data = {
                              labels: chartJson.labels,
@@ -78,7 +124,7 @@
                          };
                          var ctx = document.getElementById("chart").getContext("2d");
                          var chart = new Chart(ctx).Line(data);
-                     }
+                     }*/
                  },
                  function() {$log.error("error while get product with params")}
              );

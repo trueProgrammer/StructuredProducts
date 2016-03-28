@@ -8,11 +8,9 @@ import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
-import com.structuredproducts.persistence.entities.instrument.InvestIdea;
-import com.structuredproducts.persistence.entities.instrument.Product;
-import com.structuredproducts.persistence.entities.instrument.ProductParam;
-import com.structuredproducts.persistence.entities.instrument.RiskType;
+import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.DBService;
+import com.structuredproducts.sevices.YahooUnderlayingPriceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -171,6 +169,47 @@ public class DataController {
             return new ResponseEntity<>(paramOpt.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(new ProductParam(product), HttpStatus.OK);
+    }
+
+    @RequestMapping(path="/historicalquotes",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<Object> getUnderlayingHistoricalQuotes(@RequestParam("id")Integer id) {
+        Optional<Product> productOpt = (getProducts((List<Product>) dbService.getResultList(Product.class))).stream().filter(p -> p.getId().equals(id)).findAny();
+        if (productOpt.isPresent()) {
+            Product product = productOpt.get();
+            //Map<String, Map<String, String>> result = new HashMap<>();
+            List<HistoricalHolder> result = Lists.newArrayList();
+            product.getUnderlaying().parallelStream().forEach(
+                    v -> {
+                        try {
+                            HistoricalHolder holder = new HistoricalHolder();
+                            Map<String, String> historical = YahooUnderlayingPriceService.getYearHistoricalQuotes(v.getOfficialName());
+                            holder.name = v.getName();
+                            for(Map.Entry<String, String> entry : historical.entrySet()) {
+                                holder.labels.add(entry.getKey());
+                                holder.dataset.add(entry.getValue());
+                            }
+                            Collections.reverse(holder.labels);
+                            Collections.reverse(holder.dataset);
+                            result.add(holder);
+                            //result.put(v.getName(), YahooUnderlayingPriceService.getYearHistoricalQuotes(v.getOfficialName()));
+                        } catch (IOException e) {
+                            logger.error("Error while get historical quotes for underlaying: " + v.getName(), e);
+                        }
+                    }
+            );
+            return new ResponseEntity<>(result.toArray(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    static final class HistoricalHolder {
+        public String name;
+        public List<String> labels = Lists.newArrayList();
+        public List<String> dataset = Lists.newArrayList();
     }
 
     @RequestMapping(path="/createProductRequest",
