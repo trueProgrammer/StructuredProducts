@@ -192,11 +192,11 @@ public class ProductCsvToDbService {
             while( (line = mapReader.read(headers)) != null) {
                 List<Tuple> entryList = Lists.newArrayList();
 
-                line.entrySet().parallelStream().forEach(
+                line.entrySet().stream().forEach(
                         entry -> entryList.add(new Tuple(entry.getKey().toLowerCase().trim(), entry.getValue().trim()))
                 );
                 final ProductBean bean = new ProductBean();
-                entryList.parallelStream().forEach(
+                entryList.stream().forEach(
                         tuple -> {
 
                             switch (tuple.getName()) {
