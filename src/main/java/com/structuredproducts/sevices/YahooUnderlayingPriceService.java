@@ -1,5 +1,8 @@
 package com.structuredproducts.sevices;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -19,11 +22,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Vlad on 24.03.2016.
  */
 public class YahooUnderlayingPriceService {
+
+    private static final int CACHE_SIZE = 35;
 
     private static final String[] MONTH_NAMES = { "January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December" };
@@ -32,6 +38,17 @@ public class YahooUnderlayingPriceService {
 
     //private static final String URL = "http://ichart.yahoo.com/table.csv?s=MSFT&a=01&b=12&c=2007&d=10&e=1&f=2015&g=d&ignore=.csv";
     //private static final String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=m&ignore=.csv";
+
+    public static final LoadingCache<String, Map<String, String>> cache = CacheBuilder
+                                                                            .newBuilder()
+                                                                            .maximumSize(CACHE_SIZE)
+                                                                            .expireAfterAccess(24, TimeUnit.HOURS)
+                                                                            .build(new CacheLoader<String, Map<String, String>>() {
+                                                                                @Override
+                                                                                public Map<String, String> load(String baseActive) throws Exception {
+                                                                                    return getYearHistoricalQuotes(baseActive);
+                                                                                }
+                                                                            });
 
     public static Map<String, String> getYearHistoricalQuotes(String product) throws IOException {
         Date date = new Date();

@@ -9,6 +9,17 @@
 .controller('product', ['$scope', '$log', 'restService', '$routeParams', '$uibModal',
          function($scope, $log, restService, $routeParams, $uibModal) {
 
+             var colors = [
+                 "rgba(220,220,220,1)",
+                 "rgba(151,187,205,1)",
+                 "rgba(255,255,102,1)",
+                 "rgba(153,153,51,1)",
+                 "rgba(102,255,51,1)",
+                 "rgba(153,204,153,1)",
+                 "rgba(0,204,153,1)",
+                 "rgba(204,153,204,1)"
+             ];
+
              var selected = {
                  desc : false,
                  otherParams: false
@@ -65,24 +76,29 @@
                                  datasets: []
                              };
 
+                             var index = 0;
+
                              result.forEach(function(hist){
                                 if(!data.labels) {
                                     data.labels = hist.labels;
                                 }
                                  var dataset = {
                                      label: hist.name,
-                                     fillColor: "rgba(220,220,220,0.2)",
-                                     strokeColor: "rgba(220,220,220,1)",
-                                     pointColor: "rgba(220,220,220,1)",
+                                     fillColor: "rgba(0,0,0,0)",
+                                     strokeColor: colors[index],
+                                     pointColor: colors[index],
                                      pointStrokeColor: "#fff",
                                      pointHighlightFill: "#fff",
-                                     pointHighlightStroke: "rgba(220,220,220,1)",
+                                     pointHighlightStroke: colors[index],
+                                     multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>",
                                      data: hist.dataset
                                  };
                                  data.datasets.push(dataset);
                              });
                              var ctx = document.getElementById("chart").getContext("2d");
                              var chart = new Chart(ctx).Line(data);
+                             document.getElementById("legendDiv").innerHTML = chart.generateLegend();
+                             index++;
                          },
                          function(error) {
 

@@ -15,6 +15,7 @@
         <h3 >График цены базовых активов</h3>
         <div>
             <canvas id="chart" width="400" height="300"></canvas>
+            <div id="legendDiv"></div>
         </div>
         <!--<img src="{{productParams.img}}" width="400" height="300"/>
         <h3 class="btn-link" ng-click="showChart = !showChart">График цены базового актива</h3>
@@ -131,6 +132,7 @@
             <p ng-if="invalidFormMessage">{{invalidFormMessage}}</p>
             <h3 ng-if="msg">{{msg}}</h3>
             <button type="submit" ng-click="sendParams(user)" ng-if="!msg" class="btn btn-default">Отправить заявку</button>
+            <button type="submit" ng-click="closeModal()" class="btn btn-default">Отмена</button>
         </form>
     </div>
     <link rel="stylesheet" href="resources/lib/bootstrap.min.css">

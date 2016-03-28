@@ -133,3 +133,11 @@ fieldset {
 .disabled-button[disabled]:hover {
      background: #e0e0e0;
 }
+
+.table-row {
+    cursor: pointer;
+}
+
+.table-row:hover {
+    background-color: #D4E4E9;
+}

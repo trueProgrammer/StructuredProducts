@@ -264,8 +264,8 @@ angular.module('App.createproduct')
 
 
         }])
-        .controller('sendRequestCtrl', ['$scope', 'restService',
-        function ($scope, restService) {
+        .controller('sendRequestCtrl', ['$scope', '$modalInstance', 'restService',
+        function ($scope, $modalInstance, restService) {
             var checkPhone = function() {
                 var phoneEl = $('#phone');
                 var val = phoneEl.val();
@@ -298,6 +298,8 @@ angular.module('App.createproduct')
                         });
                     }
                 }
+            };
+            $scope.closeModal = function(){
+                $modalInstance.close();
             }
-
         }]);

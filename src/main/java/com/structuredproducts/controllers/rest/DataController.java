@@ -185,7 +185,7 @@ public class DataController {
                     v -> {
                         try {
                             HistoricalHolder holder = new HistoricalHolder();
-                            Map<String, String> historical = YahooUnderlayingPriceService.getYearHistoricalQuotes(v.getOfficialName());
+                            Map<String, String> historical = YahooUnderlayingPriceService.cache.get(v.getOfficialName());
                             holder.name = v.getName();
                             for(Map.Entry<String, String> entry : historical.entrySet()) {
                                 holder.labels.add(entry.getKey());
@@ -195,7 +195,7 @@ public class DataController {
                             Collections.reverse(holder.dataset);
                             result.add(holder);
                             //result.put(v.getName(), YahooUnderlayingPriceService.getYearHistoricalQuotes(v.getOfficialName()));
-                        } catch (IOException e) {
+                        } catch (Exception e) {
                             logger.error("Error while get historical quotes for underlaying: " + v.getName(), e);
                         }
                     }

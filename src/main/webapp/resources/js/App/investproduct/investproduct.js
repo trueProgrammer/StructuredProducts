@@ -394,17 +394,18 @@ angular.module('App.investproduct')
             }
             return products;
         };
-        
         $scope.filterProducts = function() {
             $scope.products = $scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.allProducts))));
         };
-        
         $scope.getPeriodValue = function(val) {
             if (val.min == 0) {
                 return val.max;
             } else {
                 return "от " + val.min + " до" + val.max;
             }
-        }
+        };
+        $scope.goToProductPage = function(id) {
+            $location.path("/product").search("id",id);
+        };
 
     }]).value("duScrollDuration",100);

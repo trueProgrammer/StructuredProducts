@@ -122,6 +122,7 @@
             <p ng-if="invalidFormMessage">{{invalidFormMessage}}</p>
             <h3 ng-if="msg">{{msg}}</h3>
             <button type="submit" ng-click="sendParams(user)" ng-if="!msg" class="btn btn-default">Отправить заявку</button>
+            <button type="submit" ng-click="closeModal()" class="btn btn-default">Отмена</button>
         </form>
     </div>
     <link rel="stylesheet" href="resources/lib/bootstrap.min.css">
