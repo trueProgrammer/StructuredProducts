@@ -85,7 +85,7 @@ angular.module('App.admin.products')
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'minTerm',  displayName: 'Минимальный срок', width: 50, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'maxTerm',  displayName: 'Максимальный срок', width: 50, notNull: true, cellTemplate: defaultStrCellTemplate},
-                { field: 'underlaying', displayName: 'Базовый актив', width: 200,
+                { field: 'underlayings', displayName: 'Базовый актив', width: 200,
                     notNull: true,
                     cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
                     cellFilter: "griddropdown:this",
