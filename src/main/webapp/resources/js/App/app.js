@@ -1,10 +1,3 @@
-/*
- * Template Name: Unify - Responsive Bootstrap Template
- * Description: Business, Corporate, Portfolio, E-commerce and Blog Theme.
- * Version: 1.7
- * Author: @htmlstream
- * Website: http://htmlstream.com
-*/
 angular.module('App',
     ['ngRoute', 'ngAnimate', 'ngTouch', 'ui.bootstrap', 'duScroll', 'ngCookies', 'App.services',
         'ui.grid', 'ui.grid.edit', 'ui.grid.selection',
