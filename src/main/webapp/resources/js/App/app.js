@@ -5,8 +5,9 @@ angular.module('App',
         'App.createproduct',
         'App.login',
         'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts', 'App.admin.productparams', 'App.admin.csv'
-    ]).config(['$httpProvider',
-        function($httpProvider){
+    ]).config(['$httpProvider', '$locationProvider',
+        function($httpProvider, $locationProvider){
+            $locationProvider.html5Mode(true);
             $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
                     return {
                         'request': function(config) {

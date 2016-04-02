@@ -5,7 +5,7 @@
     <div class="container">
         <h1 class="pull-left">Инвестиционные идеи</h1>
         <ul class="pull-right breadcrumb">
-            <li><a href="#/">Главная</a></li>
+            <li><a href="/">Главная</a></li>
             <li class="active">Инвестиционные идеи</li>
         </ul>
     </div><!--/container-->
@@ -27,7 +27,7 @@
     <div ng-repeat="val in investideas">
         <!-- Begin Inner Results -->
         <div class="inner-results">
-            <h3><a href="#/investidea?id={{val.id}}">{{val.title}}</a></h3>
+            <h3><a href="/investidea?id={{val.id}}">{{val.title}}</a></h3>
             <p>{{val.preview}}</p>
             <ul class="list-inline down-ul">
                 <li>{{val.addDate | date:'dd, MMMM yyyy'}}</li>
