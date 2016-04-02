@@ -1,0 +1,32 @@
+    <div class="body-style">
+        <form role="form" name="sendform" novalidate>
+            <div class="form-group">
+                <label for="name">Имя<span class="color-red">*</span></label>
+                <input type="text" name="firstname" ng-model="user.firstname" required class="form-control input-style "
+                       id="name" placeholder="Введите Ваше имя" class="input-style"/>
+            </div>
+            <div class="form-group">
+                <label for="secondName">Фамилия<span class="color-red">*</span></label>
+                <input type="text" name="lastname" ng-model="user.lastname" required class="form-control input-style"
+                       id="secondName" placeholder="Введите Вашу фамилию" class="input-style"/>
+            </div>
+            <div class="form-group">
+                <label for="phone">Контактный номер телефон<span class="color-red">*</span></label>
+                <input type="text" name="phone" ng-model="user.phone" class="form-control input-style" id="phone"
+                       placeholder="Введите Ваш номер телефона"/>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" formnovalidate name="email" ng-model="user.email" class="form-control input-style"
+                       id="email" placeholder="Введите Ваш email"/>
+            </div>
+            <p ng-if="invalidFormMessage">{{invalidFormMessage}}</p>
+            <h3 ng-if="msg">{{msg}}</h3>
+            <button type="submit" ng-click="sendParams(user)" ng-if="!msg" class="btn btn-default">Отправить заявку
+            </button>
+            <button type="submit" ng-click="closeModal()" class="btn btn-default">Отмена</button>
+        </form>
+    </div>
+    <link rel="stylesheet" href="resources/lib/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/js/App/createproduct/sendingRequestModal.css">
+    <script type="text/javascript" src="resources/lib/bootstrap.min.js"></script>

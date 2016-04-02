@@ -6,8 +6,8 @@
                  controller: 'product'
              })
          }])
-.controller('product', ['$scope', '$log', 'restService', '$routeParams', '$uibModal',
-         function($scope, $log, restService, $routeParams, $uibModal) {
+.controller('product', ['$scope', '$log', 'restService', '$routeParams', 'modalService',
+         function($scope, $log, restService, $routeParams, modalService) {
 
              var colors = [
                  "rgba(220,220,220,1)",
@@ -110,16 +110,7 @@
              }());
 
              $scope.openModal = function () {
-
-                 var modalInstance = $uibModal.open({
-                     templateUrl: 'sendingRequestModal.html',
-                     controller: 'sendRequestCtrl',
-                 });
-
-                 modalInstance.rendered.then(function () {
-                     $("#phone").mask("+7 (999) 999-9999");
-                 }, function () {
-                 });
+                 modalService.show();
              };
 
          }]);
