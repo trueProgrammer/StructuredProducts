@@ -9,7 +9,6 @@ angular.module('App.partners')
 
 .controller('partnersCtrl', [
     function() {
-        //init app function
         angular.element(document).ready(function () {
             App.init();
         });

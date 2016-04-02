@@ -67,7 +67,7 @@ angular.module('App.createproduct')
                 toValues: ['10%', '20%', '30%', '40%'],
                 fromValue: '10%',
                 toValue: '20%',
-                lineFormat: 'От {0} до {1}',
+                lineFormat: 'От {0} до {1}'
             },{
                 id: 'riskBlock',
                 header: 'Уровень риска',

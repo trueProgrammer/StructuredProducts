@@ -28,7 +28,7 @@
              var show = {
                 desc: false,
                 mainParams: true,
-                otherParams: false,
+                otherParams: false
              };
 
              $scope.click = function(section) {

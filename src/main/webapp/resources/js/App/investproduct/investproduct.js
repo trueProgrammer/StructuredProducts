@@ -11,7 +11,6 @@ angular.module('App.investproduct')
 
         restService.getAllProducts(
             function (response) {
-                $log.info("Get all products success.");
                 $scope.allProducts = response;
                 $scope.products = response;
 
@@ -50,10 +49,6 @@ angular.module('App.investproduct')
             var redText = angular.element(document.getElementById("red-text"));
             var blueText = angular.element(document.getElementById("blue-text"));
 
-            var blueArc = angular.element(document.getElementById("blue-arc"));
-            var redArc = angular.element(document.getElementById("red-arc"));
-            var greenArc = angular.element(document.getElementById("green-arc"));
-
             var greenButton = angular.element(document.getElementById("green-button"));
             var blueButton = angular.element(document.getElementById("blue-button"));
             var redButton = angular.element(document.getElementById("red-button"));
@@ -71,8 +66,6 @@ angular.module('App.investproduct')
             var blue = $("#blue-ellipse");
             var main = $("#main-ellipse");
 
-            var mainEllipse = angular.element(document.getElementById("main-ellipse"));
-
             var clicked = {};
 
             function mouseOverLine(type, line, arc, button) {
@@ -80,7 +73,7 @@ angular.module('App.investproduct')
                 arc.attr("stroke-width", "9");
                 //button.css("box-shadow", "0px 0px 5px 3px #aead95");
                 button.attr("stroke-width", "9");
-            };
+            }
             function mouseOutLine(type, line, arc, button) {
                 if(clicked[type]) {
                     return
@@ -89,26 +82,26 @@ angular.module('App.investproduct')
                 arc.attr("stroke-width", "5");
                 //button.css("box-shadow", "none");
                 button.attr("stroke-width", "3");
-            };
+            }
 
             function mouseOverGreen() {
                 mouseOverLine('green',greenLine, greenArc, greenButton);
-            };
+            }
             function mouseOutGreen() {
                 mouseOutLine('green',greenLine, greenArc, greenButton);
-            };
+            }
             function mouseOverRed() {
                 mouseOverLine('red',redLine, redArc, redButton);
-            };
+            }
             function mouseOutRed() {
                 mouseOutLine('red',redLine, redArc, redButton);
-            };
+            }
             function mouseOverBlue() {
                 mouseOverLine('blue',blueLine, blueArc, blueButton);
-            };
+            }
             function mouseOutBlue() {
                 mouseOutLine('blue',blueLine, blueArc, blueButton);
-            };
+            }
             $scope.click = function(type, over, out) {
                 if(clicked[type]) {
                     clicked[type] = false;
@@ -120,13 +113,13 @@ angular.module('App.investproduct')
             };
             function greenClick() {
                 $scope.filterByType('Low');
-            };
+            }
             function redClick() {
                 $scope.filterByType('High');
-            };
+            }
             function blueClick() {
                 $scope.filterByType('Medium');
-            };
+            }
             $scope.filterByMobileType = function(risk, event){
                 var section = angular.element(document.getElementById('table'));
                 $document.scrollToElementAnimated(section);
@@ -158,7 +151,6 @@ angular.module('App.investproduct')
                 if(typesList.length === 0) {
                     restService.getAllProducts(
                         function (response) {
-                            $log.info("Get all products success.");
                             $scope.allProducts = response;
                             $scope.products = response;
                         },
@@ -168,7 +160,6 @@ angular.module('App.investproduct')
                     );
                 } else {
                     restService.getProductsByType(typesList, function (response) {
-                            $log.info("Get products by risk " + typesList + " success.");
                             $scope.allProducts = response;
                             $scope.products = response;
                         },
@@ -327,7 +318,7 @@ angular.module('App.investproduct')
             var width = parseFloat(event.target.getAttributeNS(null,"width"));
             var height = parseFloat(event.target.getAttributeNS(null,"height"));
             alert("Area of the rectangle is: " +width +"x"+ height);
-        }
+        };
 
         $scope.predicate = 'name';
         $scope.reverse = true;

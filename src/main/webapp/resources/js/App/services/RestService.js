@@ -7,24 +7,9 @@ angular.module('App.services', ['ngResource']).service('restService', [
 
     return {
         sendEmail: function (json, onSuccess, onFail) {
-            $log.info("Send email");
             $http.post(
                 serviceUri + "email",
                 json
-            )
-                .then(
-                function (response) {
-                    onSuccess(response.data);
-                }, function (response) {
-                    onFail(response.data);
-                }
-            );
-        },
-
-        getNews: function (onSuccess, onFail) {
-            $log.info("Get news");
-            $http.get(
-                dataUri + "news"
             )
                 .then(
                 function (response) {
@@ -62,7 +47,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         addProductParam: function(param, onSuccess, onFail) {
-            $log.info("add params " + param);
             $http.post(
                 adminUri + "productparams/add",
                 param
@@ -72,7 +56,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getProductWithParams: function(id, onSuccess, onFail) {
-            $log.info("Get product " + id);
             $http.get(
                 dataUri + "productwithparams",
                 {
@@ -84,12 +67,11 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getInvestIdeas: function (showOnMainPage, onSuccess, onFail) {
-            $log.info("Get invest ideas");
             $http.get(
                 dataUri + "investideas",
                 {
                     params: {
-                        showOnMainPage: showOnMainPage,
+                        showOnMainPage: showOnMainPage
                     }
                 }
             )
@@ -103,7 +85,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         removeIdea: function(id, onSuccess, onFail) {
-            $log.info("Remove idea " + id);
             $http.post(
                 adminUri + "removeIdea",
                 {
@@ -118,12 +99,11 @@ angular.module('App.services', ['ngResource']).service('restService', [
                 });
         },
         getInvestIdeaById: function (id, onSuccess, onFail) {
-            $log.info("Get invest idea by id");
             $http.get(
                 dataUri + "investidea",
                 {
                     params: {
-                        id: id,
+                        id: id
                     }
                 }
             )
@@ -137,12 +117,11 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getTopProducts: function (time, onSuccess, onFail) {
-            $log.info("Get top products");
             $http.get(
                 adminUri + "getTopProducts",
                 {
                     params: {
-                        time: time,
+                        time: time
                     }
                 }
             )
@@ -156,7 +135,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         addToTop: function(ids, time, onSuccess, onFail) {
-            $log.info("Add to top ids " + ids);
             $http.post(
                 adminUri + "addToTop",
                 {ids: ids, time: time}
@@ -170,7 +148,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         removeFromTop: function(ids, time, onSuccess, onFail) {
-            $log.info("Remove from top ids " + ids);
             $http.post(
                 adminUri + "removeFromTop",
                 {ids: ids, time: time}
@@ -184,7 +161,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getAllProducts: function(onSuccess, onFail) {
-            $log.info("Get all products");
             $http
                 .get(dataUri + "allproducts", {
 
@@ -199,7 +175,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getTopProductsByTimeAndType: function(time, type, onSuccess, onFail) {
-            $log.info("Get top products by time " + time + " and type " + type);
             $http.get(dataUri + "topproducts", {
                 params: {
                     time: time,
@@ -215,7 +190,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
             )
         },
         getProductsByType: function(types, onSuccess, onFail) {
-            $log.info("Get products by type");
             $http
                 .get(dataUri + "productsbytype", {
                     params: {
@@ -232,7 +206,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getProductTypes: function (onSuccess, onFail) {
-            $log.info("Get product types");
             $http.get(
                 dataUri + "producttypes"
             )
@@ -246,7 +219,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getTimeTypes: function (onSuccess, onFail) {
-            $log.info("Get time types");
             $http.get(
                 dataUri + "timetypes"
             )
@@ -260,7 +232,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         uploadProductsCsv: function(file, broker, onSuccess, onFail) {
-            $log.info("Get time types");
             var formData = new FormData();
             formData.append('file', file);
             $http(
@@ -297,7 +268,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         addBroker: function(id, name, img, onSuccess, onFail){
-            $log.info("Add broker");
             $http.post(
                 adminUri + "brokerAdd",
                 {
@@ -314,7 +284,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getAllBrokers: function(onSuccess, onFail) {
-            $log.info("Get brokers");
             $http.get(
                 adminUri + "brokerGet"
             ).then(
@@ -327,7 +296,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         addIdea: function(ideaJson, onSuccess, onFail) {
-            $log.info("Save idea");
             $http.post(
                 adminUri + "investIdeaAddOrUpdate",
                 ideaJson
@@ -341,12 +309,11 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         getInstrumentType: function (entityType, onSuccess, onFail) {
-            $log.info("Get instrument type");
             $http.get(
                 adminUri + "instrumentType",
                 {
                     params: {
-                        entityType: entityType,
+                        entityType: entityType
                     }
                 }
             )
@@ -360,14 +327,13 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         deleteInstrumentType: function (json, entityType, onSuccess, onFail) {
-            $log.info("Delete instrument type");
             $http.post(
                 adminUri + "instrumentType/delete",
                 json,
                 {
                     params: {
-                        entityType: entityType,
-                    },
+                        entityType: entityType
+                    }
                 }
             )
                 .then(
@@ -380,13 +346,12 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         updateInstrumentType: function (json, entityType, onSuccess, onFail) {
-            $log.info("Update instrument type");
             $http.post(
                 adminUri + "instrumentType/update",
                 json,
                 {
                     params: {
-                        entityType: entityType,
+                        entityType: entityType
                     }
                 }
             )
@@ -400,7 +365,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         downloadCsv: function(onSuccess, onFail) {
-            $log.info("Download csv");
             $http.get(
                 adminUri + "instrument/download"
             )
@@ -414,7 +378,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         createProductRequest: function(data, onSuccess, onFail) {
-            $log.info("Create Product");
             $http.post(
                 dataUri + "createProductRequest",
                 data
@@ -440,7 +403,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
         },
 
         login: function (name, pass, onSuccess, onFail) {
-            $log.info("LOGIN");
             $http.post(
                 "api/v1/user/instrumentType"
             )
@@ -451,8 +413,6 @@ angular.module('App.services', ['ngResource']).service('restService', [
                     onFail(response.data.message);
                 }
             );
-        },
-
+        }
     }
-
 }]);

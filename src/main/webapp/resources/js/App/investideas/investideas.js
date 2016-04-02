@@ -9,12 +9,10 @@ angular.module('App.investideas')
 }])
 .controller('investideas', [ '$scope', '$log', 'restService',
     function($scope, $log, restService) {
-
         (function() {
             restService.getInvestIdeas(
                 false,
                 function(response) {
-                    $log.info("Get invest idea success.");
                     $scope.investideas = response;
                 },
                 function() {

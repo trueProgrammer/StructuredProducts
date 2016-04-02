@@ -10,11 +10,9 @@ angular.module('App.investidea')
 .controller('investidea', [ '$scope', '$log', 'restService','$routeParams',
     function($scope, $log, restService, $routeParams) {
         (function() {
-            $log.info($routeParams);
             restService.getInvestIdeaById(
                 $routeParams.id,
                 function(response) {
-                    $log.info("Get invest idea success.");
                     $scope.investidea = response;
                 },
                 function() {

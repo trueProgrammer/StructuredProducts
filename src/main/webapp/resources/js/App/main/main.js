@@ -19,7 +19,7 @@ angular.module('App.main')
         $scope.showContactForm = function() {
             contactShow = true;
             $scope.gotoAnchorAnimatedWithPageAndOffset('page3', 2, 30)
-        }
+        };
 
         $scope.data = {};
         $scope.accordion = {};
@@ -34,16 +34,16 @@ angular.module('App.main')
         };
 
         $scope.showFailAlert = function(msg) {
-            $scope.emailAlert.type = 'danger',
-                $scope.emailAlert.msg = msg;
+            $scope.emailAlert.type = 'danger';
+            $scope.emailAlert.msg = msg;
             $scope.emailAlert.visible = true;
         };
 
         $scope.showSuccessAlert = function(msg) {
-            $scope.emailAlert.type = 'success',
-                $scope.emailAlert.msg = msg;
+            $scope.emailAlert.type = 'success';
+            $scope.emailAlert.msg = msg;
             $scope.emailAlert.visible = true;
-        }
+        };
 
         $scope.validateForm = function(form) {
             return form.$dirty
@@ -57,7 +57,6 @@ angular.module('App.main')
             restService.sendEmail(
                 $scope.email,
                 function() {
-                    $log.info("Email success sent.");
                     $scope.showSuccessAlert("Message sent successfully.");
                     $scope.email = '';
                     contactShow = false;
@@ -80,7 +79,7 @@ angular.module('App.main')
                     selected[id] = tab;
                 }
             }
-        }
+        };
 
         $scope.accordion.isSelected = function (id, tab) {
             if (selected[id] === undefined) {
@@ -98,7 +97,6 @@ angular.module('App.main')
                 $scope.data.timeType.value,
                 $scope.data.productType,
                 function(response) {
-                    $log.info("Get top products success.");
                     $scope.topProducts = response;
                 },
                 function() {
@@ -119,7 +117,6 @@ angular.module('App.main')
             restService.getInvestIdeas(
                 true,
                 function(investideas) {
-                    $log.info("Get invest ideas.");
                     $scope.data.investideas = investideas;
                 },
                 function(response) {
@@ -132,7 +129,6 @@ angular.module('App.main')
         (function() {
             restService.getTimeTypes(
                 function(timeTypes) {
-                    $log.info("Get time types success.");
                     $scope.data.timeTypes = timeTypes;
                     $scope.data.timeType = timeTypes[0];
 
@@ -140,7 +136,6 @@ angular.module('App.main')
                     (function() {
                         restService.getProductTypes(
                             function(productTypes) {
-                                $log.info("Get product types success.");
                                 $scope.data.productTypes = productTypes;
                                 $scope.data.productType = productTypes[0];
 
