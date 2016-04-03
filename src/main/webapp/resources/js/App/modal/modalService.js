@@ -1,5 +1,5 @@
-angular.module('App.services').service('modalService', ['$modal',
-    function ($modal) {
+angular.module('App.services').service('modalService', ['$uibModal',
+    function ($uibModal) {
         var modalDefaults = {
             templateUrl: 'resources/js/App/modal/sendingRequestModal.html',
             // controller: 'sendRequestCtrl',
@@ -52,7 +52,7 @@ angular.module('App.services').service('modalService', ['$modal',
                     }
                 }
             }
-            var modalInstance = $modal.open(tempModalDefaults);
+            var modalInstance = $uibModal.open(tempModalDefaults);
             modalInstance.rendered.then(function () {
                 $("#phone").mask("+7 (999) 999-9999");
             }, function () {

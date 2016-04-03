@@ -141,3 +141,7 @@ fieldset {
 .table-row:hover {
     background-color: #D4E4E9;
 }
+
+.modal-content {
+    width: 400px;
+}
