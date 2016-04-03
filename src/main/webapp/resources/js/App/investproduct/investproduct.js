@@ -9,11 +9,26 @@ angular.module('App.investproduct')
 .controller('investproduct', ['$scope', '$log', 'restService', '$document', '$location',
     function($scope, $log, restService, $document, $location) {
 
+        $scope.viewby = 5;
+        $scope.totalItems = 0;
+        $scope.currentPage = 1;
+        $scope.itemsPerPage = $scope.viewby;
+        $scope.maxSize = 5; //Number of pager buttons to show
+
+        $scope.setItemsPerPage = function(num) {
+            $scope.itemsPerPage = num;
+            $scope.currentPage = 1; //reset to first paghe
+        };
+
+        function setProducts(products) {
+            $scope.allProducts = products;
+            $scope.products = products;
+            $scope.totalItems = products.length;
+        }
+
         restService.getAllProducts(
             function (response) {
-                $scope.allProducts = response;
-                $scope.products = response;
-
+                setProducts(response);
                 $scope.highRiskProducts = 0;
                 $scope.mediumRiskProducts = 0;
                 $scope.lowRiskProducts = 0;
@@ -151,8 +166,7 @@ angular.module('App.investproduct')
                 if(typesList.length === 0) {
                     restService.getAllProducts(
                         function (response) {
-                            $scope.allProducts = response;
-                            $scope.products = response;
+                            setProducts(response);
                         },
                         function () {
                             $log.error("Get all products failure.");
@@ -160,8 +174,7 @@ angular.module('App.investproduct')
                     );
                 } else {
                     restService.getProductsByType(typesList, function (response) {
-                            $scope.allProducts = response;
-                            $scope.products = response;
+                            setProducts(response);
                         },
                         function () {
                             $log.error("Get products by risk failure.");
@@ -386,7 +399,7 @@ angular.module('App.investproduct')
             return products;
         };
         $scope.filterProducts = function() {
-            $scope.products = $scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.allProducts))));
+            setProducts($scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.allProducts)))));
         };
         $scope.getPeriodValue = function(val) {
             if (val.min == 0) {

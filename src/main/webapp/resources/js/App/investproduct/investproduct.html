@@ -214,7 +214,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="val in products | orderBy:predicate:reverse"  ng-click="goToProductPage(val.id)" class="table-row">
+                    <tr ng-repeat="val in products.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | orderBy:predicate:reverse"  ng-click="goToProductPage(val.id)" class="table-row">
                         <td>{{$index + 1}}</td>
                         <td>{{val.name}}</td>
                         <td>{{val.underlayings}}</td>
@@ -225,6 +225,15 @@
                     </tr>
                     </tbody>
                 </table>
+                <div>
+                    <div class="col-md-6 left-unmargin">
+                        <pagination total-items="totalItems" ng-model="currentPage" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+                        <select ng-model="viewby" ng-change="setItemsPerPage(viewby)" class="right-mardin"><option>5</option><option>10</option><option>20</option><option>40</option></select>
+                        <span class="right-mardin">Выводить по</span>
+                    </div>
+                </div>
             </div>
             <div ng-show="isMobileShow()">
                 <table class="table main-table">
@@ -245,7 +254,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="val in products | orderBy:predicate:reverse" ng-click="goToProductPage(val.id)" class="table-row">
+                    <tr ng-repeat="val in products.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | orderBy:predicate:reverse" ng-click="goToProductPage(val.id)" class="table-row">
                         <td>{{$index + 1}}</td>
                         <td>{{val.name}}</td>
                         <td>{{val.returnValue}}%</td>
@@ -253,6 +262,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="left-unmargin">
+                    <pagination total-items="totalItems" ng-model="currentPage" class="pagination-sm" items-per-page="itemsPerPage"></pagination>
+                </div>
             </div>
         </div>
     </div>
