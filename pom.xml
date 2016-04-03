@@ -258,6 +258,7 @@
                             <jsSourceExcludes>
                                 <jsSourceExclude>**/app.js</jsSourceExclude>
                                 <jsSourceExclude>**/UserService.js</jsSourceExclude>
+                                <jsSourceExclude>**/modalService.js</jsSourceExclude>
                             </jsSourceExcludes>
                         </configuration>
                         <goals>
@@ -277,7 +278,7 @@
                 </configuration>
             </plugin>
 
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
@@ -288,7 +289,7 @@
                         </resource>
                     </webResources>
                 </configuration>
-            </plugin>-->
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
