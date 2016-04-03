@@ -10,10 +10,6 @@
     <welcome-file-list>
         <welcome-file>/views/index.html</welcome-file>
     </welcome-file-list>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/views/index.html</location>
-    </error-page>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
