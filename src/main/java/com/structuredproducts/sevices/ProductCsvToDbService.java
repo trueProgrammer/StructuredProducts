@@ -123,7 +123,7 @@ public class ProductCsvToDbService {
             Product product = new Product();
             product.setName(productBean.getName());
             product.setCurrency(new Currency(productBean.getCurrency()));
-            product.setUnderlaying(productBean.getUnderlying());
+            product.setUnderlayingList(productBean.getUnderlying());
             product.setInvestment(new Investment(productBean.getMinInvestment(), productBean.getMaxInvestment()));
             product.setBroker(new Broker(productBean.getBroker()));
             product.setReturnValue(productBean.getProfit());

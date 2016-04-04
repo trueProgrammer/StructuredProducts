@@ -110,9 +110,9 @@ public class DBService {
                 product.setStrategy(saveOrUpdateNameable(product.getStrategy()));
 
                 List<Underlaying> underlayings = Lists.newArrayList();
-                product.getUnderlaying().forEach(val -> underlayings.add(saveOrUpdateNameable(val)));
-                product.getUnderlaying().clear();
-                product.setUnderlaying(underlayings);
+                product.getUnderlayingList().forEach(val -> underlayings.add(saveOrUpdateNameable(val)));
+                product.getUnderlayingList().clear();
+                product.setUnderlayingList(underlayings);
 
                 logger.debug("Save all product contains.");
                 dbManager.getEntityManager().merge(product);
@@ -187,6 +187,12 @@ public class DBService {
         }
     }
 
+    public List<Underlaying> getProductUnderlyings(Integer productId) {
+        TypedQuery<Underlaying> query = dbManager.getEntityManager().createQuery("select u from  Product  p inner join p.underlayingList u where p.id = :product_id", Underlaying.class);
+        query.setParameter("product_id", productId);
+        return query.getResultList();
+    }
+
     public void removeTopProductByProduct(List<TopProduct> topProducts) {
         Query query = dbManager.getEntityManager().createQuery("delete from TopProduct where product = :product_id");
 
@@ -225,6 +231,9 @@ public class DBService {
 
     public InvestIdea getInvestIdeaById(int id) {
         return dbManager.getEntityManager().find(InvestIdea.class, id);
+    }
+    public <S>S getObjectById(Class<S> clazz, int id) {
+        return dbManager.getEntityManager().find(clazz, id);
     }
 
     @PreDestroy

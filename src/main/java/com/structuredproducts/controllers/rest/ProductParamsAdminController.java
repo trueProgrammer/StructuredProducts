@@ -3,6 +3,7 @@ package com.structuredproducts.controllers.rest;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.persistence.entities.instrument.ProductParam;
+import com.structuredproducts.persistence.entities.instrument.Underlaying;
 import com.structuredproducts.sevices.ServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(AbstractAdminController.rootUrl)
@@ -38,8 +43,13 @@ public class ProductParamsAdminController extends AbstractAdminController{
             String img = (String) map.get("img");
             String chart = (String) map.get("chart");
 
-            Product product = new Product();
-            product.setId(productId);
+            ArrayList<HashMap<String, Object>> underlayings = (ArrayList<HashMap<String, Object>>) map.get("underlaying");
+            List<Underlaying> parsedUnderlayings = underlayings.stream()
+                                            .map(underlayingMap -> new Underlaying((Integer) underlayingMap.get("id")))
+                                            .collect(Collectors.toList());
+
+
+            Product product = new Product(productId);
 
             ProductParam productParam = new ProductParam(product);
             productParam.setId(id);
@@ -48,9 +58,21 @@ public class ProductParamsAdminController extends AbstractAdminController{
             productParam.setForecast(forecast);
 
             dbService.save(productParam);
+
+            product = dbService.getObjectById(Product.class, productId);
+            product.setUnderlayingList(parsedUnderlayings);
+            dbService.save(product);
         } catch (IOException e) {
             logger.error("can't handle json", e);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(path="productparams/underlaying",
+                           method = RequestMethod.GET,
+                           produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<List<Underlaying>> getUnderlayings() {
+        return new ResponseEntity<>((List<Underlaying>) dbService.getResultList(Underlaying.class), HttpStatus.OK);
     }
 }

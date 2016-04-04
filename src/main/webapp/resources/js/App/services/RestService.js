@@ -46,6 +46,15 @@ angular.module('App.services', ['ngResource']).service('restService', [
                 .error(onFail);
         },
 
+        getProductUnderlayings: function(onSuccess, onFail) {
+            $http.get(
+                adminUri + "productparams/underlaying"
+            )
+                .success(onSuccess)
+                .error(onFail);
+
+        },
+
         addProductParam: function(param, onSuccess, onFail) {
             $http.post(
                 adminUri + "productparams/add",

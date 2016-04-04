@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
-@Table(name="UNDERLAYING", schema = "INSTRUMENT")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "employee")
+@Table(name = "UNDERLAYING", schema = "INSTRUMENT")
 public class Underlaying implements Serializable, UniqueWithName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,10 @@ public class Underlaying implements Serializable, UniqueWithName {
         this.name = name;
     }
     public Underlaying() {
+    }
+
+    public Underlaying(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

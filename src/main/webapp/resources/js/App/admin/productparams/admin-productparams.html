@@ -36,9 +36,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6" ng-show="selectedProduct">
+        <div class="col-md-8" ng-if="selectedProduct">
             <h3>Редактирование продукта <b>{{selectedProduct.product.name}}</b></h3>
             <form id="form">
+                <div class="row">
+                    <div class="col-md-5">
+                        <p>Базовые продукты</p>
+                        <div class="panel panel-blue margin-bottom-10">
+                            <div ui-grid="choosenUnderlying" ui-grid-selection ui-grid-edit></div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 " style="margin-top: 60px">
+                        <button class="btn btn-primary" ng-click="toChoosen()"><<</button>
+                        <button class="btn btn-primary" ng-click="toAvailable()">>></button>
+                    </div>
+                    <div class="col-md-5">
+                        <p>Базовые продукты</p>
+                        <div class="panel panel-blue margin-bottom-10">
+                            <div ui-grid="availableUnderlying" ui-grid-selection ui-grid-edit></div>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="form-group">
                     <label for="forecast">Прогноз:</label>
                     <textarea id="forecast" class="form-control" ng-model="selectedProduct.forecast">{{forecast}}</textarea>

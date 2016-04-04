@@ -8,7 +8,10 @@ import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
-import com.structuredproducts.persistence.entities.instrument.*;
+import com.structuredproducts.persistence.entities.instrument.InvestIdea;
+import com.structuredproducts.persistence.entities.instrument.Product;
+import com.structuredproducts.persistence.entities.instrument.ProductParam;
+import com.structuredproducts.persistence.entities.instrument.RiskType;
 import com.structuredproducts.sevices.DBService;
 import com.structuredproducts.sevices.YahooUnderlayingPriceService;
 import org.slf4j.Logger;
@@ -23,8 +26,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -123,7 +128,7 @@ public class DataController {
 
     private static void setUnderlayings(List<Product> products) {
         products.parallelStream().forEach(
-                a -> a.setUnderlayings(joiner.join(a.getUnderlaying().parallelStream().map(b -> b.getName()).collect(Collectors.toList())))
+                a -> a.setUnderlayings(joiner.join(a.getUnderlayingList().parallelStream().map(b -> b.getName()).collect(Collectors.toList())))
         );
     }
 
@@ -181,7 +186,7 @@ public class DataController {
             Product product = productOpt.get();
             //Map<String, Map<String, String>> result = new HashMap<>();
             List<HistoricalHolder> result = Lists.newArrayList();
-            product.getUnderlaying().parallelStream().forEach(
+            product.getUnderlayingList().parallelStream().forEach(
                     v -> {
                         try {
                             HistoricalHolder holder = new HistoricalHolder();

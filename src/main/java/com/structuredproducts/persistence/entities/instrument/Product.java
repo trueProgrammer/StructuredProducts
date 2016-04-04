@@ -28,7 +28,7 @@ public class Product {
         joinColumns=@JoinColumn(name="product", referencedColumnName="id"),
         inverseJoinColumns=@JoinColumn(name="underlaying", referencedColumnName="id")
     )
-    private List<Underlaying> underlaying;
+    List<Underlaying> underlayingList;
 
     @Transient
     private String underlayings;
@@ -83,7 +83,10 @@ public class Product {
     @Transient
     private boolean top;
 
-    public Product() {
+    public Product(){}
+
+    public Product(Integer productId) {
+        this.id = productId;
     }
 
     public Integer getId() {
@@ -102,12 +105,12 @@ public class Product {
         this.productType = productType;
     }
 
-    public List<Underlaying> getUnderlaying() {
-        return underlaying;
+    public List<Underlaying> getUnderlayingList() {
+        return underlayingList;
     }
 
-    public void setUnderlaying(List<Underlaying> underlaying) {
-        this.underlaying = underlaying;
+    public void setUnderlayingList(List<Underlaying> underlaying) {
+        this.underlayingList = underlaying;
     }
 
     public Investment getInvestment() {

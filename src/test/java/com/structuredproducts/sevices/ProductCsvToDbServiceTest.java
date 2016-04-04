@@ -6,7 +6,9 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 /**
@@ -54,7 +56,7 @@ public class ProductCsvToDbServiceTest {
         Assert.assertThat(product.getDescription(), Matchers.notNullValue());
         Assert.assertThat(product.getMaxTerm(), Matchers.is(30));
         Assert.assertThat(product.getMinTerm(), Matchers.is(0));
-        Assert.assertThat(product.getUnderlaying(), Matchers.hasSize(4));
+        Assert.assertThat(product.getUnderlayingList(), Matchers.hasSize(4));
         Assert.assertThat(product.getReturnValue(), Matchers.is(25.0F));
         Assert.assertThat(product.getStrategy().getName(), Matchers.is("Барьерные стратегии"));
         Assert.assertThat(product.getCurrency().getName(), Matchers.is("RUR"));

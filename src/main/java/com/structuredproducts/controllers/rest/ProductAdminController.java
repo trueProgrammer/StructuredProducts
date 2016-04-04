@@ -118,7 +118,7 @@ public class ProductAdminController extends AbstractAdminController{
 
     private static void setUnderlayings(List<Product> products) {
         products.parallelStream().forEach(
-                a -> a.setUnderlayings(joiner.join(a.getUnderlaying().parallelStream().map(b -> b.getName()).collect(Collectors.toList())))
+                a -> a.setUnderlayings(joiner.join(a.getUnderlayingList().parallelStream().map(b -> b.getName()).collect(Collectors.toList())))
         );
     }
 }
