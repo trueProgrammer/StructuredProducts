@@ -74,7 +74,6 @@ public class DataController {
     public ResponseEntity<Product[]> getTopProducts(@RequestParam(name="time") String timeType, @RequestParam(name="type")String productType) {
         logger.debug("Time {}, product type {}", timeType, productType);
         List<Product> list = getProducts(dbService.getTopProductsByTimeTypeAndProductType(timeType, productType));
-        list.forEach(product -> product.getInvestment().setName());
         return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
     }
 

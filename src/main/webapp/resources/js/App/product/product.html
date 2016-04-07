@@ -43,18 +43,24 @@
                     <span class="custom-h2 red-style">Описание</span>
                 </div>
             </div>
-            <div class="row" ng-if="isShow('desc')" class="under-style">
-                <p>{{productParams.product.description}}</p>
+            <div class="row" ng-if="isShow('desc')">
+                <div class="under-style">
+                    <p>{{productParams.product.description}}</p>
+                </div>
             </div>
         </div>
         <!--END DESCRIPTION-->
         <!--START MAIN PARAMS-->
         <div ng-if="isShow('mainParams')">
-            <span class="custom-h3">Уровень риска: <span class="blue-style">{{productParams.product.risks.name}}</span></span>
-            <hr class="devider devider-dashed hr-style"/>
             <span class="custom-h3">Доходность: <span class="blue-style">{{productParams.product.returnValue}}%</span></span>
             <hr class="devider devider-dashed hr-style"/>
+            <span class="custom-h3">Уровень защиты: <span class="blue-style">{{productParams.product.productType.name}}</span></span>
+            <hr class="devider devider-dashed hr-style"/>
             <span class="custom-h3">Срок инвестирования: <span class="blue-style">{{productParams.product.termName}}</span></span>
+            <hr class="devider devider-dashed hr-style"/>
+            <span class="custom-h3">Минимальная сумма инвестиций и валюта: <span class="blue-style">{{productParams.product.investName}} {{productParams.product.currency.name}}</span></span>
+            <hr class="devider devider-dashed hr-style"/>
+            <span class="custom-h3">Базовые активы: <span class="blue-style">{{productParams.product.underlayings}}</span></span>
             <hr class="devider devider-dashed hr-style"/>
         </div>
         <!--END MAIN PARAMS-->
@@ -74,21 +80,25 @@
                         <thead>
                         <tr>
                             <th>
-                                Название
+                                Стратегия
                             </th>
                             <th>
-                                Базовый актив
+                                Периодичность выплат
                             </th>
                             <th>
-                                Cумма инвестиций
+                                Юридическая форма
+                            </th>
+                            <th>
+                                Размер выплаты
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{{productParams.product.name}}</td>
-                                <td>{{productParams.product.underlayings}}</td>
-                                <td>от {{productParams.product.investment.min}} до {{productParams.product.investment.max}} тысяч рублей</td>
+                                <td>{{productParams.product.strategy.name}}</td>
+                                <td>{{productParams.product.paymentPeriodicity.name}}</td>
+                                <td>{{productParams.product.legalType.name}}</td>
+                                <td>{{productParams.product.payoff.name}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -98,12 +108,12 @@
         <!--END OTHER PARAMS-->
         <hr class="devider devider-dashed hr-style"/>
         <div class="margin-top-20">
-            <div class="col-md-6">
-                <h2>Заполнить анкету</h2>
+            <div class="col-md-10">
+                <a href="" ng-click="openModal()"><h2>Отправить заявку на покупку структурного продукта</h2></a>
                 <button type="button" style="border:0; background: white" ng-click="openModal()"><img src="resources/img/send_bid.png"/></button>
             </div>
-            <div class="col-md-6">
-                <img ng-src="{{productParams.product.broker.logo}}">
+            <div class="col-md-2">
+                <img ng-src="{{productParams.product.broker.logo}}" class="img-style">
             </div>
         </div>
     </div>

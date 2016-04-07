@@ -53,22 +53,23 @@
                      show[section] = true;
                  }
              };
+             function rangeFunction(min, max) {
+                 var result;
+                 if(min != 0 && max != 0) {
+                     return "От " + min + " до " + max;
+                 } else if(min == 0 && max != 0) {
+                     return "До " +  max;
+                 } else if (min != 0 && max == 0) {
+                     return "Свыше " + min;
+                 }
+             }
              (function() {
              restService.getProductWithParams(
                  $routeParams.id,
                  /*'20',*/
                  function(result) {
-                     var termName;
-                     var minTerm = result.product.minTerm;
-                     var maxTerm = result.product.maxTerm;
-                     if(minTerm != 0 && maxTerm != 0) {
-                         termName = "От " + minTerm + " до " + maxTerm + " месяцев";
-                     } else if(minTerm == 0 && maxTerm != 0) {
-                         termName = "До " +  maxTerm + " месяцев";
-                     } else if (minTerm != 0 && maxTerm == 0) {
-                         termName = "Свыше " + minTerm + " месяцев";
-                     }
-                     result.product.termName = termName;
+                     result.product.termName = rangeFunction(result.product.minTerm, result.product.maxTerm)+ " месяцев";
+                     result.product.investName = rangeFunction(result.product.investment.min, result.product.investment.max);
                      $scope.productParams = result;
                      restService.getUnderlayingHistoricalQuotes(result.product.id,
                          function(result) {
@@ -90,13 +91,16 @@
                                      pointStrokeColor: "#fff",
                                      pointHighlightFill: "#fff",
                                      pointHighlightStroke: colors[index],
-                                     multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>",
+                                     //multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>",
                                      data: hist.dataset
                                  };
                                  data.datasets.push(dataset);
                              });
                              var ctx = document.getElementById("chart").getContext("2d");
-                             var chart = new Chart(ctx).Line(data);
+                             var chart = new Chart(ctx).Line(data, {
+                                 // make enough space on the right side of the graph
+                                 scaleLabel: "<%=value%> $"
+                             });
                              document.getElementById("legendDiv").innerHTML = chart.generateLegend();
                              index++;
                          },

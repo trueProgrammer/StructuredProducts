@@ -64,7 +64,7 @@ public class YahooUnderlayingPriceService {
         for(Map.Entry<Date, Double> quote : quotes.entrySet()) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(quote.getKey());
-            result.putIfAbsent(MONTH_NAMES[calendar.get(Calendar.MONTH)], quote.getValue().toString());
+            result.putIfAbsent(MONTH_NAMES[calendar.get(Calendar.MONTH)] + " " + calendar.get(Calendar.YEAR), quote.getValue().toString());
         }
         return result;
     }

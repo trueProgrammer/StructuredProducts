@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
 @Table(name="INVESTMENT", schema = "INSTRUMENT")
-public class Investment implements Serializable, Nameble, UniqueWithMinMax{
+public class Investment implements Serializable, UniqueWithMinMax{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -17,9 +17,6 @@ public class Investment implements Serializable, Nameble, UniqueWithMinMax{
     private Integer min;
 
     private Integer max;
-
-    @Transient
-    private String name;
 
     public Investment(Integer min, Integer max) {
         this.min = min;
@@ -53,17 +50,4 @@ public class Investment implements Serializable, Nameble, UniqueWithMinMax{
         this.max = max;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName() {
-        if(min != null && max != null) {
-            name = "От " + min + " до " + max + " рублей";
-        } else if(min == null && max != null) {
-            name = "До " +  max + " рублей";
-        } else if (min != null && max == null) {
-            name = "От " + min + " рублей";
-        }
-    }
 }

@@ -2,7 +2,6 @@ package com.structuredproducts.controllers.rest;
 
 import com.google.common.base.Joiner;
 import com.structuredproducts.controllers.data.Message;
-import com.structuredproducts.persistence.entities.instrument.Nameble;
 import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.sevices.ServiceUtils;
 import org.slf4j.Logger;
@@ -103,11 +102,6 @@ public class ProductAdminController extends AbstractAdminController{
     public ResponseEntity<Object[]> getValues(@RequestParam("entityType")String entityType) {
         Class<?> clazz = ENTITY_TYPES.get(entityType);
         List<?> list = dbService.getResultList(clazz);
-        if(Nameble.class.isAssignableFrom(clazz)) {
-            for(Object obj : list) {
-                ((Nameble)obj).setName();
-            }
-        }
         if(Product.class.isAssignableFrom(clazz)) {
             setUnderlayings((List<Product>) list);
         }
