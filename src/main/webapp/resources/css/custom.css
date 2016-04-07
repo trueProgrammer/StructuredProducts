@@ -17,7 +17,7 @@
 	bottom: -14px;
 }
 
-.footer-v1 .footer {
+.footer-v2 .footer {
     padding: 15px 0;
 }
 
@@ -144,4 +144,43 @@ fieldset {
 
 .modal-content {
     width: 400px;
+}
+
+.b-share-icon {
+    margin: 0 3px;
+    width: 28px;
+    height: 28px;
+    display: block;
+    background-repeat: no-repeat;
+    -webkit-transition: all .3s ease-in-out;
+    text-decoration: underline;
+    border-radius: 50%!important;
+    list-style: none;
+    margin-right: 3px;
+    margin-bottom: 5px;
+    text-indent: -9999px;
+    display: inline-block;
+}
+
+.b-share-icon:hover {
+    background-position: 0 -38px;
+    color: #3498db;
+    text-decoration: underline;
+}
+
+.b-share-icon_vkontakte {
+    background: url(../assets/img/icons/social/vk.png) no-repeat;
+}
+
+.b-share-icon_facebook {
+    background: url(../assets/img/icons/social/facebook.png) no-repeat;
+}
+
+.b-share-icon_twitter {
+    background: url(../assets/img/icons/social/twitter.png) no-repeat;
+}
+
+.social-icons {
+    margin-top: -13px;
+    margin-bottom: 13px;
 }

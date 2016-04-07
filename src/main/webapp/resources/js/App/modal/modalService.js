@@ -27,6 +27,7 @@ angular.module('App.services').service('modalService', ['$uibModal',
                         var phoneCheck = checkPhone();
                         if ($scope.sendform.$valid && phoneCheck) {
                             $scope.user.controls = savedControls;
+                            $scope.user.phone = $('#phone').val();
                             restService.createProductRequest($scope.user,
                                 function () {
                                     $scope.invalidFormMessage = "";

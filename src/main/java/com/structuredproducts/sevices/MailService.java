@@ -40,9 +40,9 @@ public class MailService {
         props.put("mail.smtp.socketFactory.fallback", "false");
     }
 
-    public void sendMessage(String name, String from, String text) throws ServiceException {
+    public void sendMessage(String name, String midName, String secondName, String email, String phone, String text) throws ServiceException {
 
-        log.debug("Email [name:{}, from:{}] will be send.", name, from);
+        log.debug("Email [name:{}, from:{}] will be send.", name, email);
 
         try {
             Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
@@ -61,11 +61,16 @@ public class MailService {
             msg.setSentDate(new Date());
             msg.setSubject("Contact form " + random.nextInt());
 
-            msg.setText(String.format("FROM [%s] \n\nName [%s] \n\nText:\n%s", from, name, text));
+            msg.setText(String.format("Email=[%s];\n\n" +
+                                    "Телефон=[%s];\n\n" +
+                                    "Имя=[%s];\n\n" +
+                                    "Фамилия=[%s];\n\n" +
+                                    "Отчество=[%s];\n\n" +
+                                    "Вопрос='%s'\n", email, phone, name, secondName, midName, text));
 
             Transport.send(msg);
         } catch (MessagingException e) {
-            log.error("Email [name:{}, from:{}] hasn't send.", name, from, e);
+            log.error("Email [name:{}, from:{}] hasn't send.", name, email, e);
             throw new ServiceException("Email hasn't send.", e);
         }
 

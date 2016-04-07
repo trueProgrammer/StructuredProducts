@@ -36,7 +36,12 @@ public class EmailController {
         logger.debug("Send main request {} ", request);
         try {
             Map<String, Object> map = ServiceUtils.getObjectMapping(request);
-            mailService.sendMessage((String) map.get("name"), (String) map.get("email"), (String) map.get("text"));
+            mailService.sendMessage((String) map.get("name"),
+                    (String) map.get("midName"),
+                    (String) map.get("secondName"),
+                    (String) map.get("email"),
+                    (String) map.get("phone"),
+                    (String) map.get("text"));
             return new ResponseEntity<>(new Message("Message new Message()"), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

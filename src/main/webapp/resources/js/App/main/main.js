@@ -50,9 +50,23 @@ angular.module('App.main')
                 && form.$valid;
         };
 
+        var checkPhone = function () {
+            var phoneEl = $('#phone');
+            var val = phoneEl.val();
+            if (val && val !== '') {
+                return true;
+            }
+            phoneEl.addClass('invalid-control');
+            return false;
+        };
+
         $scope.sendEmail = function (form) {
-            if(!$scope.validateForm(form)) {
+            var phoneCheck = checkPhone();
+            if(!($scope.validateForm(form) && phoneCheck)) {
+                $scope.showFailAlert("Пожалуйста, заполните все необходимые поля");
                 return;
+            } else {
+                $scope.email.phone = $('#phone').val();
             }
             restService.sendEmail(
                 $scope.email,
@@ -64,7 +78,7 @@ angular.module('App.main')
                 },
                 function(response) {
                     $log.error("Email sending failed.");
-                    $scope.showFailAlert("Email sending failed.");
+                    $scope.showFailAlert("Не возможно отправить сообщение.");
                 }
             )
         };
@@ -226,6 +240,20 @@ angular.module('App.main')
 
         //init app function
         angular.element(document).ready(function () {
+            /*new Ya.share({
+                element: 'the_share',
+                elementStyle: {
+                    'type': 'none',
+                    'quickServices': ['yaru', 'vkontakte', 'facebook', 'twitter', 'odnoklassniki', 'moimir', 'lj', 'gplus']
+                },
+                link: 'http://blog.olegorlov.com',
+                title: 'Олег Орлов - Технические инструменты инфобизнеса',
+                serviceSpecific: {
+                    twitter: {
+                        title: '@olegik_orlov Текст twitter сообщения',
+                    }
+                }
+            });*/
             App.init();
             jQuery("#layerslider").layerSlider({
                 navStartStop: false,
@@ -236,7 +264,7 @@ angular.module('App.main')
                 autoPlayVideos: true,
                 skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
             });
-
+            $("#phone").mask("+7 (999) 999-9999");
             if (document.addEventListener) {
                 document.addEventListener("mousewheel", handler, false);
                 document.addEventListener("DOMMouseScroll", handler, false);

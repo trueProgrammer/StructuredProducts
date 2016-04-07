@@ -70,9 +70,7 @@
                 <div class="col-md-6 md-margin-bottom-40">
 
                     <div class="headline"><h2>Топ 5 структурных продуктов</h2></div>
-
-
-                    <div class="panel-body select-table-body" ng-show="isDesktopShow()">
+<!--                    <div class="panel-body select-table-body" ng-show="isDesktopShow()">
                         <div class="col-md-4">
                             <label for="byTimeType"> Лучшие продукты: </label><br>
                             <select id="byTimeType" ng-model="data.timeType" ng-change="topProductsChange()"
@@ -85,8 +83,7 @@
                                 <option ng-repeat="val in data.productTypes" value="{{val}}">{{val}}</option>
                             </select>
                         </div>
-                    </div>
-
+                    </div>-->
                     <div ng-show="isDesktopShow()">
                         <!--Basic Table-->
                         <table class="table main-table">
@@ -98,10 +95,9 @@
                                     <a href="" ng-click="order('name')">Название</a>
                                     <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
                                 </th>-->
-                                <th>Актив</th>
-                                <th>Минимальная сумма</th>
-                                <th>Доходность</th>
-                                <th>Стратегия</th>
+                                <th>Базовые активы</th>
+                                <th>Потенциальная доходность</th>
+                                <th>Брокер</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -109,9 +105,8 @@
                                 <td>{{$index + 1}}</td>
                                 <td>{{val.name}}</td>
                                 <td>{{val.underlayings}}</td>
-                                <td>{{val.investment.name}}</td>
                                 <td>{{val.returnValue}}</td>
-                                <td>{{val.strategy.name}}</td>
+                                <td>{{val.broker.name}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -143,15 +138,11 @@
                     </div>
                 </div>
                 <!-- End Latest -->
-
                 <!-- Ideas -->
                 <div class="col-md-6 md-margin-bottom-40">
-
                     <div class="headline"><h2>Инвестиционные идеи наших партнеров</h2></div>
-
                     <!-- Accordion -->
                     <div id="accordion-v1" class="panel-group acc-v1">
-
                         <div ng-repeat="val in data.investideas">
                             <div class="panel panel-default" ng-if="val.mainPage">
                                 <div class="panel-heading">
@@ -177,30 +168,24 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!-- End Accordion -->
                 </div>
-
                 <!-- End Ideas -->
-            </div><!--/row-->
-
-            <!--<button class="btn-u btn-u-blue" type="button"><i class="fa fa-cloud"></i> Icon Button</button>-->
-
+            </div>
             <div>
                 <div>
                     <button class="btn-u btn-u-blue rounded" type="button" ng-click="showContactForm()">
                         <i class="fa fa-envelope-o"></i> Задать вопрос
                     </button>
                 </div>
-                <div>
+                <!--<div>
                     <ul class="social-icons">
                         <li><a href="#" data-original-title="Vk" class="rounded-x social_vk"></a></li>
                         <li><a href="#" data-original-title="Facebook" class="rounded-x social_facebook"></a></li>
                     </ul>
-                </div>
+                </div>-->
             </div>
-
         </div>
     </div>
     <!-- End Info Blokcs -->
@@ -213,6 +198,14 @@
                 <div class="headline"><h2>Форма отправки сообщений</h2></div>
                 <form name="emailForm" class="sky-form contact-style">
                     <fieldset class="no-padding">
+                        <label>Фамилия <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-7 col-md-offset-0">
+                                <div>
+                                    <input type="text" name="secondName" id="secondName" class="form-control" ng-model="email.secondName" required>
+                                </div>
+                            </div>
+                        </div>
                         <label>Имя <span class="color-red">*</span></label>
                         <div class="row sky-space-20">
                             <div class="col-md-7 col-md-offset-0">
@@ -221,11 +214,27 @@
                                 </div>
                             </div>
                         </div>
+                        <label>Отчество <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-7 col-md-offset-0">
+                                <div>
+                                    <input type="text" name="midName" id="midName" class="form-control" ng-model="email.midName" required>
+                                </div>
+                            </div>
+                        </div>
                         <label>Email <span class="color-red">*</span></label>
                         <div class="row sky-space-20">
                             <div class="col-md-7 col-md-offset-0">
                                 <div>
                                     <input type="email" name="email" id="email" class="form-control" ng-model="email.email" data-valid-pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required >
+                                </div>
+                            </div>
+                        </div>
+                        <label>Телефон <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-7 col-md-offset-0">
+                                <div>
+                                    <input type="text" name="phone" id="phone" class="form-control" ng-model="email.phone">
                                 </div>
                             </div>
                         </div>
@@ -250,8 +259,8 @@
                     </div>
                 </form>
                 <!-- End email form -->
-            </div><!--/col-md-9-->
-            <div class="col-md-3">
+            </div>
+<!--            <div class="col-md-3">
                 <div class="headline"><h2>Контакты</h2></div>
                 <ul class="list-unstyled">
                     <li class="padding-bottom-10">
@@ -266,8 +275,8 @@
                         </ul>
                     </li>
                 </ul>
-            </div><!--/col-md-3-->
-        </div><!--/row-->
+            </div>-->
+        </div>
     </div>
     <!--=== End Contacs Part ===-->
 </div>
