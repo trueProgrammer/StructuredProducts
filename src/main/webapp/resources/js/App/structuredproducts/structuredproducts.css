@@ -57,3 +57,8 @@
     margin-right: 0 !important;
     margin-left: 0 !important;
 }
+.scroll-to-top {
+    display: none;
+    position: fixed; bottom: 30px; right: 50px;
+}
+.scroll-to-top:hover { text-decoration: none; }
