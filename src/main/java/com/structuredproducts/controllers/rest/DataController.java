@@ -8,10 +8,7 @@ import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
-import com.structuredproducts.persistence.entities.instrument.InvestIdea;
-import com.structuredproducts.persistence.entities.instrument.Product;
-import com.structuredproducts.persistence.entities.instrument.ProductParam;
-import com.structuredproducts.persistence.entities.instrument.RiskType;
+import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.DBService;
 import com.structuredproducts.sevices.YahooUnderlayingPriceService;
 import org.slf4j.Logger;
@@ -68,6 +65,15 @@ public class DataController {
         }
 
         return new ResponseEntity<>(values, HttpStatus.OK);
+    }
+
+    @RequestMapping(path="/brokerGet",
+            method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<Object[]> getBrokers() {
+        List<?> list = dbService.getResultList(Broker.class);
+        return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/topproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

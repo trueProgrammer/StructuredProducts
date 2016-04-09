@@ -11,8 +11,9 @@
 </div>
 <div class="container">
     <div class="screen-height">
-        <div class="col-md-8 col-sm-6" ng-if="isDesktopShow()">
-            <svg id='svg' width="100%" height="800px">
+        <h2>Задайте параметры вашего структурного продукта</h2>
+        <div class="col-md-8 col-sm-6">
+            <svg id='svg' width="100%" height="870px">
                 <text class="header-text-style"  id="add-param-header"><tspan y="20">Выберите параметр для добавления: </tspan></text>
             </svg>
         </div>
@@ -27,27 +28,106 @@
                         </div>
                     </p>
                     <div ng-if="!control.isSaved">
-                        <div class="btn-group" uib-dropdown>
-                            <span class="h4-style">От </span>
-                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="control.isDisabled">
-                                {{control.fromValue}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
-                                <li ng-repeat="fromValue in control.fromValues"><a ng-click="control.setFromValue(fromValue)">{{fromValue}}</a></li>
-                            </ul>
+                        <!--SIMPLE DIAPASON-->
+                        <div ng-if="control.type == 'diapason'">
+                            <div class="btn-group" uib-dropdown>
+                                <span class="h4-style">От </span>
+                                <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                        style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                        ng-disabled="control.isDisabled">
+                                    {{control.fromValue}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                    <li ng-repeat="fromValue in control.fromValues"><a ng-click="control.setFromValue(fromValue)">{{fromValue}}</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group left-margin" uib-dropdown>
+                                <span class="h4-style">До </span>
+                                <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                        style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                        ng-disabled="control.isDisabled">
+                                    {{control.toValue}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                    <li ng-repeat="toValue in control.toValues"><a ng-click="control.setToValue(toValue)">{{toValue}}</a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="btn-group left-margin" uib-dropdown>
-                            <span class="h4-style">До </span>
-                            <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                    style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                    ng-disabled="control.isDisabled">
-                                {{control.toValue}} <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
-                                <li ng-repeat="toValue in control.toValues"><a ng-click="control.setToValue(toValue)">{{toValue}}</a></li>
-                            </ul>
+                        <!--DIAPASON WITH DROPDOWN-->
+                        <div ng-if="control.type == 'dropdownAndDiapason'">
+                                <div class="btn-group" uib-dropdown>
+                                    <span class="h4-style">{{control.dropdown.header}} </span>
+                                    <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                            style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                            ng-disabled="control.isDisabled">
+                                        {{control.dropdown.value.dropdownName}} <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                        <li ng-repeat="dropdownValue in control.dropdown.values"><a ng-click="control.setDropdownValue(dropdownValue)">{{dropdownValue.dropdownName}}</a></li>
+                                    </ul>
+                                </div>
+                            <br/>
+                            <div class="btn-group" uib-dropdown>
+                                <span class="h4-style">От </span>
+                                <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                        style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                        ng-disabled="control.isDisabled">
+                                    {{control.fromValue}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                    <li ng-repeat="fromValue in control.fromValues"><a ng-click="control.setFromValue(fromValue)">{{fromValue}}</a></li>
+                                </ul>
+                            </div>
+                            <div class="btn-group left-margin" uib-dropdown>
+                                <span class="h4-style">До </span>
+                                <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                        style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                        ng-disabled="control.isDisabled">
+                                    {{control.toValue}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                    <li ng-repeat="toValue in control.toValues"><a ng-click="control.setToValue(toValue)">{{toValue}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--DROPDOWN WITH OPTIONAL DIAPASON-->
+                        <div ng-if="control.type == 'optDiapason'">
+                            <div class="btn-group" uib-dropdown>
+                                <span class="h4-style">{{control.dropdown.header}} </span>
+                                <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                        style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                        ng-disabled="control.isDisabled">
+                                    {{control.dropdown.value.value}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                    <li ng-repeat="dropdownValue in control.dropdown.values"><a ng-click="control.setOptDiapasonDropdownValue(dropdownValue)">{{dropdownValue.value}}</a></li>
+                                </ul>
+                            </div>
+                            <br/>
+                            <div ng-if="control.diapasonOn">
+                                <div class="btn-group" uib-dropdown>
+                                    <span class="h4-style">От </span>
+                                    <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                            style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                            ng-disabled="control.isDisabled">
+                                        {{control.fromValue}} <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                        <li ng-repeat="fromValue in control.fromValues"><a ng-click="control.setFromValue(fromValue)">{{fromValue}}</a></li>
+                                    </ul>
+                                </div>
+                                <div class="btn-group left-margin" uib-dropdown>
+                                    <span class="h4-style">До </span>
+                                    <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                            style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                            ng-disabled="control.isDisabled">
+                                        {{control.toValue}} <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                        <li ng-repeat="toValue in control.toValues"><a ng-click="control.setToValue(toValue)">{{toValue}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <button class="btn-u btn-u-blue top-margin" type="button" ng-click="control.save()" ng-if="!control.isSaved" ng-disabled="control.isDisabled">{{control.buttonText}}</button>
@@ -88,10 +168,10 @@
                 <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
                         style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
                         ng-disabled="control.isDisabled">
-                    {{control.value}} <span class="caret"></span>
+                    {{control.value.value}} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" uib-dropdown-menu>
-                    <li ng-repeat="value in control.values"><a ng-click="control.setValue(value)">{{value}}</a></li>
+                    <li ng-repeat="value in control.values"><a ng-click="control.setValue(value)">{{value.value}}</a></li>
                 </ul>
             </div>
         </div>

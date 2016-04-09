@@ -22,7 +22,7 @@
                 angles = hexAngles2;
                 radiusPow = 3.5;
                 params[i].x = params[0].x;
-                params[i].y = params[0].y - radius * 3.5;
+                params[i].y = params[0].y + radius * 3.5;
                 params[i].angle = angles[0];
                 continue;
             }
@@ -79,7 +79,11 @@
         var forAdd = this.optParams.splice(removeIndex, 1)[0];
         var x = onAddParamClick.clickedParam.x;
         var y = onAddParamClick.clickedParam.y;
-        this.defaultParams.splice(this.defaultParams.length - 1, 0, forAdd);
+        if (this.optParams.length === 0) {
+            this.defaultParams.splice(this.defaultParams.length-1, 1, forAdd);
+        } else {
+            this.defaultParams.splice(this.defaultParams.length - 1, 0, forAdd);
+        }
         prepareData(this.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
         forAdd.x = x;
         forAdd.y = y;
@@ -289,7 +293,10 @@
                 })
                 .text(function(d) {
                     if (d.boundedControl) {
-                        return d.boundedControl.value;
+                        if (d.boundedControl.shortValue === null || d.boundedControl.shortValue === undefined) {
+                            return d.boundedControl.value.shortValue;
+                        }
+                        return d.boundedControl.shortValue;
                     }
                 })
                 .attr("class","hex-text unselectable")

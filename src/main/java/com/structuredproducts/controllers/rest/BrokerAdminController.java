@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -65,12 +64,4 @@ public class BrokerAdminController extends AbstractAdminController{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(path="/brokerGet",
-                           method = RequestMethod.GET,
-                           produces = MediaType.APPLICATION_JSON_UTF8_VALUE
-    )
-    public ResponseEntity<Object[]> getBrokers() {
-        List<?> list = dbService.getResultList(Broker.class);
-        return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
-    }
 }

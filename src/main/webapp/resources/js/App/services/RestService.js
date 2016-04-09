@@ -294,7 +294,7 @@ angular.module('App.services', ['ngResource']).service('restService', [
 
         getAllBrokers: function(onSuccess, onFail) {
             $http.get(
-                adminUri + "brokerGet"
+                dataUri + "brokerGet"
             ).then(
                 function (response) {
                     onSuccess(response.data);
