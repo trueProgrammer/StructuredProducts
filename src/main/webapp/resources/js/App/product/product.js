@@ -95,6 +95,7 @@
                                      data: hist.dataset
                                  };
                                  data.datasets.push(dataset);
+                                 index++;
                              });
                              var ctx = document.getElementById("chart").getContext("2d");
                              var chart = new Chart(ctx).Line(data, {
@@ -102,7 +103,6 @@
                                  scaleLabel: "<%=value%> $"
                              });
                              document.getElementById("legendDiv").innerHTML = chart.generateLegend();
-                             index++;
                          },
                          function(error) {
 
