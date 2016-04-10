@@ -61,4 +61,19 @@
     display: none;
     position: fixed; bottom: 30px; right: 50px;
 }
-.scroll-to-top:hover { text-decoration: none; }
+.scroll-to-top:hover {
+    text-decoration: none;
+}
+
+.main-buttons-style {
+    margin-top: 50px;
+    display:inline-block;
+}
+
+.center {
+    text-align: center;
+}
+
+.max-width-buttons {
+    max-width: 350px;
+}
