@@ -100,6 +100,10 @@ fieldset {
     color: #e72e29;
 }
 
+.green-style {
+    color: #6BD931;
+}
+
 .content-lg {
     padding-top: 30px;
     padding-bottom: 10px;
@@ -183,4 +187,11 @@ fieldset {
 .social-icons {
     margin-top: -13px;
     margin-bottom: 13px;
+}
+
+.text-like-header-style {
+    color: #687074;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 20px;
 }

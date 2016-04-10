@@ -13,15 +13,24 @@ angular.module('App.investproduct')
         $scope.totalItems = 0;
         $scope.currentPage = 1;
         $scope.itemsPerPage = $scope.viewby;
-        $scope.maxSize = 5; //Number of pager buttons to show
+        $scope.maxSize = 5;
+
+        $scope.filter = {
+            unders : ['Все', 'Фондовые индексы', 'Акции', 'Драгоценные металлы', 'Товары', 'Валюта'],
+            underVal : 'Все'
+        };
 
         $scope.setItemsPerPage = function(num) {
             $scope.itemsPerPage = num;
-            $scope.currentPage = 1; //reset to first paghe
+            $scope.currentPage = 1; //reset to first page
         };
 
         function setProducts(products) {
             $scope.allProducts = products;
+            setTableProducts(products);
+        }
+
+        function setTableProducts(products) {
             $scope.products = products;
             $scope.totalItems = products.length;
         }
@@ -88,6 +97,13 @@ angular.module('App.investproduct')
                 arc.attr("stroke-width", "9");
                 //button.css("box-shadow", "0px 0px 5px 3px #aead95");
                 button.attr("stroke-width", "9");
+                if(type === 'red') {
+                    button.attr('fill','#E3F1FF');
+                } else if(type === 'blue') {
+                    button.attr('fill', '#FFF0FE');
+                } else {
+                    button.attr('fill', '#D8FFD5');
+                }
             }
             function mouseOutLine(type, line, arc, button) {
                 if(clicked[type]) {
@@ -95,8 +111,10 @@ angular.module('App.investproduct')
                 }
                 line.css("visibility", "hidden");
                 arc.attr("stroke-width", "5");
+                button.attr('fill','white');
                 //button.css("box-shadow", "none");
                 button.attr("stroke-width", "3");
+
             }
 
             function mouseOverGreen() {
@@ -347,6 +365,9 @@ angular.module('App.investproduct')
             }
             return products;
         };
+        function resetNameFilter() {
+            $scope.nameFilter = null;
+        }
         $scope.filterProfit = function(products) {
             if ($scope.profitFilter) {
                 return products.filter(function(p) {
@@ -364,27 +385,97 @@ angular.module('App.investproduct')
             }
             return products;
         };
+        function resetProfitFilter() {
+            $scope.profitFilter = null;
+        }
+
+        $scope.filterUnder = function(products) {
+            if ($scope.filter.underVal) {
+                if($scope.filter.underVal === 'Все') {
+                    return products;
+                } else {
+                    return products.filter(function(e) {
+                        var index;
+                        for (index = 0; index < e.underlayingList.length; ++index) {
+                            if(e.underlayingList[index].type.name == $scope.filter.underVal) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
+                }
+            }
+            return products;
+        };
+        function resetUnderFilter() {
+            $scope.filter.underVal === 'Все';
+        };
+        function periodFilter(val,filter) {
+            if (filter.from && filter.to) {
+                if(val.min == 0) {
+                    return val.max >= filter.from && val.max <= filter.to
+                } else if(val.max == 0) {
+                    return val.min >= filter.from && val.min <= filter.to;
+                } else {
+                    return val.min >= filter.from && val.max <= filter.to;
+                }
+            }
+            if (filter.from) {
+                if(val.min == 0) {
+                    return val.max >= filter.from;
+                } else {
+                    return val.min >= filter.from;
+                }
+            }
+            if (filter.to) {
+                if(val.max == 0) {
+                    return val.min <= filter.to;
+                } else {
+                    return val.max <= filter.to;
+                }
+            }
+            return true;
+        };
         $scope.filterSum = function(products) {
             if ($scope.sumFilter) {
                 return products.filter(function(p) {
-                    if ($scope.sumFilter.from && $scope.sumFilter.to) {
-                        return p.investment.min >= $scope.sumFilter.from && p.investment.max <= $scope.sumFilter.to;
+                    return periodFilter(p.investment, $scope.sumFilter);
+                    /*if ($scope.sumFilter.from && $scope.sumFilter.to) {
+                        if(p.investment.min == 0) {
+                            p.investment.max >= $scope.sumFilter.from && p.investment.max <= $scope.sumFilter.to
+                        } else if(p.investment.max == 0) {
+                            return p.investment.min >= $scope.sumFilter.from && p.investment.min <= $scope.sumFilter.to;
+                        } else {
+                            return p.investment.min >= $scope.sumFilter.from && p.investment.max <= $scope.sumFilter.to;
+                        }
                     }
                     if ($scope.sumFilter.from) {
-                        return p.investment.min >= $scope.sumFilter.from ;
+                        if(p.investment.min == 0) {
+                            p.investment.max >= $scope.sumFilter.from;
+                        } else {
+                            return p.investment.min >= $scope.sumFilter.from;
+                        }
                     }
                     if ($scope.sumFilter.to) {
-                        return p.investment.max <= $scope.sumFilter.to ;
+                        if(p.investment.max == 0) {
+                            return p.investment.min <= $scope.sumFilter.to;
+                        } else {
+                            return p.investment.max <= $scope.sumFilter.to;
+                        }
                     }
-                    return true;
+                    return true;*/
                 });
             }
             return products;
         };
+        function resetSumFilter() {
+            $scope.sumFilter = null;
+        }
         $scope.filterTerms = function(products) {
             if ($scope.termsFilter) {
                 return products.filter(function(p) {
-                    if ($scope.termsFilter.from && $scope.termsFilter.to) {
+                    return periodFilter({min:p.minTerm, max:p.maxTerm}, $scope.termsFilter);
+                    /*if ($scope.termsFilter.from && $scope.termsFilter.to) {
                         return p.minTerm >= $scope.termsFilter.from && p.maxTerm <= $scope.termsFilter.to;
                     }
                     if ($scope.termsFilter.from) {
@@ -393,23 +484,44 @@ angular.module('App.investproduct')
                     if ($scope.termsFilter.to) {
                         return p.maxTerm <= $scope.termsFilter.to ;
                     }
-                    return true;
+                    return true;*/
                 });
             }
             return products;
         };
+        function resetTermsFilter() {
+            $scope.termsFilter = null;
+        }
         $scope.filterProducts = function() {
-            setProducts($scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.allProducts)))));
+            setTableProducts($scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.filterUnder($scope.allProducts))))));
+        };
+        $scope.setUnderFilter = function() {
+            $scope.filterProducts();
+        };
+        $scope.clickFilter = function(filter) {
+            if($scope.filter[filter]) {
+                eval('reset'+filter+'Filter')();
+                $scope.filterProducts();
+            }
+            $scope.filter[filter] = !$scope.filter[filter];
         };
         $scope.getPeriodValue = function(val) {
             if (val.min == 0) {
-                return val.max;
+                return 'до ' + val.max;
             } else {
-                return "от " + val.min + " до" + val.max;
+                return "от " + val.min + " до " + val.max;
             }
         };
         $scope.goToProductPage = function(id) {
             $location.path("/product").search("id",id);
         };
-
+        $scope.getClassByRiskType = function(risk) {
+            if(risk == 'Medium') {
+                return 'blue-style';
+            } else if(risk == 'Low') {
+                return 'green-style';
+            } else {
+                return 'red-style'
+            }
+        }
     }]).value("duScrollDuration",100);
