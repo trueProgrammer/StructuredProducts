@@ -240,20 +240,7 @@ angular.module('App.main')
 
         //init app function
         angular.element(document).ready(function () {
-            /*new Ya.share({
-                element: 'the_share',
-                elementStyle: {
-                    'type': 'none',
-                    'quickServices': ['yaru', 'vkontakte', 'facebook', 'twitter', 'odnoklassniki', 'moimir', 'lj', 'gplus']
-                },
-                link: 'http://blog.olegorlov.com',
-                title: 'Олег Орлов - Технические инструменты инфобизнеса',
-                serviceSpecific: {
-                    twitter: {
-                        title: '@olegik_orlov Текст twitter сообщения',
-                    }
-                }
-            });*/
+            var sliderHeight = $("#page1").height() - $("#main-buttons").height();
             App.init();
             jQuery("#layerslider").layerSlider({
                 navStartStop: false,
@@ -261,9 +248,11 @@ angular.module('App.main')
                 responsive : true,
                 responsiveUnder : 960,
                 layersContainer : 960,
+                height: sliderHeight,
                 autoPlayVideos: true,
                 skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
             });
+            //jQuery("#layerslider").height(570);
             $("#phone").mask("+7 (999) 999-9999");
             if (document.addEventListener) {
                 document.addEventListener("mousewheel", handler, false);
@@ -277,5 +266,4 @@ angular.module('App.main')
             document.removeEventListener("DOMMouseScroll", handler, false);
             document.removeEventListener("mousewheel", handler, false);
         });
-
     }]).value('duScrollOffset', 0).value("duScrollDuration",100);

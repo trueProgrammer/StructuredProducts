@@ -5,55 +5,57 @@
 
     <div id="page1" class="screen-height-95">
 
-        <!--=== Slider ===-->
-        <div id="layerslider" style="width: 100%;height: 40%; margin: 0px auto;min-height: 240px;">
+        <div id="layerslider" style="width: 100%;margin: 0px auto;min-height: 240px;">
             <div class="ls-slide" data-ls="slidedelay:2500;transition2d:25;">
-                <img src="resources/img/bg1.jpg" class="ls-bg" alt="Slide background">
+                <img src="resources/img/iStock_bg1.jpg" class="ls-bg" alt="Slide background">
             </div>
             <div class="ls-slide" data-ls="transition2d:93;">
-                <img src="resources/img/18.jpg" class="ls-bg" alt="Slide background">
+                <img src="resources/img/iStock_bg2.jpg" class="ls-bg" alt="Slide background">
             </div>
             <div class="ls-slide"style="slidedirection: right;transition2d: 92,93,105;">
-                <img src="resources/img/bg2.jpg" class="ls-bg" alt="Slide background">
+                <img src="resources/img/iStock_bg3.jpg" class="ls-bg" alt="Slide background">
+            </div>
+            <div class="ls-slide"style="slidedirection: right;transition2d: 92,93,105;">
+                <img src="resources/img/iStock_bg4.jpg" class="ls-bg" alt="Slide background">
             </div>
         </div>
-        <!--=== End Slider ===-->
-
-        <div class="container height-60">
-            <br/>
-            <div class="title-v1 margin-bottom-20">
-                <h2>С помощью <span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span> вы можете</h2>
-            </div>
-            <!-- Service Blocks -->
-            <div id="main-button" class="margin-bottom-60">
-                <div id="buttons" class="row">
-                    <div class="col-md-4 col-btn">
-                        <div class="service-block service-block-default main-button-with-top">
-                            <a href="#/investproduct">
-                                <div id="butcol">
-                                    <img alt="" src="resources/img/icons/target.png">
-                                    <h2  class="heading-sm invest-button">Выбрать свой инвестиционный продукт</h2>
-                                </div>
+        <div id="main-buttons" style="width:100%;display: inline-block;">
+            <div class="container">
+                <br/>
+                <div class="title-v1 margin-bottom-20">
+                    <h2>С помощью <span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span> вы можете</h2>
+                </div>
+                <!-- Service Blocks -->
+                <div id="main-button" class="margin-bottom-60">
+                    <div id="buttons" class="row">
+                        <div class="col-md-4 col-btn">
+                            <div class="service-block service-block-default main-button-with-top">
+                                <a href="#/investproduct">
+                                    <div id="butcol">
+                                        <img alt="" src="resources/img/icons/target.png">
+                                        <h2  class="heading-sm invest-button">Выбрать свой инвестиционный продукт</h2>
+                                    </div>
+                                </a>
+                                <button type="button" class="main-page-button" ng-click="gotoAnchorAnimatedWithPageAndOffset('page2', 1, 40)">
+                                    <h3 class="top-five-button">Топ-5</h3>
+                                    <i class="fa fa-angle-down"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-btn">
+                            <a href="#/createproduct">
+                            <div class="service-block service-block-default button-height">
+                                <img alt="" src="resources/img/icons/portfel.png">
+                                <h2 class="heading-md">Создать индивидуальный инвестиционный продукт</h2>
+                            </div>
                             </a>
-                            <button type="button" class="main-page-button" ng-click="gotoAnchorAnimatedWithPageAndOffset('page2', 1, 40)">
-                                <h3 class="top-five-button">Топ-5</h3>
-                                <i class="fa fa-angle-down"></i>
-                            </button>
                         </div>
-                    </div>
-                    <div class="col-md-4 col-btn">
-                        <a href="#/createproduct">
-                        <div class="service-block service-block-default button-height">
-                            <img alt="" src="resources/img/icons/portfel.png">
-                            <h2 class="heading-md">Создать индивидуальный инвестиционный продукт</h2>
-                        </div>
-                        </a>
-                    </div>
-                    <div class="col-md-4 col-btn">
-                        <div class="service-block service-block-default">
-                            <img alt="" src="resources/img/icons/dollar.png">
-                            <h2 class="heading-md"><br/>Coming soon<br/><br/><br/></h2>
-                            <p></p>
+                        <div class="col-md-4 col-btn">
+                            <div class="service-block service-block-default">
+                                <img alt="" src="resources/img/icons/dollar.png">
+                                <h2 class="heading-md"><br/>Coming soon<br/><br/><br/></h2>
+                                <p></p>
+                            </div>
                         </div>
                     </div>
                 </div>
