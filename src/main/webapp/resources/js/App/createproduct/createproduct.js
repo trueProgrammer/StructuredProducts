@@ -270,6 +270,7 @@ angular.module('App.createproduct')
                             } else {
                                 $scope.optParamsControl.isDisabled = false;
                                 $('#optParamsControlBlock').css('opacity', '1');
+                                $('#sendRequest').css('opacity', '1');
                                 hex.switchAddParams();
                             }
                             savedControls[this.id] = {header: this.header, value: this.line};

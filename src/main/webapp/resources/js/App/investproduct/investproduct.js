@@ -98,9 +98,9 @@ angular.module('App.investproduct')
                 //button.css("box-shadow", "0px 0px 5px 3px #aead95");
                 button.attr("stroke-width", "9");
                 if(type === 'red') {
-                    button.attr('fill','#E3F1FF');
-                } else if(type === 'blue') {
                     button.attr('fill', '#FFF0FE');
+                } else if(type === 'blue') {
+                    button.attr('fill','#E3F1FF');
                 } else {
                     button.attr('fill', '#D8FFD5');
                 }

@@ -10,6 +10,9 @@
     </div>
 </div>
 <div class="container">
+    <!--<div class="center">
+        <h2>Выберете структурный продукт по интересующему вас параметру</h2>
+    </div>-->
     <div class="screen-height">
         <h2>Задайте параметры вашего структурного продукта</h2>
         <div class="col-md-8 col-sm-6">
@@ -146,13 +149,14 @@
                       </li>
                   </ul>
                 </span>
+            </div>
+            <!--END OTHER PARAMS-->
+            <div id="sendRequest" class="opacity-style">
                 <br/>
                 <a href="" ng-click="openModal()"><h3>Отправить заявку на создание продукта</h3></a>
                 <button type="button" style="border:0; background: white" ng-click="openModal()"><img src="resources/img/send_bid.png"/></button>
             </div>
-            <!--END OTHER PARAMS-->
         </div>
-
     </div>
 </div>
 <div id="optParamsContainer" ng-show="false">
@@ -176,7 +180,6 @@
             </div>
         </div>
         <button class="btn-u btn-u-blue top-margin" type="button" ng-click="control.save()" ng-if="!control.isSaved">{{control.buttonText}}</button>
-        <hr class="hr-style"/>
     </div>
 </div>
 

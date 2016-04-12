@@ -5,13 +5,12 @@
 }
 
 .header .navbar-nav {
-    margin-right: 10%;
-    float: right;
-    margin-left: 280px;
+    float: left;
+    margin-left: 45%;
 }
 
 .header .navbar-nav > li > a {
-    padding: 9px 30px 4px 20px;
+    padding: 9px 22px 4px 20px;
 }
 
 .header-fixed .header.header-fixed-shrink .navbar-nav > li > a {

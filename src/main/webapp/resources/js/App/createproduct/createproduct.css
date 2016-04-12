@@ -100,3 +100,7 @@ input.invalid-control {
 .list-style {
     list-style-type: none;
 }
+
+.center {
+    text-align: center;
+}

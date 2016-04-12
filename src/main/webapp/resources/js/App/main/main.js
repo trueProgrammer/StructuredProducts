@@ -240,7 +240,8 @@ angular.module('App.main')
 
         //init app function
         angular.element(document).ready(function () {
-            var sliderHeight = $("#page1").height() - $("#main-buttons").height();
+            var sliderHeight = $( window ).height() * 0.95 - $("#main-buttons").height();
+            //var sliderHeight = $("#page1").height() - $("#main-buttons").height();
             App.init();
             jQuery("#layerslider").layerSlider({
                 navStartStop: false,
@@ -252,18 +253,18 @@ angular.module('App.main')
                 autoPlayVideos: true,
                 skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
             });
-            //jQuery("#layerslider").height(570);
+            /*jQuery("#layerslider").height(sliderHeight);*/
             $("#phone").mask("+7 (999) 999-9999");
-            if (document.addEventListener) {
+            /*if (document.addEventListener) {
                 document.addEventListener("mousewheel", handler, false);
                 document.addEventListener("DOMMouseScroll", handler, false);
             } else {
                 document.attachEvent("onmousewheel", MouseWheelHandler());
-            }
+            }*/
         });
 
-        $scope.$on("$destroy", function() {
+        /*$scope.$on("$destroy", function() {
             document.removeEventListener("DOMMouseScroll", handler, false);
             document.removeEventListener("mousewheel", handler, false);
-        });
+        });*/
     }]).value('duScrollOffset', 0).value("duScrollDuration",100);
