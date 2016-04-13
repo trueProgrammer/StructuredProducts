@@ -13,6 +13,8 @@ angular.module('App.createproduct')
                 isDisabled: true
             };
 
+            $scope.sendRequestDisabled = true;
+
             var defaultParams = [{
                 text: 'Доходность',
                 stroke: '#91CF50',
@@ -269,6 +271,7 @@ angular.module('App.createproduct')
                                 this.next.hexControl.turnOn();
                             } else {
                                 $scope.optParamsControl.isDisabled = false;
+                                $scope.sendRequestDisabled = false;
                                 $('#optParamsControlBlock').css('opacity', '1');
                                 $('#sendRequest').css('opacity', '1');
                                 hex.switchAddParams();

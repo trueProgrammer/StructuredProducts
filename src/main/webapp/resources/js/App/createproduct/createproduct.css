@@ -104,3 +104,7 @@ input.invalid-control {
 .center {
     text-align: center;
 }
+
+.headline {
+    border-bottom: none !important;
+}

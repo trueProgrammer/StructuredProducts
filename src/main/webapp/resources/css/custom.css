@@ -195,3 +195,7 @@ fieldset {
     font-weight: 400;
     line-height: 20px;
 }
+
+.breadcrumbs {
+    background: none;
+}

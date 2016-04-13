@@ -27,7 +27,7 @@
                 continue;
             }
             params[i].x = params[0].x + Math.sin(params[i - 1].angle) * radius * radiusPow;
-            params[i].y = params[0].y - Math.cos(params[i - 1].angle) * radius * radiusPow;
+            params[i].y = params[0].y + Math.cos(params[i - 1].angle) * radius * radiusPow;
             params[i].angle = angles[i % angles.length];
         }
     };
@@ -84,7 +84,7 @@
         } else {
             this.defaultParams.splice(this.defaultParams.length - 1, 0, forAdd);
         }
-        prepareData(this.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
+        prepareData(this.defaultParams, radius * 3, radius * 3, radius);
         forAdd.x = x;
         forAdd.y = y;
         forAdd.mode = 'active';
@@ -319,7 +319,7 @@
                 id: 'addParam'
             });
         }
-        prepareData(self.defaultParams, svg[0][0].clientWidth / 2, svg[0][0].clientHeight / 2, radius);
+        prepareData(self.defaultParams, radius * 3, radius * 3, radius);
         this.drawHex(this.defaultParams, mainGroup, onActiveParamClick);
     }
 })();
