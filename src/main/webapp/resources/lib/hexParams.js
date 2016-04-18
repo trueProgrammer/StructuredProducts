@@ -294,9 +294,12 @@
                 .text(function(d) {
                     if (d.boundedControl) {
                         if (d.boundedControl.shortValue === null || d.boundedControl.shortValue === undefined) {
-                            return d.boundedControl.value.shortValue;
+                            if(d.boundedControl.value) {
+                                return d.boundedControl.value.shortValue;
+                            }
+                        } else {
+                            return d.boundedControl.shortValue;
                         }
-                        return d.boundedControl.shortValue;
                     }
                 })
                 .attr("class","hex-text unselectable")

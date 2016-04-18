@@ -108,3 +108,15 @@ input.invalid-control {
 .headline {
     border-bottom: none !important;
 }
+
+.error-diapason {
+    border-color: #e72e29 !important;
+}
+
+.sendRequestForm {
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-radius: 5px;
+    border: 2px solid #e72e29;
+}

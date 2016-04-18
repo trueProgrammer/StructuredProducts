@@ -202,6 +202,21 @@ angular.module('App.createproduct')
                 });
             };
 
+            function validateDiapason(control) {
+                if(control.type === 'diapason' || control.type === 'dropdownAndDiapason' || control.diapasonOn) {
+                    if(control.toValue > control.fromValue) {
+                        control.error = false;
+                        return true;
+                    } else {
+                        control.error = true;
+                        return false;
+                    }
+                } else {
+                    control.error = false;
+                    return true;
+                }
+            }
+
             var extendDefaultControls = function (controls) {
                 controls.forEach(function(control, index){
                     if (control.type === 'diapason') {
@@ -253,6 +268,9 @@ angular.module('App.createproduct')
                         }
                     };
                     control.save = function () {
+                        if(!validateDiapason(control)) {
+                            return;
+                        }
                         if (control.active) {
                             this.isSaved = true;
                             if (control.type === 'diapason') {
@@ -321,7 +339,9 @@ angular.module('App.createproduct')
 
 
             $scope.openModal = function () {
-                modalService.show();
+                if(!$scope.sendRequestDisabled) {
+                    modalService.show();
+                }
             };
 
         }]);
