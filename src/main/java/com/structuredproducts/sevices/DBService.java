@@ -152,6 +152,7 @@ public class DBService {
             transaction.commit();
         } catch (Exception e) {
             logger.error("Can not remove list of entities.", e);
+            throw e;
         } finally {
             if(transaction.isActive()) {
                 transaction.rollback();
