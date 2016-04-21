@@ -101,7 +101,7 @@ public class ProductAdminController extends AbstractAdminController{
         Class<?> clazz = ENTITY_TYPES.get(entityType);
         List<?> list = dbService.getResultList(clazz);
         if(Product.class.isAssignableFrom(clazz)) {
-            ControllerUtils.setUnderlayings((List<Product>) list);
+            ControllerUtils.getProducts((List<Product>) list);
         }
         if(list.size() == 0) {
             return new ResponseEntity<>(HttpStatus.OK);

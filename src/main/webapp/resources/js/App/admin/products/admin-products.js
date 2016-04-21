@@ -254,6 +254,11 @@ angular.module('App.admin.products')
         };
 
         $scope.removeData = function() {
+            for(var i in $scope.selection) {
+                if(!$scope.selection[i].id) {
+                    $scope.selection.splice(i, 1);
+                }
+            }
             restService.deleteInstrumentType(
                 $scope.selection,
                 $scope.selected,
