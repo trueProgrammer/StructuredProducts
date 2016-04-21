@@ -33,10 +33,6 @@ public class Product {
     @Transient
     private String underlayings;
 
-    @ManyToOne(targetEntity = Investment.class)
-    @JoinColumn(name = "investment")
-    private Investment investment;
-
     @ManyToOne(targetEntity = Broker.class)
     @JoinColumn(name = "broker")
     private Broker broker;
@@ -77,6 +73,12 @@ public class Product {
     @Column
     private int maxTerm;
 
+    @Column
+    private int minInvest;
+
+    @Column
+    private int maxInvest;
+
     @Transient
     private RiskType riskType;
 
@@ -111,14 +113,6 @@ public class Product {
 
     public void setUnderlayingList(List<Underlaying> underlaying) {
         this.underlayingList = underlaying;
-    }
-
-    public Investment getInvestment() {
-        return investment;
-    }
-
-    public void setInvestment(Investment investment) {
-        this.investment = investment;
     }
 
     public Broker getBroker() {
@@ -239,5 +233,21 @@ public class Product {
 
     public void setUnderlayings(String underlayings) {
         this.underlayings = underlayings;
+    }
+
+    public int getMinInvest() {
+        return minInvest;
+    }
+
+    public void setMinInvest(int minInvest) {
+        this.minInvest = minInvest;
+    }
+
+    public int getMaxInvest() {
+        return maxInvest;
+    }
+
+    public void setMaxInvest(int maxInvest) {
+        this.maxInvest = maxInvest;
     }
 }

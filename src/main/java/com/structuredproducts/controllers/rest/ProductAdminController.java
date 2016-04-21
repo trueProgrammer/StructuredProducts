@@ -1,6 +1,5 @@
 package com.structuredproducts.controllers.rest;
 
-import com.google.common.base.Joiner;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.sevices.ServiceUtils;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(AbstractAdminController.rootUrl)
@@ -103,16 +101,12 @@ public class ProductAdminController extends AbstractAdminController{
         Class<?> clazz = ENTITY_TYPES.get(entityType);
         List<?> list = dbService.getResultList(clazz);
         if(Product.class.isAssignableFrom(clazz)) {
-            setUnderlayings((List<Product>) list);
+            ControllerUtils.setUnderlayings((List<Product>) list);
         }
-        return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
-    }
-
-    private static final Joiner joiner = Joiner.on(", ");
-
-    private static void setUnderlayings(List<Product> products) {
-        products.parallelStream().forEach(
-                a -> a.setUnderlayings(joiner.join(a.getUnderlayingList().parallelStream().map(b -> b.getName()).collect(Collectors.toList())))
-        );
+        if(list.size() == 0) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
+        }
     }
 }

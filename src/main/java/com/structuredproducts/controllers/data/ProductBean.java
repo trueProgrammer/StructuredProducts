@@ -8,7 +8,6 @@ public class ProductBean {
     private long id;
     private String name;
     private List<Underlaying> underlying;
-    private String underlying2;
     private int minInvestment;
     private String broker;
     private float profit;
@@ -96,10 +95,6 @@ public class ProductBean {
         return profit;
     }
 
-    public void setReturn(float profit) {
-        this.profit = profit;
-    }
-
     public String getPeriodicity() {
         return periodicity;
     }
@@ -148,7 +143,7 @@ public class ProductBean {
         this.minTerm = minTerm;
     }
 
-    public void setProfit(int profit) {
+    public void setProfit(float profit) {
         this.profit = profit;
     }
 
@@ -158,14 +153,6 @@ public class ProductBean {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getUnderlying2() {
-        return underlying2;
-    }
-
-    public void setUnderlying2(String underlying2) {
-        this.underlying2 = underlying2;
     }
 
     public void setUnderlying(List<Underlaying> underlying) {

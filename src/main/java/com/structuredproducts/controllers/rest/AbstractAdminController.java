@@ -18,7 +18,6 @@ public class AbstractAdminController {
 
     protected final Map<String, Class<?>> ENTITY_TYPES = ImmutableMap.<String, Class<?>>builder()
                                                                       .put("productType", ProductType.class)
-                                                                      .put("investment", Investment.class)
                                                                       .put("broker", Broker.class)
                                                                       .put("strategy", Strategy.class)
                                                                       .put("legalType", LegalType.class)

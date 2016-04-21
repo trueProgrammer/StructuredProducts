@@ -37,14 +37,6 @@ angular.module('App.admin.products')
                     cellTemplate: defaultStrCellTemplate
                 }
             ],
-            investment : [
-                { field: 'min', displayName: 'Минимум', width: "47%",
-                    notNull: true,
-                    cellTemplate: defaultStrCellTemplate
-
-                },
-                { field: 'max', displayName: 'Максимум', width: "47%", notNull: true, cellTemplate: defaultStrCellTemplate},
-            ],
             strategy : [
                 { field: 'name', displayName: 'Стратегия', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate },
             ],
@@ -85,18 +77,9 @@ angular.module('App.admin.products')
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
                 { field: 'minTerm',  displayName: 'Минимальный срок', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'maxTerm',  displayName: 'Максимальный срок', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
-                { field: 'underlayings', displayName: 'Базовый актив', width: 200,
-                    notNull: true,
-                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
-                    cellFilter: "griddropdown:this",
-                    editableEntity: 'underlaying', editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
-                { field: 'investment', displayName: 'Минимальная сумма инвестиций', width: 250,
-                    notNull: true,
-                    cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
-                    cellFilter: "griddropdown:this",
-                    editableEntity: 'investment', editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'underlayings',  displayName: 'Базовый актив', width: 200, notNull: true},
+                { field: 'minInvest',  displayName: 'Минимальные инвестиции', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'maxInvest',  displayName: 'Максимальные инвестиции', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'broker', displayName: 'Провайдер продукта', width: 200,
                     notNull: true,
                     cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
@@ -135,7 +118,11 @@ angular.module('App.admin.products')
             restService.getInstrumentType(
                 entity,
                 function(values) {
-                    $scope.table.data = values;
+                    if(values === "") {
+                        $scope.table.data = [];
+                    } else {
+                        $scope.table.data = values;
+                    }
                 },
                 function(response) {
                     $log.error("Get instrument values for "+entity+" failed.");
@@ -180,7 +167,7 @@ angular.module('App.admin.products')
 
         var validateColumn = function(colDef, newVal) {
             if (colDef.notNull) {
-                if (newVal === undefined || newVal === null || (newVal.trim && (newVal === '' || newVal.trim() === ''))) {
+                if (newVal === undefined || newVal === null || (newVal && newVal === '')) {
                     return false;
                 }
             }
@@ -244,8 +231,8 @@ angular.module('App.admin.products')
                     for (var j in $scope.table.data) {
                         var data = $scope.table.data[j];
                         if (data[columnDef.name] !== undefined || data[columnDef.name] !== null) {
-                            if (data[columnDef.name].trim) {
-                                if(data[columnDef.name] === '' || data[columnDef.name].trim() === '') {
+                            if (data[columnDef.name]) {
+                                if(data[columnDef.name] === '') {
                                     invalidColumns.push({row: j, name: columnDef.name});
                                 }
                             }

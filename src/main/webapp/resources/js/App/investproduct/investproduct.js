@@ -440,30 +440,6 @@ angular.module('App.investproduct')
             if ($scope.sumFilter) {
                 return products.filter(function(p) {
                     return periodFilter(p.investment, $scope.sumFilter);
-                    /*if ($scope.sumFilter.from && $scope.sumFilter.to) {
-                        if(p.investment.min == 0) {
-                            p.investment.max >= $scope.sumFilter.from && p.investment.max <= $scope.sumFilter.to
-                        } else if(p.investment.max == 0) {
-                            return p.investment.min >= $scope.sumFilter.from && p.investment.min <= $scope.sumFilter.to;
-                        } else {
-                            return p.investment.min >= $scope.sumFilter.from && p.investment.max <= $scope.sumFilter.to;
-                        }
-                    }
-                    if ($scope.sumFilter.from) {
-                        if(p.investment.min == 0) {
-                            p.investment.max >= $scope.sumFilter.from;
-                        } else {
-                            return p.investment.min >= $scope.sumFilter.from;
-                        }
-                    }
-                    if ($scope.sumFilter.to) {
-                        if(p.investment.max == 0) {
-                            return p.investment.min <= $scope.sumFilter.to;
-                        } else {
-                            return p.investment.max <= $scope.sumFilter.to;
-                        }
-                    }
-                    return true;*/
                 });
             }
             return products;
@@ -475,16 +451,6 @@ angular.module('App.investproduct')
             if ($scope.termsFilter) {
                 return products.filter(function(p) {
                     return periodFilter({min:p.minTerm, max:p.maxTerm}, $scope.termsFilter);
-                    /*if ($scope.termsFilter.from && $scope.termsFilter.to) {
-                        return p.minTerm >= $scope.termsFilter.from && p.maxTerm <= $scope.termsFilter.to;
-                    }
-                    if ($scope.termsFilter.from) {
-                        return p.minTerm >= $scope.termsFilter.from ;
-                    }
-                    if ($scope.termsFilter.to) {
-                        return p.maxTerm <= $scope.termsFilter.to ;
-                    }
-                    return true;*/
                 });
             }
             return products;

@@ -18,9 +18,6 @@
                     <li class="list-group-item"><a href="" ng-click="selectTable('productType')" ng-class="{'blue-style': selected == 'productType'}">
                         Тип структурного продукта
                     </a></li>
-                    <li class="list-group-item"><a href="" ng-click="selectTable('investment')" ng-class="{'blue-style': selected == 'investment'}">
-                        Минимальные инвестиции
-                    </a></li>
                     <li class="list-group-item"><a href="" ng-click="selectTable('strategy')" ng-class="{'blue-style': selected == 'strategy'}">
                         Стратегия
                     </a></li>
@@ -58,7 +55,7 @@
                 <button class="btn-u btn-u-sea rounded disabled-button" type="button" ng-click="saveData()" ng-disabled="saveButtonsDisabled">
                     Сохранить изменения
                 </button>
-                <button type="button" class="btn-u btn-u-sea rounded" ng-click="addData()">
+                <button type="button" class="btn-u btn-u-sea rounded" ng-click="addData()" >
                     Добавить
                 </button>
                 <button type="button" class="btn-u btn-u-sea rounded disabled-button" ng-click="removeData()" ng-disabled="selection.length === 0">

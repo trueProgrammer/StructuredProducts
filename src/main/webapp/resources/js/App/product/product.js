@@ -69,7 +69,7 @@
                  /*'20',*/
                  function(result) {
                      result.product.termName = rangeFunction(result.product.minTerm, result.product.maxTerm)+ " месяцев";
-                     result.product.investName = rangeFunction(result.product.investment.min, result.product.investment.max);
+                     result.product.investName = rangeFunction(result.product.minInvest, result.product.maxInvest);
                      $scope.productParams = result;
                      restService.getUnderlayingHistoricalQuotes(result.product.id,
                          function(result) {

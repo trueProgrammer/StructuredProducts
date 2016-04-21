@@ -9,8 +9,6 @@ import com.structuredproducts.persistence.entities.instrument.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvMapReader;
 import org.supercsv.io.CsvMapWriter;
 import org.supercsv.io.ICsvMapReader;
@@ -20,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -45,44 +42,8 @@ public class ProductCsvToDbService {
             .put("eur", "EUR")
             .build();
 
-    public final static CellProcessor[] PRODUCTS_PROCESSORS = new CellProcessor[]{
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-            new Optional(),
-    };
-
     @Autowired
     DBService dbService;
-
-    private Map<String, String> beanPropertiesToColumnName = new HashMap<>();
-    {
-        beanPropertiesToColumnName.put("name", "Название");//��������
-        beanPropertiesToColumnName.put("productType", "Тип продукта");
-        beanPropertiesToColumnName.put("minTerm","Минимальный срок");
-        beanPropertiesToColumnName.put("maxTerm", "Максимальный срок");
-        beanPropertiesToColumnName.put("underlying", "Базовый актив");
-        beanPropertiesToColumnName.put("minInvestment","Минимальная сумма");
-        beanPropertiesToColumnName.put("maxInvestment","Максимальная сумма");
-        beanPropertiesToColumnName.put("broker","Провайдер");
-        beanPropertiesToColumnName.put("return","Доходность");
-        beanPropertiesToColumnName.put("strategy", "Стратегия");
-        beanPropertiesToColumnName.put("legalType", "Юридическая форма");
-        beanPropertiesToColumnName.put("payoff","Размер выплаты");
-        beanPropertiesToColumnName.put("risks", "Риски");
-        beanPropertiesToColumnName.put("currency", "Валюта");
-        beanPropertiesToColumnName.put("periodicity", "Периодичность выплат");
-    }
 
     private String header[] = new String[]{
             "Название",
@@ -124,7 +85,8 @@ public class ProductCsvToDbService {
             product.setName(productBean.getName());
             product.setCurrency(new Currency(productBean.getCurrency()));
             product.setUnderlayingList(productBean.getUnderlying());
-            product.setInvestment(new Investment(productBean.getMinInvestment(), productBean.getMaxInvestment()));
+            product.setMinInvest(productBean.getMinInvestment());
+            product.setMaxInvest(productBean.getMaxInvestment());
             product.setBroker(new Broker(productBean.getBroker()));
             product.setReturnValue(productBean.getProfit());
             product.setStrategy(new Strategy(productBean.getStrategy()));
@@ -141,45 +103,16 @@ public class ProductCsvToDbService {
     }
 
     public String convertToCsv() throws IOException {
-        List<Product> products = (List<Product>) dbService.getResultList(Product.class);
-
-//        String[] header = beanPropertiesToColumnName.values().toArray(new String[beanPropertiesToColumnName.size()]);
         StringWriter stringWriter = new StringWriter();
         CsvMapWriter writer = new CsvMapWriter(stringWriter, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
-        Map<String, Object> map = new HashMap<>();
         writer.writeHeader(header);
-
- /*       try {
-            for (Product product : products) {
-                map.put(beanPropertiesToColumnName.get("name"), product.getName());
-                map.put(beanPropertiesToColumnName.get("productType"), product.getProductType().getName());
-                map.put(beanPropertiesToColumnName.get("minTerm"), product.getTerm().getMin());
-                map.put(beanPropertiesToColumnName.get("maxTerm"), product.getTerm().getMax());
-                map.put(beanPropertiesToColumnName.get("underlying"), product.getUnderlaying().getName());
-                map.put(beanPropertiesToColumnName.get("minInvestment"), product.getInvestment().getMin());
-                map.put(beanPropertiesToColumnName.get("maxInvestment"), product.getInvestment().getMax());
-                map.put(beanPropertiesToColumnName.get("broker"), product.getBroker().getName());
-                map.put(beanPropertiesToColumnName.get("return"), product.getReturnValue());
-                map.put(beanPropertiesToColumnName.get("strategy"), product.getStrategy().getName());
-                map.put(beanPropertiesToColumnName.get("legalType"), product.getLegalType().getName());
-                map.put(beanPropertiesToColumnName.get("payoff"), product.getPayoff().getName());
-                map.put(beanPropertiesToColumnName.get("risks"), product.getRisks().getName());
-                map.put(beanPropertiesToColumnName.get("currency"), product.getCurrency().getName());
-                map.put(beanPropertiesToColumnName.get("periodicity"), product.getPaymentPeriodicity().getName());
-                writer.write(map, header, PRODUCTS_PROCESSORS);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            writer.close();
-        }*/
         return stringWriter.toString();
     }
 
     private static final Pattern FROM_TO_TERM_PATTERN = Pattern.compile("от (\\d+) до (\\d+) мес.*");
     private static final Pattern YEAR_PATTERN = Pattern.compile("([\\d\\.\\,]+)\\sгод.*");
     private static final Pattern MONTH_PATTERN = Pattern.compile("([d+])\\sмес.*");
-    private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(\\w+)\\s*\\(([\\w\\S\\s])\\)+");
+    //private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(\\w+)\\s*\\(([\\w\\S\\s])\\)+");
     private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
     private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до (\\d+) тыс.*");
 
@@ -242,13 +175,13 @@ public class ProductCsvToDbService {
                                     Iterable<String> underlayings = Splitter.on(",").split(tuple.getValue());
                                     List<Underlaying> underObjList = Lists.newArrayList();
                                     underlayings.forEach(
-                                            str -> underObjList.add(new Underlaying(str))
+                                            str -> underObjList.add(new Underlaying(str.trim()))
                                     );
                                     bean.setUnderlying(underObjList);
                                     break;
                                 case "доходность":
                                 case "return":
-                                    bean.setReturn(Float.parseFloat(tuple.getValue().replace("%", "").replace(",", ".")));
+                                    bean.setProfit(Float.parseFloat(tuple.getValue().replace("%", "").replace(",", ".")));
                                     break;
                                 case "стратегия":
                                 case "strategy":

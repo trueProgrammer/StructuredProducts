@@ -1,8 +1,5 @@
 package com.structuredproducts.controllers.rest;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Lists;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.controllers.data.ProductType;
@@ -27,7 +24,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by Vlad on 23.11.2015.
@@ -40,8 +36,6 @@ public class DataController {
 
     @Autowired
     private DBService dbService;
-
-    private static final Joiner joiner = Joiner.on(", ");
 
     @RequestMapping(path = "/timetypes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Tuple[]> getTimeTypes() {
@@ -79,15 +73,11 @@ public class DataController {
     @RequestMapping(path = "/topproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Product[]> getTopProducts(@RequestParam(name="time") String timeType, @RequestParam(name="type")String productType) {
         logger.debug("Time {}, product type {}", timeType, productType);
-        List<Product> list = getProducts(dbService.getTopProductsByTimeTypeAndProductType(timeType, productType));
+        List<Product> list = ControllerUtils.getProducts(dbService.getTopProductsByTimeTypeAndProductType(timeType, productType));
         return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
     }
 
-    //stupid RiskTypeToProductType for association button type and product type by risk....
-    private static BiMap<String, RiskType> RiskTypeToProductType = ImmutableBiMap.<String, RiskType>builder().
-            put("100% защита капитала без гарантированной доходности", RiskType.High).
-            put("С участием (ограниченный риск)", RiskType.Medium).
-            put("100% защита капитала плюс гарантированная доходность", RiskType.Low).build();
+
 
     @RequestMapping(path = "/allproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object[]> getAllProducts() {
@@ -104,7 +94,7 @@ public class DataController {
             for(String type : types) {
                 RiskType riskType = RiskType.getRiskType(type);
                 if(riskType != null) {
-                    productTypes.add(RiskTypeToProductType.inverse().get(riskType));
+                    productTypes.add(ControllerUtils.RiskTypeToProductType.inverse().get(riskType));
                 } else {
                     logger.error("Unknown risk type: {}", type);
                 }
@@ -114,27 +104,11 @@ public class DataController {
     }
 
     private List<Product> getProductsByType(List<String> productTypes) {
-        return getProducts((List<Product>) dbService.getProductsByType(productTypes));
+        return ControllerUtils.getProducts((List<Product>) dbService.getProductsByType(productTypes));
     }
 
     private List<Product> getProducts() {
-        return getProducts((List<Product>) dbService.getResultList(Product.class));
-    }
-
-    private List<Product> getProducts(List<Product> result) {
-        setRiskType(result);
-        setUnderlayings(result);
-        return result;
-    }
-
-    private static void setRiskType(List<Product> products) {
-        products.parallelStream().forEach(a -> a.setRiskType(RiskTypeToProductType.get(a.getProductType().getName())));
-    }
-
-    private static void setUnderlayings(List<Product> products) {
-        products.parallelStream().forEach(
-                a -> a.setUnderlayings(joiner.join(a.getUnderlayingList().parallelStream().map(b -> b.getName()).collect(Collectors.toList())))
-        );
+        return ControllerUtils.getProducts((List<Product>) dbService.getResultList(Product.class));
     }
 
     @RequestMapping(path = "/investideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -168,7 +142,7 @@ public class DataController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public ResponseEntity<ProductParam> getProductWithParams(@RequestParam("id")Integer id) {
-        Optional<Product> productOpt = (getProducts((List<Product>) dbService.getResultList(Product.class))).stream().filter(p -> p.getId().equals(id)).findAny();
+        Optional<Product> productOpt = (ControllerUtils.getProducts((List<Product>) dbService.getResultList(Product.class))).stream().filter(p -> p.getId().equals(id)).findAny();
         List<ProductParam> params = (List<ProductParam>) dbService.getResultList(ProductParam.class);
         if (!productOpt.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -186,10 +160,9 @@ public class DataController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public ResponseEntity<Object> getUnderlayingHistoricalQuotes(@RequestParam("id")Integer id) {
-        Optional<Product> productOpt = (getProducts((List<Product>) dbService.getResultList(Product.class))).stream().filter(p -> p.getId().equals(id)).findAny();
+        Optional<Product> productOpt = (ControllerUtils.getProducts((List<Product>) dbService.getResultList(Product.class))).stream().filter(p -> p.getId().equals(id)).findAny();
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
-            //Map<String, Map<String, String>> result = new HashMap<>();
             List<HistoricalHolder> result = Lists.newArrayList();
             product.getUnderlayingList().parallelStream().forEach(
                     v -> {

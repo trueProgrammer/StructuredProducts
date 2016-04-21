@@ -34,7 +34,7 @@ public class ProductCsvToDbServiceTest {
         Product product = products.get(0);
         Assert.assertThat(product.getName(), Matchers.is("Alpari"));
         Assert.assertThat(product.getMinTerm(), Matchers.is(1));
-        Assert.assertThat(product.getInvestment().getMin(), Matchers.is(100));
+        Assert.assertThat(product.getMinInvest(), Matchers.is(100));
     }
 
     @Test

@@ -25,7 +25,6 @@ public class DBService {
 
     private static final Map<Class<?>, String> TABLE_TO_TYPE_MAPPING = ImmutableMap.<Class<?>, String>builder().
             put(ProductType.class, "INSTRUMENT.PRODUCT_TYPE").
-            put(Investment.class, "INSTRUMENT.INVESTMENT").
             put(UnderlayingType.class, "INSTRUMENT.UNDERLAYING_TYPE").
             put(Underlaying.class, "INSTRUMENT.UNDERLAYING").
             put(Strategy.class, "INSTRUMENT.STRATEGY").
@@ -99,7 +98,6 @@ public class DBService {
         try {
             products.forEach(product -> {
                 product.setCurrency(saveOrUpdateNameable(product.getCurrency()));
-                product.setInvestment(saveOrUpdateUniqueWithMinMax(product.getInvestment()));
                 product.setBroker(saveOrUpdateNameable(product.getBroker()));
                 product.setLegalType(saveOrUpdateNameable(product.getLegalType()));
                 product.setPaymentPeriodicity(saveOrUpdateNameable(product.getPaymentPeriodicity()));
@@ -143,32 +141,6 @@ public class DBService {
         return dbManager.getEntityManager().merge(obj);
     }
 
-    private <E extends UniqueWithInt> E saveOrUpdateUniqueWithInt(E obj) {
-        String queryStr = String.format("Select id from %s t where t.count = :count", obj.getClass().getSimpleName());
-        TypedQuery<Integer> query = dbManager.getEntityManager().createQuery(queryStr, Integer.class);
-        query.setParameter("count", obj.getCount());
-        List<Integer> ids = query.getResultList();
-        if (ids.size() > 0) {
-            obj.setId(ids.get(0));
-            return obj;
-        }
-        return dbManager.getEntityManager().merge(obj);
-    }
-
-    private <E extends UniqueWithMinMax> E saveOrUpdateUniqueWithMinMax(E obj) {
-        String queryStr = String.format("Select id from %s t where t.min = :min and t.max = :max", obj.getClass().getSimpleName());
-        TypedQuery<Integer> query = dbManager.getEntityManager().createQuery(queryStr, Integer.class);
-        query.setParameter("min", obj.getMin());
-        query.setParameter("max", obj.getMax());
-        List<Integer> ids = query.getResultList();
-        if (ids.size() > 0) {
-            obj.setId(ids.get(0));
-            return obj;
-        }
-        return dbManager.getEntityManager().merge(obj);
-
-    }
-
     public void remove(List<?> list) {
         EntityTransaction transaction = dbManager.getEntityManager().getTransaction();
         transaction.begin();
@@ -185,12 +157,6 @@ public class DBService {
                 transaction.rollback();
             }
         }
-    }
-
-    public List<Underlaying> getProductUnderlyings(Integer productId) {
-        TypedQuery<Underlaying> query = dbManager.getEntityManager().createQuery("select u from  Product  p inner join p.underlayingList u where p.id = :product_id", Underlaying.class);
-        query.setParameter("product_id", productId);
-        return query.getResultList();
     }
 
     public void removeTopProductByProduct(List<TopProduct> topProducts) {
@@ -251,7 +217,7 @@ public class DBService {
         }
         List<Product> topProducts = productByTime.getResultList();
 
-        if (productType == null || productType.equals("\u0412\u0441\u0435")) {
+        if (productType == null || productType.equals("Все")) {
             return topProducts;
         } else {
             return topProducts.stream()
