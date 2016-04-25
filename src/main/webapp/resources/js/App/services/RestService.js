@@ -257,7 +257,7 @@ angular.module('App.services', ['ngResource']).service('restService', [
                 function (response) {
                     onSuccess(response.data);
                 }, function (response) {
-                    onFail(response.data);
+                    onFail(response.data.message);
                 }
             );
         },

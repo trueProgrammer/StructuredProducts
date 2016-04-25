@@ -18,6 +18,7 @@ angular.module('App.admin.csv')
         $scope.broker;
         var loadBrokers = function() {
             restService.getAllBrokers(function(data) {
+                data.unshift({id:-1, name:""});
                 $scope.brokers = data;
                 $scope.broker = data[0];
             }, function () {

@@ -108,7 +108,11 @@ public class DBService {
                 product.setStrategy(saveOrUpdateNameable(product.getStrategy()));
 
                 List<Underlaying> underlayings = Lists.newArrayList();
-                product.getUnderlayingList().forEach(val -> underlayings.add(saveOrUpdateNameable(val)));
+                product.getUnderlayingList().forEach(val -> {
+                        val.setType(saveOrUpdateNameable(val.getType()));
+                        underlayings.add(saveOrUpdateNameable(val));
+                    }
+                );
                 product.getUnderlayingList().clear();
                 product.setUnderlayingList(underlayings);
 

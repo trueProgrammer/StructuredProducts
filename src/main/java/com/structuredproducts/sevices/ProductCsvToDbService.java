@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.structuredproducts.controllers.data.ProductBean;
 import com.structuredproducts.controllers.data.Tuple;
 import com.structuredproducts.persistence.entities.instrument.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,8 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -67,9 +70,9 @@ public class ProductCsvToDbService {
         try {
             List<ProductBean> productList = readCsv(reader);
             List<Product> convertedProducts = convertToProdutsList(productList);
-            if(broker != null) {
+            if(!StringUtils.isEmpty(broker)) {
                 convertedProducts.parallelStream().forEach(
-                        product -> product.setBroker(new Broker(broker))
+                        product -> product.setBroker(product.getBroker() == null ? new Broker(broker) : product.getBroker())
                 );
             }
             dbService.saveProducts(convertedProducts);
@@ -109,12 +112,18 @@ public class ProductCsvToDbService {
         return stringWriter.toString();
     }
 
-    private static final Pattern FROM_TO_TERM_PATTERN = Pattern.compile("от (\\d+) до (\\d+) мес.*");
-    private static final Pattern YEAR_PATTERN = Pattern.compile("([\\d\\.\\,]+)\\sгод.*");
-    private static final Pattern MONTH_PATTERN = Pattern.compile("([d+])\\sмес.*");
-    //private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(\\w+)\\s*\\(([\\w\\S\\s])\\)+");
+    private static final Pattern FROM_TO_TERM_PATTERN_MONTH = Pattern.compile("от (\\d+) до (\\d+)\\s?мес.*");
+    private static final Pattern FROM_DASH_TO_TERM_PATTERN_MONTH = Pattern.compile("(\\d+)\\s?-\\s?(\\d+)\\s?мес.*");
+    private static final Pattern FROM_TO_TERM_PATTERN_YEAR = Pattern.compile("от ([\\d\\.\\,]+)\\s?до\\s?([\\d\\.\\,]+)\\s?лет.*");
+    private static final Pattern FROM_DASH_TO_TERM_PATTERN_YEAR = Pattern.compile("([\\d\\.\\,]+)\\s?-\\s?([\\d\\.\\,]+)\\s?лет.*");
+    private static final Pattern YEAR_PATTERN = Pattern.compile(".*([\\d\\.\\,]+)\\s?год.*");
+    private static final Pattern FROM_YEAR_PATTERN = Pattern.compile("от\\s?([\\d\\.\\,]+)\\s?год.*");
+    private static final Pattern FROM_MONTH_PATTERN = Pattern.compile("от\\s?(\\d+)\\s?мес.*");
+    private static final Pattern MONTH_PATTERN = Pattern.compile(".*(\\d+)\\s?мес.*");
+    private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(.*)\\((.*)\\)");
     private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
     private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до (\\d+) тыс.*");
+    private static final Pattern INVEST_PATTERN = Pattern.compile(".*([\\d]+).*");
 
     public List<ProductBean> readCsv(InputStreamReader reader) throws IOException {
         List<ProductBean> result = new ArrayList<>();
@@ -125,9 +134,13 @@ public class ProductCsvToDbService {
             while( (line = mapReader.read(headers)) != null) {
                 List<Tuple> entryList = Lists.newArrayList();
 
-                line.entrySet().stream().forEach(
-                        entry -> entryList.add(new Tuple(entry.getKey().toLowerCase().trim(), entry.getValue().trim()))
-                );
+                for(Map.Entry<String, String> entry : line.entrySet()) {
+                    if(entry.getKey() == null || entry.getValue() == null) {
+                        continue;
+                    } else {
+                        entryList.add(new Tuple(entry.getKey().toLowerCase().trim(), entry.getValue().trim()));
+                    }
+                }
                 final ProductBean bean = new ProductBean();
                 entryList.stream().forEach(
                         tuple -> {
@@ -150,19 +163,51 @@ public class ProductCsvToDbService {
                                     break;
                                 case "срок":
                                 case "term":
-                                    Matcher fromToMatcher = FROM_TO_TERM_PATTERN.matcher(tuple.getValue().toLowerCase());
-                                    if(fromToMatcher.matches()) {
-                                        bean.setMinTerm(Integer.parseInt(fromToMatcher.group(1)));
-                                        bean.setMaxTerm(Integer.parseInt(fromToMatcher.group(2)));
+                                    Consumer<Matcher> monthMatcher = v -> {
+                                        bean.setMinTerm(Integer.parseInt(v.group(1)));
+                                        bean.setMaxTerm(Integer.parseInt(v.group(2)));
+                                    };
+                                    Consumer<Matcher> yearMatcher = v -> {
+                                        bean.setMinTerm((int) (Float.parseFloat(v.group(1).replace(",", ".")) * 12));
+                                        bean.setMaxTerm((int) (Float.parseFloat(v.group(2).replace(",", ".")) * 12));
+                                    };
+                                    Matcher fromToMatcherMonth = FROM_TO_TERM_PATTERN_MONTH.matcher(tuple.getValue().toLowerCase());
+                                    if (fromToMatcherMonth.matches()) {
+                                        monthMatcher.accept(fromToMatcherMonth);
+                                        break;
+                                    }
+                                    Matcher fromDashToMatcherMonth = FROM_DASH_TO_TERM_PATTERN_MONTH.matcher(tuple.getValue().toLowerCase());
+                                    if (fromDashToMatcherMonth.matches()) {
+                                        monthMatcher.accept(fromDashToMatcherMonth);
+                                        break;
+                                    }
+                                    Matcher fromDashToMatcherYear = FROM_DASH_TO_TERM_PATTERN_YEAR.matcher(tuple.getValue().toLowerCase());
+                                    if (fromDashToMatcherYear.matches()) {
+                                        yearMatcher.accept(fromDashToMatcherYear);
+                                        break;
+                                    }
+                                    Matcher fromToMatcherYear = FROM_TO_TERM_PATTERN_YEAR.matcher(tuple.getValue().toLowerCase());
+                                    if (fromToMatcherYear.matches()) {
+                                        yearMatcher.accept(fromToMatcherYear);
+                                        break;
+                                    }
+                                    Matcher fromYearPatter = FROM_YEAR_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    if (fromYearPatter.matches()) {
+                                        bean.setMinTerm((int) (Double.parseDouble(fromYearPatter.group(1).replace(",", ".")) * 12));
                                         break;
                                     }
                                     Matcher yearPatter = YEAR_PATTERN.matcher(tuple.getValue().toLowerCase());
-                                    if(yearPatter.matches()) {
-                                        bean.setMaxTerm((int) (Double.parseDouble(yearPatter.group(1).replace(",",".")) * 12));
+                                    if (yearPatter.matches()) {
+                                        bean.setMaxTerm((int) (Double.parseDouble(yearPatter.group(1).replace(",", ".")) * 12));
+                                        break;
+                                    }
+                                    Matcher fromMonthPatter = FROM_MONTH_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    if (fromMonthPatter.matches()) {
+                                        bean.setMaxTerm(Integer.parseInt(fromMonthPatter.group(1)));
                                         break;
                                     }
                                     Matcher monthPatter = MONTH_PATTERN.matcher(tuple.getValue().toLowerCase());
-                                    if(yearPatter.matches()) {
+                                    if (monthPatter.matches()) {
                                         bean.setMaxTerm(Integer.parseInt(monthPatter.group(1)));
                                         break;
                                     }
@@ -170,16 +215,32 @@ public class ProductCsvToDbService {
                                 case "базовый актив":
                                 case "базовые актив":
                                 case "underlayings":
-                                case "Underlying-1":
-                                case "Underlying":
-                                    Iterable<String> underlayings = Splitter.on(",").split(tuple.getValue());
+                                case "underlying-1":
+                                case "underlying":
+                                    Function<String, Iterable<String>> splitFunction = v -> Splitter.on(",").split(v);
                                     List<Underlaying> underObjList = Lists.newArrayList();
-                                    underlayings.forEach(
-                                            str -> underObjList.add(new Underlaying(str.trim()))
-                                    );
+                                    Iterable<String> underlayings;
+                                    Matcher underMatcher = UNDERLAYING_PATTERN.matcher(tuple.getValue());
+                                    if (underMatcher.matches()) {
+                                        String type = underMatcher.group(1);
+                                        underlayings = splitFunction.apply(underMatcher.group(2));
+                                        underlayings.forEach(
+                                                str -> {
+                                                    Underlaying under = new Underlaying(str.trim());
+                                                    under.setType(new UnderlayingType(type));
+                                                    underObjList.add(under);
+                                                }
+                                        );
+                                    } else {
+                                        underlayings = splitFunction.apply(tuple.getValue());
+                                        underlayings.forEach(
+                                                str -> underObjList.add(new Underlaying(str.trim()))
+                                        );
+                                    }
                                     bean.setUnderlying(underObjList);
                                     break;
                                 case "доходность":
+                                case "потенциальная доходность (% годовых)":
                                 case "return":
                                     bean.setProfit(Float.parseFloat(tuple.getValue().replace("%", "").replace(",", ".")));
                                     break;
@@ -190,7 +251,7 @@ public class ProductCsvToDbService {
                                 case "валюта":
                                 case "currency":
                                     String currency = currencyMap.get(tuple.getValue().toLowerCase());
-                                    if(currency == null) {
+                                    if (currency == null) {
                                         logger.error("Unknown currency:" + tuple.getValue());
                                         throw new RuntimeException("Unknown currency:" + tuple.getValue());
                                     }
@@ -199,18 +260,26 @@ public class ProductCsvToDbService {
                                 case "минимальная сумма инвестиций":
                                 case "сумма инвестиций":
                                 case "min investment":
+                                case "mininvestment":
                                 case "investment":
                                     Matcher fromToInvestMatcher = FROM_TO_INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
-                                    if(fromToInvestMatcher.matches()) {
+                                    if (fromToInvestMatcher.matches()) {
                                         bean.setMinInvestment(Integer.parseInt(fromToInvestMatcher.group(1)) * 1000);
-                                        bean.setMaxInvestment(Integer.parseInt(fromToInvestMatcher.group(2))*1000);
+                                        bean.setMaxInvestment(Integer.parseInt(fromToInvestMatcher.group(2)) * 1000);
                                         break;
                                     }
                                     Matcher toInvestMatcher = TO_INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
-                                    if(toInvestMatcher.matches()) {
-                                        bean.setMaxInvestment(Integer.parseInt(toInvestMatcher.group(1))*1000);
+                                    if (toInvestMatcher.matches()) {
+                                        bean.setMaxInvestment(Integer.parseInt(toInvestMatcher.group(1)) * 1000);
                                         break;
                                     }
+
+                                    Matcher investMatcher = INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    if (investMatcher.matches()) {
+                                        bean.setMaxInvestment(Integer.parseInt(investMatcher.group(1).replaceAll("\\s","")));
+                                        break;
+                                    }
+
                                     throw new RuntimeException("Unknown invest:" + tuple.getValue());
                                 case "минимальный срок":
                                     bean.setMinTerm(Integer.parseInt(tuple.getValue()));
@@ -225,6 +294,8 @@ public class ProductCsvToDbService {
                                     bean.setMaxInvestment(Integer.parseInt(tuple.getValue()));
                                     break;
                                 case "провайдер":
+                                case "broker":
+                                case "брокер":
                                     bean.setBroker(tuple.getValue());
                                     break;
                                 case "юридическая форма":
@@ -240,11 +311,14 @@ public class ProductCsvToDbService {
                                     bean.setPeriodicity(tuple.getValue());
                                     break;
                                 default:
-                                    throw new RuntimeException("Unknown column:" + tuple.getName());
+                                    logger.error("Unknown column:" + tuple.getName());
+                                    //throw new RuntimeException("Unknown column:" + tuple.getName());
                             }
                         }
                 );
-                result.add(bean);
+                if (bean.getBroker() != null) {
+                    result.add(bean);
+                }
             }
         }
         return result;

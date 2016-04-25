@@ -27,6 +27,9 @@ public class ProductParam implements Serializable{
     @Column
     private String forecast;
 
+    @Column
+    private boolean showChart;
+
     public ProductParam() {
 
     }
@@ -72,5 +75,13 @@ public class ProductParam implements Serializable{
 
     public void setForecast(String forecast) {
         this.forecast = forecast;
+    }
+
+    public boolean isShowChart() {
+        return showChart;
+    }
+
+    public void setShowChart(boolean showChart) {
+        this.showChart = showChart;
     }
 }

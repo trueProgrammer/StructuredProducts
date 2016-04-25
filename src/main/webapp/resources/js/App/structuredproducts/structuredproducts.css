@@ -74,6 +74,7 @@
     text-align: center;
 }
 
-.max-width-buttons {
+.max-size-buttons {
     max-width: 350px;
+    max-height: 188px;
 }

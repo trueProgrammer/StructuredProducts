@@ -66,11 +66,13 @@
              (function() {
              restService.getProductWithParams(
                  $routeParams.id,
-                 /*'20',*/
                  function(result) {
                      result.product.termName = rangeFunction(result.product.minTerm, result.product.maxTerm)+ " месяцев";
                      result.product.investName = rangeFunction(result.product.minInvest, result.product.maxInvest);
                      $scope.productParams = result;
+                     if(!$scope.productParams.showChart) {
+                         return;
+                     }
                      restService.getUnderlayingHistoricalQuotes(result.product.id,
                          function(result) {
                              var data = {
@@ -105,11 +107,11 @@
                              document.getElementById("legendDiv").innerHTML = chart.generateLegend();
                          },
                          function(error) {
-
+                             $log.error("error get product's historical data")
                          }
                      );
                  },
-                 function() {$log.error("error while get product with params")}
+                 function() {$log.error("error get product with params")}
              );
              }());
 

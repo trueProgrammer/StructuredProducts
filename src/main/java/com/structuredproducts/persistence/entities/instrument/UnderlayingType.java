@@ -9,12 +9,16 @@ import java.io.Serializable;
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
 @Table(name="UNDERLAYING_TYPE", schema = "INSTRUMENT")
-public class UnderlayingType implements Serializable{
+public class UnderlayingType implements Serializable, UniqueWithName{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     private String name;
+
+    public UnderlayingType(String name) {
+        this.name = name;
+    }
 
     public UnderlayingType() {
     }

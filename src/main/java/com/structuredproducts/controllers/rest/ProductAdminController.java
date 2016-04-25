@@ -50,16 +50,15 @@ public class ProductAdminController extends AbstractAdminController{
                            method = RequestMethod.POST,
                            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<Message> uploadCsv(@RequestParam(value="broker") String broker, @RequestBody MultipartFile file) {
-
+    public ResponseEntity<Message> uploadCsv(@RequestParam(value = "broker") String broker, @RequestBody MultipartFile file) {
         try {
             InputStreamReader reader = new InputStreamReader(file.getInputStream(), "UTF-8");
             if ((char)reader.read() != '\uFEFF') {//Skip BOM symbol
                 reader = new InputStreamReader(file.getInputStream(), "UTF-8");
             }
             converter.convertToDb(reader, broker);
-        } catch (IOException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e)  {
+            return new ResponseEntity<Message>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -72,10 +71,8 @@ public class ProductAdminController extends AbstractAdminController{
 
             response.getOutputStream().write(productsCsv.getBytes(Charset.forName("UTF-8")));
             response.flushBuffer();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Error get csv.", e);
         }
     }
 

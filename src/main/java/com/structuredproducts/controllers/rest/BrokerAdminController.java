@@ -42,6 +42,7 @@ public class BrokerAdminController extends AbstractAdminController{
             dbService.save(broker);
         } catch (IOException e) {
             logger.error("can't handle json " + json, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -60,6 +61,7 @@ public class BrokerAdminController extends AbstractAdminController{
             dbService.removeObj(broker);
         } catch (IOException e) {
             logger.error("can't handle json " + json, e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

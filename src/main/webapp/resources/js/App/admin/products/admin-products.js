@@ -268,7 +268,7 @@ angular.module('App.admin.products')
                     getValues($scope.selected);
                 },
                 function(response) {
-                    $scope.showFailAlert(response);
+                    $scope.showFailAlert("Cannot delete:" + response);
                     $log.error("Delete " + $scope.selected + " failed.");
                     $scope.selection = [];
                     getValues($scope.selected);
