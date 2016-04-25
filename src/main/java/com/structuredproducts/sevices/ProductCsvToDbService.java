@@ -116,10 +116,10 @@ public class ProductCsvToDbService {
     private static final Pattern FROM_DASH_TO_TERM_PATTERN_MONTH = Pattern.compile("(\\d+)\\s?-\\s?(\\d+)\\s?мес.*");
     private static final Pattern FROM_TO_TERM_PATTERN_YEAR = Pattern.compile("от ([\\d\\.\\,]+)\\s?до\\s?([\\d\\.\\,]+)\\s?лет.*");
     private static final Pattern FROM_DASH_TO_TERM_PATTERN_YEAR = Pattern.compile("([\\d\\.\\,]+)\\s?-\\s?([\\d\\.\\,]+)\\s?лет.*");
-    private static final Pattern YEAR_PATTERN = Pattern.compile(".*([\\d\\.\\,]+)\\s?год.*");
+    private static final Pattern YEAR_PATTERN = Pattern.compile("([\\d\\.\\,]+)\\s?год.*");
     private static final Pattern FROM_YEAR_PATTERN = Pattern.compile("от\\s?([\\d\\.\\,]+)\\s?год.*");
     private static final Pattern FROM_MONTH_PATTERN = Pattern.compile("от\\s?(\\d+)\\s?мес.*");
-    private static final Pattern MONTH_PATTERN = Pattern.compile(".*(\\d+)\\s?мес.*");
+    private static final Pattern MONTH_PATTERN = Pattern.compile("(\\d+)\\s?мес.*");
     private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(.*)\\((.*)\\)");
     private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
     private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до (\\d+) тыс.*");
