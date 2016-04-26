@@ -70,6 +70,11 @@
                      result.product.termName = rangeFunction(result.product.minTerm, result.product.maxTerm)+ " месяцев";
                      result.product.investName = rangeFunction(result.product.minInvest, result.product.maxInvest);
                      $scope.productParams = result;
+                     if(!$scope.productParams.img) {
+                         $scope.productParams.showImg = false;
+                     } else {
+                         $scope.productParams.showImg = true;
+                     }
                      if(!$scope.productParams.showChart) {
                          return;
                      }

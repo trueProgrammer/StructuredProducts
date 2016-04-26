@@ -116,7 +116,7 @@ input.invalid-control {
 .sendRequestForm {
     text-align: center;
     padding-bottom: 5px;
-    padding-top: 5px;
+    padding-top: 10px;
     border-radius: 5px;
     border: 2px solid #e72e29;
 }
