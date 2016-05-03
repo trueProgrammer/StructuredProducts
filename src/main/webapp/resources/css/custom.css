@@ -199,3 +199,7 @@ fieldset {
 .breadcrumbs {
     background: none;
 }
+
+.page-hg {
+    min-height: calc(100vh - 191px);
+}
