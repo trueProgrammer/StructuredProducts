@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -44,6 +45,7 @@ public class ProductCsvToDbService {
             .put("евро", "EUR")
             .put("eur", "EUR")
             .build();
+    private final String DEFAULT_VALUE_EXPORT = "";
 
     @Autowired
     DBService dbService;
@@ -106,9 +108,35 @@ public class ProductCsvToDbService {
     }
 
     public String convertToCsv() throws IOException {
+        List<Product> products = (List<Product>) dbService.getResultList(Product.class);
         StringWriter stringWriter = new StringWriter();
         CsvMapWriter writer = new CsvMapWriter(stringWriter, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
         writer.writeHeader(header);
+        HashMap<String, Object> map = new HashMap<>();
+        try {
+            for (Product product : products) {
+                map.put("Название", product.getName());
+                map.put("Тип продукта", product.getProductType().getName());
+                map.put("Минимальный срок", product.getMinTerm());
+                map.put("Максимальный срок", product.getMaxTerm());
+                map.put("Базовый актив", product.getUnderlayings());
+                map.put("Минимальная сумма", product.getMinInvest());
+                map.put("Максимальная сумма", product.getMaxInvest());
+                map.put("Провайдер", product.getBroker().getName());
+                map.put("Доходность", product.getReturnValue());
+                map.put("Стратегия", product.getStrategy() != null ? product.getStrategy().getName() : DEFAULT_VALUE_EXPORT);
+                map.put("Юридическая форма", product.getLegalType() != null ? product.getLegalType().getName() : DEFAULT_VALUE_EXPORT);
+                map.put("Размер выплаты", product.getPayoff() != null ? product.getPayoff().getName() : DEFAULT_VALUE_EXPORT);
+                map.put("Риски", product.getRisks() != null ? product.getRisks().getName() : DEFAULT_VALUE_EXPORT);
+                map.put("Валюта", product.getCurrency() != null ? product.getCurrency().getName() : DEFAULT_VALUE_EXPORT);
+                map.put("Периодичность выплат", product.getPaymentPeriodicity() != null ? product.getPaymentPeriodicity().getName() : DEFAULT_VALUE_EXPORT);
+                writer.write(map, header);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            writer.close();
+        }
         return stringWriter.toString();
     }
 
@@ -242,7 +270,7 @@ public class ProductCsvToDbService {
                                 case "доходность":
                                 case "потенциальная доходность (% годовых)":
                                 case "return":
-                                    bean.setProfit(Float.parseFloat(tuple.getValue().replace("%", "").replace(",", ".")));
+                                    bean.setProfit(Float.parseFloat(tuple.getValue().replace("%", DEFAULT_VALUE_EXPORT).replace(",", ".")));
                                     break;
                                 case "стратегия":
                                 case "strategy":
@@ -276,7 +304,7 @@ public class ProductCsvToDbService {
 
                                     Matcher investMatcher = INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
                                     if (investMatcher.matches()) {
-                                        bean.setMaxInvestment(Integer.parseInt(investMatcher.group(1).replaceAll("\\s","")));
+                                        bean.setMaxInvestment(Integer.parseInt(investMatcher.group(1).replaceAll("\\s", DEFAULT_VALUE_EXPORT)));
                                         break;
                                     }
 
