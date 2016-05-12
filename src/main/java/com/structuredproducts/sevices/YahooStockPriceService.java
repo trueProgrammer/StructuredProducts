@@ -25,25 +25,35 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Vlad on 24.03.2016.
  */
-public class YahooUnderlayingPriceService {
+public class YahooStockPriceService implements ChartDataService{
 
     private static final int CACHE_SIZE = 35;
 
     private static final String[] MONTH_NAMES = { "January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December" };
 
-    private final static Logger logger = LoggerFactory.getLogger(YahooUnderlayingPriceService.class);
+    private final static Logger logger = LoggerFactory.getLogger(YahooStockPriceService.class);
 
+    private static final CellProcessor[] DAY_PROCESSORS = new CellProcessor[] {
+            new ParseDate("yyyy-MM-dd"),    //Date
+            new ParseDouble(),              //Open
+            new ParseDouble(),              //High
+            new ParseDouble(),              //Low
+            new ParseDouble(),              //Close
+            new ParseInt(),                 //Volume
+            new ParseDouble(),              //Adj Close
+    };
     // http://finance.yahoo.com/d/quotes.csv?e=.csv&f=c4l1&s=EURUSD=X,GBPUSD=X
     //private static final String URL = "http://ichart.yahoo.com/table.csv?s=MSFT&a=01&b=12&c=2007&d=10&e=1&f=2015&g=d&ignore=.csv";
     //private static final String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=m&ignore=.csv";
 
-    public static final LoadingCache<String, Map<String, String>> cache = CacheBuilder
+    private final LoadingCache<String, Map<String, String>> cache = CacheBuilder
             .newBuilder()
             .maximumSize(CACHE_SIZE)
             .expireAfterAccess(24, TimeUnit.HOURS)
@@ -54,7 +64,12 @@ public class YahooUnderlayingPriceService {
                 }
             });
 
-    public static Map<String, String> getYearHistoricalQuotes(String product) throws IOException {
+    @Override
+    public Map<String, String> getChartData(String symbol) throws ExecutionException {
+        return cache.get(symbol);
+    }
+
+    Map<String, String> getYearHistoricalQuotes(String product) throws IOException {
         Date date = new Date();
         Calendar to = Calendar.getInstance();
         to.setTime(date);
@@ -72,7 +87,7 @@ public class YahooUnderlayingPriceService {
         return result;
     }
 
-    public static Map<Date, Double> getHistoricalQuotes(String instrument, Date from, Date to, String URL) throws IOException {
+    private Map<Date, Double> getHistoricalQuotes(String instrument, Date from, Date to, String URL) throws IOException {
 
         Calendar fromCalendar = Calendar.getInstance();
         fromCalendar.setTime(from);
@@ -95,17 +110,7 @@ public class YahooUnderlayingPriceService {
         return parseCsvQuotesByDayToMap(response.getEntity().getContent());
     }
 
-    private static final CellProcessor[] DAY_PROCESSORS = new CellProcessor[] {
-            new ParseDate("yyyy-MM-dd"),    //Date
-            new ParseDouble(),              //Open
-            new ParseDouble(),              //High
-            new ParseDouble(),              //Low
-            new ParseDouble(),              //Close
-            new ParseInt(),                 //Volume
-            new ParseDouble(),              //Adj Close
-    };
-
-    public static Map<Date, Double> parseCsvQuotesByDayToMap(InputStream inputStream) {
+    private Map<Date, Double> parseCsvQuotesByDayToMap(InputStream inputStream) {
 
         final Map<Date, Double> result = new LinkedHashMap<>();
 

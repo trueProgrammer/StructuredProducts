@@ -17,9 +17,10 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-public class YahooCurrencyPriceService {
+public class YahooCurrencyPriceService implements ChartDataService{
     private final static Logger logger = LoggerFactory.getLogger(YahooCurrencyPriceService.class);
     private static final int CACHE_SIZE = 35;
 
@@ -27,18 +28,23 @@ public class YahooCurrencyPriceService {
             "August", "September", "October", "November", "December" };
     private final static String URL = "https://finance-yql.media.yahoo.com/v7/finance/chart/%s=X?period1=%d&period2=%d&interval=1mo&indicators=quote&includeTimestamps=true&includePrePost=true&events=div%%7Csplit%%7Cearn&corsDomain=finance.yahoo.com";
 
-    public static final LoadingCache<String, Map<String, String>> cache = CacheBuilder
+    private final LoadingCache<String, Map<String, String>> cache = CacheBuilder
             .newBuilder()
             .maximumSize(CACHE_SIZE)
             .expireAfterAccess(24, TimeUnit.HOURS)
             .build(new CacheLoader<String, Map<String, String>>() {
                 @Override
                 public Map<String, String> load(String baseActive) throws Exception {
-                    return getData(baseActive);
+                    return loadData(baseActive);
                 }
             });
 
-    static Map<String, String> getData(String symbol) {
+    @Override
+    public Map<String, String> getChartData(String symbol) throws ExecutionException {
+        return cache.get(symbol);
+    }
+
+    Map<String, String> loadData(String symbol) {
         String url = prepareUrl(URL, symbol);
         HttpClient client = HttpClientBuilder.create().build();
         HttpGet get = new HttpGet(url);
@@ -53,14 +59,14 @@ public class YahooCurrencyPriceService {
         }
     }
 
-    private static String prepareUrl(String urlTemplate, String symbol) {
+    private String prepareUrl(String urlTemplate, String symbol) {
         Calendar endDate = new GregorianCalendar();
         Calendar startDate = new GregorianCalendar();
         startDate.set(Calendar.YEAR, endDate.get(Calendar.YEAR) - 1);
         return String.format(urlTemplate, symbol, startDate.getTimeInMillis() / 1000, endDate.getTimeInMillis() / 1000);
     }
 
-    private static Map<String, String> parseData(String data) {
+    private Map<String, String> parseData(String data) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             Object jsonObj = mapper.readValue(data, Object.class);

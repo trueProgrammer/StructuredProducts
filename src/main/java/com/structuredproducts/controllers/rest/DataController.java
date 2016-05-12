@@ -6,12 +6,12 @@ import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
 import com.structuredproducts.persistence.entities.instrument.*;
+import com.structuredproducts.sevices.ChartDataService;
 import com.structuredproducts.sevices.DBService;
-import com.structuredproducts.sevices.YahooCurrencyPriceService;
-import com.structuredproducts.sevices.YahooUnderlayingPriceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +37,14 @@ public class DataController {
 
     @Autowired
     private DBService dbService;
+
+    @Autowired
+    @Qualifier("yahooCurrencyPriceService")
+    private ChartDataService currencyPriceService;
+
+    @Autowired
+    @Qualifier("yahooStockPriceService")
+    private ChartDataService stockPriceService;
 
     @RequestMapping(path = "/timetypes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Tuple[]> getTimeTypes() {
@@ -169,9 +177,9 @@ public class DataController {
                     v -> {
                         try {
                             HistoricalHolder holder = new HistoricalHolder();
-                            Map<String, String> historical = YahooUnderlayingPriceService.cache.get(v.getOfficialName());
+                            Map<String, String> historical = stockPriceService.getChartData(v.getOfficialName());
                             if (historical.isEmpty()) {
-                                historical = YahooCurrencyPriceService.cache.get(v.getOfficialName());
+                                historical = currencyPriceService.getChartData(v.getOfficialName());
                             }
                             holder.name = v.getName();
                             for(Map.Entry<String, String> entry : historical.entrySet()) {
@@ -181,7 +189,7 @@ public class DataController {
                             Collections.reverse(holder.labels);
                             Collections.reverse(holder.dataset);
                             result.add(holder);
-                            //result.put(v.getName(), YahooUnderlayingPriceService.getYearHistoricalQuotes(v.getOfficialName()));
+                            //result.put(v.getName(), YahooStockPriceService.getYearHistoricalQuotes(v.getOfficialName()));
                         } catch (Exception e) {
                             logger.error("Error while get historical quotes for underlaying: " + v.getName(), e);
                         }

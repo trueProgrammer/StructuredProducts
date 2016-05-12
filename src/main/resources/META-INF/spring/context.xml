@@ -13,6 +13,8 @@
     <bean class="com.structuredproducts.persistence.DBManager" scope="singleton"/>
 
     <bean class="com.structuredproducts.sevices.DBService"/>
+    <bean class="com.structuredproducts.sevices.YahooCurrencyPriceService" name="yahooCurrencyPriceService"/>
+    <bean class="com.structuredproducts.sevices.YahooStockPriceService" name="yahooStockPriceService"/>
     <bean class="com.structuredproducts.sevices.MailService"/>
     <bean class="com.structuredproducts.sevices.ProductCsvToDbService"/>
 

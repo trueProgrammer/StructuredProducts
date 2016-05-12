@@ -5,25 +5,22 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
-
-import static org.hamcrest.Matchers.is;
 
 /**
  * Created by Vlad on 24.03.2016.
  */
-public class YahooUnderlayingPriceServiceTest {
+public class YahooStockPriceServiceTest {
 
     @Test
     public void yahooServiceTest() throws IOException {
 
-        Map<String, String > quotes = YahooUnderlayingPriceService.getYearHistoricalQuotes("LUKOY");
+        YahooStockPriceService service = new YahooStockPriceService();
+        Map<String, String > quotes = service.getYearHistoricalQuotes("LUKOY");
 
         Assert.assertThat(quotes, Matchers.notNullValue());
 
-        quotes = YahooUnderlayingPriceService.getYearHistoricalQuotes("FB");
+        quotes = service.getYearHistoricalQuotes("FB");
 
         Assert.assertThat(quotes, Matchers.notNullValue());
     }
