@@ -7,6 +7,7 @@ import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
 import com.structuredproducts.persistence.entities.instrument.*;
 import com.structuredproducts.sevices.DBService;
+import com.structuredproducts.sevices.YahooCurrencyPriceService;
 import com.structuredproducts.sevices.YahooUnderlayingPriceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -169,6 +170,9 @@ public class DataController {
                         try {
                             HistoricalHolder holder = new HistoricalHolder();
                             Map<String, String> historical = YahooUnderlayingPriceService.cache.get(v.getOfficialName());
+                            if (historical.isEmpty()) {
+                                historical = YahooCurrencyPriceService.cache.get(v.getOfficialName());
+                            }
                             holder.name = v.getName();
                             for(Map.Entry<String, String> entry : historical.entrySet()) {
                                 holder.labels.add(entry.getKey());

@@ -21,7 +21,10 @@ import org.supercsv.prefs.CsvPreference;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -85,8 +88,8 @@ public class YahooUnderlayingPriceService {
         HttpResponse response = client.execute(get);
 
         if (HttpStatus.SC_OK != response.getStatusLine().getStatusCode()) {
-            throw new RuntimeException("Client: status code is not OK : " + response.getStatusLine().getStatusCode()
-            + " .Instrumen=" + instrument + " URL=" + url);
+            logger.error("Client: status code is not OK : {} instrument: {} URL: {}", response.getStatusLine().getStatusCode(), instrument, url);
+            return new LinkedHashMap<>();
         }
 
         return parseCsvQuotesByDayToMap(response.getEntity().getContent());
