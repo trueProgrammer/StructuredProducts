@@ -107,8 +107,7 @@ public class ProductCsvToDbService {
         }).collect(Collectors.toList());
     }
 
-    public String convertToCsv() throws IOException {
-        List<Product> products = (List<Product>) dbService.getResultList(Product.class);
+    public String convertToCsv(List<Product> products) throws IOException {
         StringWriter stringWriter = new StringWriter();
         CsvMapWriter writer = new CsvMapWriter(stringWriter, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE);
         writer.writeHeader(header);
@@ -149,7 +148,7 @@ public class ProductCsvToDbService {
     private static final Pattern FROM_MONTH_PATTERN = Pattern.compile("от\\s?(\\d+)\\s?мес.*");
     private static final Pattern MONTH_PATTERN = Pattern.compile("(\\d+)\\s?мес.*");
     private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(.*)\\((.*)\\)");
-    private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс*");
+    private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
     private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до (\\d+) тыс.*");
     private static final Pattern FROM_INVEST_PATTERN = Pattern.compile("от (\\d+) тыс.*");
 
@@ -162,13 +161,7 @@ public class ProductCsvToDbService {
             while( (line = mapReader.read(headers)) != null) {
                 List<Tuple> entryList = Lists.newArrayList();
 
-                for(Map.Entry<String, String> entry : line.entrySet()) {
-                    if(entry.getKey() == null || entry.getValue() == null) {
-                        continue;
-                    } else {
-                        entryList.add(new Tuple(entry.getKey().toLowerCase().trim(), entry.getValue().trim()));
-                    }
-                }
+                entryList.addAll(line.entrySet().stream().filter(entry -> entry.getKey() != null && entry.getValue() != null).map(entry -> new Tuple(entry.getKey().toLowerCase().trim(), entry.getValue().trim())).collect(Collectors.toList()));
                 final ProductBean bean = new ProductBean();
                 entryList.stream().forEach(
                         tuple -> {
@@ -301,13 +294,11 @@ public class ProductCsvToDbService {
                                         bean.setMaxInvestment(Integer.parseInt(toInvestMatcher.group(1)) * 1000);
                                         break;
                                     }
-
                                     Matcher investMatcher = FROM_INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
                                     if (investMatcher.matches()) {
                                         bean.setMinInvestment(Integer.parseInt(investMatcher.group(1)) * 1000);
                                         break;
                                     }
-
                                     throw new RuntimeException("Unknown invest:" + tuple.getValue());
                                 case "минимальный срок":
                                     bean.setMinTerm(Integer.parseInt(tuple.getValue()));

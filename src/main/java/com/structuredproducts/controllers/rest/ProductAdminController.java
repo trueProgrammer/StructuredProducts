@@ -1,6 +1,7 @@
 package com.structuredproducts.controllers.rest;
 
 import com.structuredproducts.controllers.data.Message;
+import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.sevices.ServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,8 +66,7 @@ public class ProductAdminController extends AbstractAdminController{
                            method = RequestMethod.GET)
     public void getCsv(HttpServletResponse response) {
         try {
-            String productsCsv = converter.convertToCsv();
-
+            String productsCsv = converter.convertToCsv((List<Product>) dbService.getResultList(Product.class));
             response.getOutputStream().write(productsCsv.getBytes(Charset.forName("UTF-8")));
             response.flushBuffer();
         } catch (IOException e) {
