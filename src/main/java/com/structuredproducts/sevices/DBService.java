@@ -41,14 +41,13 @@ public class DBService {
             build();
 
     public List<?> getProductsByType(List<String> types) {
-        Query query = createCacheableQuery("SELECT * from INSTRUMENT.PRODUCT p WHERE p.productType in (SELECT id FROM INSTRUMENT.PRODUCT_TYPE t WHERE t.name IN (:types))",
+        Query query = createCacheableQuery("SELECT * from INSTRUMENT.PRODUCT p WHERE p.productType in (SELECT id FROM INSTRUMENT.PRODUCT_TYPE t WHERE t.riskType IN (:types))",
                 Product.class);
         query.setParameter("types", types);
         return query.getResultList();
     }
     public List<?> getResultList(Class<?> clazz) {
-        return createCacheableQuery("SELECT * from " + TABLE_TO_TYPE_MAPPING.get(clazz), clazz)
-                .getResultList();
+        return createCacheableQuery("SELECT * from " + TABLE_TO_TYPE_MAPPING.get(clazz), clazz).getResultList();
     }
 
     private Query createCacheableQuery(String select, Class<?> clazz) {

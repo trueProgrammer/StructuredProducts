@@ -82,7 +82,7 @@ public class DataController {
     @RequestMapping(path = "/topproducts", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Product[]> getTopProducts(@RequestParam(name="time") String timeType, @RequestParam(name="type")String productType) {
         logger.debug("Time {}, product type {}", timeType, productType);
-        List<Product> list = ControllerUtils.getProducts(dbService.getTopProductsByTimeTypeAndProductType(timeType, productType));
+        List<Product> list = dbService.getTopProductsByTimeTypeAndProductType(timeType, productType);
         return new ResponseEntity<>(list.toArray(new Product[list.size()]), HttpStatus.OK);
     }
 
@@ -103,21 +103,21 @@ public class DataController {
             for(String type : types) {
                 RiskType riskType = RiskType.getRiskType(type);
                 if(riskType != null) {
-                    productTypes.add(ControllerUtils.RiskTypeToProductType.inverse().get(riskType));
+                    productTypes.add(riskType.name());
                 } else {
                     logger.error("Unknown risk type: {}", type);
                 }
             }
-            return new ResponseEntity<>( getProductsByType(productTypes).toArray(), HttpStatus.OK);
+            return new ResponseEntity<>(getProductsByType(productTypes).toArray(), HttpStatus.OK);
         }
     }
 
     private List<Product> getProductsByType(List<String> productTypes) {
-        return ControllerUtils.getProducts((List<Product>) dbService.getProductsByType(productTypes));
+        return (List<Product>) dbService.getProductsByType(productTypes);
     }
 
     private List<Product> getProducts() {
-        return ControllerUtils.getProducts((List<Product>) dbService.getResultList(Product.class));
+        return (List<Product>) dbService.getResultList(Product.class);
     }
 
     @RequestMapping(path = "/investideas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -151,7 +151,7 @@ public class DataController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public ResponseEntity<ProductParam> getProductWithParams(@RequestParam("id")Integer id) {
-        Optional<Product> productOpt = (ControllerUtils.getProducts((List<Product>) dbService.getResultList(Product.class))).stream().filter(p -> p.getId().equals(id)).findAny();
+        Optional<Product> productOpt = ((List<Product>) dbService.getResultList(Product.class)).stream().filter(p -> p.getId().equals(id)).findAny();
         List<ProductParam> params = (List<ProductParam>) dbService.getResultList(ProductParam.class);
         if (!productOpt.isPresent()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -169,7 +169,7 @@ public class DataController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public ResponseEntity<Object> getUnderlayingHistoricalQuotes(@RequestParam("id")Integer id) {
-        Optional<Product> productOpt = (ControllerUtils.getProducts((List<Product>) dbService.getResultList(Product.class))).stream().filter(p -> p.getId().equals(id)).findAny();
+        Optional<Product> productOpt = ((List<Product>) dbService.getResultList(Product.class)).stream().filter(p -> p.getId().equals(id)).findAny();
         if (productOpt.isPresent()) {
             Product product = productOpt.get();
             List<HistoricalHolder> result = Lists.newArrayList();

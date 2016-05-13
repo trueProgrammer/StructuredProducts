@@ -1,15 +1,19 @@
 package com.structuredproducts.persistence.entities.instrument;
 
+import com.google.common.base.Joiner;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
 @Table(name="PRODUCT", schema = "INSTRUMENT")
 public class Product {
+
+    private static final Joiner joiner = Joiner.on(", ");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +26,7 @@ public class Product {
     @JoinColumn(name = "productType")
     private ProductType productType;
 
+    @Access(AccessType.PROPERTY)
     @ManyToMany
     @JoinTable(
         name = "INSTRUMENT.UNDERLAYINGS",
@@ -113,6 +118,7 @@ public class Product {
 
     public void setUnderlayingList(List<Underlaying> underlaying) {
         this.underlayingList = underlaying;
+        joiner.join(getUnderlayingList().parallelStream().map(Underlaying::getName).collect(Collectors.toList()));
     }
 
     public Broker getBroker() {

@@ -43,10 +43,10 @@ angular.module('App.investproduct')
                 $scope.lowRiskProducts = 0;
 
                 response.forEach(function(item) {
-                    if (item.productType.name === '100% защита капитала без гарантированной доходности'){
+                    if (item.productType.riskType === 'High'){
                         $scope.highRiskProducts++;
                     }
-                    else if(item.productType.name === 'С участием (ограниченный риск)') {
+                    else if(item.productType.riskType === 'Medium') {
                         $scope.mediumRiskProducts++;
                     } else {
                         $scope.lowRiskProducts++;

@@ -15,6 +15,8 @@ public class ProductType implements Serializable, UniqueWithName{
     private Integer id;
     @Column
     private String name;
+    @Enumerated(EnumType.STRING)
+    private RiskType riskType;
 
     public ProductType() {
     }
@@ -37,5 +39,13 @@ public class ProductType implements Serializable, UniqueWithName{
 
     public String getName() {
         return name;
+    }
+
+    public RiskType getRiskType() {
+        return riskType;
+    }
+
+    public void setRiskType(RiskType riskType) {
+        this.riskType = riskType;
     }
 }

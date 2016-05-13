@@ -1,7 +1,6 @@
 package com.structuredproducts.controllers.rest;
 
 import com.structuredproducts.controllers.data.Message;
-import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.sevices.ServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -58,7 +56,7 @@ public class ProductAdminController extends AbstractAdminController{
             }
             converter.convertToDb(reader, broker);
         } catch (Exception e)  {
-            return new ResponseEntity<Message>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -95,11 +93,7 @@ public class ProductAdminController extends AbstractAdminController{
     @RequestMapping(path = "/instrumentType", method = RequestMethod.GET, produces = MediaType
                                                                                              .APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Object[]> getValues(@RequestParam("entityType")String entityType) {
-        Class<?> clazz = ENTITY_TYPES.get(entityType);
-        List<?> list = dbService.getResultList(clazz);
-        if(Product.class.isAssignableFrom(clazz)) {
-            ControllerUtils.getProducts((List<Product>) list);
-        }
+        List<?> list = dbService.getResultList(ENTITY_TYPES.get(entityType));
         if(list.size() == 0) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

@@ -13,12 +13,10 @@ angular.module('App.admin.products')
         $scope.saveButtonsDisabled = true;
         $scope.selection = [];
 
-        var dropDownValues = {};
         var returnValues = function(entity, array) {
             restService.getInstrumentType(
                 entity,
                 function(values) {
-                    dropDownValues[entity] = values;
                     array.editDropdownOptionsArray = values;
                 },
                 function(response) {
@@ -32,10 +30,17 @@ angular.module('App.admin.products')
         var defaultStrCellTemplate = "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field]}}</div>";
         var columns = {
             productType : [
-                { field: 'name', displayName: 'Тип структурного продукта', width: "94%",
+                { field: 'name', displayName: 'Тип СП', width: "47%",
                     notNull: true,
                     cellTemplate: defaultStrCellTemplate
-                }
+                },
+                { field: 'riskType', displayName: 'Тип риска', width: "47%",
+                    editableCellTemplate: 'ui-grid/dropdownEditor',
+                    cellFilter: 'mapRiskType', editDropdownValueLabel: 'type', editDropdownOptionsArray: [
+                    { id: 1, type: 'High' },
+                    { id: 2, type: 'Medium' },
+                    { id: 3, type: 'Low' }]
+                },
             ],
             strategy : [
                 { field: 'name', displayName: 'Стратегия', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate },
@@ -66,20 +71,19 @@ angular.module('App.admin.products')
                     notNull: true,
                     cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
                     editableEntity: 'underlayingType', editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []}
             ],
             product: [
-                { field: 'name',  displayName: 'Название', width: 200, notNull: true, cellTemplate: defaultStrCellTemplate},
-                { field: 'description',  displayName: 'Описание', width: 350, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'name',  displayName: 'Название', width: 250, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'productType', displayName: 'Тип структурного продукта', width: 250,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'productType', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
-                { field: 'minTerm',  displayName: 'Минимальный срок', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
-                { field: 'maxTerm',  displayName: 'Максимальный срок', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'minTerm',  displayName: 'Мин срок', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'maxTerm',  displayName: 'Мак срок', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'underlayings',  displayName: 'Базовый актив', width: 200, notNull: true},
-                { field: 'minInvest',  displayName: 'Минимальные инвестиции', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
-                { field: 'maxInvest',  displayName: 'Максимальные инвестиции', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'minInvest',  displayName: 'Мин инвестиции', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
+                { field: 'maxInvest',  displayName: 'Мак инвестиции', width: 120, notNull: true, cellTemplate: defaultStrCellTemplate},
                 { field: 'broker', displayName: 'Провайдер продукта', width: 200,
                     notNull: true,
                     cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",
@@ -110,7 +114,8 @@ angular.module('App.admin.products')
                 { field: 'paymentPeriodicity', displayName: 'Периодичность выплаты дохода', width: 150,
                     cellFilter: "griddropdown:this",
                     editableEntity: 'paymentPeriodicity', editableCellTemplate: 'ui-grid/dropdownEditor',
-                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []}
+                    editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
+                { field: 'description',  displayName: 'Описание', width: 400, notNull: true, cellTemplate: defaultStrCellTemplate}
             ],
         };
 
@@ -180,7 +185,9 @@ angular.module('App.admin.products')
             $scope.saveButtonsDisabled = true;
             for(field in columns[id]) {
                 if (columns[id][field].editDropdownOptionsArray) {
-                    returnValues(columns[id][field].editableEntity, columns[id][field]);
+                    if(columns[id][field].editDropdownOptionsArray.length == 0) {
+                        returnValues(columns[id][field].editableEntity, columns[id][field]);
+                    }
                 }
             }
             $scope.table.columnDefs = columns[id];
@@ -204,6 +211,17 @@ angular.module('App.admin.products')
 
         $scope.saveData = function() {
             $scope.saveButtonsDisabled = true;
+
+            //huck, because dropdown editor can't use simle values in array, like ['High', 'Medium', 'Low'], instead using objects
+            if ($scope.selected === 'productType') {
+                for (var i in $scope.table.data) {
+                    if ($scope.table.data[i].riskType) {
+                        if($scope.table.data[i].riskType.type) {
+                            $scope.table.data[i].riskType = $scope.table.data[i].riskType.type;
+                        }
+                    }
+                }
+            }
 
             if (validate()) {
                 restService.updateInstrumentType(
@@ -304,5 +322,18 @@ angular.module('App.admin.products')
                 return initial;
             }
             return input;
+        };
+    })
+    .filter('mapRiskType', function() {
+        return function(input) {
+            if (!input){
+                return '';
+            } else {
+                if(input.type) {
+                    return input.type;
+                } else {
+                    return input;
+                }
+            }
         };
     });

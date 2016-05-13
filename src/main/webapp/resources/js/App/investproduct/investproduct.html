@@ -227,7 +227,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="val in products.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | orderBy:predicate:reverse"
-                        ng-click="goToProductPage(val.id)" class="table-row" ng-class="getClassByRiskType(val.riskType)">
+                        ng-click="goToProductPage(val.id)" class="table-row" ng-class="getClassByRiskType(val.productType.riskType)">
                         <td>{{$index + 1}}</td>
                         <td>{{val.name}}</td>
                         <td>{{val.underlayings}}</td>

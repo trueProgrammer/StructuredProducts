@@ -149,9 +149,9 @@ public class ProductCsvToDbService {
     private static final Pattern FROM_MONTH_PATTERN = Pattern.compile("от\\s?(\\d+)\\s?мес.*");
     private static final Pattern MONTH_PATTERN = Pattern.compile("(\\d+)\\s?мес.*");
     private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(.*)\\((.*)\\)");
-    private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
+    private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс*");
     private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до (\\d+) тыс.*");
-    private static final Pattern INVEST_PATTERN = Pattern.compile(".*([\\d]+).*");
+    private static final Pattern FROM_INVEST_PATTERN = Pattern.compile("от (\\d+) тыс.*");
 
     public List<ProductBean> readCsv(InputStreamReader reader) throws IOException {
         List<ProductBean> result = new ArrayList<>();
@@ -255,7 +255,7 @@ public class ProductCsvToDbService {
                                         underlayings.forEach(
                                                 str -> {
                                                     Underlaying under = new Underlaying(str.trim());
-                                                    under.setType(new UnderlayingType(type));
+                                                    under.setType(new UnderlayingType(type.trim()));
                                                     underObjList.add(under);
                                                 }
                                         );
@@ -302,9 +302,9 @@ public class ProductCsvToDbService {
                                         break;
                                     }
 
-                                    Matcher investMatcher = INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    Matcher investMatcher = FROM_INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
                                     if (investMatcher.matches()) {
-                                        bean.setMaxInvestment(Integer.parseInt(investMatcher.group(1).replaceAll("\\s", DEFAULT_VALUE_EXPORT)));
+                                        bean.setMinInvestment(Integer.parseInt(investMatcher.group(1)) * 1000);
                                         break;
                                     }
 
