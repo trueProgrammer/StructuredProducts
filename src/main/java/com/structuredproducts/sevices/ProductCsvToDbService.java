@@ -148,9 +148,11 @@ public class ProductCsvToDbService {
     private static final Pattern FROM_MONTH_PATTERN = Pattern.compile("от\\s?(\\d+)\\s?мес.*");
     private static final Pattern MONTH_PATTERN = Pattern.compile("(\\d+)\\s?мес.*");
     private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(.*)\\((.*)\\)");
-    private static final Pattern FROM_TO_INVEST_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
-    private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до (\\d+) тыс.*");
-    private static final Pattern FROM_INVEST_PATTERN = Pattern.compile("от (\\d+) тыс.*");
+    private static final Pattern FROM_TO_INVEST_THOUSAND_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
+    private static final Pattern TO_INVEST_THOUSAND_PATTERN = Pattern.compile("до (\\d+) тыс.*");
+    private static final Pattern FROM_INVEST_THOUSAND_PATTERN = Pattern.compile("от (\\d+) тыс.*");
+    private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до ([\\d\\s]+)");
+    private static final Pattern FROM_INVEST_PATTERN = Pattern.compile("от ([\\d\\s]+)");
 
     public List<ProductBean> readCsv(InputStreamReader reader) throws IOException {
         List<ProductBean> result = new ArrayList<>();
@@ -283,20 +285,30 @@ public class ProductCsvToDbService {
                                 case "min investment":
                                 case "mininvestment":
                                 case "investment":
-                                    Matcher fromToInvestMatcher = FROM_TO_INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
-                                    if (fromToInvestMatcher.matches()) {
-                                        bean.setMinInvestment(Integer.parseInt(fromToInvestMatcher.group(1)) * 1000);
-                                        bean.setMaxInvestment(Integer.parseInt(fromToInvestMatcher.group(2)) * 1000);
+                                    Matcher fromToThousandInvestMatcher = FROM_TO_INVEST_THOUSAND_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    if (fromToThousandInvestMatcher.matches()) {
+                                        bean.setMinInvestment(Integer.parseInt(fromToThousandInvestMatcher.group(1)) * 1000);
+                                        bean.setMaxInvestment(Integer.parseInt(fromToThousandInvestMatcher.group(2)) * 1000);
+                                        break;
+                                    }
+                                    Matcher toThousandInvestMatcher = TO_INVEST_THOUSAND_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    if (toThousandInvestMatcher.matches()) {
+                                        bean.setMaxInvestment(Integer.parseInt(toThousandInvestMatcher.group(1)) * 1000);
+                                        break;
+                                    }
+                                    Matcher fromThousandInvestMatcher = FROM_INVEST_THOUSAND_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    if (fromThousandInvestMatcher.matches()) {
+                                        bean.setMinInvestment(Integer.parseInt(fromThousandInvestMatcher.group(1)) * 1000);
                                         break;
                                     }
                                     Matcher toInvestMatcher = TO_INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
                                     if (toInvestMatcher.matches()) {
-                                        bean.setMaxInvestment(Integer.parseInt(toInvestMatcher.group(1)) * 1000);
+                                        bean.setMaxInvestment(Integer.parseInt(StringUtils.deleteWhitespace(toInvestMatcher.group(1))));
                                         break;
                                     }
-                                    Matcher investMatcher = FROM_INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
-                                    if (investMatcher.matches()) {
-                                        bean.setMinInvestment(Integer.parseInt(investMatcher.group(1)) * 1000);
+                                    Matcher fromInvestMatcher = FROM_INVEST_PATTERN.matcher(tuple.getValue().toLowerCase());
+                                    if (fromInvestMatcher.matches()) {
+                                        bean.setMinInvestment(Integer.parseInt(StringUtils.deleteWhitespace(fromInvestMatcher.group(1))));
                                         break;
                                     }
                                     throw new RuntimeException("Unknown invest:" + tuple.getValue());
