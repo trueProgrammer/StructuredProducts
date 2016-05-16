@@ -4,8 +4,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.aMapWithSize;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -14,16 +15,14 @@ import static org.junit.Assert.assertThat;
 public class YahooStockPriceServiceTest {
 
     @Test
-    public void yahooServiceTest() throws IOException {
-
+    public void yahooServiceTest() throws IOException, ExecutionException {
         YahooStockPriceService service = new YahooStockPriceService();
-        Map<String, String > quotes = service.getYearHistoricalQuotes("LUKOY");
 
-        assertThat(quotes, notNullValue());
+        Map<String, String > quotes = service.getHistoricalCachingData("LUKOY");
+        assertThat(quotes, aMapWithSize(13));
 
-        quotes = service.getYearHistoricalQuotes("FB");
-
-        assertThat(quotes, notNullValue());
+        quotes = service.getHistoricalCachingData("FB");
+        assertThat(quotes, aMapWithSize(13));
     }
 
 }

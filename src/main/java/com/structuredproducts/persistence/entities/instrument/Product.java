@@ -117,8 +117,10 @@ public class Product {
     }
 
     public void setUnderlayingList(List<Underlaying> underlaying) {
-        this.underlayingList = underlaying;
-        joiner.join(getUnderlayingList().parallelStream().map(Underlaying::getName).collect(Collectors.toList()));
+        underlayingList = underlaying;
+        if(underlayingList != null) {
+            underlayings = joiner.join(getUnderlayingList().parallelStream().map(Underlaying::getName).collect(Collectors.toList()));
+        }
     }
 
     public Broker getBroker() {

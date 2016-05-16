@@ -6,7 +6,7 @@ import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
 import com.structuredproducts.persistence.entities.instrument.*;
-import com.structuredproducts.sevices.ChartDataService;
+import com.structuredproducts.sevices.HistoricalCachingDataService;
 import com.structuredproducts.sevices.DBService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,11 +40,11 @@ public class DataController {
 
     @Autowired
     @Qualifier("yahooCurrencyPriceService")
-    private ChartDataService currencyPriceService;
+    private HistoricalCachingDataService currencyPriceService;
 
     @Autowired
     @Qualifier("yahooStockPriceService")
-    private ChartDataService stockPriceService;
+    private HistoricalCachingDataService stockPriceService;
 
     @RequestMapping(path = "/timetypes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Tuple[]> getTimeTypes() {
@@ -177,9 +177,9 @@ public class DataController {
                     v -> {
                         try {
                             HistoricalHolder holder = new HistoricalHolder();
-                            Map<String, String> historical = stockPriceService.getChartData(v.getOfficialName());
+                            Map<String, String> historical = stockPriceService.getHistoricalCachingData(v.getOfficialName());
                             if (historical.isEmpty()) {
-                                historical = currencyPriceService.getChartData(v.getOfficialName());
+                                historical = currencyPriceService.getHistoricalCachingData(v.getOfficialName());
                             }
                             holder.name = v.getName();
                             for(Map.Entry<String, String> entry : historical.entrySet()) {
@@ -189,7 +189,6 @@ public class DataController {
                             Collections.reverse(holder.labels);
                             Collections.reverse(holder.dataset);
                             result.add(holder);
-                            //result.put(v.getName(), YahooStockPriceService.getYearHistoricalQuotes(v.getOfficialName()));
                         } catch (Exception e) {
                             logger.error("Error while get historical quotes for underlaying: " + v.getName(), e);
                         }
@@ -201,7 +200,7 @@ public class DataController {
         }
     }
 
-    static final class HistoricalHolder {
+    private static final class HistoricalHolder {
         public String name;
         public List<String> labels = Lists.newArrayList();
         public List<String> dataset = Lists.newArrayList();
