@@ -75,9 +75,9 @@
                      } else {
                          $scope.productParams.showImg = true;
                      }
-                     if(!$scope.productParams.showChart) {
+                     /*if(!$scope.productParams.showChart) {
                          return;
-                     }
+                     }*/
                      restService.getUnderlayingHistoricalQuotes(result.product.id,
                          function(result) {
                              var data = {

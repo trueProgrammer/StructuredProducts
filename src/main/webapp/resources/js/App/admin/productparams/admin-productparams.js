@@ -26,7 +26,7 @@ angular.module('App.admin.productparams')
         var columns = [
                 { field: 'name', displayName: 'Базовый актив'},
                 { field: 'officialName', displayName: 'Биржевое имя'},
-                { field: 'type', displayName: 'Тип базового актива'}
+                { field: 'type.name', displayName: 'Тип базового актива'}
             ];
         $scope.selectionChoosen = [];
         $scope.choosenUnderlying = {
