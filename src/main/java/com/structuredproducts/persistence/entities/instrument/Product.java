@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Entity
 @Cache(usage= CacheConcurrencyStrategy.READ_WRITE, region="employee")
@@ -119,7 +120,8 @@ public class Product {
     public void setUnderlayingList(List<Underlaying> underlaying) {
         underlayingList = underlaying;
         if(underlayingList != null) {
-            underlayings = joiner.join(getUnderlayingList().parallelStream().map(Underlaying::getName).collect(Collectors.toList()));
+            Stream<Underlaying> underlayingStream = getUnderlayingList().parallelStream();
+            underlayings = joiner.join(underlayingStream.map(Underlaying::getName).collect(Collectors.toList()));
         }
     }
 

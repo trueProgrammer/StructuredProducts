@@ -27,8 +27,9 @@ public class Underlaying implements Serializable, UniqueWithName {
     public Underlaying() {
     }
 
-    public Underlaying(Integer id) {
+    public Underlaying(Integer id, String name) {
         this.id = id;
+        this.name = name;
     }
 
     public Integer getId() {

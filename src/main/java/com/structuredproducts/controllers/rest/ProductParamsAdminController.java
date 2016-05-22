@@ -45,7 +45,7 @@ public class ProductParamsAdminController extends AbstractAdminController{
 
             ArrayList<HashMap<String, Object>> underlayings = (ArrayList<HashMap<String, Object>>) map.get("underlaying");
             List<Underlaying> parsedUnderlayings = underlayings.stream()
-                                            .map(underlayingMap -> new Underlaying((Integer) underlayingMap.get("id")))
+                                            .map(underlayingMap -> new Underlaying((Integer) underlayingMap.get("id"), (String) underlayingMap.get("name")))
                                             .collect(Collectors.toList());
 
 
