@@ -64,9 +64,9 @@ angular.module('App.admin.products')
                 { field: 'name', displayName: 'Тип базового актива', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate  },
             ],
             underlaying: [
-                { field: 'name', displayName: 'Базовый актив', width: "25%", notNull: true, cellTemplate: defaultStrCellTemplate  },
+                { field: 'name', displayName: 'Базовый актив', width: "45%", notNull: true, cellTemplate: defaultStrCellTemplate  },
                 { field: 'officialName', displayName: 'Биржевое имя', width: "18%", notNull: true, cellTemplate: defaultStrCellTemplate  },
-                { field: 'type', displayName: 'Тип базового актива', width: "47%",
+                { field: 'type', displayName: 'Тип базового актива', width: "30%",
                     cellFilter: "griddropdown:this",
                     notNull: true,
                     cellTemplate: "<div id={{(rowRenderIndex+'-'+col.name)}} class='ui-grid-cell-content'>{{row.entity[col.field].name}}</div>",

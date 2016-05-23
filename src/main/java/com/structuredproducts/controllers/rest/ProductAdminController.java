@@ -34,6 +34,10 @@ public class ProductAdminController extends AbstractAdminController{
         try {
             List<?> list = ServiceUtils.getObjects(ENTITY_TYPES.get(entityType), entity);
             if (dbService.save(list)) {
+                if (entityType.equals("underlaying")) {
+                    currencyPriceService.invalidateCache();
+                    stockPriceService.invalidateCache();
+                }
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(new Message("Ошибка при сохранении продукта. Возможно, вы заполнили не все поля."), HttpStatus.BAD_REQUEST);

@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedHashMap;
@@ -23,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class HistoricalCachingDataService {
     private final static Logger logger = LoggerFactory.getLogger(HistoricalCachingDataService.class);
     private static final int CACHE_SIZE = 35;
+    private static final String UTF8 = "UTF-8";
 
     protected final LoadingCache<String, Map<String, String>> cache = CacheBuilder
         .newBuilder()
@@ -39,6 +42,10 @@ public abstract class HistoricalCachingDataService {
         return cache.get(symbol);
     }
 
+    public void invalidateCache() {
+        cache.invalidateAll();
+    }
+
     protected Map<String, String> loadData(String symbol) throws IOException {
         String url = prepareUrl(getUrl(), symbol);
         HttpClient client = HttpClientBuilder.create().build();
@@ -52,11 +59,11 @@ public abstract class HistoricalCachingDataService {
 
         return parseData(response.getEntity().getContent());
     }
-    private String prepareUrl(String urlTemplate, String symbol) {
+    private String prepareUrl(String urlTemplate, String symbol) throws UnsupportedEncodingException {
         Calendar endDate = new GregorianCalendar();
         Calendar startDate = new GregorianCalendar();
         startDate.set(Calendar.YEAR, endDate.get(Calendar.YEAR) - 1);
-        return prepareUrl(urlTemplate, symbol, startDate, endDate);
+        return prepareUrl(urlTemplate, URLEncoder.encode(symbol, UTF8), startDate, endDate);
     }
 
     protected abstract String prepareUrl(String urlTemplate, String symbol, Calendar startDate, Calendar endDate);

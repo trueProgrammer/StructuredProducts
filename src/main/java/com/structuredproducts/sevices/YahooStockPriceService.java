@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.supercsv.cellprocessor.ParseDate;
 import org.supercsv.cellprocessor.ParseDouble;
-import org.supercsv.cellprocessor.ParseInt;
+import org.supercsv.cellprocessor.ParseLong;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvMapReader;
 import org.supercsv.io.ICsvMapReader;
@@ -34,7 +34,7 @@ public class YahooStockPriceService extends HistoricalCachingDataService {
             new ParseDouble(),              //High
             new ParseDouble(),              //Low
             new ParseDouble(),              //Close
-            new ParseInt(),                 //Volume
+            new ParseLong(),                 //Volume
             new ParseDouble(),              //Adj Close
     };
     // http://finance.yahoo.com/d/quotes.csv?e=.csv&f=c4l1&s=EURUSD=X,GBPUSD=X
