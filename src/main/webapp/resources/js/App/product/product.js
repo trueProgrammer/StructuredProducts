@@ -21,7 +21,7 @@
              ];
 
              var selected = {
-                 desc : false,
+                 desc : true,
                  otherParams: false
              };
 
