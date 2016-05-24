@@ -115,7 +115,7 @@ angular.module('App.admin.products')
                     cellFilter: "griddropdown:this",
                     editableEntity: 'paymentPeriodicity', editableCellTemplate: 'ui-grid/dropdownEditor',
                     editDropdownValueLabel: 'name', editDropdownOptionsArray: []},
-                { field: 'description',  displayName: 'Описание', width: 400, notNull: true, cellTemplate: defaultStrCellTemplate}
+                { field: 'description',  displayName: 'Описание', width: 600, notNull: true, cellTemplate: defaultStrCellTemplate}
             ],
         };
 

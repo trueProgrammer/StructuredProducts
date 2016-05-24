@@ -26,7 +26,7 @@
              };
 
              var show = {
-                desc: false,
+                desc: true,
                 mainParams: true,
                 otherParams: false
              };
@@ -93,7 +93,7 @@
                                  var dataset = {
                                      label: hist.name,
                                      fillColor: "rgba(0,0,0,0)",
-                                     strokeColor: colors[index],
+                                     //strokeColor: colors[index],
                                      pointColor: colors[index],
                                      pointStrokeColor: "#fff",
                                      pointHighlightFill: "#fff",

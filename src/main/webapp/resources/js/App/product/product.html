@@ -10,7 +10,7 @@
     </div>
 </div>
 <div class="container">
-    <div class="col-md-6 col-style">
+    <div class="col-md-6 col-style margin-top-5">
         <h2>{{productParams.product.name}}</h2>
         <div ng-if="productParams.showImg == false">
             <h3 >График цены базовых активов</h3>
@@ -20,7 +20,7 @@
             </div>
         </div>
         <div ng-if="productParams.showImg == true">
-            <img src="{{productParams.img}}" width="400" height="300"/>
+            <img src="{{productParams.img}}" height="380"/>
         </div>
         <!--<img src="{{productParams.img}}" width="400" height="300"/>
         <h3 class="btn-link" ng-click="showChart = !showChart">График цены базового актива</h3>
@@ -56,7 +56,7 @@
         </div>
         <!--END DESCRIPTION-->
         <!--START MAIN PARAMS-->
-        <div ng-if="isShow('mainParams')">
+        <div>
             <span class="custom-h3">Доходность: <span class="blue-style">{{productParams.product.returnValue}}%</span></span>
             <hr class="devider devider-dashed hr-style"/>
             <span class="custom-h3">Уровень защиты: <span class="blue-style">{{productParams.product.productType.name}}</span></span>
