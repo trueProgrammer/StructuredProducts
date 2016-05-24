@@ -87,9 +87,9 @@ angular.module('App.admin.broker')
             });
         };
         $scope.onAddEmailClick = function() {
-            $scope.emails.push({id: $scope.emails.length + 1, email: ""});
+            $scope.emails.push({num: $scope.emails.length + 1, email: ""});
         };
-        $scope.onModifyEmail = function(id, email) {
-            $scope.emails[id - 1].email = email;
+        $scope.onModifyEmail = function(num, email) {
+            $scope.emails[num - 1].email = email;
         }
     }]);

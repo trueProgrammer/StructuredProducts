@@ -40,7 +40,7 @@ public class MailService {
         props.put("mail.smtp.socketFactory.fallback", "false");
     }
 
-    public void sendMessage(String name, String midName, String secondName, String email, String phone, String text) throws ServiceException {
+    public void sendMessage(String name, String midName, String secondName, String email, String phone, String text, String to) throws ServiceException {
 
         log.debug("Email [name:{}, from:{}] will be send.", name, email);
 
@@ -57,7 +57,7 @@ public class MailService {
             Message msg = new MimeMessage( mailSession );
 
             msg.setFrom(new InternetAddress(login));
-            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(login));
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
             msg.setSentDate(new Date());
             msg.setSubject("Contact form " + random.nextInt());
 

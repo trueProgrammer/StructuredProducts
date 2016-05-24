@@ -41,7 +41,9 @@ public class EmailController {
                     (String) map.get("secondName"),
                     (String) map.get("email"),
                     (String) map.get("phone"),
-                    (String) map.get("text"));
+                    (String) map.get("text"),
+                    ""//TODO add admin mail
+            );
             return new ResponseEntity<>(new Message("Message new Message()"), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

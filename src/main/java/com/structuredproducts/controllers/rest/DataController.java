@@ -6,8 +6,7 @@ import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
 import com.structuredproducts.persistence.entities.instrument.*;
-import com.structuredproducts.sevices.DBService;
-import com.structuredproducts.sevices.HistoricalCachingDataService;
+import com.structuredproducts.sevices.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by Vlad on 23.11.2015.
@@ -37,6 +38,9 @@ public class DataController {
 
     @Autowired
     private DBService dbService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     @Qualifier("yahooCurrencyPriceService")
@@ -211,8 +215,19 @@ public class DataController {
                            method = RequestMethod.POST,
                            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
-    public ResponseEntity<Message> sendCreateProductRequest( @RequestBody String productRequest) {
-        logger.debug("Got create product request {} ", productRequest);
+    public ResponseEntity<Message> sendCreateProductRequest( @RequestBody String json) throws IOException, ServiceException {
+        logger.debug("Got create product request {} ", json);
+        Map<String, Object> map = ServiceUtils.getObjectMapping(json);
+        String firstname = (String) map.get("firstname");
+        String lastname = (String) map.get("lastname");
+        String email = (String) map.get("email");
+        String phone = (String) map.get("phone");
+        Integer brokerId = (Integer) map.get("brokerId");
+
+        Broker broker = dbService.getObjectById(Broker.class, brokerId);
+        String recepients = String.join(",", broker.getEmails().stream().map(Email::getEmail).collect(Collectors.toList()));
+
+        mailService.sendMessage(firstname, "", lastname, email, phone, "", recepients);//TODO add valid text
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -121,7 +121,10 @@
              }());
 
              $scope.openModal = function () {
-                 modalService.show();
+                 if ($scope.productParams.product.broker) {
+                     modalService.show(undefined, $scope.productParams.product.broker.id);
+                 } else {
+                     modalService.show();
+                 }
              };
-
          }]);
