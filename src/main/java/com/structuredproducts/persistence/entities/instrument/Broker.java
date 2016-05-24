@@ -5,6 +5,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "employee")
@@ -19,6 +20,9 @@ public class Broker implements Serializable, UniqueWithName{
 
     @Column
     private String logo;
+
+    @OneToMany(mappedBy = "broker")
+    private List<Email> emails;
 
     public Broker() {
     }
@@ -49,5 +53,13 @@ public class Broker implements Serializable, UniqueWithName{
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public void setEmails(List<Email> emails) {
+        this.emails = emails;
+    }
+
+    public List<Email> getEmails() {
+        return emails;
     }
 }

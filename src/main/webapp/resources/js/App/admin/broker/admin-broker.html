@@ -29,6 +29,20 @@
                         <img id="broker-logo-preview" width="250" src=""/>
                     </div>
                 </div>
+                <div class="row">
+                    <b>Email:</b>
+                </div>
+                <div id="emails" ng-repeat="email in emails track by email.id">
+                    <div class="row">
+                        <div class="form-group col-md-1">
+                            {{email.num}}
+                        </div>
+                        <div class="form-group col-md-5">
+                            <input type="text" class="form-control" ng-value="email.email" ng-change="onModifyEmail({{email.num}}, emailVal)" ng-model="emailVal" id="broker-email"/>
+                        </div>
+                        <button ng-show="email.num==1" class="btn" ng-click="onAddEmailClick()">+</button>
+                    </div>
+                </div>
             </form>
             <button class="btn-primary" id="actionbtn" ng-click="onAddClick()">Добавить</button>
             <button class="btn-primary" ng-show="mode === 'modify'" id="cancelbtn" ng-click="cancel()">Отмена</button>
@@ -45,7 +59,14 @@
                                 <b>Логотип:</b>
                                 <br/>
                                 <img width="250" ng-src="{{broker.logo}}">
-                                <br>
+                                <br/>
+                                <b>Почта:</b>
+                                <br/>
+                                <div ng-repeat="email in broker.emails">
+                                    {{email.email}}
+                                    <br/>
+                                </div>
+                                <br/>
                                 <button class="btn-primary" ng-click="modifyBroker(broker)">Редактировать</button>
                                 <button class="btn-primary" ng-click="removeBroker(broker)">Удалить</button>
                             </div>

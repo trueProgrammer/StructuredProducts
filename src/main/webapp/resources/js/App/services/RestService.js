@@ -276,13 +276,14 @@ angular.module('App.services', ['ngResource']).service('restService', [
                 });
         },
 
-        addBroker: function(id, name, img, onSuccess, onFail){
+        addBroker: function(id, name, img, emails, onSuccess, onFail){
             $http.post(
                 adminUri + "brokerAdd",
                 {
                     id: id,
                     name: name,
-                    img: img
+                    img: img,
+                    emails: emails
                 }).then(
                 function (response) {
                     onSuccess(response.data);

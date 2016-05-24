@@ -6,8 +6,8 @@ import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
 import com.structuredproducts.persistence.entities.instrument.*;
-import com.structuredproducts.sevices.HistoricalCachingDataService;
 import com.structuredproducts.sevices.DBService;
+import com.structuredproducts.sevices.HistoricalCachingDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +75,8 @@ public class DataController {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public ResponseEntity<Object[]> getBrokers() {
-        List<?> list = dbService.getResultList(Broker.class);
+        List<Broker> list = (List<Broker>) dbService.getResultList(Broker.class);
+        list.forEach(b -> b.getEmails());
         return new ResponseEntity<>(list.toArray(), HttpStatus.OK);
     }
 

@@ -2,6 +2,7 @@ package com.structuredproducts.controllers.rest;
 
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.Broker;
+import com.structuredproducts.persistence.entities.instrument.Email;
 import com.structuredproducts.sevices.ServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(AbstractAdminController.rootUrl)
@@ -39,7 +43,13 @@ public class BrokerAdminController extends AbstractAdminController{
             broker.setName(name);
             broker.setLogo(img);
 
-            dbService.save(broker);
+            Broker savedBroker = (Broker)dbService.save(broker);
+            List<Email> emails = ((List<LinkedHashMap>) map.get("emails"))
+                    .stream()
+                    .map(m -> new Email((Integer)m.get("id"), (String)m.get("email"), savedBroker))
+                    .collect(Collectors.toList());
+            savedBroker.setEmails(emails);
+            dbService.save(emails);
         } catch (IOException e) {
             logger.error("can't handle json " + json, e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
