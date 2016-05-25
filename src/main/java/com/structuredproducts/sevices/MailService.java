@@ -22,6 +22,8 @@ public class MailService {
     private String login;
     @Value( "${mail.password}" )
     private String password;
+    @Value( "${mail.servicemail}" )
+    private String servicemail;
 
     private final Random random = new Random();
 
@@ -41,8 +43,11 @@ public class MailService {
     }
 
     public void sendMessage(String name, String midName, String secondName, String email, String phone, String text, String to) throws ServiceException {
+        if (to == null) {
+            to = servicemail;
+        }
 
-        log.debug("Email [name:{}, from:{}] will be send.", name, email);
+        log.debug("Email [name:{}, from:{}] will be send to {}.", name, email, to);
 
         try {
             Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {

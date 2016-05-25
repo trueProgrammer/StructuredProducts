@@ -224,8 +224,11 @@ public class DataController {
         String phone = (String) map.get("phone");
         Integer brokerId = (Integer) map.get("brokerId");
 
-        Broker broker = dbService.getObjectById(Broker.class, brokerId);
-        String recepients = String.join(",", broker.getEmails().stream().map(Email::getEmail).collect(Collectors.toList()));
+        String recepients = null;
+        if (brokerId != null) {
+            Broker broker = dbService.getObjectById(Broker.class, brokerId);
+            recepients = String.join(",", broker.getEmails().stream().map(Email::getEmail).collect(Collectors.toList()));
+        }
 
         mailService.sendMessage(firstname, "", lastname, email, phone, "", recepients);//TODO add valid text
         return new ResponseEntity<>(HttpStatus.OK);
