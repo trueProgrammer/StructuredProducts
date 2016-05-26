@@ -411,7 +411,20 @@ angular.module('App.services', ['ngResource']).service('restService', [
                 }
             ).success(onSuccess).error(onFail);
         },
+        
+        getSystemProperties: function(onSuccess, onFail) {
+            $http.get(
+                adminUri + "systemproperties/get"
+            ).success(onSuccess).error(onFail);
+        },
 
+        modifySystemProperty: function(systemProperty, onSuccess, onFail) {
+            $http.post(
+                adminUri + "systemproperties/modify",
+                systemProperty
+            ).success(onSuccess).error(onFail);
+        },
+        
         login: function (name, pass, onSuccess, onFail) {
             $http.post(
                 "api/v1/user/instrumentType"

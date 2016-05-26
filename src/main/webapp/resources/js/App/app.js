@@ -4,7 +4,7 @@ angular.module('App',
         'App.main', 'App.about', 'App.investidea', 'App.investideas', 'App.investproduct', 'App.product', 'App.partners', 'App.structuredproducts',
         'App.createproduct',
         'App.login',
-        'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts', 'App.admin.productparams', 'App.admin.csv'
+        'App.admin.products', 'App.admin.broker', 'App.admin.investidea', 'App.admin.topproducts', 'App.admin.productparams', 'App.admin.csv', 'App.admin.system'
     ]).config(['$httpProvider',
         function($httpProvider){
             $httpProvider.interceptors.push(function ($q, $rootScope, $location) {
@@ -96,6 +96,7 @@ angular.module('App.admin.topproducts', []);
 angular.module('App.admin.productparams', []);
 angular.module('App.admin.csv', []);
 angular.module('App.createproduct', []);
+angular.module('App.admin.system', []);
 
 var App = function () {
 

@@ -1,0 +1,25 @@
+<div class="breadcrumbs">
+    <div class="container">
+        <h1 class="pull-left">Страница Администратора</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="#/">Home</a></li>
+            <li><a href="#/admin">Страница Администратора</a></li>
+        </ul>
+    </div>
+</div>
+<div class="container content-sm">
+    <!--<div ng-include="'views/template/admin-menu.htm'" onload="$('#broker').attr('active', true)"></div>-->
+    <div ng-include="'views/template/admin-menu.htm'" onload=""></div>
+
+    <div ng-repeat="prop in properties track by prop.key">
+        <div class="row">
+            <div class="col-md-6">
+                <p align="right">{{prop.key}} :</p>
+            </div>
+            <div class="col-md-6">
+                <input type="text" value="{{prop.value}}" ng-model="prop.value"/>
+            </div>
+            <button class="btn-primary" ng-click="updateProperty(prop.key, prop.value)">Обновить</button>
+        </div>
+    </div>
+</div>
