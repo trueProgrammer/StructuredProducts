@@ -151,8 +151,8 @@ public class ProductCsvToDbService {
     private static final Pattern FROM_TO_INVEST_THOUSAND_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
     private static final Pattern TO_INVEST_THOUSAND_PATTERN = Pattern.compile("до (\\d+) тыс.*");
     private static final Pattern FROM_INVEST_THOUSAND_PATTERN = Pattern.compile("от (\\d+) тыс.*");
-    private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до ([\\d\\s]+)");
-    private static final Pattern FROM_INVEST_PATTERN = Pattern.compile("от ([\\d\\s]+)");
+    private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до ([\\d\\s]+) .*$");
+    private static final Pattern FROM_INVEST_PATTERN = Pattern.compile("от ([\\d\\s]+) .*$");
 
     public List<ProductBean> readCsv(InputStreamReader reader) throws IOException {
         List<ProductBean> result = new ArrayList<>();
