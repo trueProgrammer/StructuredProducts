@@ -38,6 +38,7 @@ public class DBService {
             put(TopProduct.class, "INSTRUMENT.TOP_PRODUCT").
             put(InvestIdea.class, "INSTRUMENT.INVEST_IDEA").
             put(ProductParam.class, "INSTRUMENT.PRODUCT_PARAMS").
+            put(SystemProperty.class, "INSTRUMENT.SYSTEM_PROPERTY").
             build();
 
     public List<?> getProductsByType(List<String> types) {
@@ -203,6 +204,10 @@ public class DBService {
         return dbManager.getEntityManager().find(InvestIdea.class, id);
     }
     public <S>S getObjectById(Class<S> clazz, int id) {
+        return dbManager.getEntityManager().find(clazz, id);
+    }
+
+    public <S>S getObjectByKey(Class<S> clazz, Object id) {
         return dbManager.getEntityManager().find(clazz, id);
     }
 

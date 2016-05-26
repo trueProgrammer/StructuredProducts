@@ -1,9 +1,12 @@
 package com.structuredproducts.sevices;
 
+import com.structuredproducts.persistence.entities.instrument.SystemProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -18,12 +21,16 @@ public class MailService {
 
     private static final Logger log = LoggerFactory.getLogger(MailService.class);
 
+    @Autowired
+    private DBService dbService;
+
     @Value( "${mail.login}" )
     private String login;
     @Value( "${mail.password}" )
     private String password;
-    @Value( "${mail.servicemail}" )
-    private String servicemail;
+    @Value( "${mail.service_mail_property}" )
+    private String serviceMailProperty;
+    private String serviceMail;
 
     private final Random random = new Random();
 
@@ -42,9 +49,20 @@ public class MailService {
         props.put("mail.smtp.socketFactory.fallback", "false");
     }
 
+    @PostConstruct
+    public void init() {
+        SystemProperty prop = dbService.getObjectByKey(SystemProperty.class, serviceMailProperty);
+        if (prop != null) {
+            serviceMail = prop.getValue();
+            log.debug("Service mail value: {}", serviceMail);
+        } else {
+            log.error("There is no system property {} in database", serviceMailProperty);
+        }
+    }
+
     public void sendMessage(String name, String midName, String secondName, String email, String phone, String text, String to) throws ServiceException {
         if (to == null) {
-            to = servicemail;
+            to = serviceMail;
         }
 
         log.debug("Email [name:{}, from:{}] will be send to {}.", name, email, to);
