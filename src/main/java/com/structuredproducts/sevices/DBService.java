@@ -130,6 +130,20 @@ public class DBService {
         }
     }
 
+    public void saveOrUpdateProductParam(ProductParam productParam) {
+        if(productParam == null || productParam == null) {
+            return;
+        }
+        String queryStr = String.format("Select id from %s where product = :product", productParam.getClass().getSimpleName());
+        TypedQuery<Integer> query = dbManager.getEntityManager().createQuery(queryStr, Integer.class);
+        query.setParameter("product", productParam.getProduct());
+        List<Integer> ids = query.getResultList();
+        if (ids.size() > 0) {
+            productParam.setId(ids.get(0));
+        }
+        dbManager.getEntityManager().merge(productParam);
+    }
+
     private <E extends UniqueWithName> E saveOrUpdateNameable(E obj) {
         if(obj == null || obj.getName() == null) {
             return null;

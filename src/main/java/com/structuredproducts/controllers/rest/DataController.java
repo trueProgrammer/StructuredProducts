@@ -191,8 +191,8 @@ public class DataController {
                                 holder.labels.add(entry.getKey());
                                 holder.dataset.add(entry.getValue());
                             }
-                            Collections.reverse(holder.labels);
-                            Collections.reverse(holder.dataset);
+                            //Collections.reverse(holder.labels);
+                            //Collections.reverse(holder.dataset);
                             result.add(holder);
                         } catch (Exception e) {
                             logger.error("Error while get historical quotes for underlaying: " + v.getName(), e);

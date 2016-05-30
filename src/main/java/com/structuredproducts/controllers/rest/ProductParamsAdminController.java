@@ -1,5 +1,6 @@
 package com.structuredproducts.controllers.rest;
 
+import com.google.common.collect.Lists;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.persistence.entities.instrument.ProductParam;
@@ -49,19 +50,19 @@ public class ProductParamsAdminController extends AbstractAdminController{
                                             .collect(Collectors.toList());
 
 
-            Product product = new Product(productId);
+            Product product = dbService.getObjectById(Product.class, productId);
 
             ProductParam productParam = new ProductParam(product);
             productParam.setId(id);
             productParam.setChart(chart);
             productParam.setImg(img);
             productParam.setForecast(forecast);
+            dbService.saveOrUpdateProductParam(productParam);
 
-            dbService.save(productParam);
-
-            product = dbService.getObjectById(Product.class, productId);
-            product.setUnderlayingList(parsedUnderlayings);
-            dbService.save(product);
+            if (!Lists.newArrayList(product.getUnderlayingList()).equals(Lists.newArrayList(parsedUnderlayings))) {
+                product.setUnderlayingList(parsedUnderlayings);
+                dbService.save(product);
+            }
         } catch (IOException e) {
             logger.error("can't handle json", e);
         }

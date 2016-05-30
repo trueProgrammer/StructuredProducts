@@ -19,10 +19,10 @@ public class YahooStockPriceServiceTest {
         YahooStockPriceService service = new YahooStockPriceService();
 
         Map<String, String > quotes = service.getHistoricalCachingData("LUKOY");
-        assertThat(quotes, aMapWithSize(13));
+        assertThat(quotes, aMapWithSize(12));
 
         quotes = service.getHistoricalCachingData("FB");
-        assertThat(quotes, aMapWithSize(13));
+        assertThat(quotes, aMapWithSize(12));
     }
 
 }

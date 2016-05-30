@@ -55,5 +55,6 @@
 }
 
 .img-style {
-    width: 100px;
+    max-width: 110px;
+    max-height: 70px;
 }

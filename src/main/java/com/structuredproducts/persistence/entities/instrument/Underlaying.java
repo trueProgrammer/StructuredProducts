@@ -63,4 +63,20 @@ public class Underlaying implements Serializable, UniqueWithName {
     public void setOfficialName(String officialName) {
         this.officialName = officialName;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Underlaying that = (Underlaying) o;
+
+        return id.equals(that.id);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

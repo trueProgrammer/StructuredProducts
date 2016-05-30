@@ -2,7 +2,6 @@ package com.structuredproducts.sevices;
 
 import com.structuredproducts.controllers.data.ProductBean;
 import com.structuredproducts.persistence.entities.instrument.Product;
-import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import java.io.InputStream;
