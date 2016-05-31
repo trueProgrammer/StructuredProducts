@@ -1,6 +1,8 @@
 package com.structuredproducts.controllers.rest;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multiset;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
@@ -21,10 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -182,15 +181,17 @@ public class DataController {
                     v -> {
                         try {
                             HistoricalHolder holder = new HistoricalHolder();
-                            Map<String, String> historical = stockPriceService.getHistoricalCachingData(v.getOfficialName());
-                            if (historical.isEmpty()) {
-                                historical = currencyPriceService.getHistoricalCachingData(v.getOfficialName());
-                            }
+                            /*Multimap<String, String> historical = stockPriceService.getHistoricalCachingData(v.getOfficialName());
+                            if (historical.isEmpty()) {*/
+                            Multimap<Date, String> historical = currencyPriceService.getHistoricalCachingData(v.getOfficialName(), v.getType());
+                            //}
                             holder.name = v.getName();
-                            for(Map.Entry<String, String> entry : historical.entrySet()) {
+                            holder.labels = historical.keys();
+                            holder.dataset = historical.values();
+                            /*for(Map.Entry<String, String> entry : historical.entrySet()) {
                                 holder.labels.add(entry.getKey());
                                 holder.dataset.add(entry.getValue());
-                            }
+                            }*/
                             //Collections.reverse(holder.labels);
                             //Collections.reverse(holder.dataset);
                             result.add(holder);
@@ -207,8 +208,8 @@ public class DataController {
 
     private static final class HistoricalHolder {
         public String name;
-        public List<String> labels = Lists.newArrayList();
-        public List<String> dataset = Lists.newArrayList();
+        public Multiset<Date> labels;
+        public Collection<String> dataset;
     }
 
     @RequestMapping(path="/createProductRequest",

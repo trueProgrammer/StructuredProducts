@@ -1,5 +1,8 @@
 package com.structuredproducts.sevices;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.LinkedListMultimap;
+import com.google.common.collect.Multimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.supercsv.cellprocessor.ParseDate;
@@ -41,24 +44,25 @@ public class YahooStockPriceService extends HistoricalCachingDataService {
     //private static final String URL = "http://ichart.yahoo.com/table.csv?s=MSFT&a=01&b=12&c=2007&d=10&e=1&f=2015&g=d&ignore=.csv";
     //private static final String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=m&ignore=.csv";
 
-    private static final String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=m&ignore=.csv";
+    private static final String URL = "http://ichart.yahoo.com/table.csv?s=%s&a=%d&b=%d&c=%d&d=%d&e=%d&f=%d&g=d&ignore=.csv";
 
     @Override
-    protected String prepareUrl(String urlTemplate, String symbol, Calendar startDate, Calendar endDate) {
+    protected String prepareUrl(String urlTemplate, String symbol, String type, Calendar startDate, Calendar endDate) {
         return String.format(URL, symbol,
                 startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH), startDate.get(Calendar.YEAR),
                 endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH), endDate.get(Calendar.YEAR));
     }
 
     @Override
-    protected Map<String, String> parseData(InputStream inputStream) {
-        Map<String, String> result = new LinkedHashMap<>();
-        Map<Date, Double> quotes = parseCsvQuotesByDayToMap(inputStream);
+    protected Multimap<Date, String> parseData(InputStream inputStream) {
+        //Map<String, String> result = new LinkedHashMap<>();
+        Multimap<Date, String> result = LinkedListMultimap.create();
+        /*Map<Date, Double> quotes = parseCsvQuotesByDayToMap(inputStream);
         for(Map.Entry<Date, Double> quote : quotes.entrySet()) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(quote.getKey());
-            result.putIfAbsent(MONTH_NAMES[calendar.get(Calendar.MONTH)] + " " + calendar.get(Calendar.YEAR), quote.getValue().toString());
-        }
+            result.put(MONTH_NAMES[calendar.get(Calendar.MONTH)] + " " + calendar.get(Calendar.YEAR), quote.getValue().toString());
+        }*/
         return result;
     }
 

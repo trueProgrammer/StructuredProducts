@@ -80,36 +80,69 @@
                      }*/
                      restService.getUnderlayingHistoricalQuotes(result.product.id,
                          function(result) {
-                             var data = {
-                                 datasets: []
+                             var config = {
+                                 type: 'line',
+                                 data: {
+                                     datasets: []
+                                 },
+                                 options: {
+                                     scaleLabel: "<%=value%> $",
+                                     responsive: true,
+                                     scales: {
+                                         xAxes: [{
+                                             /*display: true,
+                                             ticks: {
+                                                 maxTicksLimit: 12,
+                                                 callback: function(value) {
+                                                     return '' + value;
+                                                 }
+                                             },*/
+                                             /*ticks: {
+                                                 maxTicksLimit: 10,
+                                             },*/
+                                             type: 'time',
+                                             time: {
+                                                 //maxTicksLimit: 12,
+                                                 displayFormats: {
+                                                     quarter: 'MMM YYYY'
+                                                 }
+                                             }
+                                             /*time: {
+                                                 maxTicksLimit: 12,
+                                                 unit: 'month'
+                                             }*/
+                                         }],
+                                         yAxes: [{
+                                             display: true,
+                                             beginAtZero: false,
+                                         }]
+                                     }
+                                 }
                              };
 
                              var index = 0;
-
                              result.forEach(function(hist){
-                                if(!data.labels) {
-                                    data.labels = hist.labels;
+                                if(!config.data.labels) {
+                                    config.data.labels = hist.labels;
                                 }
                                  var dataset = {
                                      label: hist.name,
+                                     pointRadius: 0,
                                      fillColor: "rgba(0,0,0,0)",
-                                     //strokeColor: colors[index],
+                                     strokeColor: colors[index],
                                      pointColor: colors[index],
                                      pointStrokeColor: "#fff",
                                      pointHighlightFill: "#fff",
                                      pointHighlightStroke: colors[index],
+                                     pointBorderWidth: 1,
                                      //multiTooltipTemplate: "<%= datasetLabel %> - <%= value %>",
                                      data: hist.dataset
                                  };
-                                 data.datasets.push(dataset);
+                                 config.data.datasets.push(dataset);
                                  index++;
                              });
                              var ctx = document.getElementById("chart").getContext("2d");
-                             var chart = new Chart(ctx).Line(data, {
-                                 // make enough space on the right side of the graph
-                                 scaleLabel: "<%=value%> $"
-                             });
-                             document.getElementById("legendDiv").innerHTML = chart.generateLegend();
+                             var chart = new Chart(ctx, config);
                          },
                          function(error) {
                              $log.error("error get product's historical data")
