@@ -28,6 +28,8 @@
         <hibernate.version>5.0.7.Final</hibernate.version>
         <postgresl.driver.version>9.4.1207</postgresl.driver.version>
         <apache.client.version>4.5.1</apache.client.version>
+        <dbh2.version>1.4.187</dbh2.version>
+        <dbunit.version>2.4.3</dbunit.version>
     </properties>
 
     <dependencies>
@@ -211,6 +213,29 @@
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-junit</artifactId>
             <version>${hamcrest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- http://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+
+        <!-- H2 DB -->
+        <!--<dependency>-->
+            <!--<groupId>com.h2database</groupId>-->
+            <!--<artifactId>h2</artifactId>-->
+            <!--<version>${dbh2.version}</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.dbunit</groupId>
+            <artifactId>dbunit</artifactId>
+            <version>${dbunit.version}</version>
             <scope>test</scope>
         </dependency>
 

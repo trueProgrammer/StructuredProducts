@@ -46,7 +46,7 @@ public class ProductParamsAdminController extends AbstractAdminController{
 
             ArrayList<HashMap<String, Object>> underlayings = (ArrayList<HashMap<String, Object>>) map.get("underlaying");
             List<Underlaying> parsedUnderlayings = underlayings.stream()
-                                            .map(underlayingMap -> new Underlaying((Integer) underlayingMap.get("id"), (String) underlayingMap.get("name")))
+                                            .map(underlayingMap -> new Underlaying((Integer) underlayingMap.get("id"), (String) underlayingMap.get("name"), (String) underlayingMap.get("officialName")))
                                             .collect(Collectors.toList());
 
 
@@ -61,6 +61,7 @@ public class ProductParamsAdminController extends AbstractAdminController{
 
             if (!Lists.newArrayList(product.getUnderlayingList()).equals(Lists.newArrayList(parsedUnderlayings))) {
                 product.setUnderlayingList(parsedUnderlayings);
+                dbService.save(parsedUnderlayings);
                 dbService.save(product);
             }
         } catch (IOException e) {

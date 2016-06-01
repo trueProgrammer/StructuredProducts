@@ -1,5 +1,6 @@
 package com.structuredproducts.persistence.entities.instrument;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -27,9 +28,10 @@ public class Underlaying implements Serializable, UniqueWithName {
     public Underlaying() {
     }
 
-    public Underlaying(Integer id, String name) {
+    public Underlaying(Integer id, String name, String officialName) {
         this.id = id;
         this.name = name;
+        this.officialName = officialName;
     }
 
     public Integer getId() {
@@ -71,7 +73,11 @@ public class Underlaying implements Serializable, UniqueWithName {
 
         Underlaying that = (Underlaying) o;
 
-        return id.equals(that.id);
+        EqualsBuilder equalsBuilder = new EqualsBuilder();
+        equalsBuilder.append(id, that.id)
+                .append(name, that.name)
+                .append(officialName, that.officialName);
+        return equalsBuilder.build();
 
     }
 
