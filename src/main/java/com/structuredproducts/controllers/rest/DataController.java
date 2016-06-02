@@ -45,10 +45,6 @@ public class DataController {
     @Qualifier("yahooCurrencyPriceService")
     private HistoricalCachingDataService currencyPriceService;
 
-    @Autowired
-    @Qualifier("yahooStockPriceService")
-    private HistoricalCachingDataService stockPriceService;
-
     @RequestMapping(path = "/timetypes", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Tuple[]> getTimeTypes() {
         TimeType[] timeTypes = TimeType.values();
@@ -180,21 +176,21 @@ public class DataController {
             product.getUnderlayingList().parallelStream().forEach(
                     v -> {
                         try {
-                            HistoricalHolder holder = new HistoricalHolder();
-                            /*Multimap<String, String> historical = stockPriceService.getHistoricalCachingData(v.getOfficialName());
-                            if (historical.isEmpty()) {*/
-                            Multimap<Date, String> historical = currencyPriceService.getHistoricalCachingData(v.getOfficialName(), v.getType());
-                            //}
-                            holder.name = v.getName();
-                            holder.labels = historical.keys();
-                            holder.dataset = historical.values();
+                            if (v.getOfficialName() != null) {
+                                HistoricalHolder holder = new HistoricalHolder();
+                                Multimap<Date, String> historical = currencyPriceService.getHistoricalCachingData(v.getOfficialName(), v.getType());
+                                holder.name = v.getName();
+                                holder.labels = historical.keys();
+                                holder.dataset = historical.values();
                             /*for(Map.Entry<String, String> entry : historical.entrySet()) {
                                 holder.labels.add(entry.getKey());
                                 holder.dataset.add(entry.getValue());
                             }*/
-                            //Collections.reverse(holder.labels);
-                            //Collections.reverse(holder.dataset);
-                            result.add(holder);
+                                //Collections.reverse(holder.labels);
+                                //Collections.reverse(holder.dataset);
+                                result.add(holder);
+
+                            }
                         } catch (Exception e) {
                             logger.error("Error while get historical quotes for underlaying: " + v.getName(), e);
                         }
