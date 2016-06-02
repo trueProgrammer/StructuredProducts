@@ -253,7 +253,6 @@
                 <executions>
                     <execution>
                         <id>default-minify</id>
-                        <phase>package</phase>
                         <configuration>
                             <skipMerge>true</skipMerge>
                             <nosuffix>true</nosuffix>
