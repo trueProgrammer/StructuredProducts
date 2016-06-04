@@ -2,15 +2,25 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd"
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd"
 >
 
     <context:property-placeholder location="classpath:sp.properties" />
 
-    <bean class="com.structuredproducts.persistence.DBManager" scope="singleton"/>
+    <bean class="com.structuredproducts.persistence.DBManager"/>
+    <bean class="com.structuredproducts.persistence.EntityManagerBean"
+          scope="request"
+          init-method="init"
+          destroy-method="destroy"
+    >
+        <aop:scoped-proxy/>
+    </bean>
 
     <bean class="com.structuredproducts.sevices.DBService"/>
     <bean class="com.structuredproducts.sevices.YahooCurrencyPriceService" name="yahooCurrencyPriceService"/>
