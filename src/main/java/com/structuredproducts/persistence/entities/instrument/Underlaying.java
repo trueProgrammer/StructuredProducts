@@ -18,6 +18,8 @@ public class Underlaying implements Serializable, UniqueWithName {
     private String name;
     @Column
     private String officialName;
+    @Column
+    private String period;
     @ManyToOne(targetEntity = UnderlayingType.class)
     @JoinColumn(name = "type")
     UnderlayingType type;
@@ -64,6 +66,14 @@ public class Underlaying implements Serializable, UniqueWithName {
 
     public void setOfficialName(String officialName) {
         this.officialName = officialName;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
     @Override

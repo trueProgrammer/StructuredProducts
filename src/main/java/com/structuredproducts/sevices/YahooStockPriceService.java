@@ -1,6 +1,5 @@
 package com.structuredproducts.sevices;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
 import org.slf4j.Logger;
@@ -54,7 +53,7 @@ public class YahooStockPriceService extends HistoricalCachingDataService {
     }
 
     @Override
-    protected Multimap<Date, String> parseData(InputStream inputStream) {
+    protected Multimap<?, String> parseData(InputStream inputStream, String underlayingPeriod) {
         //Map<String, String> result = new LinkedHashMap<>();
         Multimap<Date, String> result = LinkedListMultimap.create();
         /*Map<Date, Double> quotes = parseCsvQuotesByDayToMap(inputStream);
@@ -67,7 +66,7 @@ public class YahooStockPriceService extends HistoricalCachingDataService {
     }
 
     @Override
-    protected String getUrl() {
+    protected String getUrl(String underlayingPeriod) {
         return URL;
     }
 

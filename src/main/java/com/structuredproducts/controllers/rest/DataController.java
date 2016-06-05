@@ -178,16 +178,11 @@ public class DataController {
                         try {
                             if (v.getOfficialName() != null) {
                                 HistoricalHolder holder = new HistoricalHolder();
-                                Multimap<Date, String> historical = currencyPriceService.getHistoricalCachingData(v.getOfficialName(), v.getType());
+                                Multimap<?, String> historical = currencyPriceService.getHistoricalCachingData(v);
                                 holder.name = v.getName();
                                 holder.labels = historical.keys();
                                 holder.dataset = historical.values();
-                            /*for(Map.Entry<String, String> entry : historical.entrySet()) {
-                                holder.labels.add(entry.getKey());
-                                holder.dataset.add(entry.getValue());
-                            }*/
-                                //Collections.reverse(holder.labels);
-                                //Collections.reverse(holder.dataset);
+                                holder.period = v.getPeriod();
                                 result.add(holder);
 
                             }
@@ -204,7 +199,8 @@ public class DataController {
 
     private static final class HistoricalHolder {
         public String name;
-        public Multiset<Date> labels;
+        public String period;
+        public Multiset<?> labels;
         public Collection<String> dataset;
     }
 

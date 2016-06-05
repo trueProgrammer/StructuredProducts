@@ -36,7 +36,7 @@ angular.module('App.admin.products')
                 },
                 { field: 'riskType', displayName: 'Тип риска', width: "47%",
                     editableCellTemplate: 'ui-grid/dropdownEditor',
-                    cellFilter: 'mapRiskType', editDropdownValueLabel: 'type', editDropdownOptionsArray: [
+                    cellFilter: 'mapEnumType', editDropdownValueLabel: 'type', editDropdownOptionsArray: [
                     { id: 1, type: 'High' },
                     { id: 2, type: 'Medium' },
                     { id: 3, type: 'Low' }]
@@ -64,8 +64,15 @@ angular.module('App.admin.products')
                 { field: 'name', displayName: 'Тип базового актива', width: "94%", notNull: true, cellTemplate: defaultStrCellTemplate  },
             ],
             underlaying: [
-                { field: 'name', displayName: 'Базовый актив', width: "45%", notNull: true, cellTemplate: defaultStrCellTemplate  },
-                { field: 'officialName', displayName: 'Биржевое имя', width: "18%", notNull: true, cellTemplate: defaultStrCellTemplate  },
+                { field: 'name', displayName: 'Базовый актив', width: "30%", notNull: true, cellTemplate: defaultStrCellTemplate  },
+                { field: 'officialName', displayName: 'Биржевое имя', width: "16%", notNull: true, cellTemplate: defaultStrCellTemplate  },
+                { field: 'period', displayName: 'Период', width: "15%",
+                    editableCellTemplate: 'ui-grid/dropdownEditor',
+                    cellFilter: 'mapEnumType', editDropdownValueLabel: 'type', editDropdownOptionsArray: [
+                        { id: 1, type: 'Y' },
+                        { id: 2, type: '5d' },
+                    ]
+                },
                 { field: 'type', displayName: 'Тип базового актива', width: "30%",
                     cellFilter: "griddropdown:this",
                     notNull: true,
@@ -212,12 +219,21 @@ angular.module('App.admin.products')
         $scope.saveData = function() {
             $scope.saveButtonsDisabled = true;
 
-            //huck, because dropdown editor can't use simle values in array, like ['High', 'Medium', 'Low'], instead using objects
+            //TODO: huck, because dropdown editor can't use simple values in array, like ['High', 'Medium', 'Low'], instead using objects
             if ($scope.selected === 'productType') {
                 for (var i in $scope.table.data) {
                     if ($scope.table.data[i].riskType) {
                         if($scope.table.data[i].riskType.type) {
                             $scope.table.data[i].riskType = $scope.table.data[i].riskType.type;
+                        }
+                    }
+                }
+            }
+            if ($scope.selected === 'underlaying') {
+                for (var i in $scope.table.data) {
+                    if ($scope.table.data[i].period) {
+                        if($scope.table.data[i].period.type) {
+                            $scope.table.data[i].period = $scope.table.data[i].period.type;
                         }
                     }
                 }
@@ -324,7 +340,7 @@ angular.module('App.admin.products')
             return input;
         };
     })
-    .filter('mapRiskType', function() {
+    .filter('mapEnumType', function() {
         return function(input) {
             if (!input){
                 return '';

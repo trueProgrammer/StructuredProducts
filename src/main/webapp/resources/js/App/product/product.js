@@ -89,29 +89,19 @@
                                      scaleLabel: "<%=value%> $",
                                      responsive: true,
                                      scales: {
-                                         xAxes: [{
-                                             /*display: true,
+                                         xAxes: [/*{
+                                             /!*display: true,
                                              ticks: {
-                                                 maxTicksLimit: 12,
-                                                 callback: function(value) {
-                                                     return '' + value;
-                                                 }
-                                             },*/
-                                             /*ticks: {
-                                                 maxTicksLimit: 10,
-                                             },*/
-                                             type: 'time',
+                                                 maxTicksLimit: 5,
+                                             },*!/
+                                             /!*type: 'time',
                                              time: {
                                                  //maxTicksLimit: 12,
                                                  displayFormats: {
                                                      quarter: 'MMM YYYY'
                                                  }
-                                             }
-                                             /*time: {
-                                                 maxTicksLimit: 12,
-                                                 unit: 'month'
-                                             }*/
-                                         }],
+                                             }*!/
+                                         }*/],
                                          yAxes: [{
                                              display: true,
                                              beginAtZero: false,
@@ -119,6 +109,25 @@
                                      }
                                  }
                              };
+
+                             if (result[0].period && result[0].period === '5d') {
+                                 config.options.scales.xAxes.push({
+                                     display: true,
+                                        ticks: {
+                                            maxTicksLimit: 5,
+                                        }
+                                 });
+                             } else {
+                                 config.options.scales.xAxes.push({
+                                     display: true,
+                                     type: 'time',
+                                     time: {
+                                         displayFormats: {
+                                             quarter: 'MMM YYYY'
+                                         }
+                                     }
+                                 });
+                             }
 
                              var index = 0;
                              result.forEach(function(hist){
