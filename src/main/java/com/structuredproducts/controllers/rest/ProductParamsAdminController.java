@@ -33,7 +33,7 @@ public class ProductParamsAdminController extends AbstractAdminController{
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public ResponseEntity<Message> addParam(@RequestBody String json) {
-        logger.debug("Got json {}", json);
+//        logger.debug("Got json {}", json);
 
         Map<String, Object> map = null;
         try {

@@ -2,13 +2,12 @@ package com.structuredproducts.sevices;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.structuredproducts.persistence.DBManager;
+import com.structuredproducts.persistence.EntityManagerBean;
 import com.structuredproducts.persistence.entities.instrument.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.PreDestroy;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
@@ -21,7 +20,7 @@ public class DBService {
 
     private final static Logger logger = LoggerFactory.getLogger(DBService.class);
     @Autowired
-    private DBManager dbManager;
+    private EntityManagerBean dbManager;
 
     private static final Map<Class<?>, String> TABLE_TO_TYPE_MAPPING = ImmutableMap.<Class<?>, String>builder().
             put(ProductType.class, "INSTRUMENT.PRODUCT_TYPE").
@@ -141,7 +140,7 @@ public class DBService {
         if (ids.size() > 0) {
             productParam.setId(ids.get(0));
         }
-        dbManager.getEntityManager().merge(productParam);
+        save(productParam);
     }
 
     private <E extends UniqueWithName> E saveOrUpdateNameable(E obj) {
@@ -223,11 +222,6 @@ public class DBService {
 
     public <S>S getObjectByKey(Class<S> clazz, Object id) {
         return dbManager.getEntityManager().find(clazz, id);
-    }
-
-    @PreDestroy
-    public void destroy() {
-        dbManager.close();
     }
 
     public List<Product> getTopProductsByTimeTypeAndProductType(String time, String productType) {
