@@ -3,15 +3,27 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd"
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd"
 >
 
     <context:property-placeholder location="classpath:sp.properties" />
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="entityManager" />
+    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
+    </bean>
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+    <tx:annotation-driven transaction-manager="transactionManager"  />
 
     <bean class="com.structuredproducts.persistence.DBManager"/>
     <bean class="com.structuredproducts.persistence.EntityManagerBean"
@@ -22,10 +34,12 @@
         <aop:scoped-proxy/>
     </bean>
 
-    <bean class="com.structuredproducts.sevices.DBService"/>
+    <!--<bean class="com.structuredproducts.sevices.DBService"/>-->
     <bean class="com.structuredproducts.sevices.YahooCurrencyPriceService" name="yahooCurrencyPriceService"/>
     <bean class="com.structuredproducts.sevices.YahooStockPriceService" name="yahooStockPriceService"/>
     <bean class="com.structuredproducts.sevices.MailService"/>
     <bean class="com.structuredproducts.sevices.ProductCsvToDbService"/>
 
+    <context:annotation-config  />
+    <context:component-scan base-package="com.structuredproducts.sevices" />
 </beans>

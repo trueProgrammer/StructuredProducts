@@ -21,7 +21,7 @@ public class Broker implements Serializable, UniqueWithName{
     @Column
     private String logo;
 
-    @OneToMany(mappedBy = "broker")
+    @OneToMany(mappedBy = "broker", fetch = FetchType.EAGER)
     private List<Email> emails;
 
     public Broker() {

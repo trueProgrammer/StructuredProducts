@@ -220,7 +220,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring.version}</version>
-            <scope>test</scope>
         </dependency>
 
 
@@ -238,6 +237,14 @@
             <version>${dbunit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- http://mvnrepository.com/artifact/org.springframework/spring-orm -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
 
     </dependencies>
 

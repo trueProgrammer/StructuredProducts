@@ -1,16 +1,13 @@
 package com.structuredproducts.persistence;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class DBManager {
 
-    private final EntityManagerFactory factory;
-
-
-    public DBManager() {
-        factory = Persistence.createEntityManagerFactory("entityManager");
-    }
+    @Autowired
+    private EntityManagerFactory factory;
 
     public EntityManagerFactory getFactory() {
         return factory;
