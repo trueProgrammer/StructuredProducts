@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,7 +42,8 @@ public class DBService {
             put(SystemProperty.class, "INSTRUMENT.SYSTEM_PROPERTY").
             build();
 
-    public List<?> getProductsByType(List<String> types) {
+    @Transactional
+    public List<Product> getProductsByType(List<String> types) {
         Query query = createCacheableQuery("SELECT * from INSTRUMENT.PRODUCT p WHERE p.productType in (SELECT id FROM INSTRUMENT.PRODUCT_TYPE t WHERE t.riskType IN (:types))",
                 Product.class);
         query.setParameter("types", types);
@@ -147,30 +151,8 @@ public class DBService {
     }
 
     @Transactional
-    public void removeObj(Object obj) {
-        EntityManager em = entityManager;
-        EntityTransaction tr = em.getTransaction();
-        tr.begin();
-        try {
-            em.remove(entityManager.contains(obj) ? obj : entityManager.merge(obj));
-            tr.commit();
-        } catch (Exception e) {
-            logger.error("Can not remove entity.", e);
-        } finally {
-            if (tr.isActive()) {
-                tr.rollback();
-            }
-        }
-    }
-
-    @Transactional
-    public InvestIdea getInvestIdeaById(int id) {
-        return entityManager.find(InvestIdea.class, id);
-    }
-
-    @Transactional
-    public <S> S getObjectById(Class<S> clazz, int id) {
-        return entityManager.find(clazz, id);
+    public void remove(Object obj) {
+        entityManager.remove(entityManager.contains(obj) ? obj : entityManager.merge(obj));
     }
 
     @Transactional

@@ -50,7 +50,7 @@ public class ProductParamsAdminController extends AbstractAdminController{
                                             .collect(Collectors.toList());
 
 
-            Product product = dbService.getObjectById(Product.class, productId);
+            Product product = dbService.getObjectByKey(Product.class, productId);
 
             ProductParam productParam = new ProductParam(product);
             productParam.setId(id);

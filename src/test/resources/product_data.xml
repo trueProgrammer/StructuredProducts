@@ -1,0 +1,30 @@
+<dataset>
+    <broker id="1" name="bks" />
+    <broker id="2" name="БКС" />
+
+    <product_type id="1" name="С участием (ограниченный риск)" />
+    <product_type id="2" name="100% защита капитала плюс гарантированная доходность" />
+    <product_type id="3" name="100% защита капитала без гарантированной доходности" />
+
+
+    <strategy id="1" name="Барьерные стратегии" />
+    <strategy id="2" name="На стабильность" />
+    <strategy id="3" name="Диапазонные стратегии" />
+    <strategy id="4" name="Падение цены базового актива" />
+
+    <currency id="1" name="RUR" />
+    <currency id="2" name="USD" />
+
+    <product id="4" name="Феникс Россия" producttype="1" minterm="0" maxterm="24" mininvest="200000" maxinvest="500000" broker="2" return="20.0" strategy="1" currency="1" description="Феникс Россия позволяет получать высокую фиксированную купонную доходность в рублях каждый купонный период в течение срока действия продукта при условии, что цены базовых активов находятся в определенном диапазоне (выше порога)." />
+    <product id="5" name="Нефтяной коридор" producttype="3" minterm="3" maxterm="6" mininvest="200000" maxinvest="500000" broker="2" return="20.0" strategy="3" currency="1" description="Структурный продукт позволяет получить повышенную доходность в рублях  при условии, если цена на нефть Brent не выйдет за пределы заданного диапазона в конце срока действия продукта. В неблагоприятном исходе Клиенту будут возвращены 100% инвестированных средств." />
+
+    <underlaying id="15" name="Google" officialname="GOOG"/>
+    <underlaying id="16" name="USD/RUB" />
+    <underlaying id="12" name="Facebook" officialname="FACE" />
+    <underlaying id="14" name="Microsoft" officialname="MCRS" />
+
+    <underlayings product="5" underlaying="15" />
+    <underlayings product="5" underlaying="16" />
+    <underlayings product="4" underlaying="12" />
+
+</dataset>

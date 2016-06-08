@@ -68,7 +68,7 @@ public class BrokerAdminController extends AbstractAdminController{
             Integer id = (Integer) map.get("id");
             Broker broker = new Broker();
             broker.setId(id);
-            dbService.removeObj(broker);
+            dbService.remove(broker);
         } catch (IOException e) {
             logger.error("can't handle json " + json, e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

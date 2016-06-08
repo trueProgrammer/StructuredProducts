@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -131,7 +134,7 @@ public class DataController {
 
     @RequestMapping(path = "/investidea", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<InvestIdea> getInvestIdeaById(int id) {
-        return new ResponseEntity<>(dbService.getInvestIdeaById(id), HttpStatus.OK);
+        return new ResponseEntity<>(dbService.getObjectByKey(InvestIdea.class, id), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/productparams", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -219,7 +222,7 @@ public class DataController {
 
         String recepients = null;
         if (brokerId != null) {
-            Broker broker = dbService.getObjectById(Broker.class, brokerId);
+            Broker broker = dbService.getObjectByKey(Broker.class, brokerId);
             recepients = String.join(",", broker.getEmails().stream().map(Email::getEmail).collect(Collectors.toList()));
         }
 

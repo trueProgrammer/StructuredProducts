@@ -31,7 +31,7 @@ public class InvestIdeaController extends AbstractAdminController{
             Map<String, Object> map = ServiceUtils.getObjectMapping(json);
             InvestIdea idea = new InvestIdea();
             idea.setId((Integer) map.get("id"));
-            dbService.removeObj(idea);
+            dbService.remove(idea);
         } catch (IOException e) {
             logger.error("can't handle json " + json, e);
         }
