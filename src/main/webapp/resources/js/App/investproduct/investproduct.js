@@ -471,11 +471,16 @@ angular.module('App.investproduct')
             }
             $scope.filter[filter] = !$scope.filter[filter];
         };
-        $scope.getPeriodValue = function(val) {
-            if (val.min == 0) {
-                return 'до ' + val.max;
-            } else {
-                return "от " + val.min + " до " + val.max;
+        $scope.getPeriodValue = function(min, max) {
+            var minStr = min.toLocaleString();
+            var maxStr = max.toLocaleString();
+
+            if(min != 0 && max != 0) {
+                return "От " + minStr + " до " + maxStr;
+            } else if(min == 0 && max != 0) {
+                return "До " +  maxStr;
+            } else if (min != 0 && max == 0) {
+                return "Свыше " + minStr;
             }
         };
         $scope.goToProductPage = function(id) {

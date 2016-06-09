@@ -232,8 +232,8 @@
                         <td>{{val.name}}</td>
                         <td>{{val.underlayings}}</td>
                         <td>{{val.returnValue}}%</td>
-                        <td>{{getPeriodValue({min: val.minInvest, max: val.maxInvest})}} {{val.currency.name}}</td>
-                        <td>{{getPeriodValue({min: val.minTerm, max: val.maxTerm})}} мес.</td>
+                        <td>{{getPeriodValue(val.minInvest,val.maxInvest)}} {{val.currency.name}}</td>
+                        <td>{{getPeriodValue(val.minTerm,val.maxTerm)}} мес.</td>
                         <td>{{val.broker.name}}</td>
                     </tr>
                     </tbody>

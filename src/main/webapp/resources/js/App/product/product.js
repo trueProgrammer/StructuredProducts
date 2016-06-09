@@ -54,13 +54,15 @@
                  }
              };
              function rangeFunction(min, max) {
-                 var result;
+                 var minStr = min.toLocaleString();
+                 var maxStr = max.toLocaleString();
+
                  if(min != 0 && max != 0) {
-                     return "От " + min + " до " + max;
+                     return "От " + minStr + " до " + maxStr;
                  } else if(min == 0 && max != 0) {
-                     return "До " +  max;
+                     return "До " +  maxStr;
                  } else if (min != 0 && max == 0) {
-                     return "Свыше " + min;
+                     return "Свыше " + minStr;
                  }
              }
              (function() {
