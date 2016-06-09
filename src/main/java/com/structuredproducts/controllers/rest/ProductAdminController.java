@@ -2,6 +2,7 @@ package com.structuredproducts.controllers.rest;
 
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.Product;
+import com.structuredproducts.persistence.entities.instrument.TopProduct;
 import com.structuredproducts.sevices.ServiceUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,6 +86,10 @@ public class ProductAdminController extends AbstractAdminController{
     public ResponseEntity<Message> deleteValues(@RequestParam("entityType")String entityType, @RequestBody String entity) {
         try {
             List<?> list = ServiceUtils.getObjects(ENTITY_TYPES.get(entityType), entity);
+            if (ENTITY_TYPES.get(entityType).isAssignableFrom(Product.class)) {
+                dbService.removeProductParamByProduct((List<Product>) list);
+                dbService.removeTopProductByProduct((List<Product>) list);
+            }
             dbService.remove(list);
         } catch (IOException e) {
             logger.error("Error while convert from json to object. Entity type:{} json: {}",entityType,entity);

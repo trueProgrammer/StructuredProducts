@@ -142,7 +142,25 @@ public class DBService {
     }
 
     @Transactional
-    public void removeTopProductByProduct(List<TopProduct> topProducts) {
+    public void removeProductParamByProduct(List<Product> products) {
+        Query query = entityManager.createQuery("delete from ProductParam where product = :product_id");
+        for (Product product : products) {
+            query.setParameter("product_id", product);
+            query.executeUpdate();
+        }
+    }
+
+    @Transactional
+    public void removeTopProductByProduct(List<Product> products) {
+        Query query = entityManager.createQuery("delete from TopProduct where product = :product_id");
+        for (Product product : products) {
+            query.setParameter("product_id", product);
+            query.executeUpdate();
+        }
+    }
+
+    @Transactional
+    public void removeTopProductByTopProduct(List<TopProduct> topProducts) {
         Query query = entityManager.createQuery("delete from TopProduct where product = :product_id");
         for (TopProduct topProduct : topProducts) {
             query.setParameter("product_id", topProduct.getProduct());

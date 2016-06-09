@@ -23,6 +23,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(value = "classpath:test-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
+@Ignore
 public class DBServiceTest {
 
     @Autowired

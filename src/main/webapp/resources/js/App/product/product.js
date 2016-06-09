@@ -62,7 +62,7 @@
                  } else if(min == 0 && max != 0) {
                      return "До " +  maxStr;
                  } else if (min != 0 && max == 0) {
-                     return "Свыше " + minStr;
+                     return "От " + minStr;
                  }
              }
              (function() {

@@ -63,7 +63,7 @@ public class TopProductAdminController extends AbstractAdminController{
         logger.debug("Got json {}", json);
         try {
             List<TopProduct> products = extractTopProductsFromJson(json);
-            dbService.removeTopProductByProduct(products);
+            dbService.removeTopProductByTopProduct(products);
         } catch (IOException e) {
             logger.error("can't handle json " + json, e);
         }
