@@ -3,6 +3,8 @@ package com.structuredproducts.sevices;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.structuredproducts.persistence.entities.instrument.*;
+import jdk.nashorn.internal.ir.IfNode;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -77,29 +79,47 @@ public class DBService {
     @Transactional
     public void saveProducts(List<Product> products) {
         products.forEach(product -> {
-            product.setCurrency(saveOrUpdateNameable(product.getCurrency()));
-            product.setBroker(saveOrUpdateNameable(product.getBroker()));
-            product.setLegalType(saveOrUpdateNameable(product.getLegalType()));
-            product.setPaymentPeriodicity(saveOrUpdateNameable(product.getPaymentPeriodicity()));
-            product.setProductType(saveOrUpdateNameable(product.getProductType()));
-            product.setPayoff(saveOrUpdateNameable(product.getPayoff()));
-            product.setReturnValue(product.getReturnValue());
-            product.setRisks(saveOrUpdateNameable(product.getRisks()));
-            product.setStrategy(saveOrUpdateNameable(product.getStrategy()));
+            if (getProductByName(product.getName()) == null) {
+                product.setCurrency(saveOrUpdateNameable(product.getCurrency()));
+                product.setBroker(saveOrUpdateNameable(product.getBroker()));
+                product.setLegalType(saveOrUpdateNameable(product.getLegalType()));
+                product.setPaymentPeriodicity(saveOrUpdateNameable(product.getPaymentPeriodicity()));
+                product.setProductType(saveOrUpdateNameable(product.getProductType()));
+                product.setPayoff(saveOrUpdateNameable(product.getPayoff()));
+                product.setReturnValue(product.getReturnValue());
+                product.setRisks(saveOrUpdateNameable(product.getRisks()));
+                product.setStrategy(saveOrUpdateNameable(product.getStrategy()));
 
-            List<Underlaying> underlayings = Lists.newArrayList();
-            product.getUnderlayingList().forEach(val -> {
-                        val.setType(saveOrUpdateNameable(val.getType()));
-                        underlayings.add(saveOrUpdateNameable(val));
-                    }
-            );
-            product.getUnderlayingList().clear();
-            product.setUnderlayingList(underlayings);
+                List<Underlaying> underlayings = Lists.newArrayList();
+                product.getUnderlayingList().forEach(val -> {
+                            val.setType(saveOrUpdateNameable(val.getType()));
+                            underlayings.add(saveOrUpdateNameable(val));
+                        }
+                );
+                product.getUnderlayingList().clear();
+                product.setUnderlayingList(underlayings);
 
-            logger.debug("Save all product contains.");
-            entityManager.merge(product);
-            logger.debug("Products saved");
+                logger.debug("Save all product contains.");
+                entityManager.merge(product);
+                logger.debug("Products saved");
+            }
         });
+    }
+
+    public Product getProductByName(String name) {
+        if (StringUtils.isNotEmpty(name)) {
+            Query productQuery =
+                    entityManager.createNativeQuery("SELECT * from INSTRUMENT.Product where name = :name", Product.class);
+            productQuery.setParameter("name", name);
+            List<Product> productList = productQuery.getResultList();
+            if (productList.size() == 0) {
+                return null;
+            } else {
+                return productList.get(0);
+            }
+        } else {
+            return null;
+        }
     }
 
     @Transactional

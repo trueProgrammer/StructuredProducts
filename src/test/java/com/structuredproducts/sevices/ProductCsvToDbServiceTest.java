@@ -24,7 +24,7 @@ public class ProductCsvToDbServiceTest {
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/products.csv");
         InputStreamReader reader = new InputStreamReader(is, "UTF-8");
 
-        List<ProductBean> csvBeans = service.readCsv(reader);
+        List<ProductBean> csvBeans = service.readCsv(reader, null);
         assertThat(csvBeans, notNullValue());
         assertThat(csvBeans, hasSize(2));
 
@@ -43,7 +43,7 @@ public class ProductCsvToDbServiceTest {
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/production_products.csv");
         InputStreamReader reader = new InputStreamReader(is, "UTF-8");
 
-        List<ProductBean> csvBeans = service.readCsv(reader);
+        List<ProductBean> csvBeans = service.readCsv(reader, null);
         assertThat(csvBeans, notNullValue());
         assertThat(csvBeans, hasSize(1));
 
@@ -71,7 +71,7 @@ public class ProductCsvToDbServiceTest {
         InputStream is = this.getClass().getClassLoader().getResourceAsStream("data/bks_products.csv");
         InputStreamReader reader = new InputStreamReader(is, "UTF-8");
 
-        List<ProductBean> csvBeans = service.readCsv(reader);
+        List<ProductBean> csvBeans = service.readCsv(reader, null);
         assertThat(csvBeans, notNullValue());
         assertThat(csvBeans, hasSize(6));
 

@@ -70,13 +70,8 @@ public class ProductCsvToDbService {
 
     public void convertToDb(InputStreamReader reader, String broker) {
         try {
-            List<ProductBean> productList = readCsv(reader);
+            List<ProductBean> productList = readCsv(reader, broker);
             List<Product> convertedProducts = convertToProdutsList(productList);
-            if(!StringUtils.isEmpty(broker)) {
-                convertedProducts.parallelStream().forEach(
-                        product -> product.setBroker(product.getBroker() == null ? new Broker(broker) : product.getBroker())
-                );
-            }
             dbService.saveProducts(convertedProducts);
         } catch (IOException e) {
             logger.error("Error while import csv.", e);
@@ -143,7 +138,7 @@ public class ProductCsvToDbService {
     private static final Pattern FROM_DASH_TO_TERM_PATTERN_MONTH = Pattern.compile("(\\d+)\\s?-\\s?(\\d+)\\s?мес.*");
     private static final Pattern FROM_TO_TERM_PATTERN_YEAR = Pattern.compile("от ([\\d\\.\\,]+)\\s?до\\s?([\\d\\.\\,]+)\\s?лет.*");
     private static final Pattern FROM_DASH_TO_TERM_PATTERN_YEAR = Pattern.compile("([\\d\\.\\,]+)\\s?-\\s?([\\d\\.\\,]+)\\s?лет.*");
-    private static final Pattern YEAR_PATTERN = Pattern.compile("([\\d\\.\\,]+)\\s?год.*");
+    private static final Pattern YEAR_PATTERN = Pattern.compile("([\\d\\.\\,]+)\\s?(год|лет).*");
     private static final Pattern FROM_YEAR_PATTERN = Pattern.compile("от\\s?([\\d\\.\\,]+)\\s?год.*");
     private static final Pattern FROM_MONTH_PATTERN = Pattern.compile("от\\s?(\\d+)\\s?мес.*");
     private static final Pattern MONTH_PATTERN = Pattern.compile("(\\d+)\\s?мес.*");
@@ -154,7 +149,7 @@ public class ProductCsvToDbService {
     private static final Pattern TO_INVEST_PATTERN = Pattern.compile("до ([\\d\\s]+) .*$");
     private static final Pattern FROM_INVEST_PATTERN = Pattern.compile("от ([\\d\\s]+) .*$");
 
-    public List<ProductBean> readCsv(InputStreamReader reader) throws IOException {
+    public List<ProductBean> readCsv(InputStreamReader reader, String broker) throws IOException {
         List<ProductBean> result = new ArrayList<>();
 
         try(ICsvMapReader mapReader = new CsvMapReader(reader, CsvPreference.EXCEL_NORTH_EUROPE_PREFERENCE)) {
@@ -325,7 +320,7 @@ public class ProductCsvToDbService {
                                     bean.setMaxInvestment(Integer.parseInt(tuple.getValue()));
                                     break;
                                 case "провайдер":
-                                case "broker":
+                                case "brokerName":
                                 case "брокер":
                                     bean.setBroker(tuple.getValue());
                                     break;
@@ -347,7 +342,12 @@ public class ProductCsvToDbService {
                             }
                         }
                 );
-                if (bean.getBroker() != null) {
+
+
+                if (bean.getBroker() == null && broker != null) {
+                    bean.setBroker(broker);
+                }
+                if (bean.getBroker() != null && bean.getName() != null) {
                     result.add(bean);
                 }
             }
