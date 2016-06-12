@@ -112,23 +112,25 @@
                                  }
                              };
 
-                             if (result[0].period && result[0].period === '5d') {
-                                 config.options.scales.xAxes.push({
-                                     display: true,
-                                        ticks: {
-                                            maxTicksLimit: 5,
-                                        }
-                                 });
-                             } else {
-                                 config.options.scales.xAxes.push({
-                                     display: true,
-                                     type: 'time',
-                                     time: {
-                                         displayFormats: {
-                                             quarter: 'MMM YYYY'
+                             if (result[0]) {
+                                 if (result[0].period && result[0].period === '5d') {
+                                     config.options.scales.xAxes.push({
+                                         display: true,
+                                         ticks: {
+                                             maxTicksLimit: 5,
                                          }
-                                     }
-                                 });
+                                     });
+                                 } else {
+                                     config.options.scales.xAxes.push({
+                                         display: true,
+                                         type: 'time',
+                                         time: {
+                                             displayFormats: {
+                                                 quarter: 'MMM YYYY'
+                                             }
+                                         }
+                                     });
+                                 }
                              }
 
                              var index = 0;
@@ -152,8 +154,11 @@
                                  config.data.datasets.push(dataset);
                                  index++;
                              });
-                             var ctx = document.getElementById("chart").getContext("2d");
-                             var chart = new Chart(ctx, config);
+                             var elementById = document.getElementById("chart");
+                             if (elementById){
+                                 var ctx = elementById.getContext("2d");
+                                 var chart = new Chart(ctx, config);
+                             }
                          },
                          function(error) {
                              $log.error("error get product's historical data")
