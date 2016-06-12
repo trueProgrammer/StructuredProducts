@@ -79,7 +79,8 @@ public class DBService {
     @Transactional
     public void saveProducts(List<Product> products) {
         products.forEach(product -> {
-            if (getProductByName(product.getName()) == null) {
+            List<Product> productsWithSamaName = getProductByName(product.getName());
+            if (productsWithSamaName == null || product.canBeSavedToDb(productsWithSamaName)) {
                 product.setCurrency(saveOrUpdateNameable(product.getCurrency()));
                 product.setBroker(saveOrUpdateNameable(product.getBroker()));
                 product.setLegalType(saveOrUpdateNameable(product.getLegalType()));
@@ -106,7 +107,7 @@ public class DBService {
         });
     }
 
-    public Product getProductByName(String name) {
+    public List<Product> getProductByName(String name) {
         if (StringUtils.isNotEmpty(name)) {
             Query productQuery =
                     entityManager.createNativeQuery("SELECT * from INSTRUMENT.Product where name = :name", Product.class);
@@ -115,7 +116,7 @@ public class DBService {
             if (productList.size() == 0) {
                 return null;
             } else {
-                return productList.get(0);
+                return productList;
             }
         } else {
             return null;

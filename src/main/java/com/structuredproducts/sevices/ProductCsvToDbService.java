@@ -143,6 +143,7 @@ public class ProductCsvToDbService {
     private static final Pattern FROM_MONTH_PATTERN = Pattern.compile("от\\s?(\\d+)\\s?мес.*");
     private static final Pattern MONTH_PATTERN = Pattern.compile("(\\d+)\\s?мес.*");
     private static final Pattern UNDERLAYING_PATTERN = Pattern.compile("(.*)\\((.*)\\)");
+    private static final Pattern UNDERLAYING_SPLITTER_PATTERN = Pattern.compile("[,/]");
     private static final Pattern FROM_TO_INVEST_THOUSAND_PATTERN = Pattern.compile("от (\\d+) до (\\d+) тыс.*");
     private static final Pattern TO_INVEST_THOUSAND_PATTERN = Pattern.compile("до (\\d+) тыс.*");
     private static final Pattern FROM_INVEST_THOUSAND_PATTERN = Pattern.compile("от (\\d+) тыс.*");
@@ -235,7 +236,7 @@ public class ProductCsvToDbService {
                                 case "underlayings":
                                 case "underlying-1":
                                 case "underlying":
-                                    Function<String, Iterable<String>> splitFunction = v -> Splitter.on(",").split(v);
+                                    Function<String, Iterable<String>> splitFunction = v -> Splitter.on(UNDERLAYING_SPLITTER_PATTERN).split(v);
                                     List<Underlaying> underObjList = Lists.newArrayList();
                                     Iterable<String> underlayings;
                                     Matcher underMatcher = UNDERLAYING_PATTERN.matcher(tuple.getValue());

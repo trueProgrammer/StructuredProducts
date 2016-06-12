@@ -260,4 +260,29 @@ public class Product {
     public void setMaxInvest(int maxInvest) {
         this.maxInvest = maxInvest;
     }
+
+    /**
+     * This method compare two product and if they have some different params it can be saved to db
+     */
+    public boolean canBeSavedToDb(List<Product> products) {
+        for (Product product : products) {
+            if (!canBeSavedToDb(product)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean canBeSavedToDb(Product product) {
+        if (this == product) return false;
+
+        if (Float.compare(product.returnValue, returnValue) != 0) return true;
+        if (minTerm != product.minTerm) return true;
+        if (maxTerm != product.maxTerm) return true;
+        if (minInvest != product.minInvest) return true;
+        if (maxInvest != product.maxInvest) return true;
+        if (!currency.getName().equals(product.currency.getName())) return true;
+
+        return false;
+    }
 }
