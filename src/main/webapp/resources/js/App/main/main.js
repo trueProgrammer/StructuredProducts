@@ -9,7 +9,6 @@ angular.module('App.main')
     }])
 .controller('mainCtrl', [ '$scope', '$log', 'restService', '$anchorScroll', '$document', '$location',
     function($scope, $log, restService, $anchorScroll, $document, $location) {
-
         var contactShow = false;
 
         $scope.isContactFormShow = function() {

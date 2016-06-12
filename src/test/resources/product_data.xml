@@ -6,6 +6,13 @@
     <product_type id="2" name="100% защита капитала плюс гарантированная доходность" />
     <product_type id="3" name="100% защита капитала без гарантированной доходности" />
 
+    <email id="1" email="broker1@email.com" brokerId="1"/>
+    <email id="2" email="broker2@email.com" brokerId="2"/>
+
+    <invest_idea id="1" title="Title1" adddate="2016-06-09" content="text1" mainpage="false" broker="1" />
+    <invest_idea id="2" title="Title2" adddate="2016-06-08" content="text2" mainpage="true" broker="2" />
+
+    <product_params id="1" product="4" showchart="false" />
 
     <strategy id="1" name="Барьерные стратегии" />
     <strategy id="2" name="На стабильность" />

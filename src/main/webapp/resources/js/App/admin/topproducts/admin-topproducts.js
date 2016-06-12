@@ -130,4 +130,24 @@ angular.module('App.admin.topproducts')
                 $scope.loadTop('week');
             }
         }());
-    }]);
+    }])
+    .filter('griddropdown', function () {
+        return function (input, context) {
+            if ((typeof input === 'undefined') || (input === null)) {
+                return '';
+            }
+            var map = context.col.colDef.editDropdownOptionsArray;
+            var valueField = context.col.colDef.editDropdownValueLabel;
+            var initial = context.row.entity[context.col.field];
+            if (typeof map !== "undefined") {
+                for (var i = 0; i < map.length; i++) {
+                    if (map[i]['id'] == input['id']) {
+                        return map[i][valueField];
+                    }
+                }
+            } else if (initial) {
+                return initial;
+            }
+            return input;
+        };
+    });
