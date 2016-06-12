@@ -4,16 +4,7 @@ angular.module('App.createproduct')
         function ($routeProvider) {
             $routeProvider.when('/createproduct', {
                 templateUrl: 'resources/js/App/createproduct/createproduct.html',
-                controller: 'createproduct',
-                resolve: {
-                    load: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load('resources/lib/d3.min.js').then(function() {
-                            return $ocLazyLoad.load('resources/lib/hexbin.js').then(function() {
-                                return $ocLazyLoad.load('resources/lib/hexParams.js');
-                            });
-                        });
-                    }]
-                }
+                controller: 'createproduct'
             })
         }])
     .controller('createproduct', ['$scope', 'modalService', 'restService',

@@ -111,13 +111,13 @@ angular.module('App.about', [])
         }]);
 angular.module('App.investidea', [])
     .config(['$routeProvider',
-        function ($routeProvider) {
-            $routeProvider.when('/admin/investidea', {
-                templateUrl: 'resources/js/App/admin/investidea/admin-investidea.html',
-                controller: 'admin-investidea',
+        function($routeProvider){
+            $routeProvider.when('/investidea', {
+                templateUrl: 'resources/js/App/investidea/investidea.html',
+                controller: 'investidea',
                 resolve: {
                     load: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load('resources/js/App/admin/investidea/admin-investidea.js');
+                        return $ocLazyLoad.load('resources/js/App/investidea/investidea.js');
                     }]
                 }
             })
@@ -289,13 +289,15 @@ angular.module('App.createproduct', [])
                 controller: 'createproduct',
                 resolve: {
                     load: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load('resources/js/App/createproduct/createproduct.js').then(function () {
-                            return $ocLazyLoad.load('resources/lib/d3.min.js').then(function () {
-                                return $ocLazyLoad.load('resources/lib/hexbin.js').then(function () {
-                                    return $ocLazyLoad.load('resources/lib/hexParams.js');
+                            return $ocLazyLoad.load('resources/js/App/createproduct/createproduct.js').then(function () {
+                                return $ocLazyLoad.load('resources/lib/d3.min.js').then(function () {
+                                    return $ocLazyLoad.load('resources/lib/hexbin.js').then(function () {
+                                        return $ocLazyLoad.load('resources/lib/hexParams.js').then(function() {
+                                            return $ocLazyLoad.load('resources/lib/jquery.maskedinput-1.3.min.js');
+                                        });
+                                    });
                                 });
                             });
-                        })
                     }]
                 }
             })
