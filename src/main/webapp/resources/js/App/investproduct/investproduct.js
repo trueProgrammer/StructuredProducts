@@ -6,8 +6,8 @@ angular.module('App.investproduct')
                 controller: 'investproduct'
             })
         }])
-.controller('investproduct', ['$scope', '$log', 'restService', '$document', '$location',
-    function($scope, $log, restService, $document, $location) {
+.controller('investproduct', ['$scope', '$log', 'restService', '$document', '$location', '$cookieStore',
+    function($scope, $log, restService, $document, $location, $cookieStore) {
 
         $scope.viewby = 5;
         $scope.totalItems = 0;
@@ -15,15 +15,78 @@ angular.module('App.investproduct')
         $scope.itemsPerPage = $scope.viewby;
         $scope.maxSize = 5;
 
+        $scope.itemsPerPageOptions = ['5', '10', '20', '40'];
+
         $scope.filter = {
             unders : ['Все', 'Фондовые индексы', 'Акции', 'Драгоценные металлы', 'Товары', 'Валюта'],
             underVal : 'Все'
         };
 
+        $scope.brokers = [];
+        $scope.selectedBroker = [];
+
+        $scope.isCheckedForSpan = function(broker) {
+            if ($scope.selectedBroker.indexOf(broker) !== -1) {
+                return 'float-right fa fa-check fa-2';
+            } else {
+                return false;
+            }
+        }
+
+        $scope.isCheckedForHref = function(broker) {
+            if ($scope.selectedBroker.indexOf(broker) !== -1) {
+                return 'font-bold';
+            } else {
+                return 'font-initial';
+            }
+        }
+
+        $scope.setSelectedBroker = function(broker){
+            var index = $scope.selectedBroker.indexOf(this.broker);
+            if (index === -1) {
+                $scope.selectedBroker.push(this.broker);
+            } else {
+                $scope.selectedBroker.splice(index, 1);
+            }
+            $scope.filterProducts();
+        }
+
         $scope.setItemsPerPage = function(num) {
             $scope.itemsPerPage = num;
             $scope.currentPage = 1; //reset to first page
         };
+
+        $scope.$on('$locationChangeStart', function( event ) {
+            $cookieStore.put('currentPage', $scope.currentPage);
+            $cookieStore.put('itemsPerPage', $scope.itemsPerPage);
+
+            /*$cookieStore.put('nameFilter', $scope.nameFilter);
+            $cookieStore.put('profitFilter ', $scope.profitFilter);
+            $cookieStore.put('filter.underVal', $scope.filter.underVal);
+            $cookieStore.put('sumFilter ', $scope.sumFilter);
+            $cookieStore.put('termsFilter ', $scope.termsFilter);
+            $cookieStore.put('selectedBroker ', $scope.selectedBroker);*/
+        });
+
+        function cookiesDataLoad() {
+            var itemsPerPage = $cookieStore.get('itemsPerPage');
+            var currentPage = $cookieStore.get('currentPage');
+            if (itemsPerPage != null) {
+                $scope.itemsPerPage = itemsPerPage;
+            }
+            if (currentPage != null) {
+                $scope.currentPage = currentPage;
+            }
+           /* $scope.nameFilter = $cookieStore.get('nameFilter');
+            $scope.profitFilter = $cookieStore.get('profitFilter');
+            $scope.sumFilter = $cookieStore.get('sumFilter');
+            $scope.termsFilter = $cookieStore.get('termsFilter');
+            $scope.filter.underVal = $cookieStore.get('filter.underVal');
+            var selectedBroker = $cookieStore.get('selectedBroker');
+            if (selectedBroker != null) {
+                $scope.selectedBroker = selectedBroker;
+            }*/
+        }
 
         function setProducts(products) {
             $scope.allProducts = products;
@@ -42,7 +105,13 @@ angular.module('App.investproduct')
                 $scope.mediumRiskProducts = 0;
                 $scope.lowRiskProducts = 0;
 
+                cookiesDataLoad();
+                /*$scope.filterProducts();*/
+
                 response.forEach(function(item) {
+                    if ($scope.brokers.indexOf(item.broker.name) === -1) {
+                        $scope.brokers.push(item.broker.name);
+                    }
                     if (item.productType.riskType === 'High'){
                         $scope.highRiskProducts++;
                     }
@@ -389,6 +458,19 @@ angular.module('App.investproduct')
             $scope.profitFilter = null;
         }
 
+        $scope.filterBrokers = function(products) {
+            if ($scope.selectedBroker.length > 0) {
+                return products.filter(function(e) {
+                    if ($scope.selectedBroker.indexOf(e.broker.name) === -1) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+            }
+            return products;
+        }
+
         $scope.filterUnder = function(products) {
             if ($scope.filter.underVal) {
                 if($scope.filter.underVal === 'Все') {
@@ -459,7 +541,7 @@ angular.module('App.investproduct')
             $scope.termsFilter = null;
         }
         $scope.filterProducts = function() {
-            setTableProducts($scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.filterUnder($scope.allProducts))))));
+            setTableProducts($scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.filterUnder($scope.filterBrokers($scope.allProducts)))))));
         };
         $scope.setUnderFilter = function() {
             $scope.filterProducts();

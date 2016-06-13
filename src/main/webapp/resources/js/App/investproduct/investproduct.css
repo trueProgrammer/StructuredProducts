@@ -80,7 +80,7 @@
 
 .table-full {
     font-size: 15px;
-    width: 94%;
+    width: 97%;
     margin-top: 10px;
 }
 
@@ -130,4 +130,20 @@
 .right-mardin {
     float: right;
     margin-right: 30px;
+}
+
+.float-right {
+    float: right;
+}
+
+.font-bold {
+    font-weight: bold !important;
+}
+
+.font-initial {
+    font-weight: initial !important;
+}
+
+.dropdown-menu {
+    min-width: 173px !important;
 }
