@@ -77,11 +77,11 @@
                      } else {
                          $scope.productParams.showImg = true;
                      }
-                     /*if(!$scope.productParams.showChart) {
-                         return;
-                     }*/
                      restService.getUnderlayingHistoricalQuotes(result.product.id,
                          function(result) {
+                             if ( result.length == 0) {
+                                 return;
+                             }
                              var config = {
                                  type: 'line',
                                  data: {

@@ -36,11 +36,13 @@ public class ProductCsvToDbService {
             ImmutableMap.<String, String>builder()
             .put("рубли", "RUR")
             .put("рубль", "RUR")
+            .put("рублей", "RUR")
             .put("ruble", "RUR")
             .put("rur", "RUR")
             .put("российские рубли", "RUR")
             .put("доллары сша", "USD")
             .put("доллары", "USD")
+            .put("долларов", "USD")
             .put("usd", "USD")
             .put("евро", "EUR")
             .put("eur", "EUR")
@@ -83,7 +85,8 @@ public class ProductCsvToDbService {
         return productList.stream().<Product>map(productBean -> {
             Product product = new Product();
             product.setName(productBean.getName());
-            product.setInputCurrency(new Currency(productBean.getCurrency()));
+            product.setInputCurrency(new Currency(productBean.getInputCurrency()));
+            product.setOutputCurrency(new Currency(productBean.getOutputCurrency()));
             product.setUnderlayingList(productBean.getUnderlying());
             product.setMinInvest(productBean.getMinInvestment());
             product.setMaxInvest(productBean.getMaxInvestment());
@@ -274,13 +277,18 @@ public class ProductCsvToDbService {
                                         logger.error("Unknown currency:" + tuple.getValue());
                                         throw new RuntimeException("Unknown currency:" + tuple.getValue());
                                     }
-                                    bean.setCurrency(currency);
+                                    bean.setOutputCurrency(currency);
                                     break;
                                 case "минимальная сумма инвестиций":
                                 case "сумма инвестиций":
                                 case "min investment":
                                 case "mininvestment":
                                 case "investment":
+                                    for(Map.Entry<String, String> cur : currencyMap.entrySet()) {
+                                        if (tuple.getValue().toLowerCase().contains(cur.getKey())) {
+                                            bean.setInputCurrency(cur.getValue());
+                                        }
+                                    }
                                     Matcher fromToThousandInvestMatcher = FROM_TO_INVEST_THOUSAND_PATTERN.matcher(tuple.getValue().toLowerCase());
                                     if (fromToThousandInvestMatcher.matches()) {
                                         bean.setMinInvestment(Integer.parseInt(fromToThousandInvestMatcher.group(1)) * 1000);

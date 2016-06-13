@@ -294,6 +294,7 @@ public class Product {
         if (minInvest != product.minInvest) return true;
         if (maxInvest != product.maxInvest) return true;
         if (!inputCurrency.getName().equals(product.inputCurrency.getName())) return true;
+        if (!outputCurrency.getName().equals(product.outputCurrency.getName())) return true;
 
         return false;
     }

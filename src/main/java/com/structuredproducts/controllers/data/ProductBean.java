@@ -1,5 +1,6 @@
 package com.structuredproducts.controllers.data;
 
+import com.structuredproducts.persistence.entities.instrument.Currency;
 import com.structuredproducts.persistence.entities.instrument.Underlaying;
 
 import java.util.List;
@@ -15,7 +16,8 @@ public class ProductBean {
     private String legalType;
     private String payoff;
     private String risk;
-    private String currency;
+    private String inputCurrency;
+    private String outputCurrency;
     private String periodicity;
     private String productType;
     private String description;
@@ -79,12 +81,20 @@ public class ProductBean {
         this.risk = risk;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getInputCurrency() {
+        return inputCurrency;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setInputCurrency(String inputCurrency) {
+        this.inputCurrency = inputCurrency;
+    }
+
+    public String getOutputCurrency() {
+        return outputCurrency;
+    }
+
+    public void setOutputCurrency(String outputCurrency) {
+        this.outputCurrency = outputCurrency;
     }
 
     public List<Underlaying> getUnderlying() {
