@@ -81,7 +81,11 @@ public class DBService {
             List<Product> productsWithSamaName = getProductByName(product.getName());
             if (productsWithSamaName == null || product.canBeSavedToDb(productsWithSamaName)) {
                 product.setInputCurrency(saveOrUpdateNameable(product.getInputCurrency()));
-                product.setOutputCurrency(saveOrUpdateNameable(product.getOutputCurrency()));
+                if (product.getOutputCurrency() != null) {
+                    product.setOutputCurrency(saveOrUpdateNameable(product.getOutputCurrency()));
+                } else {
+                    product.setOutputCurrency(saveOrUpdateNameable(product.getInputCurrency()));
+                }
                 product.setBroker(saveOrUpdateNameable(product.getBroker()));
                 product.setLegalType(saveOrUpdateNameable(product.getLegalType()));
                 product.setPaymentPeriodicity(saveOrUpdateNameable(product.getPaymentPeriodicity()));
