@@ -60,12 +60,13 @@ angular.module('App.investproduct')
             $cookieStore.put('currentPage', $scope.currentPage);
             $cookieStore.put('itemsPerPage', $scope.itemsPerPage);
 
-            /*$cookieStore.put('nameFilter', $scope.nameFilter);
-            $cookieStore.put('profitFilter ', $scope.profitFilter);
+            $cookieStore.put('nameFilter', $scope.nameFilter);
+            $cookieStore.put('profitFilter', $scope.profitFilter);
             $cookieStore.put('filter.underVal', $scope.filter.underVal);
-            $cookieStore.put('sumFilter ', $scope.sumFilter);
-            $cookieStore.put('termsFilter ', $scope.termsFilter);
-            $cookieStore.put('selectedBroker ', $scope.selectedBroker);*/
+            $cookieStore.put('sumFilter', $scope.sumFilter);
+            $cookieStore.put('termsFilter', $scope.termsFilter);
+            $cookieStore.put('selectedBroker', $scope.selectedBroker);
+            $cookieStore.put('filter', $scope.filter);
         });
 
         function cookiesDataLoad() {
@@ -77,7 +78,7 @@ angular.module('App.investproduct')
             if (currentPage != null) {
                 $scope.currentPage = currentPage;
             }
-           /* $scope.nameFilter = $cookieStore.get('nameFilter');
+            $scope.nameFilter = $cookieStore.get('nameFilter');
             $scope.profitFilter = $cookieStore.get('profitFilter');
             $scope.sumFilter = $cookieStore.get('sumFilter');
             $scope.termsFilter = $cookieStore.get('termsFilter');
@@ -85,7 +86,11 @@ angular.module('App.investproduct')
             var selectedBroker = $cookieStore.get('selectedBroker');
             if (selectedBroker != null) {
                 $scope.selectedBroker = selectedBroker;
-            }*/
+            }
+            var filter = $cookieStore.get('filter');
+            if (filter != null) {
+                $scope.filter = filter;
+            }
         }
 
         function setProducts(products) {
@@ -106,7 +111,7 @@ angular.module('App.investproduct')
                 $scope.lowRiskProducts = 0;
 
                 cookiesDataLoad();
-                /*$scope.filterProducts();*/
+                $scope.filterProducts();
 
                 response.forEach(function(item) {
                     if ($scope.brokers.indexOf(item.broker.name) === -1) {
@@ -479,7 +484,11 @@ angular.module('App.investproduct')
                     return products.filter(function(e) {
                         var index;
                         for (index = 0; index < e.underlayingList.length; ++index) {
-                            if(e.underlayingList[index].type.name == $scope.filter.underVal) {
+                            if(e.underlayingList[index].type) {
+                                if(e.underlayingList[index].type.name == $scope.filter.underVal) {
+                                    return true;
+                                }
+                            } else {
                                 return true;
                             }
                         }
@@ -521,7 +530,7 @@ angular.module('App.investproduct')
         $scope.filterSum = function(products) {
             if ($scope.sumFilter) {
                 return products.filter(function(p) {
-                    return periodFilter(p.investment, $scope.sumFilter);
+                    return periodFilter({min:p.minInvest ,max: p.maxInvest}, $scope.sumFilter);
                 });
             }
             return products;

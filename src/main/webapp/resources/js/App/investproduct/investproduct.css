@@ -114,8 +114,10 @@
 }
 
 .filter-input-small {
-    border-radius: 5px;
     width:95px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 
 .pagination {
