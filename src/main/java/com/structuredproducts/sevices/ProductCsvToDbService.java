@@ -83,7 +83,7 @@ public class ProductCsvToDbService {
         return productList.stream().<Product>map(productBean -> {
             Product product = new Product();
             product.setName(productBean.getName());
-            product.setCurrency(new Currency(productBean.getCurrency()));
+            product.setInputCurrency(new Currency(productBean.getCurrency()));
             product.setUnderlayingList(productBean.getUnderlying());
             product.setMinInvest(productBean.getMinInvestment());
             product.setMaxInvest(productBean.getMaxInvestment());
@@ -122,7 +122,7 @@ public class ProductCsvToDbService {
                 map.put("Юридическая форма", product.getLegalType() != null ? product.getLegalType().getName() : DEFAULT_VALUE_EXPORT);
                 map.put("Размер выплаты", product.getPayoff() != null ? product.getPayoff().getName() : DEFAULT_VALUE_EXPORT);
                 map.put("Риски", product.getRisks() != null ? product.getRisks().getName() : DEFAULT_VALUE_EXPORT);
-                map.put("Валюта", product.getCurrency() != null ? product.getCurrency().getName() : DEFAULT_VALUE_EXPORT);
+                map.put("Валюта", product.getInputCurrency() != null ? product.getInputCurrency().getName() : DEFAULT_VALUE_EXPORT);
                 map.put("Периодичность выплат", product.getPaymentPeriodicity() != null ? product.getPaymentPeriodicity().getName() : DEFAULT_VALUE_EXPORT);
                 writer.write(map, header);
             }

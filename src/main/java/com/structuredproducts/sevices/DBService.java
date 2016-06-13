@@ -3,7 +3,6 @@ package com.structuredproducts.sevices;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.structuredproducts.persistence.entities.instrument.*;
-import jdk.nashorn.internal.ir.IfNode;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +80,8 @@ public class DBService {
         products.forEach(product -> {
             List<Product> productsWithSamaName = getProductByName(product.getName());
             if (productsWithSamaName == null || product.canBeSavedToDb(productsWithSamaName)) {
-                product.setCurrency(saveOrUpdateNameable(product.getCurrency()));
+                product.setInputCurrency(saveOrUpdateNameable(product.getInputCurrency()));
+                product.setOutputCurrency(saveOrUpdateNameable(product.getOutputCurrency()));
                 product.setBroker(saveOrUpdateNameable(product.getBroker()));
                 product.setLegalType(saveOrUpdateNameable(product.getLegalType()));
                 product.setPaymentPeriodicity(saveOrUpdateNameable(product.getPaymentPeriodicity()));

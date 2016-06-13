@@ -57,13 +57,13 @@
         <!--END DESCRIPTION-->
         <!--START MAIN PARAMS-->
         <div>
-            <span class="custom-h3">Доходность: <span class="blue-style">{{productParams.product.returnValue}}%</span></span>
+            <span class="custom-h3">Доходность и валюта: <span class="blue-style">{{productParams.product.returnValue}}% {{productParams.product.outputCurrency.name}}</span></span>
             <hr class="devider devider-dashed hr-style"/>
             <span class="custom-h3">Уровень защиты: <span class="blue-style">{{productParams.product.productType.name}}</span></span>
             <hr class="devider devider-dashed hr-style"/>
             <span class="custom-h3">Срок инвестирования: <span class="blue-style">{{productParams.product.termName}}</span></span>
             <hr class="devider devider-dashed hr-style"/>
-            <span class="custom-h3">Минимальная сумма инвестиций и валюта: <span class="blue-style">{{productParams.product.investName}} {{productParams.product.currency.name}}</span></span>
+            <span class="custom-h3">Минимальная сумма инвестиций и валюта: <span class="blue-style">{{productParams.product.investName}} {{productParams.product.inputCurrency.name}}</span></span>
             <hr class="devider devider-dashed hr-style"/>
             <span class="custom-h3">Базовые активы: <span class="blue-style">{{productParams.product.underlayings}}</span></span>
             <hr class="devider devider-dashed hr-style"/>

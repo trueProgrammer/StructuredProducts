@@ -63,8 +63,12 @@ public class Product {
     private Risks risks;
 
     @ManyToOne(targetEntity = Currency.class)
-    @JoinColumn(name = "currency")
-    private Currency currency;
+    @JoinColumn(name = "input_currency")
+    private Currency inputCurrency;
+
+    @ManyToOne(targetEntity = Currency.class)
+    @JoinColumn(name = "output_currency")
+    private Currency outputCurrency;
 
     @ManyToOne(targetEntity = PaymentPeriodicity.class)
     @JoinColumn(name = "paymentPeriodicity")
@@ -173,12 +177,12 @@ public class Product {
         this.risks = risks;
     }
 
-    public Currency getCurrency() {
-        return currency;
+    public Currency getInputCurrency() {
+        return inputCurrency;
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public void setInputCurrency(Currency currency) {
+        this.inputCurrency = currency;
     }
 
     public PaymentPeriodicity getPaymentPeriodicity() {
@@ -261,6 +265,14 @@ public class Product {
         this.maxInvest = maxInvest;
     }
 
+    public Currency getOutputCurrency() {
+        return outputCurrency;
+    }
+
+    public void setOutputCurrency(Currency outputCurrency) {
+        this.outputCurrency = outputCurrency;
+    }
+
     /**
      * This method compare two product and if they have some different params it can be saved to db
      */
@@ -281,7 +293,7 @@ public class Product {
         if (maxTerm != product.maxTerm) return true;
         if (minInvest != product.minInvest) return true;
         if (maxInvest != product.maxInvest) return true;
-        if (!currency.getName().equals(product.currency.getName())) return true;
+        if (!inputCurrency.getName().equals(product.inputCurrency.getName())) return true;
 
         return false;
     }

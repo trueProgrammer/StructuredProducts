@@ -61,7 +61,7 @@ public class ProductCsvToDbServiceTest {
         assertThat(product.getMinInvest(), is(250000));
         assertThat(product.getStrategy().getName(), is("Рост цены базового актива"));
         assertThat(product.getReturnValue(), is(25.0f));
-        assertThat(product.getCurrency().getName(), is("RUR"));
+        assertThat(product.getInputCurrency().getName(), is("RUR"));
         assertThat(product.getUnderlayingList().size(), is(4));
         assertThat(product.getUnderlayingList().get(0).getType().getName(), is("Акции"));
     }
@@ -88,6 +88,6 @@ public class ProductCsvToDbServiceTest {
         assertThat(product.getUnderlayingList(), hasSize(4));
         assertThat(product.getReturnValue(), is(25.0F));
         assertThat(product.getStrategy().getName(), is("Барьерные стратегии"));
-        assertThat(product.getCurrency().getName(), is("RUR"));
+        assertThat(product.getInputCurrency().getName(), is("RUR"));
     }
 }
