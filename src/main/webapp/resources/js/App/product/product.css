@@ -58,3 +58,8 @@
     max-width: 110px;
     max-height: 70px;
 }
+
+.product-img-style {
+    max-width: 400px;
+    max-height: 400px;
+}

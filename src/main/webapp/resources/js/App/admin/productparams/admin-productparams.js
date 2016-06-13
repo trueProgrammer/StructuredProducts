@@ -6,8 +6,8 @@ angular.module('App.admin.productparams')
             controller: 'admin-productparams'
         })
     }])
-.controller('admin-productparams', [ '$scope', '$log', 'restService', '$rootScope', '$location', '$route',
-    function($scope, $log, restService, $rootScope, $location, $route) {
+.controller('admin-productparams', [ '$scope', '$log', 'restService', '$rootScope', '$location', '$window',
+    function($scope, $log, restService, $rootScope, $location, $window) {
         $scope.page = 'productparams';
         var getProductParams = function() {
             restService.getProductParams(function(params) {
@@ -117,7 +117,7 @@ angular.module('App.admin.productparams')
             }, function() {
                 $log.error("Error during saving");
             });
-            $route.reload();
+            $window.location.reload();
         };
 
         $scope.removeImg = function() {
@@ -132,7 +132,7 @@ angular.module('App.admin.productparams')
             }, function() {
                 $log.error("Error during saving");
             });
-            $route.reload();
+            $window.location.reload();
         };
 
         $scope.clickChartUpload = function() {

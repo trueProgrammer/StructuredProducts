@@ -9,7 +9,7 @@
         </File>
 </Appenders>
     <Loggers>
-        <Logger name="com.structuredproducts" level="debug" additivity="false">
+        <Logger name="com.structuredproducts" level="warn" additivity="false">
             <AppenderRef ref="console"/>
             <AppenderRef ref="file"/>
         </Logger>
