@@ -220,8 +220,17 @@
                             </div>
                         </th>
                         <th>
-                            <a href="" ng-click="order('broker.name')">Провайдер</a>
-                            <span class="sortorder" ng-show="predicate === 'broker.name'" ng-class="{reverse:reverse}"></span>
+                            <div class="btn-group" data-ng-class="{open: open}">
+                                Провайдер
+                                <button class="dropdown-toggle filter-button" data-ng-click="open=!open" data-toggle="dropdown">
+                                    <i class="fa fa-filter fa-2"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                    <li data-ng-repeat="broker in brokers">
+                                        <a href="" data-ng-click="setSelectedBroker()" data-ng-class="isCheckedForHref(broker)">{{broker}}<span data-ng-class="isCheckedForSpan(broker)"></span></a>
+                                    </li>
+                                </ul>
+                            </div>
                         </th>
                     </tr>
                     </thead>
