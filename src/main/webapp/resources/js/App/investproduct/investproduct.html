@@ -175,12 +175,23 @@
                             </div>
                         </th>
                         <th>
-                            Базовый актив
+                            <!--Базовый актив
                             <button ng-click="clickFilter('Under')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
                             <div ng-show="filter.Under">
                                 <select ng-model="filter.underVal" ng-change="setUnderFilter()">
                                     <option ng-repeat="option in filter.unders" value="{{option}}">{{option}}</option>
                                 </select>
+                            </div>-->
+                            <div class="btn-group" data-ng-class="{open1: open1}">
+                                Базовый актив
+                                <button class="dropdown-toggle filter-button" data-ng-click="open1=!open1" data-toggle="dropdown">
+                                    <i class="fa fa-filter fa-2"></i>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                                    <li data-ng-repeat="under in unders">
+                                        <a href="" data-ng-click="setSelectedUnder()" data-ng-class="isCheckedForHref(under, 'selectedUnder')">{{under}}<span data-ng-class="isCheckedForSpan(under, 'selectedUnder')"></span></a>
+                                    </li>
+                                </ul>
                             </div>
                         </th>
                         <th>
@@ -220,14 +231,14 @@
                             </div>
                         </th>
                         <th>
-                            <div class="btn-group" data-ng-class="{open: open}">
+                            <div class="btn-group" data-ng-class="{open2: open2}">
                                 Провайдер
-                                <button class="dropdown-toggle filter-button" data-ng-click="open=!open" data-toggle="dropdown">
+                                <button class="dropdown-toggle filter-button" data-ng-click="open2=!open2" data-toggle="dropdown">
                                     <i class="fa fa-filter fa-2"></i>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
                                     <li data-ng-repeat="broker in brokers">
-                                        <a href="" data-ng-click="setSelectedBroker()" data-ng-class="isCheckedForHref(broker)">{{broker}}<span data-ng-class="isCheckedForSpan(broker)"></span></a>
+                                        <a href="" data-ng-click="setSelectedBroker()" data-ng-class="isCheckedForHref(broker,'selectedBroker')">{{broker}}<span data-ng-class="isCheckedForSpan(broker,'selectedBroker')"></span></a>
                                     </li>
                                 </ul>
                             </div>

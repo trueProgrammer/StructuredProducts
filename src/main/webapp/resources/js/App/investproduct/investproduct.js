@@ -17,24 +17,24 @@ angular.module('App.investproduct')
 
         $scope.itemsPerPageOptions = ['5', '10', '20', '40'];
 
-        $scope.filter = {
-            unders : ['Все', 'Фондовые индексы', 'Акции', 'Драгоценные металлы', 'Товары', 'Валюта'],
-            underVal : 'Все'
-        };
+        $scope.filter;
 
         $scope.brokers = [];
         $scope.selectedBroker = [];
 
-        $scope.isCheckedForSpan = function(broker) {
-            if ($scope.selectedBroker.indexOf(broker) !== -1) {
+        $scope.unders = [];
+        $scope.selectedUnder = [];
+
+        $scope.isCheckedForSpan = function(val, type) {
+            if ($scope[type].indexOf(val) !== -1) {
                 return 'float-right fa fa-check fa-2';
             } else {
                 return false;
             }
         }
 
-        $scope.isCheckedForHref = function(broker) {
-            if ($scope.selectedBroker.indexOf(broker) !== -1) {
+        $scope.isCheckedForHref = function(val, type) {
+            if ($scope[type].indexOf(val) !== -1) {
                 return 'font-bold';
             } else {
                 return 'font-initial';
@@ -51,6 +51,16 @@ angular.module('App.investproduct')
             $scope.filterProducts();
         }
 
+        $scope.setSelectedUnder = function(under){
+            var index = $scope.selectedUnder.indexOf(this.under);
+            if (index === -1) {
+                $scope.selectedUnder.push(this.under);
+            } else {
+                $scope.selectedUnder.splice(index, 1);
+            }
+            $scope.filterProducts();
+        }
+
         $scope.setItemsPerPage = function(num) {
             $scope.itemsPerPage = num;
             $scope.currentPage = 1; //reset to first page
@@ -62,10 +72,10 @@ angular.module('App.investproduct')
 
             $cookieStore.put('nameFilter', $scope.nameFilter);
             $cookieStore.put('profitFilter', $scope.profitFilter);
-            $cookieStore.put('filter.underVal', $scope.filter.underVal);
             $cookieStore.put('sumFilter', $scope.sumFilter);
             $cookieStore.put('termsFilter', $scope.termsFilter);
             $cookieStore.put('selectedBroker', $scope.selectedBroker);
+            $cookieStore.put('selectedUnder', $scope.selectedUnder);
             $cookieStore.put('filter', $scope.filter);
         });
 
@@ -82,10 +92,13 @@ angular.module('App.investproduct')
             $scope.profitFilter = $cookieStore.get('profitFilter');
             $scope.sumFilter = $cookieStore.get('sumFilter');
             $scope.termsFilter = $cookieStore.get('termsFilter');
-            $scope.filter.underVal = $cookieStore.get('filter.underVal');
             var selectedBroker = $cookieStore.get('selectedBroker');
             if (selectedBroker != null) {
                 $scope.selectedBroker = selectedBroker;
+            }
+            var selectedUnder = $cookieStore.get('selectedUnder');
+            if (selectedUnder != null) {
+                $scope.selectedUnder = selectedUnder;
             }
             var filter = $cookieStore.get('filter');
             if (filter != null) {
@@ -116,6 +129,14 @@ angular.module('App.investproduct')
                 response.forEach(function(item) {
                     if ($scope.brokers.indexOf(item.broker.name) === -1) {
                         $scope.brokers.push(item.broker.name);
+                    }
+                    for (index = 0; index < item.underlayingList.length; ++index) {
+                        if (item.underlayingList[index].type) {
+                            var name = item.underlayingList[index].type.name;
+                            if ($scope.unders.indexOf(name) === -1) {
+                                $scope.unders.push(name);
+                            }
+                        }
                     }
                     if (item.productType.riskType === 'High'){
                         $scope.highRiskProducts++;
@@ -477,29 +498,20 @@ angular.module('App.investproduct')
         }
 
         $scope.filterUnder = function(products) {
-            if ($scope.filter.underVal) {
-                if($scope.filter.underVal === 'Все') {
-                    return products;
-                } else {
+            if ($scope.selectedUnder.length > 0) {
                     return products.filter(function(e) {
-                        var index;
-                        for (index = 0; index < e.underlayingList.length; ++index) {
-                            if(e.underlayingList[index].type) {
-                                if(e.underlayingList[index].type.name == $scope.filter.underVal) {
+                        var i;
+                        for (i = 0; i < e.underlayingList.length; ++i) {
+                            if (e.underlayingList[i].type) {
+                                if ($scope.selectedUnder.indexOf(e.underlayingList[i].type.name) !== -1) {
                                     return true;
                                 }
-                            } else {
-                                return true;
                             }
                         }
                         return false;
                     });
-                }
             }
             return products;
-        };
-        function resetUnderFilter() {
-            $scope.filter.underVal === 'Все';
         };
         function periodFilter(val,filter) {
             if (filter.from && filter.to) {
