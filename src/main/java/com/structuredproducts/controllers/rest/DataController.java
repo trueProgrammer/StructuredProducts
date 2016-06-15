@@ -3,12 +3,12 @@ package com.structuredproducts.controllers.rest;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
-import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.controllers.data.ProductType;
 import com.structuredproducts.controllers.data.TimeType;
 import com.structuredproducts.controllers.data.Tuple;
 import com.structuredproducts.persistence.entities.instrument.*;
-import com.structuredproducts.sevices.*;
+import com.structuredproducts.sevices.DBService;
+import com.structuredproducts.sevices.HistoricalCachingDataService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +17,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by Vlad on 23.11.2015.
@@ -40,9 +36,6 @@ public class DataController {
 
     @Autowired
     private DBService dbService;
-
-    @Autowired
-    private MailService mailService;
 
     @Autowired
     @Qualifier("yahooCurrencyPriceService")
@@ -205,28 +198,5 @@ public class DataController {
         public String period;
         public Multiset<?> labels;
         public Collection<String> dataset;
-    }
-
-    @RequestMapping(path="/createProductRequest",
-                           method = RequestMethod.POST,
-                           consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
-    )
-    public ResponseEntity<Message> sendCreateProductRequest( @RequestBody String json) throws IOException, ServiceException {
-        logger.debug("Got create product request {} ", json);
-        Map<String, Object> map = ServiceUtils.getObjectMapping(json);
-        String firstname = (String) map.get("firstname");
-        String lastname = (String) map.get("lastname");
-        String email = (String) map.get("email");
-        String phone = (String) map.get("phone");
-        Integer brokerId = (Integer) map.get("brokerId");
-
-        String recepients = null;
-        if (brokerId != null) {
-            Broker broker = dbService.getObjectByKey(Broker.class, brokerId);
-            recepients = String.join(",", broker.getEmails().stream().map(Email::getEmail).collect(Collectors.toList()));
-        }
-
-        mailService.sendMessage(firstname, "", lastname, email, phone, "", recepients);//TODO add valid text
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

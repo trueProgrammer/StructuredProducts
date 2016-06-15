@@ -389,7 +389,7 @@ angular.module('App.services', ['ngResource']).service('restService', [
 
         createProductRequest: function(data, onSuccess, onFail) {
             $http.post(
-                dataUri + "createProductRequest",
+                serviceUri + "createProductRequest",
                 data
             )
                 .then(

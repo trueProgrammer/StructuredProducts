@@ -4,7 +4,7 @@ angular.module('App.services').service('modalService', ['$uibModal',
             templateUrl: 'resources/js/App/modal/sendingRequestModal.html',
             // controller: 'sendRequestCtrl',
         };
-        this.show = function (customModalDefaults, brokerId) {
+        this.show = function (customModalDefaults) {
             //Create temp objects to work with since we're in a singleton service
             var tempModalDefaults = {};
 
@@ -28,7 +28,6 @@ angular.module('App.services').service('modalService', ['$uibModal',
                         if ($scope.sendform.$valid && phoneCheck) {
                             $scope.user.controls = savedControls;
                             $scope.user.phone = $('#phone').val();
-                            $scope.user.brokerId = brokerId;
                             restService.createProductRequest($scope.user,
                                 function () {
                                     $scope.invalidFormMessage = "";

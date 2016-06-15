@@ -143,6 +143,16 @@ public class DBService {
     }
 
     @Transactional
+    public <T> T getByName(String name, Class<T> clazz) {
+        if (name == null) {
+            return null;
+        }
+        Query query = createCacheableQuery( String.format("SELECT * from %s where name = :name", TABLE_TO_TYPE_MAPPING.get(clazz)), clazz);
+        query.setParameter("name", name);
+        return (T) query.getSingleResult();
+    }
+
+    @Transactional
     private <E extends UniqueWithName> E saveOrUpdateNameable(E obj) {
         if (obj == null || obj.getName() == null) {
             return null;
