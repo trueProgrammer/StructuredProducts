@@ -3,7 +3,12 @@
          function($routeProvider){
              $routeProvider.when('/product', {
                  templateUrl: 'resources/js/App/product/product.html',
-                 controller: 'product'
+                 controller: 'product',
+                resolve: {
+                    load: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js');
+                    }]
+                }
              })
          }])
 .controller('product', ['$scope', '$log', 'restService', '$routeParams', 'modalService',

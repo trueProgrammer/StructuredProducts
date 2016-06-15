@@ -4,7 +4,16 @@ angular.module('App.createproduct')
         function ($routeProvider) {
             $routeProvider.when('/createproduct', {
                 templateUrl: 'resources/js/App/createproduct/createproduct.html',
-                controller: 'createproduct'
+                controller: 'createproduct',
+                resolve: {
+                    load: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load('https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js').then(function() {
+                            return $ocLazyLoad.load('resources/lib/hexbin.js').then(function() {
+                                return $ocLazyLoad.load('resources/lib/hexParams.js');
+                            });
+                        });
+                    }]
+                }
             })
         }])
     .controller('createproduct', ['$scope', 'modalService', 'restService',
@@ -84,7 +93,10 @@ angular.module('App.createproduct')
                 lineFormat: 'От {0} до {1} {2}',
                 dropdown: {
                     header: 'Валюта',
-                    values: [{dropdownName: 'Рубль', lineName: 'рублей'}, {dropdownName: 'Доллар', lineName: 'долларов'},{dropdownName: 'Евро', lineName: 'евро'}],
+                    values: [{dropdownName: 'Рубль', lineName: 'рублей'}, {
+                        dropdownName: 'Доллар',
+                        lineName: 'долларов'
+                    }, {dropdownName: 'Евро', lineName: 'евро'}],
                     value: {dropdownName: 'Рубль', lineName: 'рублей'}
                 },
                 type: 'dropdownAndDiapason'
@@ -97,10 +109,16 @@ angular.module('App.createproduct')
                 fromValue: '10%',
                 toValue: '20%',
                 lineFormat: 'От {0} до {1}',
-                activateDiapasonValue : 'Задать уровень защиты самостоятельно',
+                activateDiapasonValue: 'Задать уровень защиты самостоятельно',
                 dropdown: {
                     header: '',
-                    values: [{value: '100% гарантия защиты инвестиций', shortValue: '100% гарантия '}, {value: 'Без гарантий защиты инвестиций', shortValue: 'Без гарантий'}, {value: 'Задать уровень защиты самостоятельно'}],
+                    values: [{
+                        value: '100% гарантия защиты инвестиций',
+                        shortValue: '100% гарантия '
+                    }, {
+                        value: 'Без гарантий защиты инвестиций',
+                        shortValue: 'Без гарантий'
+                    }, {value: 'Задать уровень защиты самостоятельно'}],
                     value: {value: '100% гарантия защиты инвестиций', shortValue: '100% гарантия '}
                 },
                 type: 'optDiapason'
@@ -124,8 +142,8 @@ angular.module('App.createproduct')
                     {value: 'Товары', shortValue: 'Товары'},
                     {value: 'Валюта', shortValue: 'Валюта'},
                     {value: 'Другое', shortValue: 'Другое'}
-            ],
-                value: {value:'Фондовые индексы', shortValue: 'Индексы'},
+                ],
+                value: {value: 'Фондовые индексы', shortValue: 'Индексы'},
                 lineFormat: '{0}'
             }, {
                 id: 'paymentsPeriodBlock',
@@ -146,20 +164,22 @@ angular.module('App.createproduct')
                 buttonText: 'Применить применить стратегию',
                 values: [
                     {value: 'Рост цены базового актива', shortValue: 'Рост цены'},
-                    {value:'Падение цены базового актива', shortValue: 'Падение цены'},
+                    {value: 'Падение цены базового актива', shortValue: 'Падение цены'},
                     {value: 'Барьерная стратегия', shortValue: 'Барьерная'},
                     {value: 'Диапазонная стратегия', shortValue: 'Диапазонная'}],
                 value: {value: 'Рост цены базового актива', shortValue: 'Рост цены'},
                 lineFormat: '{0}'
             }];
 
-            restService.getAllBrokers(function(response) {
-                var brokers = response.map(function(b) {return {value: b.name, shortValue: b.name}});
+            restService.getAllBrokers(function (response) {
+                var brokers = response.map(function (b) {
+                    return {value: b.name, shortValue: b.name}
+                });
                 if (brokers) {
                     $scope.controls[0].values = brokers;
                     $scope.controls[0].value = brokers[0];
                 }
-            }, function() {
+            }, function () {
             });
 
             var mapControls = function (controls, hexControls) {
@@ -203,8 +223,8 @@ angular.module('App.createproduct')
             };
 
             function validateDiapason(control) {
-                if(control.type === 'diapason' || control.type === 'dropdownAndDiapason' || control.diapasonOn) {
-                    if(control.toValue > control.fromValue) {
+                if (control.type === 'diapason' || control.type === 'dropdownAndDiapason' || control.diapasonOn) {
+                    if (control.toValue > control.fromValue) {
                         control.error = false;
                         return true;
                     } else {
@@ -218,11 +238,11 @@ angular.module('App.createproduct')
             }
 
             var extendDefaultControls = function (controls) {
-                controls.forEach(function(control, index){
+                controls.forEach(function (control, index) {
                     if (control.type === 'diapason') {
                         control.value = control.lineFormat.format(control.fromValue, control.toValue);
                         control.shortValue = control.value;
-                    } else if(control.type === 'dropdownAndDiapason'){
+                    } else if (control.type === 'dropdownAndDiapason') {
                         control.value = control.lineFormat.format(control.fromValue, control.toValue, control.dropdown.value.lineName);
                         control.shortValue = control.lineFormat.format(control.fromValue, control.toValue, '');
                     } else if (control.type === 'optDiapason') {
@@ -234,7 +254,7 @@ angular.module('App.createproduct')
                             control.shortValue = control.dropdown.value.shortValue;
                         }
                     }
-                    control.setFromValue = function(fromValue) {
+                    control.setFromValue = function (fromValue) {
                         if (control.active) {
                             control.fromValue = fromValue;
                             this.value = this.lineFormat.format(this.fromValue, this.toValue, '');
@@ -248,13 +268,13 @@ angular.module('App.createproduct')
                             $('#' + this.hexControl.id + '-text').text(this.value);
                         }
                     };
-                    control.setDropdownValue = function(dropdownValue) {
+                    control.setDropdownValue = function (dropdownValue) {
                         if (control.active) {
                             control.dropdown.value = dropdownValue;
                             control.value = dropdownValue;
                         }
                     };
-                    control.setOptDiapasonDropdownValue = function(dropdownValue) {
+                    control.setOptDiapasonDropdownValue = function (dropdownValue) {
                         if (control.active) {
                             control.dropdown.value = dropdownValue;
                             control.diapasonOn = dropdownValue.value === control.activateDiapasonValue;
@@ -268,14 +288,14 @@ angular.module('App.createproduct')
                         }
                     };
                     control.save = function () {
-                        if(!validateDiapason(control)) {
+                        if (!validateDiapason(control)) {
                             return;
                         }
                         if (control.active) {
                             this.isSaved = true;
                             if (control.type === 'diapason') {
                                 control.line = control.lineFormat.format(control.fromValue, control.toValue);
-                            } else if(control.type === 'dropdownAndDiapason'){
+                            } else if (control.type === 'dropdownAndDiapason') {
                                 control.line = control.lineFormat.format(control.fromValue, control.toValue, control.dropdown.value.lineName);
                             } else if (control.type === 'optDiapason') {
                                 if (control.diapasonOn) {
@@ -339,7 +359,7 @@ angular.module('App.createproduct')
 
 
             $scope.openModal = function () {
-                if(!$scope.sendRequestDisabled) {
+                if (!$scope.sendRequestDisabled) {
                     modalService.show();
                 }
             };

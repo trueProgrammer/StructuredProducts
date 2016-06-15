@@ -4,7 +4,12 @@ angular.module('App.main')
     function($routeProvider){
         $routeProvider.when('/', {
             templateUrl: 'resources/js/App/main/main.html',
-            controller: 'mainCtrl'
+            controller: 'mainCtrl',
+                resolve: {
+                    load: ['$ocLazyLoad', function ($ocLazyLoad) {
+                        return $ocLazyLoad.load('resources/lib/jquery.maskedinput-1.3.min.js');
+                    }]
+                }
         })
     }])
 .controller('mainCtrl', [ '$scope', '$log', 'restService', '$anchorScroll', '$document', '$location',
