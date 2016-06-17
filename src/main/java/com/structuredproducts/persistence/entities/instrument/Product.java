@@ -298,4 +298,31 @@ public class Product {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", productType=" + productType +
+                ", underlayingList=" + underlayingList +
+                ", underlayings='" + underlayings + '\'' +
+                ", broker=" + broker +
+                ", returnValue=" + returnValue +
+                ", strategy=" + strategy +
+                ", legalType=" + legalType +
+                ", payoff=" + payoff +
+                ", risks=" + risks +
+                ", inputCurrency=" + inputCurrency +
+                ", outputCurrency=" + outputCurrency +
+                ", paymentPeriodicity=" + paymentPeriodicity +
+                ", description='" + description + '\'' +
+                ", minTerm=" + minTerm +
+                ", maxTerm=" + maxTerm +
+                ", minInvest=" + minInvest +
+                ", maxInvest=" + maxInvest +
+                ", riskType=" + riskType +
+                ", top=" + top +
+                '}';
+    }
 }

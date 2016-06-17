@@ -17,7 +17,7 @@ angular.module('App.investproduct')
 
         $scope.itemsPerPageOptions = ['5', '10', '20', '40'];
 
-        $scope.filter;
+        $scope.filter = {};
 
         $scope.brokers = [];
         $scope.selectedBroker = [];

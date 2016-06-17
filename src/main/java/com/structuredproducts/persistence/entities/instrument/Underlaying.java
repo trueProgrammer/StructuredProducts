@@ -77,6 +77,17 @@ public class Underlaying implements Serializable, UniqueWithName {
     }
 
     @Override
+    public String toString() {
+        return "Underlaying{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", officialName='" + officialName + '\'' +
+                ", period='" + period + '\'' +
+                ", type=" + type +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

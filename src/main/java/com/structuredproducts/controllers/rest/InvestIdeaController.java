@@ -65,10 +65,8 @@ public class InvestIdeaController extends AbstractAdminController{
             idea.setAddDate(new Date());
             idea.setMainPage(onMainPage);
 
-            if (dbService.save(idea) != null) {
-                return new ResponseEntity<>(new Message("При сохранении идеи произошла ошибка. Обратитесь к администратору."), HttpStatus.BAD_REQUEST);
-            }
-        } catch (IOException e) {
+            dbService.save(idea);
+        } catch (Exception e) {
             logger.error("can't handle json " + json, e);
             return new ResponseEntity<>(new Message("При сохранении идеи произошла ошибка. Обратитесь к администратору."), HttpStatus.BAD_REQUEST);
         }

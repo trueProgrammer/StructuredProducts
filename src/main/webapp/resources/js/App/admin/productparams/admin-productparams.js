@@ -114,10 +114,11 @@ angular.module('App.admin.productparams')
                 underlaying: $scope.choosenUnderlying.data
             }, function() {
                 $log.info("Successfully saved");
+                $window.location.reload();
             }, function() {
                 $log.error("Error during saving");
             });
-            $window.location.reload();
+
         };
 
         $scope.removeImg = function() {
@@ -129,10 +130,10 @@ angular.module('App.admin.productparams')
                 underlaying: $scope.choosenUnderlying.data
             }, function() {
                 $log.info("Successfully saved");
+                $window.location.reload();
             }, function() {
                 $log.error("Error during saving");
             });
-            $window.location.reload();
         };
 
         $scope.clickChartUpload = function() {
