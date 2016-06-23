@@ -200,11 +200,9 @@
                                 <span class="sortorder" ng-show="predicate === 'returnValue'" ng-class="{reverse:reverse}"></span>
                                 <button ng-click="clickFilter('Profit')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
                                 <div ng-show="filter.Profit">
-                                    От
-                                    <input type="number" class="filter-input-small" ng-model="profitFilter.from" ng-change="filterProducts()"/>
+                                    <input type="number" class="filter-input-small" placeholder="От" ng-model="profitFilter.from" ng-change="filterProducts()"/>
                                     <br/>
-                                    До
-                                    <input type="number" class="filter-input-small" ng-model="profitFilter.to" ng-change="filterProducts()"/>
+                                    <input type="number" class="filter-input-small" placeholder="До" ng-model="profitFilter.to" ng-change="filterProducts()"/>
                                 </div>
                             </div>
                         </th>
@@ -212,22 +210,18 @@
                             Cумма инвестиций
                             <button ng-click="clickFilter('Sum')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
                             <div ng-show="filter.Sum">
-                                От
-                                <input type="number" class="filter-input-small" ng-model="sumFilter.from" ng-change="filterProducts()"/>
+                                <input type="number" class="filter-input-small" placeholder="От" ng-model="sumFilter.from" ng-change="filterProducts()"/>
                                 <br/>
-                                До
-                                <input type="number" class="filter-input-small" ng-model="sumFilter.to" ng-change="filterProducts()"/>
+                                <input type="number" class="filter-input-small" placeholder="До" ng-model="sumFilter.to" ng-change="filterProducts()"/>
                             </div>
                         </th>
                         <th>
                             Срок
                             <button ng-click="clickFilter('Terms')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
                             <div ng-show="filter.Terms">
-                                От
-                                <input type="number" class="filter-input-small" ng-model="termsFilter.from" ng-change="filterProducts()"/>
+                                <input type="number" class="filter-input-small" placeholder="От" ng-model="termsFilter.from" ng-change="filterProducts()"/>
                                 <br/>
-                                До
-                                <input type="number" class="filter-input-small" ng-model="termsFilter.to" ng-change="filterProducts()"/>
+                                <input type="number" class="filter-input-small" placeholder="До" ng-model="termsFilter.to" ng-change="filterProducts()"/>
                             </div>
                         </th>
                         <th>
@@ -248,7 +242,7 @@
                     <tbody>
                     <tr ng-repeat="val in products.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | orderBy:predicate:reverse"
                         ng-click="goToProductPage(val.id)" class="table-row" ng-class="getClassByRiskType(val.productType.riskType)">
-                        <td>{{$index + 1}}</td>
+                        <td>{{$index + 1 + ((currentPage - 1) * itemsPerPage)}}</td>
                         <td>{{val.name}}</td>
                         <td>{{val.underlayings}}</td>
                         <td>{{val.returnValue}}%</td>
@@ -288,7 +282,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="val in products.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | orderBy:predicate:reverse" ng-click="goToProductPage(val.id)" class="table-row">
-                        <td>{{$index + 1}}</td>
+                        <td>{{$index + 1 + ((currentPage - 1) * itemsPerPage)}}</td>
                         <td>{{val.name}}</td>
                         <td>{{val.returnValue}}%</td>
                         <td>от {{val.minInvest}} до {{val.maxInvest}} тысяч рублей</td>

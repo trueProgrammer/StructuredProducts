@@ -112,6 +112,9 @@ angular.module('App.investproduct')
         }
 
         function setTableProducts(products) {
+            for (var i = 0; i < products.length; i++) {
+                products[i].ser = i + 1;
+            }
             $scope.products = products;
             $scope.totalItems = products.length;
         }
