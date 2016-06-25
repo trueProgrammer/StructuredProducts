@@ -87,9 +87,7 @@ angular.module('App.main', [])
                 controller: 'mainCtrl',
                 resolve: {
                     load: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load('resources/js/App/main/main.js').then(function () {
-                            return $ocLazyLoad.load('resources/lib/jquery.maskedinput-1.3.min.js').then(function() {});
-                        });
+                        return $ocLazyLoad.load('resources/js/App/main/main.js');
                     }]
                 }
             })
@@ -285,7 +283,7 @@ angular.module('App.createproduct', [])
                 controller: 'createproduct',
                 resolve: {
                     load: ['$ocLazyLoad', function ($ocLazyLoad) {
-                        return $ocLazyLoad.load('resources/js/App/createproduct/createproduct.js').then();
+                        return $ocLazyLoad.load('resources/js/App/createproduct/createproduct.js');
                     }]
                 }
             })

@@ -1,5 +1,6 @@
 package com.structuredproducts.sevices;
 
+import com.structuredproducts.persistence.entities.instrument.Product;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.Date;
 import java.util.Properties;
 import java.util.Random;
@@ -28,10 +31,11 @@ public class MailService {
     private final Random random = new Random();
     private final Properties props;
 
-    private static final String QUESTION_SUBJECT = "xstrum.ru: Вопрос.";
-    private static final String REQUEST_SUBJECT = "xstrum.ru: Заявка на создание продукта.";
+    private static final String QUESTION_SUBJECT = "Экструм: вопрос от клиента.";
+    private static final String CREATE_REQUEST_SUBJECT = "Эструм: заявка на создание структурного продукта.";
+    private static final String REQUEST_SUBJECT = "Эструм: заявка на покупку структурного продукта.";
     private static final String COMMA = ",";
-
+    private static final String SIGNATURE = "<br/><br/><b>С уважением, Ваш Экструм.</b><br>xstrum.ru | Email: service@xstrum.ru";
 
     public MailService() {
         props = new Properties();
@@ -54,29 +58,35 @@ public class MailService {
         });
         mailSession.setDebug(true);
 
-        Message msg = new MimeMessage( mailSession );
+        MimeMessage  msg = new MimeMessage( mailSession );
 
         msg.setFrom(new InternetAddress(login));
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(login + COMMA + recipients));
         msg.setSentDate(new Date());
         msg.setSubject(subject + random.nextInt());
-        msg.setText(text);
+
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setText(text + SIGNATURE, "UTF-8","html");
+
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart);
+
+        msg.setContent(multipart);
 
         Transport.send(msg);
     }
 
     public void sendQuestion(String name, String midName, String secondName, String email, String phone, String text, String serviceEmail) throws ServiceException {
         log.debug("Question [name:{}, from:{}] will be send.", name, email);
-
         try {
             final String emailBody = String.format(
-                    "Данные клиента\n\n" +
-                    "\tEmail: %s;\n\n" +
-                    "\tТелефон: %s;\n\n" +
-                    "\tФамилия: %s;\n\n" +
-                    "\tИмя: %s;\n\n" +
-                    "\tОтчество: %s;\n\n" +
-                    "\tВопрос: %s;\n\n"
+                    "Данные клиента<br>" +
+                    "Email: %s;<br>" +
+                    "Телефон: %s;<br>" +
+                    "Фамилия: %s;<br>" +
+                    "Имя: %s;<br>" +
+                    "Отчество: %s;<br>" +
+                    "Вопрос: %s;<br>"
                     , email, phone, secondName, name, midName, text);
 
                     sendEmail(QUESTION_SUBJECT, emailBody, serviceEmail != null ? serviceEmail : StringUtils.EMPTY);
@@ -84,36 +94,59 @@ public class MailService {
             log.error("Email [name:{}, from:{}] hasn't send.", name, email, e);
             throw new ServiceException("Email hasn't send.", e);
         }
-
     }
 
     public void sendRequest(String name, String midName, String email, String phone, String to,
-                            String profitBlock, String time, String invest, String risk,
-                            String broker, String period, String under, String strategy) throws ServiceException {
-        log.debug("Request [name:{}, from:{}] will be send to {}.", name, email, to);
+                            Product product) throws ServiceException {
+        log.debug("Request [name:{}, from:{}] will be send to {}.", name, email, product.getBroker().getName());
+        try {
+            String emailBody = String.format("Добрый день! <br> %s %s оставил заявку на покупку продукта " +
+                                                "\"%s\" <a href=\"http://xstrum.ru/#/product?id=%s\">ссылка на страницу продукта</a>",
+                                            name, midName, product.getName(), product.getId());
+            emailBody += String.format("<br><br>Данные клиента:<br>" +
+                            "Email: %s;<br>" +
+                            "Телефон: %s;<br>."
+                            , email, phone);
+            sendEmail(REQUEST_SUBJECT, emailBody, to);
+        } catch (MessagingException e) {
+            log.error("Email [name:{}, from:{}] hasn't send.", name, email, e);
+            throw new ServiceException("Email hasn't send.", e);
+        }
+    }
+
+    public void sendCreateRequest(String name, String midName, String email, String phone, String to,
+                                  String profitBlock, String time, String invest, String risk,
+                                  String broker, String period, String under, String strategy) throws ServiceException {
+        log.debug("Create Request [name:{}, from:{}] will be send to {}.", name, email, to);
 
         try {
-            String emailBody = String.format("Заявка на создание структурного продукта с сервиса xstrum.ru\n\n\n" +
-                                "Данные клиента\n\n" +
-                                "\tEmail: %s;\n\n" +
-                                "\tТелефон: %s;\n\n" +
-                                "\tИмя: %s;\n\n" +
-                                "\tФамилия: %s;\n\n"
-                                , email, phone, name, midName);
+            String emailBody = String.format("Добрый день!<br><br>" +
+                                "%s %s оставил заявку на создание инвестиционного продукта на сайте <a href=\"http://xstrum.ru\">Экструм</a>."
+                                , name, midName);
+            emailBody += String.format("<br><br>Данные клиента:<br>" +
+                            "Email: %s;<br>" +
+                            "Телефон: %s.<br>"
+                            , email, phone);
+            emailBody += String.format("<br><br>Перечень параметров, которые заполнил клиент:<br>" +
+                            "Доходность: %s;<br>" +
+                            "Срок инвестирования: %s;<br>" +
+                            "Сумма инвестиций: %s;<br>" +
+                            "Уровень защиты инвестиций: %s;<br>"
+                            , profitBlock, time, invest, risk);
 
-            emailBody += String.format("\n\nПараметры структурного продукта для создания\n\n\n" +
-                    "\tДоходность: %s;\n\n" +
-                    "\tСрок инвестирования: %s;\n\n" +
-                    "\tСумма инвестиций: %s;\n\n" +
-                    "\tУровень защиты инвестиций: %s;\n\n" +
-                    "\tПровайдер продукта (брокер): %s;\n\n" +
-                    "\tПериодичность выплат: %s;\n\n" +
-                    "\tБазовый актив: %s;\n\n" +
-                    "\tСтратегия: %s;\n\n"
-                    , profitBlock, time, invest, risk,
-                    broker, period, under, strategy);
-
-            sendEmail(REQUEST_SUBJECT, emailBody, to);
+            if (StringUtils.isNotEmpty(broker)) {
+                emailBody += "<br>Провайдер продукта (брокер): " + broker;
+            }
+            if (StringUtils.isNotEmpty(period)) {
+                emailBody += "<br>Периодичность выплат: " + period;
+            }
+            if (StringUtils.isNotEmpty(under)) {
+                emailBody += "<br>Базовый актив: " + under;
+            }
+            if (StringUtils.isNotEmpty(strategy)) {
+                emailBody += "</br>Стратегия: " + strategy;
+            }
+            sendEmail(CREATE_REQUEST_SUBJECT, emailBody, to);
         } catch (MessagingException e) {
             log.error("Email [name:{}, from:{}] hasn't send.", name, email, e);
             throw new ServiceException("Email hasn't send.", e);

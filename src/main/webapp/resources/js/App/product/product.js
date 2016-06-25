@@ -176,9 +176,13 @@
 
              $scope.openModal = function () {
                  if ($scope.productParams.product.broker) {
-                     modalService.show(undefined, $scope.productParams.product.broker.id);
+                     modalService.show(undefined, $scope.productParams.product.id);
                  } else {
                      modalService.show();
                  }
              };
+
+             angular.element(document).ready(function () {
+                 $("#phone").mask("+7 (999) 999-9999");
+             });
          }]);

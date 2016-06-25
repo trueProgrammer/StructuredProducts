@@ -144,7 +144,7 @@ public class DBService {
 
     @Transactional
     public <T> T getByName(String name, Class<T> clazz) {
-        if (name == null) {
+        if (StringUtils.isEmpty(name)) {
             return null;
         }
         Query query = createCacheableQuery( String.format("SELECT * from %s where name = :name", TABLE_TO_TYPE_MAPPING.get(clazz)), clazz);

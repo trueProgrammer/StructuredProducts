@@ -64,10 +64,10 @@ angular.module('App.createproduct')
                 id: 'profitBlock',
                 header: 'Доходность (% годовых)',
                 buttonText: 'Применить доходность',
-                fromValues: ['10%', '20%', '30%', '40%'],
-                toValues: ['10%', '20%', '30%', '40%'],
-                fromValue: '10%',
-                toValue: '20%',
+                fromValues: ['менее 5%', '5%', '10%', '20%', '30%', '40%'],
+                toValues: ['5%', '10%', '20%', '30%', '40%', 'Свыше 40%'],
+                fromValue: 'менее 5%',
+                toValue: '5%',
                 lineFormat: 'От {0} до {1}',
                 type: 'diapason'
             }, {
@@ -77,7 +77,7 @@ angular.module('App.createproduct')
                 fromValues: ['2 мес', '3 мес', '4 мес', '5 мес', '6 мес', '8 мес',
                     '10 мес', '12 мес', '15 мес', '18 мес'],
                 toValues: ['2 мес', '3 мес', '4 мес', '5 мес', '6 мес', '8 мес',
-                    '10 мес', '12 мес', '15 мес', '18 мес'],
+                    '10 мес', '12 мес', '15 мес', '18 мес', 'Свыше 18 мес'],
                 fromValue: '2 мес',
                 toValue: '3 мес',
                 lineFormat: 'От {0} до {1}',
@@ -86,17 +86,30 @@ angular.module('App.createproduct')
                 id: 'sumBlock',
                 header: 'Сумма инвестиций',
                 buttonText: 'Применить сумму инвестиций',
-                fromValues: ['200 тыс', '300 тыс', '500 тыс', '1 млн', 'и больше'],
-                toValues: ['200 тыс', '300 тыс', '500 тыс', '1 млн', 'и больше'],
+                fromValues: ['200 тыс', '300 тыс', '500 тыс', '1 млн'],
+                toValues: [ '300 тыс', '500 тыс', '1 млн', 'свыше 1 млн'],
                 fromValue: '200 тыс',
                 toValue: '300 тыс',
                 lineFormat: 'От {0} до {1} {2}',
                 dropdown: {
                     header: 'Валюта',
-                    values: [{dropdownName: 'Рубль', lineName: 'рублей'}, {
-                        dropdownName: 'Доллар',
-                        lineName: 'долларов'
-                    }, {dropdownName: 'Евро', lineName: 'евро'}],
+                    values: [
+                        {dropdownName: 'Рубль', lineName: 'рублей', lineType: 'rur',
+                            fromValues: ['200 тыс', '300 тыс', '500 тыс', '1 млн'],
+                            toValues: ['300 тыс', '500 тыс', '1 млн', 'свыше 1 млн'],
+                            fromValue: '200 тыс',
+                            toValue: '300 тыс'},
+                        {dropdownName: 'Доллар', lineName: '$', lineType: 'dol',
+                            fromValues: ['5 тыс', '10 тыс', '50 тыс', '100 тыс'],
+                            toValues: ['10 тыс', '50 тыс', '100 тыс', 'свыше 100 тыс'],
+                            fromValue: '5 тыс ',
+                            toValue: '10 тыс',},
+                        {dropdownName: 'Евро', lineName: '€', lineType: 'euro',
+                            fromValues: ['5 тыс', '10 тыс', '50 тыс', '100 тыс'],
+                            toValues: ['10 тыс', '50 тыс', '100 тыс', 'свыше 100 тыс'],
+                            fromValue: '5 тыс',
+                            toValue: '10 тыс',}
+                    ],
                     value: {dropdownName: 'Рубль', lineName: 'рублей'}
                 },
                 type: 'dropdownAndDiapason'
@@ -224,7 +237,7 @@ angular.module('App.createproduct')
 
             function validateDiapason(control) {
                 if (control.type === 'diapason' || control.type === 'dropdownAndDiapason' || control.diapasonOn) {
-                    if (control.toValue > control.fromValue) {
+                    if (control.toValues.indexOf(control.toValue) >= control.fromValues.indexOf(control.fromValue) ) {
                         control.error = false;
                         return true;
                     } else {
@@ -272,6 +285,10 @@ angular.module('App.createproduct')
                         if (control.active) {
                             control.dropdown.value = dropdownValue;
                             control.value = dropdownValue;
+                            control.fromValues = dropdownValue.fromValues;
+                            control.toValues = dropdownValue.toValues;
+                            control.fromValue = dropdownValue.fromValue;
+                            control.toValue = dropdownValue.toValue;
                         }
                     };
                     control.setOptDiapasonDropdownValue = function (dropdownValue) {
@@ -323,6 +340,9 @@ angular.module('App.createproduct')
                             this.line = '';
                             this.hexControl.active();
                             delete savedControls[this.id];
+                            $scope.sendRequestDisabled = true;
+                            $('#optParamsControlBlock').css('opacity', '0.1');
+                            $('#sendRequest').css('opacity', '0.1');
                         }
                     };
                     if (index > 0) {

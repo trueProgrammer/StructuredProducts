@@ -401,6 +401,20 @@ angular.module('App.services', ['ngResource']).service('restService', [
             );
         },
 
+        productRequest: function(data, onSuccess, onFail) {
+            $http.post(
+                    serviceUri + "productRequest",
+                data
+                )
+                .then(
+                    function (response) {
+                        onSuccess(response.data);
+                    }, function (response) {
+                        onFail(response.data.message);
+                    }
+                );
+        },
+
         getUnderlayingHistoricalQuotes: function(id, onSuccess, onFail) {
             $http.get(
                 dataUri + "historicalquotes",

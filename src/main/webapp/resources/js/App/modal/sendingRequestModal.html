@@ -1,5 +1,5 @@
     <div class="body-style">
-        <form role="form" name="sendform" novalidate>
+        <form role="form" name="sendform" class="sky-form contact-style">
             <div class="form-group">
                 <label for="name">Имя<span class="color-red">*</span></label>
                 <input type="text" name="firstname" ng-model="user.firstname" required class="form-control input-style "
@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email<span class="color-red">*</span></label>
-                <input type="email" formnovalidate name="email" ng-model="user.email" class="form-control input-style"
+                <input type="email" formnovalidate name="email" ng-model="user.email" required class="form-control input-style"
                        id="email" placeholder="Введите Ваш email"/>
             </div>
             <p ng-if="invalidFormMessage">{{invalidFormMessage}}</p>

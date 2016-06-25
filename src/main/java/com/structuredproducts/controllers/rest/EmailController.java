@@ -3,10 +3,10 @@ package com.structuredproducts.controllers.rest;
 import com.structuredproducts.controllers.data.Message;
 import com.structuredproducts.persistence.entities.instrument.Broker;
 import com.structuredproducts.persistence.entities.instrument.Email;
+import com.structuredproducts.persistence.entities.instrument.Product;
 import com.structuredproducts.persistence.entities.instrument.SystemProperty;
 import com.structuredproducts.sevices.DBService;
 import com.structuredproducts.sevices.MailService;
-import com.structuredproducts.sevices.ServiceException;
 import com.structuredproducts.sevices.ServiceUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -76,6 +75,35 @@ public class EmailController {
         }
     }
 
+    @RequestMapping(path="/productRequest",
+            method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
+    )
+    public ResponseEntity<Message> productRequest( @RequestBody String json) {
+        logger.debug("Got create product request {} ", json);
+        try {
+            Map<String, Object> map = ServiceUtils.getObjectMapping(json);
+
+            Integer productId = (Integer) map.get("productId");
+            Product product = dbService.getObjectByKey(Product.class, productId);
+
+            String recipients = getServiceEmail() + ",";
+            recipients += String.join(",", product.getBroker().getEmails().stream().map(Email::getEmail).collect(Collectors.toList()));
+
+            mailService.sendRequest((String) map.get("firstname"),
+                    (String) map.get("lastname"),
+                    (String) map.get("email"),
+                    (String) map.get("phone"),
+                    recipients,
+                    product);
+
+            return new ResponseEntity<>(new Message("Message send successfully"), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Message(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     @RequestMapping(path="/createProductRequest",
             method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE
@@ -94,7 +122,7 @@ public class EmailController {
                 recipients += String.join(",", broker.getEmails().stream().map(Email::getEmail).collect(Collectors.toList()));
             }
 
-            mailService.sendRequest(
+            mailService.sendCreateRequest(
                     (String) map.get("firstname"),
                     (String) map.get("lastname"),
                     (String) map.get("email"),

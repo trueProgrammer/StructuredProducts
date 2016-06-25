@@ -56,17 +56,17 @@
                         </div>
                         <!--DIAPASON WITH DROPDOWN-->
                         <div ng-if="control.type == 'dropdownAndDiapason'">
-                                <div class="btn-group" uib-dropdown>
-                                    <span class="h4-style">{{control.dropdown.header}} </span>
-                                    <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
-                                            style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
-                                            ng-disabled="control.isDisabled">
-                                        {{control.dropdown.value.dropdownName}} <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
-                                        <li ng-repeat="dropdownValue in control.dropdown.values"><a ng-click="control.setDropdownValue(dropdownValue)">{{dropdownValue.dropdownName}}</a></li>
-                                    </ul>
-                                </div>
+                            <div class="btn-group" uib-dropdown>
+                                <span class="h4-style">{{control.dropdown.header}} </span>
+                                <button type="button" class="btn-u btn-brd rounded btn-u-default btn-u-xs" uib-dropdown-toggle
+                                        style="background: none; color: #58585e; margin-left: 6px; margin-top: 2px; margin-bottom: 2px; font-size: 14px;"
+                                        ng-disabled="control.isDisabled">
+                                    {{control.dropdown.value.dropdownName}} <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" ng-if="control.active" uib-dropdown-menu>
+                                    <li ng-repeat="dropdownValue in control.dropdown.values"><a ng-click="control.setDropdownValue(dropdownValue)">{{dropdownValue.dropdownName}}</a></li>
+                                </ul>
+                            </div>
                             <br/>
                             <div class="btn-group" uib-dropdown>
                                 <span class="h4-style">От </span>

@@ -203,3 +203,7 @@ fieldset {
 .page-hg {
     min-height: calc(100vh - 191px);
 }
+
+input.invalid-control {
+    border-color: red;
+}

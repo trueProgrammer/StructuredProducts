@@ -4,7 +4,7 @@ angular.module('App.services').service('modalService', ['$uibModal',
             templateUrl: 'resources/js/App/modal/sendingRequestModal.html',
             // controller: 'sendRequestCtrl',
         };
-        this.show = function (customModalDefaults) {
+        this.show = function (customModalDefaults, productId) {
             //Create temp objects to work with since we're in a singleton service
             var tempModalDefaults = {};
 
@@ -18,29 +18,36 @@ angular.module('App.services').service('modalService', ['$uibModal',
                         var phoneEl = $('#phone');
                         var val = phoneEl.val();
                         if (val && val !== '') {
+                            phoneEl.removeClass('invalid-control');
                             return true;
+                        } else {
+                            phoneEl.addClass('invalid-control');
+                            return false;
                         }
-                        phoneEl.addClass('invalid-control');
-                        return false;
+                    };
+                    var successFunc = function() {
+                        $scope.invalidFormMessage = "";
+                        $('input').removeClass('invalid-control');
+                        $scope.msg = "Ваша заявка успешно отправлена. Ожидайте звонка от брокера.";
+                    };
+                    var invalidFunc = function() {
+                        $scope.invalidFormMessage = "";
+                        $('input').removeClass('invalid-control');
+                        $scope.msg = "Проблема при обработке заявки."
                     };
                     $scope.sendParams = function () {
                         var phoneCheck = checkPhone();
                         if ($scope.sendform.$valid && phoneCheck) {
-                            $scope.user.controls = savedControls;
                             $scope.user.phone = $('#phone').val();
-                            restService.createProductRequest($scope.user,
-                                function () {
-                                    $scope.invalidFormMessage = "";
-                                    $('input').removeClass('invalid-control');
-                                    $scope.msg = "Ваша заявка успешно отправлена. Ожидайте звонка от брокера.";
-                                },
-                                function () {
-                                    $scope.invalidFormMessage = "";
-                                    $('input').removeClass('invalid-control');
-                                    $scope.msg = "Проблема при обработке заявки."
-                                })
+                            if (productId == null) {
+                                $scope.user.controls = savedControls;
+                                restService.createProductRequest($scope.user, successFunc, invalidFunc);
+                            } else {
+                                $scope.user.productId = productId;
+                                restService.productRequest($scope.user, successFunc, invalidFunc);
+                            }
                         } else {
-                            $scope.invalidFormMessage = "Пожалуйста, заполните все необходимые поля";
+                            $scope.invalidFormMessage = "Пожалуйста, заполните все необходимые поля корректно";
                             if ($scope.sendform.$error && $scope.sendform.$error.required) {
                                 $scope.sendform.$error.required.forEach(function (req) {
                                     $("input[name='" + req.$name + "']").addClass('invalid-control')
