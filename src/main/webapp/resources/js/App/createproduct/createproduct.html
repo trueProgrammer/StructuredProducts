@@ -12,9 +12,56 @@
 <div class="container">
     <div class="screen-height">
         <div class="col-md-8 col-sm-6" ng-show="isDesktopShow()">
-            <svg id='svg' width="100%" height="870px">
+            <svg id='svg' width="100%" height="706px">
                 <text class="header-text-style"  id="add-param-header"><tspan y="20">Выберите параметр для добавления: </tspan></text>
             </svg>
+            <div id="similarProducts" class="margin-top-150">
+                <h3>Продукты с похожими параметрами</h3>
+                <div ng-show="isDesktopShow()">
+                    <table class="table main-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Название</th>
+                            <th>Доходность</th>
+                            <th>Cумма инвестиций</th>
+                            <th>Срок</th>
+                            <th>Провайдер</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="val in products.slice(0, 4) | orderBy:val.name" ng-click="goToProductPage(val.id)" class="table-row">
+                            <td>{{$index + 1}}</td>
+                            <td>{{val.name}}</td>
+                            <td>{{val.returnValue}}%</td>
+                            <td>{{getPeriodValue(val.minInvest,val.maxInvest)}} {{val.currency.name}}</td>
+                            <td>{{getPeriodValue(val.minTerm,val.maxTerm)}} мес.</td>
+                            <td>{{val.broker.name}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-show="isMobileShow()">
+                    <table class="table main-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Название</th>
+                            <th>Доходность</th>
+                            <th>Провайдер</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="val in products.slice(0, 4) | orderBy:val.name" ng-click="goToProductPage(val.id)" class="table-row">
+                            <td>{{$index + 1}}</td>
+                            <td>{{val.name}}</td>
+                            <td>{{val.broker.name}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a href="#/investproduct">Смотреть все продукты</a>
+            </div>
         </div>
         <div class="col-md-4 col-sm-6" id="paramsContainer">
             <div class="headline">
@@ -161,7 +208,7 @@
     </div>
 </div>
 <div id="optParamsContainer" ng-show="false">
-    <div ng-repeat="control in controls" id="{{control.id}}"  class="top-margin">
+    <div ng-repeat="control in controls" id="{{control.id}}" class="top-margin">
         <p>
         <h4>
             <span class="parameter">{{control.header}}:</span><span class="h4-style"> {{control.line}}</span>

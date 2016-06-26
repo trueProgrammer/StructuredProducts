@@ -16,8 +16,8 @@ angular.module('App.createproduct')
                 }
             })
         }])
-    .controller('createproduct', ['$scope', 'modalService', 'restService',
-        function ($scope, modalService, restService) {
+    .controller('createproduct', ['$scope', 'modalService', 'restService','$location',
+        function ($scope, modalService, restService, $location) {
             $scope.optParamsControl = {
                 isDisabled: true
             };
@@ -65,7 +65,9 @@ angular.module('App.createproduct')
                 header: 'Доходность (% годовых)',
                 buttonText: 'Применить доходность',
                 fromValues: ['менее 5%', '5%', '10%', '20%', '30%', '40%'],
+                fromFilterValues: ['0', '5', '10', '20', '30', '40'],
                 toValues: ['5%', '10%', '20%', '30%', '40%', 'Свыше 40%'],
+                toFilterValues: ['5', '10', '20', '30', '40', '100'],
                 fromValue: 'менее 5%',
                 toValue: '5%',
                 lineFormat: 'От {0} до {1}',
@@ -74,10 +76,12 @@ angular.module('App.createproduct')
                 id: 'timeBlock',
                 header: 'Срок инвестирования',
                 buttonText: 'Применить срок инвестирования',
-                fromValues: ['2 мес', '3 мес', '4 мес', '5 мес', '6 мес', '8 мес',
+                fromValues: ['2 мес', '3 мес', '4 мес', '6 мес', '8 мес',
                     '10 мес', '12 мес', '15 мес', '18 мес'],
-                toValues: ['2 мес', '3 мес', '4 мес', '5 мес', '6 мес', '8 мес',
+                fromFilterValues: ['2', '3', '4', '6', '8', '10', '12', '15', '18'],
+                toValues: ['2 мес', '3 мес', '4 мес', '6 мес', '8 мес',
                     '10 мес', '12 мес', '15 мес', '18 мес', 'Свыше 18 мес'],
+                toFilterValues: ['2', '3', '4', '6', '8', '10', '12', '15', '18', '100'],
                 fromValue: '2 мес',
                 toValue: '3 мес',
                 lineFormat: 'От {0} до {1}',
@@ -87,7 +91,9 @@ angular.module('App.createproduct')
                 header: 'Сумма инвестиций',
                 buttonText: 'Применить сумму инвестиций',
                 fromValues: ['200 тыс', '300 тыс', '500 тыс', '1 млн'],
+                fromFilterValues: ['200000', '300000', '500000', '1000000'],
                 toValues: [ '300 тыс', '500 тыс', '1 млн', 'свыше 1 млн'],
+                toFilterValues: ['300000', '500000', '1000000', '10000000'],
                 fromValue: '200 тыс',
                 toValue: '300 тыс',
                 lineFormat: 'От {0} до {1} {2}',
@@ -96,17 +102,23 @@ angular.module('App.createproduct')
                     values: [
                         {dropdownName: 'Рубль', lineName: 'рублей', lineType: 'rur',
                             fromValues: ['200 тыс', '300 тыс', '500 тыс', '1 млн'],
+                            fromFilterValues: ['200000', '300000', '500000', '1000000'],
                             toValues: ['300 тыс', '500 тыс', '1 млн', 'свыше 1 млн'],
+                            toFilterValues: ['300000', '500000', '1000000', '10000000'],
                             fromValue: '200 тыс',
                             toValue: '300 тыс'},
                         {dropdownName: 'Доллар', lineName: '$', lineType: 'dol',
                             fromValues: ['5 тыс', '10 тыс', '50 тыс', '100 тыс'],
+                            fromFilterValues: ['5000', '10000', '50000', '100000'],
                             toValues: ['10 тыс', '50 тыс', '100 тыс', 'свыше 100 тыс'],
-                            fromValue: '5 тыс ',
+                            toFilterValues: ['10000', '50000', '100000', '1000000'],
+                            fromValue: '5 тыс',
                             toValue: '10 тыс',},
                         {dropdownName: 'Евро', lineName: '€', lineType: 'euro',
                             fromValues: ['5 тыс', '10 тыс', '50 тыс', '100 тыс'],
+                            fromFilterValues: ['5000', '10000', '50000', '100000'],
                             toValues: ['10 тыс', '50 тыс', '100 тыс', 'свыше 100 тыс'],
+                            toFilterValues: ['10000', '50000', '100000', '1000000'],
                             fromValue: '5 тыс',
                             toValue: '10 тыс',}
                     ],
@@ -286,7 +298,9 @@ angular.module('App.createproduct')
                             control.dropdown.value = dropdownValue;
                             control.value = dropdownValue;
                             control.fromValues = dropdownValue.fromValues;
+                            control.fromFilterValues = dropdownValue.fromFilterValues;
                             control.toValues = dropdownValue.toValues;
+                            control.toFilterValues = dropdownValue.toFilterValues;
                             control.fromValue = dropdownValue.fromValue;
                             control.toValue = dropdownValue.toValue;
                         }
@@ -329,9 +343,25 @@ angular.module('App.createproduct')
                                 $scope.sendRequestDisabled = false;
                                 $('#optParamsControlBlock').css('opacity', '1');
                                 $('#sendRequest').css('opacity', '1');
+                                $('#similarProducts').css('margin-top', '0px');
                                 hex.switchAddParams();
                             }
                             savedControls[this.id] = {header: this.header, value: this.line};
+                            if (control.id === 'profitBlock') {
+                                setTableProducts(filterProfit($scope.products,
+                                    control.fromFilterValues[control.fromValues.indexOf(control.fromValue)],
+                                    control.toFilterValues[control.toValues.indexOf(control.toValue)]));
+                            }
+                            if (control.id ===  'timeBlock') {
+                                setTableProducts(filterTerm($scope.products,
+                                    control.fromFilterValues[control.fromValues.indexOf(control.fromValue)],
+                                    control.toFilterValues[control.toValues.indexOf(control.toValue)]));
+                            }
+                            if (control.id === 'sumBlock') {
+                                setTableProducts(filterSum($scope.products,
+                                    control.fromFilterValues[control.fromValues.indexOf(control.fromValue)],
+                                    control.toFilterValues[control.toValues.indexOf(control.toValue)]));
+                            }
                         }
                     };
                     control.edit = function () {
@@ -350,7 +380,6 @@ angular.module('App.createproduct')
                     }
                 });
             };
-
             $scope.controlFilter = function (item) {
                 return !item.added;
             };
@@ -367,7 +396,6 @@ angular.module('App.createproduct')
             mapControls($scope.controls, $scope.optParams);
             extendControls($scope.controls);
 
-
             var hex = new hexParams({
                 $scope: $scope,
                 radius: 93,
@@ -377,10 +405,55 @@ angular.module('App.createproduct')
             defaultParams[0].active();
             //generateControls([{id: 'currencyBlock'}]);
 
-
             $scope.openModal = function () {
                 if (!$scope.sendRequestDisabled) {
                     modalService.show();
+                }
+            };
+
+            function filterProfit(products, from, to) {
+                return products.filter(function(p) {
+                    return p.returnValue >= from && p.returnValue <= to;
+                });
+            }
+            function filterTerm(products, from, to) {
+                return products.filter(function(p) {
+                    return p.minTerm >= from && p.maxTerm <= to;
+                });
+            }
+            function filterSum(products, from, to) {
+                return products.filter(function(p) {
+                    return p.minInvest >= from && p.maxInvest <= to;
+                });
+            };
+            restService.getAllProducts(
+                function (response) {
+                    setProducts(response);
+                },
+                function () {
+                    $log.error("Get all products failure.");
+                }
+            );
+            function setProducts(products) {
+                $scope.allProducts = products;
+                setTableProducts(products);
+            }
+            function setTableProducts(products) {
+                $scope.products = products;
+            }
+            $scope.goToProductPage = function(id) {
+                $location.path("/product").search("id",id);
+            };
+            $scope.getPeriodValue = function(min, max) {
+                var minStr = min.toLocaleString();
+                var maxStr = max.toLocaleString();
+
+                if(min != 0 && max != 0) {
+                    return "От " + minStr + " до " + maxStr;
+                } else if(min == 0 && max != 0) {
+                    return "До " +  maxStr;
+                } else if (min != 0 && max == 0) {
+                    return "От " + minStr;
                 }
             };
 

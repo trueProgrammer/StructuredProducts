@@ -127,3 +127,7 @@
     border-radius: 5px;
     border: 2px solid #e72e29;
 }
+
+.margin-top-150 {
+    margin-top: -150px;
+}

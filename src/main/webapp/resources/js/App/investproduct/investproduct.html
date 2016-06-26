@@ -285,7 +285,7 @@
                         <td>{{$index + 1 + ((currentPage - 1) * itemsPerPage)}}</td>
                         <td>{{val.name}}</td>
                         <td>{{val.returnValue}}%</td>
-                        <td>от {{val.minInvest}} до {{val.maxInvest}} тысяч рублей</td>
+                        <td>{{getPeriodValue(val.minInvest,val.maxInvest)}} {{val.currency.name}}</td>
                     </tr>
                     </tbody>
                 </table>
