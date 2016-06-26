@@ -64,12 +64,13 @@ angular.module('App.investproduct')
         $scope.setItemsPerPage = function(num) {
             $scope.itemsPerPage = num;
             $scope.currentPage = 1; //reset to first page
+            $cookieStore.put('itemsPerPage', $scope.itemsPerPage);
+            $cookieStore.put('currentPage', $scope.currentPage);
         };
-
         $scope.$on('$locationChangeStart', function( event ) {
             $cookieStore.put('currentPage', $scope.currentPage);
-            $cookieStore.put('itemsPerPage', $scope.itemsPerPage);
-
+        });
+        function saveFilters() {
             $cookieStore.put('nameFilter', $scope.nameFilter);
             $cookieStore.put('profitFilter', $scope.profitFilter);
             $cookieStore.put('sumFilter', $scope.sumFilter);
@@ -77,8 +78,7 @@ angular.module('App.investproduct')
             $cookieStore.put('selectedBroker', $scope.selectedBroker);
             $cookieStore.put('selectedUnder', $scope.selectedUnder);
             $cookieStore.put('filter', $scope.filter);
-        });
-
+        }
         function cookiesDataLoad() {
             var itemsPerPage = $cookieStore.get('itemsPerPage');
             var currentPage = $cookieStore.get('currentPage');
@@ -454,6 +454,33 @@ angular.module('App.investproduct')
         $scope.order = function(predicate) {
             $scope.reverse = ($scope.predicate === predicate) ? !$scope.reverse : false;
             $scope.predicate = predicate;
+            if ($scope.reverse) {
+                //desc
+                setTableProducts($scope.allProducts.sort(
+                    function (a, b) {
+                        if (a[predicate] < b[predicate]) {
+                            return 1;
+                        }
+                        if (a[predicate] > b[predicate]) {
+                            return -1;
+                        }
+                        return 0;
+                    }
+                ));
+            } else {
+                //asc
+                setTableProducts($scope.allProducts.sort(
+                    function (a, b) {
+                        if (a[predicate] < b[predicate]) {
+                            return -1;
+                        }
+                        if (a[predicate] > b[predicate]) {
+                            return 1;
+                        }
+                        return 0;
+                    }
+                ));
+            }
         };
 
 
@@ -566,6 +593,7 @@ angular.module('App.investproduct')
         }
         $scope.filterProducts = function() {
             setTableProducts($scope.filterSum($scope.filterTerms($scope.filterProfit($scope.filterName($scope.filterUnder($scope.filterBrokers($scope.allProducts)))))));
+            saveFilters();
         };
         $scope.setUnderFilter = function() {
             $scope.filterProducts();
