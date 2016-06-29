@@ -16,7 +16,7 @@
 
     <div class="row invoice-header">
         <div class="col-xs-6">
-            <img width="200" src="{{investidea.broker.logo}}" alt="">
+            <img max-height="70px" max-width="120px" src="{{investidea.broker.logo}}" alt="">
             <!--<h2 class="pull-left">{{investidea.broker.name}}</h2>-->
         </div>
         <div class="col-xs-6 invoice-numb">
@@ -28,7 +28,7 @@
     <div class="shadow-wrapper">
         <div class="tag-box tag-box-v1 box-shadow shadow-effect-2">
             <h2>{{investidea.title}}</h2>
-            <p>{{investidea.content}}</p>
+            <p ng-bind-html="content"></p>
         </div>
     </div>
 

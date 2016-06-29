@@ -1,4 +1,4 @@
-angular.module('App.investidea')
+angular.module('App.investidea', ['ngSanitize'])
 
 .config(['$routeProvider',
     function($routeProvider){
@@ -14,6 +14,7 @@ angular.module('App.investidea')
                 $routeParams.id,
                 function(response) {
                     $scope.investidea = response;
+                    $scope.content = response.content;
                 },
                 function() {
                     $log.error("Get invest idea failed.");
