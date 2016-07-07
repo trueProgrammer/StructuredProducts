@@ -14,6 +14,9 @@ angular.module('App.services').service('modalService', ['$uibModal',
 
             if (!tempModalDefaults.controller) {
                 tempModalDefaults.controller = function ($scope, $modalInstance, restService) {
+
+                    $scope.agree = true;
+
                     var checkPhone = function () {
                         var phoneEl = $('#phone');
                         var val = phoneEl.val();

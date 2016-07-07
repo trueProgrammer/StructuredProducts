@@ -22,7 +22,12 @@
             </div>
             <p ng-if="invalidFormMessage">{{invalidFormMessage}}</p>
             <h3 ng-if="msg">{{msg}}</h3>
-            <button type="submit" ng-click="sendParams(user)" ng-if="!msg" class="btn btn-default">Отправить заявку
+            <label>
+                <input type="checkbox" ng-model="agree">
+                Подтверждаю своё согласие с <a href="resources/other/Политика конфиденциальности персональной информации.docx">Политикой обработки персональных данных.</a>
+            </label>
+            <button type="submit" ng-click="sendParams(user)" ng-if="!msg" class="btn btn-default" ng-disabled="!agree">
+                Отправить заявку
             </button>
             <button type="submit" ng-click="closeModal()" class="btn btn-default">Закрыть</button>
         </form>
