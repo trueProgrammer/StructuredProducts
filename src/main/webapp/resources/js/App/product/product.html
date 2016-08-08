@@ -114,8 +114,8 @@
         <hr class="devider devider-dashed hr-style"/>
         <div class="margin-top-20">
             <div class="col-md-9">
-                <a href="" ng-click="openModal()"><h2>Отправить заявку на покупку структурного продукта</h2></a>
-                <button type="button" style="border:0; background: white" ng-click="openModal()"><img src="resources/img/send_bid.png"/></button>
+                <a href="" ng-click="openModal()" onClick="ga('send', 'event', 'Button', 'Request', 'By product');"><h2>Отправить заявку на покупку структурного продукта</h2></a>
+                <button type="button" style="border:0; background: white" ng-click="openModal()" onClick="ga('send', 'event', 'Button', 'Request', 'By product');"><img src="resources/img/send_bid.png"/></button>
             </div>
             <div class="col-md-3">
                 <img ng-src="{{productParams.product.broker.logo}}" class="img-style">

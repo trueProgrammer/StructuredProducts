@@ -260,8 +260,12 @@
                                 </div>
                             </div>
                         </div>
+                        <label>
+                            <input type="checkbox" ng-model="agree">
+                            Подтверждаю своё согласие с <a href="resources/other/Политика конфиденциальности персональной информации.docx">Политикой обработки персональных данных.</a>
+                        </label>
                         <div class="margin-top-5">
-                            <button class="btn-u" ng-click="sendEmail(emailForm)" >Отправить сообщение</button>
+                            <button class="btn-u" ng-click="sendEmail(emailForm)" ng-disabled="!agree">Отправить сообщение</button>
                         </div>
                     </fieldset>
                     <!--ng-disabled="!validateForm(emailForm)"-->

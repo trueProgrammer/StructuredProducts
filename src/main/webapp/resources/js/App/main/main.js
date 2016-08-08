@@ -17,6 +17,7 @@ angular.module('App.main')
 
         var contactShow = false;
 
+        $scope.agree = true;
         $scope.isContactFormShow = function() {
             return contactShow;
         };

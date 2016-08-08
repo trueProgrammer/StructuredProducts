@@ -16,11 +16,17 @@ angular.module('App.admin.broker')
                 $location.path("/login");
             }
         }());
-        var loadBrokers = function() {
+        var loadBrokers = function(onSuccess, onFail) {
             restService.getAllBrokers(function(data) {
                 $scope.brokers = data;
+                if (onSuccess !== undefined) {
+                    onSuccess();
+                }
             }, function () {
                 $log.error("Can't load brokers");
+                if (onFail !== undefined) {
+                    onFail();
+                }
             });
         };
         loadBrokers();
@@ -72,12 +78,22 @@ angular.module('App.admin.broker')
                 id = $scope.brokerForAdd.id;
             }
             restService.addBroker(id, name, img, emails, function() {
+                var broker = $scope.brokerForAdd;
                 $('#broker-form')[0].reset();
                 $scope.mode = 'add';
                 $scope.brokerForAdd = null;
                 $scope.emails = [{num: 1, email: ""}];
                 $('#actionbtn').html('Добавить');
-                loadBrokers();
+                loadBrokers(function() {
+                    for(var i = 0; i < $scope.brokers.length; i++) {
+                        if (broker.id === $scope.brokers[i].id) {
+                            broker = $scope.brokers[i];
+                            break;
+                        }
+                    }
+                    $scope.modifyBroker(broker);
+                });
+
             }, function() {
                 $('#broker-form')[0].reset();
                 $scope.brokerForAdd = null;

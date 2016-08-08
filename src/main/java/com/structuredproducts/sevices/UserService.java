@@ -22,7 +22,6 @@ public class UserService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-
         if(user == null) {
             user = new User();
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -33,13 +32,12 @@ public class UserService implements UserDetailsService{
         }
 
         return user;
-
     }
 
     private static class User implements UserDetails {
 
         private String name = "admin";
-        private String password = "123";
+        private String password = "saratov2016!";
         private List<String> roles = Lists.newArrayList("ROLE_admin", "ROLE_user");
 
         @Override

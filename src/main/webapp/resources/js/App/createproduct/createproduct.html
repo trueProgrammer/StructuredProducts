@@ -201,8 +201,8 @@
             </div>
             <!--END OTHER PARAMS-->
             <div id="sendRequest" class="opacity-style sendRequestForm">
-                <a href="" ng-click="openModal()"><div class="h3-style">Отправить заявку на создание продукта</div></a>
-                <button type="button" style="border:0; background: white" ng-click="openModal()" ng-disabled="sendRequestDisabled"><img src="resources/img/send_bid.png"/></button>
+                <a href="" ng-click="openModal()" onClick="ga('send', 'event', 'Button', 'Request', 'Create product');"><div class="h3-style">Отправить заявку на создание продукта</div></a>
+                <button type="button" style="border:0; background: white" ng-click="openModal()" ng-disabled="sendRequestDisabled" onClick="ga('send', 'event', 'Button', 'Request', 'Create product');"><img src="resources/img/send_bid.png"/></button>
             </div>
         </div>
     </div>

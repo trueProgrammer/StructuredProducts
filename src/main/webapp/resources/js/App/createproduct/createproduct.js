@@ -24,6 +24,15 @@ angular.module('App.createproduct')
 
             $scope.sendRequestDisabled = true;
 
+            restService.getAllProducts(
+                function (response) {
+                    setProducts(response);
+                },
+                function () {
+                    $log.error("Get all products failure.");
+                }
+            );
+            
             var defaultParams = [{
                 text: 'Доходность',
                 stroke: '#91CF50',
@@ -426,14 +435,6 @@ angular.module('App.createproduct')
                     return p.minInvest >= from && p.maxInvest <= to;
                 });
             };
-            restService.getAllProducts(
-                function (response) {
-                    setProducts(response);
-                },
-                function () {
-                    $log.error("Get all products failure.");
-                }
-            );
             function setProducts(products) {
                 $scope.allProducts = products;
                 setTableProducts(products);

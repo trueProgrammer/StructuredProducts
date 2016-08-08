@@ -35,12 +35,12 @@ public class MailService {
     private static final String CREATE_REQUEST_SUBJECT = "Эструм: заявка на создание структурного продукта.";
     private static final String REQUEST_SUBJECT = "Эструм: заявка на покупку структурного продукта.";
     private static final String COMMA = ",";
-    private static final String SIGNATURE = "<br/><br/><b>С уважением, Ваш Экструм.</b><br>xstrum.ru | Email: service@xstrum.ru";
+    private static final String SIGNATURE = "<br/><br/><b>С уважением, Ваш Экструм.</b><br>xstrum.ru | Email: order@xstrum.ru";
 
     public MailService() {
         props = new Properties();
 
-        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.host", "smtp.mail.ru");
         props.put("mail.smtp.auth", "true");
         props.put("mail.debug", "true");
         props.put("mail.smtp.starttls.enable", "true");
