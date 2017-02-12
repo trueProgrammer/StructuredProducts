@@ -1,104 +1,503 @@
 <!DOCTYPE html>
 
-<div class="breadcrumbs">
-    <div class="container">
-        <h1 class="pull-left">О проекте</h1>
-        <ul class="pull-right breadcrumb">
-            <li><a href="#/">Главная страница</a></li>
-            <li class="active">О проекте</li>
-        </ul>
-    </div>
+<div class="container-fluid top-content">
+
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-xs-12 col-md-10 ">
+		
+			<p class="headlight text-center">x<span style="color:#ff3300;">Stru</span>m<br>Электронная площадка для поиска, 
+			конструирования<br>и покупки структурных продуктов</p>
+		
+
+			<p>xStrum создан при поддержке крупнейшей российской биржи ПАО Московская Биржа, а также ряда ведущих 
+			российских брокерских компаний. Продавцами структурных продуктов выступают профессиональные участники рынка ценных бумаг (брокеры), 
+			обладающие лицензиями Банка России, а покупателями — физические лица.</p>
+
+			<p>Структурные продукты, представленные на xstrum.ru, предлагаются нашими партнерами — ведущими российскими брокерскими компаниями. 
+			Данные брокерские компании обладают всеми необходимыми лицензиями на осуществление профессиональной деятельности 
+			на финансовых рынках и являются ведущими операторами на рынках Московской биржи.</p>
+
+			<div class="text-center">
+				<img class="img-responsive"  style="margin:50px auto;" src="resources/img/sheme1.png" />
+			</div>
+
+
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+
+
+	<!-- десктоп-версия -->
+	<div class="row hidden-xs">
+		<div class="col-sm-1 col-md-2 col-lg-3"></div>
+
+		<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
+
+			<img src="resources/img/toolbox_blue.png" />
+
+			<div style="padding-top:10px; min-width:250px; max-width:250px; margin: 0 auto;">
+
+				<div class="text-left"><span class="an-header1">Выберите готовый продукт</span></div>
+
+				<div class="text-left" style="margin-top:2px; margin-bottom:30px;"><span class="an-header2">для инвестирования</span></div>
+
+			</div>
+
+			<div style="padding-top:10px; padding-bottom:10px; min-width:250px; max-width:250px; margin: 0 auto;">
+				<div style="width:100%; margin: 0 auto;">
+					<a class="btn-blue" href="#/investproduct" role="button" style="min-width:250px;">Выбрать продукт</a>
+				</div>
+			</div>
+
+		</div>
+
+		<!--Разделитель для xs разрешения-->
+		<div class="visible-xs col-xs-12 text-center" style="padding:30px"></div>
+
+		<div class="col-xs-12 col-sm-5 col-md-4 col-lg-3 text-center">
+
+			<img src="resources/img/eye_shadows_blue.png" />
+
+			<div style="padding-top:10px;  min-width:250px; max-width:250px; margin: 0 auto;">
+
+				<div class="text-left"><span class="an-header1">Создайте свой продукт</span></div>
+
+				<div class="text-left" style="margin-top:2px; margin-bottom:30px;"><span class="an-header2">при помощи конструктора</span></div>
+
+			</div>
+
+			<div style="padding-top:10px; padding-bottom:10px; width:100%; margin: 0 auto;">
+
+				<a class="btn-blue-border" href="#/investproduct" role="button" style="min-width:250px;">Открыть конструктор</a>
+
+			</div>
+		</div>
+
+		<div class="col-sm-1 col-md-2 col-lg-3"></div>
+	</div>
+	<!--конец десктоп-версии-->
+
 </div>
-<div>
-    <div class="headline-center container content">
-        <div id="ytplayer" style="max-width: 80vw;"></div>
-        <!--<iframe width="560" height="315" src="https://www.youtube.com/embed/_EZkD0nDp84" frameborder="0" allowfullscreen>--></iframe>
-        <p><h3><span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span>
-            (Экструм) – сайт (электронная площадка) для поиска,
-            конструирования и совершения сделок со структурными продуктами.</h3>
-        </p>
-    </div>
-    <div class="bg-color-light">
-        <div class="container content">
-            <div class="center">
-                <div class="title-v1 margin-bottom-20">
-                    <h2>С помощью <span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span> вы можете</h2>
-                </div>
-                <div class="row main-buttons" ng-show="isDesktopShow()">
-                    <div class="col-md-4 col-sm-6">
-                        <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button"><i class="fa"></i>
-                            <a href="#/investproduct">
-                                <h3>Выбрать из<br>предложенных</h3>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="or-style">
-                            <h2><b>ИЛИ</b></h2>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6">
-                        <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button">
-                            <a href="#/createproduct">
-                                <h3>Сконструировать<br>самостоятельно</h3>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" ng-show="isMobileShow()">
-                    <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button">
-                        <h3>Выбрать из<br>предложенных</h3>
-                    </div>
-                    <div class="or-style">
-                        <h2><b>ИЛИ</b></h2>
-                    </div>
-                    <div class="btn-u btn-brd rounded-4x btn-u-red btn-u-lg" type="button">
-                        <h3>Сконструировать<br>самостоятельно</h3>
-                    </div>
-                </div>
-                <br>
-                <div>
-                    <p><h2>инвестиционный продукт, исходя из Ваших потребностей:</h2></p>
-                </div>
-            </div>
-            <div class="row headline-left ">
-                <ul class="list-unstyled lists-v1 list-text">
-                    <li><i class="fa fa-angle-right"></i><h3>Желаемого уровня доходности</h3></li>
-                    <li><i class="fa fa-angle-right"></i><h3>Оптимального срока инвестирования</h3></li>
-                    <li><i class="fa fa-angle-right"></i><h3>Отношения к риску</h3></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container content">
-        <div>
-            <p>
-                <h3><span class="blue-style">x</span><span class="red-style">Stru</span><span class="blue-style">m</span>
-                    создан при поддержке крупнейшей российской биржи ПАО Московская Биржа, а также
-                    ряда ведущих российских брокерских компаний. См. вкладку <a href="#/partners">Наши партнеры.</a>
-                </h3>
-            <br><br>
-                <h3>
-                    Продавцами структурных продуктов выступают профессиональные участники рынка ценных бумаг
-                    (брокеры), обладающие лицензиями Банка России, а покупателями -  физические лица.
-                </h3>
-            </p>
-            <br>
-            <div class="headline-center">
-                <img src="resources/img/pages/xstrum_about.png" alt="" style="width: 95%; max-width: 684px;"/>
-            </div>
-        </div>
-        <div>
-            <p>
-                <br>
-                <a href="#/structuredproducts">Подробнее о структурных продуктах</a>
-                <br>
-                <a href="resources/other/Пользовательское соглашение сервисов XSTRUM.docx">Пользовательское соглашение</a>
-                <br>
-                <a href="resources/other/Политика конфиденциальности персональной информации.docx">Политика конфиденциальности персональной информации</a>
-            </p>
-        </div>
-    </div>
+
+
+<!-- Карусель для мобильной версии -->
+<div class="container-fluid">
+
+	<div class="row visible-xs">
+		<div class="text-center srvCarouselWhiteContainer">
+
+		  <div id="srvCarouselWhite" class="carousel slide" data-ride="carousel">
+			  <ol class="carousel-indicators">
+				<li data-target="#srvCarouselWhite" data-slide-to="0" class="active"></li>
+				<li data-target="#srvCarouselWhite" data-slide-to="1"></li>
+			  </ol>
+			  <div class="carousel-inner" role="listbox">
+				<div class="item active">
+				  <div class="container">
+					<div class="carousel-caption">
+						<img src="resources/img/toolbox_blue.png" />
+
+						<div style="padding-top: 15px; min-width:250px; max-width:250px; margin: 0 auto;">
+							<div class="text-left">
+								<span class="an-header1">Выберите готовый продукт</span>
+							</div>
+
+							<div class="text-left" style="margin-top:2px; margin-bottom:30px;">
+								<span class="an-header2">для инвестирования</span>
+							</div>
+						</div>
+
+						<div style="padding-top: 10px; min-width:250px; max-width:250px; margin: 0 auto;">
+							<div style="width:100%; margin: 0 auto;">
+								<a class="btn-blue" href="#/investproduct" role="button" style="min-width:250px;">Выбрать продукт</a>
+							</div>
+						</div>
+					</div>
+				  </div>
+				</div>
+				<div class="item">
+				  <div class="container">
+					<div class="carousel-caption">
+							<img src="resources/img/eye_shadows_blue.png" />
+
+							<div style="padding-top: 15px; min-width:250px; max-width:250px; margin: 0 auto;">
+
+								<div class="text-left">
+									<span class="an-header1">Создайте свой продукт</span>
+								</div>
+
+								<div class="text-left" style="margin-top:2px; margin-bottom:30px;">
+									<span class="an-header2">при помощи конструктора</span>
+								</div>
+
+							</div>
+
+							<div style="padding-top: 10px; min-width:250px; max-width:250px; margin: 0 auto;">
+								<div style="padding-top:10px; padding-bottom:10px; width:100%; margin: 0 auto;">
+
+									<a class="btn-blue-border" href="#/createproduct" role="button" style="min-width:250px;">Открыть конструктор</a>
+
+								</div>
+
+							</div>
+
+					</div>
+				  </div>
+				</div>
+			  </div>
+		  <a class="left carousel-control" href="#srvCarouselWhite" role="button" data-slide="prev">
+			<i class="fa fa-angle-left fa-3x left-icon" aria-hidden="true"></i>
+			<span class="sr-only">Previous</span>
+		  </a>
+		  <a class="right carousel-control" href="#srvCarouselWhite" role="button" data-slide="next">
+			<i class="fa fa-angle-right fa-3x right-icon" aria-hidden="true"></i>
+			<span class="sr-only">Next</span>
+		  </a>
+		</div><!-- /.carousel -->
+
+		</div>
+	</div>
+
+</div>
+<!-- Конец карусели для мобильной версии -->
+
+<div class="container-fluid content">
+	<div class="row">
+	<div class="col-md-1"></div>
+	<div class="col-xs-12 col-md-10 ">
+
+		<div class="row" style="padding-top:20px;">
+	
+				<div ng-click="click('0')" class="pointer list">
+
+				<span class="headlight">Что такое структурные продукты?</span>
+				<i class="fa fa-angle-down fa-2x" ng-show="isNotSelected('0')"></i>
+				<i class="fa fa-angle-up fa-2x" ng-show="isSelected('0')"></i>
+			</div>
+		</div>
+
+
+		<div class="row" ng-show="isSelected('0')">
+			<div>
+				<div id="section0"></div>
+
+				<p class="min" >
+					Структурные или структурированные продукты — комплексные финансовые инструменты, состоящие из более простых (базовых) активов. 
+					По сути каждый из них представляет собой «упакованную» инвестиционную стратегию. В большинстве случаев структурные продукты состоят 
+					из различных традиционных финансовых инструментов и являются:<br>
+				</p>
+				<ul>
+						<li>депозиты,</li>
+						<li>акции,</li>
+						<li>облигации,</li>
+						<li>производные финансовые инструменты (фьючерсы, опционы и так далее).</li>
+					</ul>
+			
+			</div>
+			<div class="haze">
+				<p>
+					<b>Пример.</b><br> Самый простой классический структурный продукт сроком на 1 год может
+					состоять из двух компонентов:
+				</p>
+				<p>	1. 93% от вложенной суммы - депозит в банке по ставке 8% годовых<br>
+							2. 7% от вложенной суммы – купленный опцион call по фьючерсу на нефть (на рост
+							нефти)					
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div ng-click="click('1')" class="pointer list">
+				<span class="headlight">Преимущества структурных продуктов?</span>
+				<i class="fa fa-angle-down fa-2x" ng-show="isNotSelected('1')"></i>
+				<i class="fa fa-angle-up fa-2x" ng-show="isSelected('1')"></i>
+			</div>
+		</div>
+
+		<div class="row" ng-show="isSelected('1')">
+			<div>
+				<div id="section1"></div>
+
+				<p class="min">
+					Благодаря своей гибкости и многообразию структурные продукты обладают следующими основными преимуществами:
+					<ul>
+						<li><a class="simple" href="#/investproduct">определить</a> подходящий  <a class="simple" href="" ng-click="gotoAnchorAnimated('protection')">уровень защиты первоначальных вложений</a></b> или уровень защиты капитала.</li>
+						<li><a class="simple" href="#/investproduct">определить</a> удобный срок инвестирования (как в банковском депозите – от нескольких
+							месяцев до нескольких лет.
+						</li>
+						<li><a class="simple" href="#/investproduct">приобрести</a> готовое инвестиционное решение – Вам не нужно самостоятельно подбирать
+							и оценивать отдельные акции или другие инвестиционные активы.
+						</li>
+					</ul>
+				</p>
+			</div>
+			<div class="haze">
+				<p class="min">
+					<b>Пример.</b> <br>Вы рассчитываете на рост стоимости акций какого-либо эмитента.  У Вас 2
+					варианта:
+				</p>
+			
+					<ul>
+						<li>купить акцию данного эмитента</li>
+						<li>купить структурный продукт на акцию со 100% защитой капитала</li>
+					</ul>
+			
+				<p class="">
+					Покупая <b>структурный продукт</b> на акцию со 100% защитой капитала, Вы получаете
+					полную гарантию возврата вложенной суммы, независимо от изменения цены акции на
+					бирже. Покупая же акцию,  Вы потеряете часть капитала при снижении ее котировок
+					на бирже.
+				</p>
+			</div>
+		</div>
+
+		<div class="row">
+			<div ng-click="click('2')" class="pointer list">
+				<span class="headlight">Доходность структурных продуктов</span>
+				<i class="fa fa-angle-down fa-2x" ng-show="isNotSelected('2')"></i>
+				<i class="fa fa-angle-up fa-2x" ng-show="isSelected('2')"></i>
+			</div>
+		</div>
+
+
+		<div class="row" ng-show="isSelected('2')">
+			<div>
+				<div id="section2"></div>
+				<p>
+					В большинстве случаев структурные продукты по показателю потенциальной доходности лежат
+					между  депозитами и более рисковыми инструментами - акциями и деривативами.
+				</p>
+			</div>
+			<div  class="hidden-xs visible-sm visible-md visible-lg" style="max-width:80%; margin-bottom: 35px;">
+				<img src="resources/img/graph.png" class="img-responsive" alt="">
+
+			</div>
+			<div class="visible-xs hidden-sm hidden-md hidden-lg" style="margin-bottom: 35px;">
+				<img src="resources/img/graph_mobile.png" class="img-responsive" alt="">
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div id="kind" ng-click="click('3')" class="pointer list">
+				<span class="headlight">Виды структурных продуктов</span>
+				<i class="fa fa-angle-down fa-2x" ng-show="isNotSelected('3')"></i>
+				<i class="fa fa-angle-up fa-2x" ng-show="isSelected('3')"></i>
+			</div>
+		</div>
+
+
+		<div class="row" ng-show="isSelected('3')" >
+			<div>
+				<div id="section3"></div>
+				<p>
+					Существуют огромное количество вариантов комбинирования различных видов и пропорций
+					финансовых инструментов (акций, облигаций, фьючерсов, опционов, депозитов и так далее).
+					Поэтому на практике инвестору доступен очень широкий спектр структурных продуктов.
+				</p>
+				<p>
+					Мы постараемся выделить основные виды структурных продуктов.
+				</p>
+				<p>
+					С точки зрения <a class="simple" href="" ng-click="gotoAnchorAnimated('protection')">гарантии возврата первоначальных вложений</a> можно выделить:
+				</p>
+
+				<ul>
+					<li><b>Структурные продукты со 100% защитой капитала - </b>
+						Вам гарантируется возврат основной
+						суммы независимо от того, каким образом будет складываться цена базового актива,
+						который лежит в основе структурного продукта.
+					</li>
+					<li><b>Структурные продукты с участием - </b>
+						Вам гарантируется  либо частичная защита
+						вложенного капитала, либо потенциально высокий доход (без защиты капитала).
+					</li>
+				</ul>
+
+				<p>
+					Также существует классификация структурных продуктов в зависимости от выбранной стратегии:
+				</p>
+			
+					<ul>
+						<li><b>Барьерные структурные продукты.</b>
+							Барьерная стратегия с защитой капитала позволяет
+							получить повышенную фиксированную ставку доходности в случае роста (или падения)
+							цены базового актива выше (или ниже) некого заранее определенного уровня -  барьера.
+							Если на момент окончания срока действия продукта цена базового актива не дойдет до
+							барьерной, то инвестор получит обратно инвестированную сумму с коэффициентом
+							защиты капитала.
+						</li>
+						<li><b>Диапазонные структурные продукты.</b>
+							Диапазонная стратегия позволяет получить
+							повышенный инвестиционный доход в случае нахождения цены базового актива внутри
+							заданного диапазона цен. Этот финансовый продукт подходит инвесторам, желающим
+							заработать в периоды отсутствия сильных движений цен базового актива вверх или вниз,
+							то есть когда цены на активы находятся в определённом  диапазоне.
+						</li>
+					</ul>
+			
+			</div>
+		
+				<div class="haze">
+					<p><b>Пример.</b><br> Вы покупаете структурный продукт со 100% защитой капитала, который
+						привязан к стоимости золота на биржевом рынке.
+						Если золото вырастет в цене, помимо вложенной Вами суммы Вы получите доход
+						пропорциональный росту цены золота.
+						Если же золото упадет в цене, Вам гарантируется возврат полной суммы Ваших
+						первоначальных вложений.
+					</p>
+				</div>
+				<div class="haze">
+					<p >
+						<b>Пример.</b><br> Вы покупаете структурный продукт с 80% защитой капитала.
+						гарантирует Вам возврат не менее 80% первоначальных вложений вне зависимости
+						от поведения рынка базового актива.
+						То есть, при самых неблагоприятных обстоятельствах Вы потеряете не более 20% от
+						вложенной суммы.
+					</p>
+				</div>
+		
+		</div>
+
+		<div class="row">
+			<div id="protection" ng-click="click('4')" class="pointer list">
+
+				<span class="headlight">Защита структурных продуктов</span>
+				<i class="fa fa-angle-down fa-2x" ng-show="isNotSelected('4')"></i>
+				<i class="fa fa-angle-up fa-2x" ng-show="isSelected('4')"></i>
+			</div>
+		</div>
+
+		<div class="row" ng-show="isSelected('4')">
+			<div>
+				<div id="section4"></div>
+				<p>
+					Как видно из <a class="simple" href="" ng-click="gotoAnchorAnimated('kind')">приведенной классификации</a>
+					структурные продукты могут обладать разной степенью гарантии возврата капитала.
+				</p>
+				<p>
+					<b>1. Полная гарантия возврата капитала</b>
+					<br />
+					Полная защита капитала означает, что в дату окончания срока
+					Вам будет возвращена сумма вложений в продукт, даже при самом неблагоприятном сценарии.
+					<br />
+					Таким образом, риск возникновения убытков является минимальным.
+					Более того, по некоторым продуктам гарантируется не только возврат капитала, но и выплата
+					некоторой фиксированной доходности (как по обычным депозитам), однако обычно эта доходность
+					является не очень высокой – например, 0,1% годовых.
+				</p>
+				<p>
+					<b>2. Частичная гарантия</b>
+					<br />
+					Частичная защита капитала означает, что эмитент продукта гарантирует возврат определенной
+					доли капитала – например, 80% от суммы вложений – это означает, что при самом
+					неблагоприятном сценарии Вы потеряете не более  20% вложенных средств.
+					<br />
+					Повышенный риск по таки структурным продуктам обычно компенсируется более высокой
+					потенциальной доходностью и более выгодными условиями (например, более высоким коэффициентом участия).
+				</p>
+				<p>
+					<b>3. Отсутствие гарантии</b>
+					<br />
+					Отсутствие гарантии возврата капитала означает, что в самой неблагоприятной ситуации
+					инвестор может потерять 100% своего капитала.
+					<br />
+					Отсутствие защиты капитала характерно для инвестиций в акции, ПИФы и другие
+					подобные инструменты.
+					Большинство структурированных продуктов обладает той или иной степенью защиты капитала.
+				</p>
+				<p>
+					<b>4. Условная гарантия</b>
+					<br />
+					Условная защита капитала подразумевает, что Вам гарантируется полный возврат суммы вложений,
+					за исключением случаев наступления определенных обстоятельств.
+					Например, полная защита капитала гарантируется при условии, что базовый актив ни разу в
+					течение срока продукта не опустился ниже определенного уровня – например, ниже 50% от
+					своего начального значения.
+					</p>
+					<p class="min">
+					Вне зависимости от условий конкретного структурного продукта возврат капитала в
+					большинстве случаев невозможен или затруднителен при:
+				</p>
+				<ul>
+					<li>наступлении события кредитного риска (например, дефолт эмитента);</li>
+					<li>возврате Вами вложенного капитала до истечения срока структурного продукта досрочном погашении.</li>
+				</ul>
+			
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+
+		<div class="row">
+			<div ng-click="click('5')" class="pointer list">
+				<span class="headlight">Провайдеры (продавцы) структурных продуктов</span>
+				<i class="fa fa-angle-down fa-2x" ng-show="isNotSelected('5')"></i>
+				<i class="fa fa-angle-up fa-2x" ng-show="isSelected('5')"></i>
+			</div>
+
+		</div>
+
+		<div class="row" ng-show="isSelected('5')">
+			<div>
+				<div id="section5"></div>
+				<p>
+					Структурные продукты, представленные на xstrum.ru,
+					предлагаются нашими партнерами – ведущими российскими брокерскими компаниями.
+					Данные брокерские компании обладают всеми необходимыми лицензиями на осуществление
+					профессиональной деятельности на финансовых рынках и являются ведущими
+					операторами на рынках Московской биржи.
+				</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-1"></div>
+
+	</div>
+</div>
+
+<div class="container-fluid">
+
+	<div class="row">
+		<div class="text-center">
+			<h2 class="headlight">Крупнейшие партнеры</h2>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="text-center">
+	
+			<div class="carusel-partners">
+				<div class='slider2Container'>
+					<div class='iosSlider2'>
+						<div class='slider' id='aboutPartners'>
+							<div class="item">
+								<a href="http://www.broker.ru/"><img src="resources/img/partners/logo-bcs.png" style="padding: 0px 15px;" /></a>
+							</div>
+							<div class="item">
+								<a href="http://www.open-broker.ru/"><img src="resources/img/partners/logo-open.png" style="padding: 0px 15px;"/></a>
+							</div>
+							<div class="item">
+								<a href="http://www.itinvest.ru/"><img src="resources/img/partners/logo-itinvest.png" style="padding: 0px 15px;" /></a>
+							</div>
+							<div class="item">
+								<a href="http://www.finam.ru/"><img src="resources/img/partners/logo-finam.png" style="padding: 0px 15px;" /></a>
+							</div>
+							<div class="item">
+								<a href="http://www.moex.ru/"><img src="resources/img/partners/logo-moex.png" style="padding: 0px 15px;" /></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+		</div>
+
+
+	</div>
+
 </div>
 
 <link rel="stylesheet" href="resources/js/App/about/about.css">
+<link rel="stylesheet" href="resources/assets/css/pages/page_one.css">

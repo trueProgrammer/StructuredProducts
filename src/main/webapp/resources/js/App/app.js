@@ -25,7 +25,16 @@ angular.module('App',
             }
         );
     }])
-    .run(function ($rootScope, $location, $cookieStore, UserService) {
+
+	.config(['uibPaginationConfig',
+            function(uibPaginationConfig){
+            uibPaginationConfig.previousText="<";
+            uibPaginationConfig.nextText=">";
+            uibPaginationConfig.firstText="<<";
+            uibPaginationConfig.lastText=">>";}])
+
+    .run(function ($rootScope, $location, $cookieStore, UserService, feedbackService) {
+
         //Add string format
         if (!String.prototype.format) {
             String.prototype.format = function () {
@@ -51,11 +60,21 @@ angular.module('App',
             }
         };
 
+
         $rootScope.isDesktopShow = function () {
             return desktopShow;
         }
         $rootScope.isMobileShow = function () {
             return !$rootScope.isDesktopShow();
+        }
+
+        $rootScope.isPageActive = function (viewLocation) {
+        	return viewLocation === $location.path();
+        };
+
+        $rootScope.showFeedbackForm = function ()
+        {
+        	feedbackService.show();
         }
 
         jQuery(window).resize(function () {
@@ -79,6 +98,8 @@ angular.module('App',
         }
 
     });
+
+
 angular.module('App.main', [])
     .config(['$routeProvider',
         function ($routeProvider) {

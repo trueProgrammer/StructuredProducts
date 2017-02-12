@@ -1,4 +1,4 @@
-.content-sm {
+/*.content-sm {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
@@ -70,4 +70,67 @@
         width: 350px;
         margin: auto;
     }
+}*/
+
+
+/* Новое */
+
+.an-header1 {
+	padding: 4px 8px; 
+	line-height: 33px;
+	font-family:'Segoe UI Semibold'; 
+	font-size: 18px;
+	background:#00aeff;
+	color:white;
 }
+
+.an-header2 {
+	padding: 4px 8px; 
+	line-height: 33px;
+	font-family:'Segoe UI Semibold'; 
+	font-size: 18px;
+	background:#0094d9;
+	color:white;
+}
+
+
+#investTable {
+    display: table;
+    border-spacing: 6px; 
+	margin: 0px;
+	padding: 0px;
+}
+
+#investTable .idea-panel {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+	padding:8px; 
+	margin: 0px;
+	background-color:#f8fafd;
+	font-family: Circe Bold;  
+	font-size: 16px;
+}
+
+#investTable .idea-panel:before {
+    border-top: 3px solid #156ab2;
+    width: 100%;
+    position: absolute;
+	margin: 0px;
+	padding: 0px;
+    top: 0;
+    left: 0;
+    content: '';
+}
+
+#investTable .idea-panel a {
+	color: black;
+	text-decoration: none;
+	}
+
+
+#investTable .idea-panel a:hover {
+	color: #156ab2;
+	text-decoration: none;
+	}
+

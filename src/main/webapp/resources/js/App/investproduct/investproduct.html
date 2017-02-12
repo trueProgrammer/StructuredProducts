@@ -1,22 +1,63 @@
 <link rel="stylesheet" href="resources/assets/css/pages/page_invoice.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<div class="breadcrumbs">
-    <div class="container">
-        <h1 class="pull-left">Выберете структурный продукт по интересующему Вас параметру</h1>
-        <ul class="pull-right breadcrumb">
-            <li><a href="#/">Главная страница</a></li>
-            <li class="active">Выбрать инвестиционный продукт</li>
-        </ul>
-    </div>
-</div>
-<div class="container content">
-    <div class="screen-height">
-        <div class="height-50">
-            <div class="height-100 no-padding-column" ng-if="isDesktopShow()">
-                <svg class="graphic" version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px"
-                 width="1557px" height="471px" viewBox="192.621 147.453 1557 471"
-                 enable-background="new 192.621 147.453 1556.4 470.892" xml:space="preserve">
-                    <style type="text/css"><![CDATA[
+
+<div class="container top-content">
+
+	<!--<div class="row">
+		<div class="text-center">
+			<p class="headlight">Выберете структурный продукт по интересующему Вас параметру</p>
+		</div>
+	</div>-->
+
+	<!--<div class="row">
+		<div ng-if="isMobileShow()">
+			<ul class="list-unstyled">
+				<li class="margin-bottom-10">
+					<button id="green-button" class="green-button rounded-2x mobile-button" ng-click="filterByMobileType('Low', $event)">
+						<img alt="" src="resources/img/icons/bank_dollar_protected32.png">
+						<div class="side-text-title">
+							<h4>100% защиты капитала</h4>
+							<span class="side-text-num num-green">{{lowRiskProducts}}</span>
+							<br>
+						</div>
+					</button>
+				</li>
+				<li class="margin-bottom-10">
+					<button id="blue-button" class="blue-button rounded-2x mobile-button" type="button" ng-click="filterByMobileType('Medium', $event)">
+						<img alt="" src="resources/img/icons/keyboard_machine32.png">
+						<div class="side-text-title">
+							<h4>Частичная защита капитала</h4>
+							<span class="side-text-num num-blue">{{mediumRiskProducts}}</span>
+							<br>
+						</div>
+					</button>
+				</li>
+				<li class="margin-bottom-10">
+					<button id="red-button" class="red-button rounded-2x mobile-button" ng-click="filterByMobileType('High', $event)">
+						<img alt="" src="resources/img/icons/dollar32.png">
+						<div class="side-text-title">
+							<h4>Рисковые</h4>
+							<span class="side-text-num num-red">{{highRiskProducts}}</span>
+							<br />
+						</div>
+					</button>
+				</li>
+			</ul>
+		</div>
+	</div>-->
+
+
+	<div class="row">
+		<div class="visible-md visible-lg text-center  no-padding-column">
+			<!--<img class="img-responsive" style="margin-bottom:70px;" src="resources/img/graph.png" />-->
+
+<svg version="1.1" id="Слой_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+ x="0px" y="0px" width="989px" height="559px" viewBox="0 0 989 559" enable-background="new 0 0 989 559" xml:space="preserve"
+ style="transform:scale(0.9); -webkit-transform:scale(0.9); -moz-transform:scale(0.9); -ms-transform:scale(0.9); -o-transform:scale(0.9);"
+ >
+
+						<style type="text/css"><![CDATA[
                         .line {
                             visibility: hidden;
                         }
@@ -24,277 +65,246 @@
                             cursor: pointer;
                         }
                     ]]></style>
-                    <g>
-                        <g>
-                            <line fill="none" stroke="#687074" stroke-width="3" stroke-miterlimit="10" x1="237.086" y1="153.805" x2="237.086" y2="578.92"/>
-                            <polygon fill="#687074" points="227.083,167.093 230.04,167.861 237.086,154.024 244.132,167.861 247.088,167.093 237.086,147.453 			"/>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <line fill="none" stroke="#687074" stroke-width="3" stroke-miterlimit="10" x1="1231.283" y1="578.92" x2="237.086" y2="578.92"/>
-                            <polygon fill="#687074" points="1213.76,571.415 1212.748,573.634 1230.994,578.92 1212.748,584.206 1213.76,586.423 1239.66,578.92 			"/>
-                        </g>
-                    </g>
-                    <path id="main-ellipse" fill="#F2F2F2" stroke="#7C91AA" stroke-width="2" stroke-miterlimit="10" d="M590.317,260.058
-                        c199.411-75.976,383.861-103.895,411.979-62.36c28.116,41.536-110.744,136.796-310.157,212.773
-                        c-199.411,75.977-383.861,103.896-411.977,62.357C252.042,431.295,390.903,336.033,590.317,260.058z"/>
-                    <path id="green-ellipse" class="cursor-type" fill="#F2F2F2" d="M331.111,393.31c42.697-33.092,90.679-50.209,107.17-38.231
-                        c16.492,11.978-4.752,48.512-47.448,81.604c-42.698,33.094-90.682,50.21-107.171,38.233
-                        C267.169,462.938,288.413,426.401,331.111,393.31z"/>
-                    <path id="blue-ellipse" class="cursor-type" fill="#F2F2F2" d="M546.906,279.021c66.604-22.314,127.673-28.519,136.401-13.854
-                        c8.728,14.664-38.187,44.642-104.788,66.958c-66.603,22.316-127.671,28.519-136.402,13.854
-                        C433.388,331.316,480.303,301.339,546.906,279.021z"/>
-                    <path id="red-ellipse" class="cursor-type" fill="#F2F2F2" d="M838.038,188.945c84.224-17.419,156.987-12.657,162.525,10.635
-                        c5.538,23.293-58.249,56.298-142.469,73.717c-84.225,17.419-156.986,12.657-162.525-10.637
-                        C690.031,239.369,753.818,206.365,838.038,188.945z"/>
-                    <path fill="none" stroke="#687074" stroke-width="3" stroke-miterlimit="10" d="M1008.5,206.049
-                        c48.785-3.421,97.807-5.217,146.837-5.229"/>
-                    <path id="red-arc" class="cursor-type" fill="none" stroke="#EA1808" stroke-width="5" stroke-miterlimit="10" d="M696.514,259.196
-                        c100.833-27.22,204.666-42.35,309.167-52.762"/>
-                    <path id="blue-arc" class="cursor-type" fill="none" stroke="#306ED4" stroke-width="5" stroke-miterlimit="10" d="M446.356,347.548
-                        c19.265-11.766,41.592-19.775,62.857-29.384c20.201-8.012,40.403-16.021,60.605-23.231c17.01-5.607,33.006-10.354,51.032-14.419
-                        c21.121-6.034,40.406-12.815,61.541-18.452"/>
-                    <path id="green-arc" class="cursor-type" fill="none" stroke="#008D36" stroke-width="5" stroke-miterlimit="10" d="M283.81,479.61
-                        c11.482-17.471,27.466-33.485,43.449-50.391c31.967-30.255,68.499-52.497,106.62-75.273"/>
-                    <path fill="none" stroke="#687074" stroke-width="3" stroke-miterlimit="10" d="M258.588,566.717
-                        c-0.604-16.564,1.871-33.159,7.18-49.243c4.302-13.031,10.438-25.711,18.041-37.861"/>
-                    <ellipse fill="none" stroke="#306ED4" stroke-width="7" stroke-miterlimit="10" cx="689.451" cy="261.061" rx="7.063" ry="6.105"/>
-                    <line id="green-line" class="line" fill="none" stroke="#687074" stroke-width="3" stroke-miterlimit="10" stroke-dasharray="12.1388,12.1388" x1="505.741" y1="475.768" x2="1280.056" y2="475.768"/>
-                    <line id="blue-line" class="line" fill="none" stroke="#687074" stroke-width="3" stroke-miterlimit="10" stroke-dasharray="11.6944,11.6944" x1="843.635" y1="348.445" x2="1373.551" y2="348.445"/>
-                    <line id="red-line" class="line" fill="none" stroke="#687074" stroke-width="3" stroke-miterlimit="10" stroke-dasharray="11.7007,11.7007" x1="998.059" y1="238.374" x2="1441.547" y2="238.374"/>
-                    <text transform="matrix(4.489659e-011 -1 1 4.489659e-011 224.3557 440)" fill="#636B6F"  font-size="1.5em" letter-spacing="2">ДОХОДНОСТЬ</text>
-                    <text transform="matrix(1 0 0 1 643.0002 607)" fill="#636B6F" font-size="1.5em" letter-spacing="2">УРОВЕНЬ РИСКА</text>
-                    <text transform="matrix(1 0 0 1 283.8098 535.7119)" fill="#636B6F" font-size="1.4em" letter-spacing="1">ДЕПОЗИТЫ</text>
-                    <text transform="matrix(1 0 0 1 1028.0002 230)" fill="#636B6F" font-size="1.4em" letter-spacing="1">АКЦИИ</text>
-                    <text id="green-text"  class="cursor-type" transform="matrix(1 0 0 1 365.385 418.9961)" enable-background="new">
-                        <tspan x="0" y="0"  font-size="1.3em">100% </tspan>
-                        <tspan x="-11.575" y="26.4"  font-size="1.3em">защита </tspan>
-                        <tspan x="-16.382" y="52.8"  font-size="1.3em">капитала</tspan>
-                    </text>
-                    <text id="blue-text" class="cursor-type" transform="matrix(1 0 0 1 546.3303 326.2646)" enable-background="new">
-                        <tspan x="0" y="0"  font-size="1.3em">Частичная</tspan>
-                        <tspan x="16.452" y="26.4"  font-size="1.3em">защита</tspan>
-                        <tspan x="6.956" y="52.8"  font-size="1.3em">капитала</tspan>
-                    </text>
-                    <text id="red-text" class="cursor-type" transform="matrix(1 0 0 1 803.6707 257.7998)"  font-size="1.3em">Рисковые</text>
-                    <text transform="matrix(0.9867 -0.3605 0.3432 0.9393 493.9529 459.5776)" font-size="1.5em" letter-spacing="2">СТРУКТУРНЫЕ ПРОДУКТЫ</text>
-                    <g>
-                        <path id="red-button" type="button" ng-click="filterByType('High', $event)" class="cursor-type" fill="white" stroke="#EA1808" stroke-width="3" stroke-miterlimit="10" d="M1724.015,272.01
-                            c-8.313,6.004-20.04,8.84-23.618,8.85c-68.306,0-136.611,0-204.917,0c-3.581-0.01-15.309-2.846-23.619-8.85
-                            c-32.423-22.546-32.423-68.062,0-90.608c8.313-6.003,20.039-8.84,23.619-8.849c68.306,0,136.611,0,204.917,0
-                            c3.578,0.01,15.307,2.845,23.618,8.849C1756.436,203.947,1756.437,249.464,1724.015,272.01z"/>
-                            <circle id="red-button-circle" type="button" ng-click="filterByType('High', $event)" class="cursor-type" fill="#FFFFFF" stroke="#EA1808" stroke-width="3" stroke-miterlimit="10" cx="1696.563" cy="226.706" r="52.459"/>
-                    </g>
-                    <g>
-                        <path id="blue-button" ng-click="filterByType('Medium', $event)" class="cursor-type" fill="white" stroke="#4F81BD" stroke-width="3" stroke-miterlimit="10" d="M1650.338,395.024
-                            c-8.312,6.003-20.038,8.839-23.616,8.849c-68.308,0-136.612,0-204.918,0c-3.578-0.01-15.306-2.846-23.616-8.849
-                            c-32.424-22.547-32.425-68.063-0.003-90.608c8.312-6.004,20.04-8.84,23.619-8.85c68.306,0,136.612,0,204.918,0
-                            c3.579,0.01,15.307,2.846,23.619,8.85C1682.761,326.962,1682.762,372.479,1650.338,395.024z"/>
-                            <circle id="blue-button-circle" ng-click="filterByType('Medium', $event)" class="cursor-type" fill="#FFFFFF" stroke="#4F81BD" stroke-width="3" stroke-miterlimit="10" cx="1621.566" cy="349.72" r="52.459"/>
-                    </g>
-                    <g>
-                        <path id="green-button" ng-click="filterByType('Low', $event)" class="cursor-type" fill="white" stroke="#3FB564" stroke-width="3" stroke-miterlimit="10" d="M1571.893,522.36
-                            c-8.657,6.12-20.873,9.01-24.598,9.02c-71.146,0-142.285,0-213.43,0c-3.729-0.01-15.941-2.899-24.599-9.02
-                            c-33.767-22.978-33.767-69.368,0.004-92.345c8.653-6.117,20.868-9.009,24.595-9.019c71.144,0,142.286,0,213.43,0
-                            c3.725,0.01,15.941,2.901,24.595,9.019C1605.659,452.993,1605.661,499.383,1571.893,522.36z"/>
-                            <ellipse id="green-button-circle" ng-click="filterByType('Low', $event)" class="cursor-type" fill="#FFFFFF" stroke="#3FB564" stroke-width="3" stroke-miterlimit="10" cx="1543.301" cy="476.188" rx="54.637" ry="53.464"/>
-                    </g>
-                    <text id="red-button-text" ng-click="filterByType('High', $event)" class="cursor-type" fill="#636B6F" transform="matrix(1 0 0 1 1498 232.6)"  font-size="1.5em">РИСКОВЫЕ</text>
-                    <text id="blue-button-text" ng-click="filterByType('Medium', $event)" class="cursor-type" fill="#636B6F" transform="matrix(1 0 0 1 1420 326.1182)" enable-background="new    ">
-                        <tspan x="0" y="0"  font-size="1.5em">ЧАСТИЧНАЯ</tspan>
-                        <tspan x="26.178" y="31.2"  font-size="1.5em">ЗАЩИТА</tspan>
-                        <tspan x="10.055" y="62.4"  font-size="1.5em">КАПИТАЛА</tspan>
-                    </text>
-                    <text id="green-button-text" ng-click="filterByType('Low', $event)" class="cursor-type" fill="#636B6F" transform="matrix(1 0 0 1 1330 467)">
-                        <tspan x="0" y="0"  font-size="1.5em">100% ЗАЩИТА</tspan>
-                        <tspan x="28.628" y="32.399"  font-size="1.5em">КАПИТАЛА</tspan>
-                    </text>
-                    <text id="red-value" transform="matrix(1 0 0 1 1690.5676 236.373)" font-family="'ArialMT'" font-size="31"></text>
-                    <text id="blue-value" transform="matrix(1 0 0 1 1614.7786 359.832)" font-family="'ArialMT'" font-size="31"></text>
-                    <text id="green-value" transform="matrix(1 0 0 1 1532.259 485.6387)" font-family="'ArialMT'" font-size="31"></text>
-                    <ellipse fill="none" stroke="#306ED4" stroke-width="7" stroke-miterlimit="10" cx="439.293" cy="351.256" rx="7.063" ry="6.105"/>
-                    <g>
-                        <line fill="none" stroke="#306ED4" stroke-width="6" stroke-miterlimit="10" x1="1012.729" y1="199.555" x2="1004.272" y2="212.543"/>
-                        <line fill="none" stroke="#306ED4" stroke-width="6" stroke-miterlimit="10" x1="1001.989" y1="201.846" x2="1015.012" y2="210.251"/>
-                    </g>
-                    <g>
-                        <line fill="none" stroke="#306ED4" stroke-width="6" stroke-miterlimit="10" x1="270.319" y1="519.229" x2="256.967" y2="527.1"/>
-                        <line fill="none" stroke="#306ED4" stroke-width="6" stroke-miterlimit="10" x1="259.68" y1="516.503" x2="267.605" y2="529.825"/>
-                    </g>
-                </svg>
-            </div>
-            <div ng-if="isMobileShow()">
-                <ul class="list-unstyled">
-                    <li class="margin-bottom-10">
-                        <button id="green-button" class="green-button rounded-2x mobile-button" ng-click="filterByMobileType('Low', $event)">
-                            <img alt="" src="resources/img/icons/bank_dollar_protected32.png">
-                            <div class="side-text-title">
-                                <h4>100% защиты капитала</h4>
-                                <span class="side-text-num num-green">{{lowRiskProducts}}</span>
-                                <br>
-                            </div>
-                        </button>
-                    </li>
-                    <li class="margin-bottom-10">
-                        <button id="blue-button" class="blue-button rounded-2x mobile-button" type="button" ng-click="filterByMobileType('Medium', $event)">
-                            <img alt="" src="resources/img/icons/keyboard_machine32.png">
-                            <div class="side-text-title">
-                                <h4>Частичная защита капитала</h4>
-                                <span class="side-text-num num-blue">{{mediumRiskProducts}}</span>
-                                <br>
-                            </div>
-                        </button>
-                    </li>
-                    <li class="margin-bottom-10">
-                        <button id="red-button" class="red-button rounded-2x mobile-button" ng-click="filterByMobileType('High', $event)">
-                            <img alt="" src="resources/img/icons/dollar32.png">
-                            <div class="side-text-title">
-                                <h4>Рисковые</h4>
-                                <span class="side-text-num num-red">{{highRiskProducts}}</span>
-                                <br/>
-                            </div>
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div id="table" class="height-50">
-            <!--<span class="text-like-header-style margin-top-5"> Кликните на название поля в таблице и выберете структурный продукт по интересующему Вас параметру</span>-->
-            <div class="table-full" ng-show="isDesktopShow()">
-                <table class="table main-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>
-                            <a href="" ng-click="order('name')">Название</a>
-                            <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
-                            <button ng-click="clickFilter('Name')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
-                            <div>
-                                <input ng-show="filter.Name" ng-model="nameFilter" ng-change="filterProducts()" type="text" class="filter-input"/>
-                            </div>
-                        </th>
-                        <th>
-                            <!--Базовый актив
-                            <button ng-click="clickFilter('Under')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
-                            <div ng-show="filter.Under">
-                                <select ng-model="filter.underVal" ng-change="setUnderFilter()">
-                                    <option ng-repeat="option in filter.unders" value="{{option}}">{{option}}</option>
-                                </select>
-                            </div>-->
-                            <div class="btn-group" data-ng-class="{open1: open1}">
-                                Базовый актив
-                                <button class="dropdown-toggle filter-button" data-ng-click="open1=!open1" data-toggle="dropdown">
-                                    <i class="fa fa-filter fa-2"></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                    <li data-ng-repeat="under in unders">
-                                        <a href="" data-ng-click="setSelectedUnder()" data-ng-class="isCheckedForHref(under, 'selectedUnder')">{{under}}<span data-ng-class="isCheckedForSpan(under, 'selectedUnder')"></span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </th>
-                        <th>
-                            <div>
-                                <a href="" ng-click="order('returnValue')">Доходность         </a>
-                                <span class="sortorder" ng-show="predicate === 'returnValue'" ng-class="{reverse:reverse}"></span>
-                                <button ng-click="clickFilter('Profit')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
-                                <div ng-show="filter.Profit">
-                                    <input type="number" class="filter-input-small" placeholder="От" ng-model="profitFilter.from" ng-change="filterProducts()"/>
-                                    <br/>
-                                    <input type="number" class="filter-input-small" placeholder="До" ng-model="profitFilter.to" ng-change="filterProducts()"/>
-                                </div>
-                            </div>
-                        </th>
-                        <th>
-                            Cумма инвестиций
-                            <button ng-click="clickFilter('Sum')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
-                            <div ng-show="filter.Sum">
-                                <input type="number" class="filter-input-small" placeholder="От" ng-model="sumFilter.from" ng-change="filterProducts()"/>
-                                <br/>
-                                <input type="number" class="filter-input-small" placeholder="До" ng-model="sumFilter.to" ng-change="filterProducts()"/>
-                            </div>
-                        </th>
-                        <th>
-                            Срок
-                            <button ng-click="clickFilter('Terms')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>
-                            <div ng-show="filter.Terms">
-                                <input type="number" class="filter-input-small" placeholder="От" ng-model="termsFilter.from" ng-change="filterProducts()"/>
-                                <br/>
-                                <input type="number" class="filter-input-small" placeholder="До" ng-model="termsFilter.to" ng-change="filterProducts()"/>
-                            </div>
-                        </th>
-                        <th>
-                            <div class="btn-group" data-ng-class="{open2: open2}">
-                                Провайдер
-                                <button class="dropdown-toggle filter-button" data-ng-click="open2=!open2" data-toggle="dropdown">
-                                    <i class="fa fa-filter fa-2"></i>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-                                    <li data-ng-repeat="broker in brokers">
-                                        <a href="" data-ng-click="setSelectedBroker()" data-ng-class="isCheckedForHref(broker,'selectedBroker')">{{broker}}<span data-ng-class="isCheckedForSpan(broker,'selectedBroker')"></span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="val in products.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))"
-                        ng-click="goToProductPage(val.id)" class="table-row" ng-class="getClassByRiskType(val.productType.riskType)">
-                        <td>{{$index + 1 + ((currentPage - 1) * itemsPerPage)}}</td>
-                        <td>{{val.name}}</td>
-                        <td>{{val.underlayings}}</td>
-                        <td>{{val.returnValue}}%</td>
-                        <td>{{getPeriodValue(val.minInvest,val.maxInvest)}} {{val.currency.name}}</td>
-                        <td>{{getPeriodValue(val.minTerm,val.maxTerm)}} мес.</td>
-                        <td>{{val.broker.name}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div>
-                    <div class="col-md-6 left-unmargin">
-                        <uib-pagination total-items="totalItems" ng-model="currentPage" class="pagination-sm" items-per-page="itemsPerPage"></uib-pagination>
-                    </div>
-                    <div class="col-md-6 col-sm-6">
-                        <select ng-model="viewby" ng-change="setItemsPerPage(viewby)" class="right-mardin"><option>5</option><option>10</option><option>20</option><option>40</option></select>
-                        <span class="right-mardin">Выводить по</span>
-                    </div>
-                </div>
-            </div>
-            <div ng-show="isMobileShow()">
-                <table class="table main-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>
-                            <a href="" ng-click="order('name')">Название</a>
-                            <span class="sortorder" ng-show="predicate === 'name'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            <a href="" ng-click="order('profit')">Доходность</a>
-                            <span class="sortorder" ng-show="predicate === 'profit'" ng-class="{reverse:reverse}"></span>
-                        </th>
-                        <th>
-                            Cумма инвестиций
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="val in products.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage)) | orderBy:predicate:reverse" ng-click="goToProductPage(val.id)" class="table-row">
-                        <td>{{$index + 1 + ((currentPage - 1) * itemsPerPage)}}</td>
-                        <td>{{val.name}}</td>
-                        <td>{{val.returnValue}}%</td>
-                        <td>{{getPeriodValue(val.minInvest,val.maxInvest)}} {{val.currency.name}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="left-unmargin">
-                    <uib-pagination total-items="totalItems" ng-model="currentPage" class="pagination-sm" items-per-page="itemsPerPage"></uib-pagination>
-                </div>
-            </div>
-        </div>
-    </div>
+
+<rect x="88.411" y="11.531" fill="#FAFCFF" width="738.181" height="510.651"/>
+<path fill="#BFBFBF" stroke="#687074" stroke-width="0.25" stroke-miterlimit="10" d="M55.166,468.709
+	c-0.074,22.376-0.071,44.753,0.012,67.13"/>
+<path fill="#BFBFBF" stroke="#687074" stroke-width="0.25" stroke-miterlimit="10" d="M55.178,1.531
+	c-0.086,146.034-0.086,296.438-0.007,441.965"/>
+<polygon fill="#BFBFBF" points="49.017,12.268 50.838,12.747 55.178,4.104 59.517,12.747 61.337,12.268 55.178,0 "/>
+<line fill="none" stroke="#BFBFBF" stroke-width="0.75" stroke-miterlimit="10" x1="983.458" y1="522.391" x2="41.332" y2="522.391"/>
+<polygon fill="#BFBFBF" points="970.39,517.41 969.719,518.884 981.822,522.391 969.719,525.896 970.39,527.366 987.571,522.391 "/>
+<path fill="none" stroke="#D8D8D8" stroke-width="2" stroke-miterlimit="10" d="M825.208,129.787
+	c38.706-3.421,77.601-5.218,116.5-5.229"/>
+
+<path id="green-arc" class="cursor-type"  ng-click="filterByType('Low', $event)" fill="none" stroke="#54BB50" stroke-width="2" stroke-miterlimit="10" d="M88.411,443.496
+	c17.897-25.077,42.812-48.065,67.723-72.335c49.827-43.428,106.769-83.968,166.188-116.661"/>
+
+<path id="blue-arc" class="cursor-type"  ng-click="filterByType('Medium', $event)" fill="none" stroke="#2C6FDE" stroke-width="2" stroke-miterlimit="10" d="M333.5,248.889
+	c19.179-11.134,41.406-18.712,62.575-27.805c20.111-7.581,40.223-15.159,60.335-21.98c16.934-5.306,32.858-11.691,50.805-15.537
+	c21.024-5.709,40.225-10.233,61.266-15.567"/>
+
+<path id="red-arc" class="cursor-type"  ng-click="filterByType('High', $event)" fill="none" stroke="#FF4011" stroke-width="2" stroke-miterlimit="10" d="M581.001,164.739
+	c51.001-12.861,131.868-23.915,245.277-34.47"/>
+
+<path fill="none" stroke="#D8D8D8" stroke-width="2" stroke-miterlimit="10" d="M68.875,486.973
+	c1.241-7.282,5.152-15.816,8.144-23.961c2.854-6.24,6.408-12.878,11.449-18.695"/>
+
+<ellipse fill="none" stroke="#2C6FDE" stroke-width="3" stroke-miterlimit="10" cx="575.543" cy="165.799" rx="6.233" ry="5.64"/>
+<ellipse fill="none" stroke="#2C6FDE" stroke-width="3" stroke-miterlimit="10" cx="329.215" cy="251.529" rx="6.233" ry="5.64"/>
+<line fill="none" stroke="#2C6FDE" stroke-width="3" stroke-miterlimit="10" x1="95.087" y1="439.562" x2="81.735" y2="447.433"/>
+<line fill="none" stroke="#2C6FDE" stroke-width="3" stroke-miterlimit="10" x1="84.448" y1="436.835" x2="92.373" y2="450.157"/>
+<g>
+	<g>
+		<line fill="none" stroke="#B1B1B2" stroke-width="0.75" stroke-miterlimit="10" x1="88.41" y1="13.714" x2="88.41" y2="19.524"/>
+		
+			<line fill="none" stroke="#B1B1B2" stroke-width="0.75" stroke-miterlimit="10" stroke-dasharray="11.9093,11.9093" x1="88.41" y1="31.055" x2="88.41" y2="509.608"/>
+		
+			<line fill="none" stroke="#B1B1B2" stroke-width="0.75" stroke-miterlimit="10" x1="88.41" y1="515.373" x2="88.41" y2="521.183"/>
+	</g>
+</g>
+<g>
+	<g>
+		<line fill="none" stroke="#B1B1B2" stroke-width="0.75" stroke-miterlimit="10" x1="826.9" y1="11.738" x2="826.9" y2="17.601"/>
+		
+			<line fill="none" stroke="#B1B1B2" stroke-width="0.75" stroke-miterlimit="10" stroke-dasharray="11.9093,11.9093" x1="826.9" y1="29.238" x2="826.9" y2="512.201"/>
+		
+			<line fill="none" stroke="#B1B1B2" stroke-width="0.75" stroke-miterlimit="10" x1="826.9" y1="518.021" x2="826.9" y2="523.884"/>
+	</g>
+</g>
+<line fill="none" stroke="#B1B1B2" stroke-width="0.75" stroke-miterlimit="10" stroke-dasharray="12" x1="329.422" y1="85.738" x2="329.422" y2="522.391"/>
+<line fill="none" stroke="#B1B1B2" stroke-width="0.75" stroke-miterlimit="10" stroke-dasharray="12" x1="575.605" y1="77.751" x2="575.605" y2="521.884"/>
+<line fill="none" stroke="#2C6FDE" stroke-width="3" stroke-miterlimit="10" x1="830.82" y1="123.293" x2="822.363" y2="136.281"/>
+<line fill="none" stroke="#2C6FDE" stroke-width="3" stroke-miterlimit="10" x1="820.081" y1="125.584" x2="833.104" y2="133.989"/>
+
+<text transform="matrix(1.0505 -0.0013 0.0012 1 200.0488 55.3228)" fill="#AFB0B2" font-family="'Circe'" font-size="26" letter-spacing="0,05em">С&nbsp;Т&nbsp;Р&nbsp;У&nbsp;К&nbsp;Т&nbsp;У&nbsp;Р&nbsp;Н&nbsp;Ы&nbsp;Е&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;П&nbsp;Р&nbsp;О&nbsp;Д&nbsp;У&nbsp;К&nbsp;Т&nbsp;Ы</text>
+
+<text transform="matrix(4.489659e-011 -1 1 4.489659e-011 44.4473 302.7383)" fill="#636B6F" font-family="'Circe'" font-size="17">ДОХОДНОСТЬ</text>
+<text transform="matrix(1 0 0 1 380 551.1738)" fill="#353535" font-family="'Circe'" font-size="17">УРОВЕНЬ РИСКА</text>
+<text transform="matrix(1 0 0 1 0 458.4492)" fill="#B7B7B7" font-family="'Circe'" font-size="16">Депозиты</text>
+<text transform="matrix(1 0 0 1 859.0918 164.7383)" fill="#B7B7B7" font-family="'Circe'" font-size="16">Акции</text>
+
+<text id="green-text"  class="cursor-type disable-select" ng-click="filterByType('Low', $event)" transform="matrix(1 0 0 1 170 390)" fill="#54BB50" font-family="'Circe'" font-size="18">
+    <tspan x="0" y="0"  font-size="18">100% защита</tspan>
+    <tspan x="16.6182" y="19"  font-size="18">капитала</tspan>
+</text>
+
+<text id="blue-text" class="cursor-type disable-select" ng-click="filterByType('Medium', $event)" transform="matrix(1 0 0 1 380 260)" fill="#2C6FDE" 
+font-family="'Circe'" font-size="18">
+    <tspan x="0" y="0"  font-size="18">Частичная защита</tspan>
+    <tspan x="36.956" y="19"  font-size="18">капитала</tspan>
+</text>
+
+<text id="red-text" class="cursor-type disable-select" ng-click="filterByType('High', $event)" transform="matrix(1 0 0 1 665 185)" 
+fill="#FF4011" font-family="'Circe'" font-size="18">Рисковые</text>
+
+</svg>
+
+		</div>
+		<div class="visible-xs visible-sm text-center">
+			<img class="img-responsive" style="margin-bottom:70px;" src="resources/img/graph_mobile.png" />
+
+		</div>
+	</div>
+	<div class="row">
+		<h1 class="headlight text-center">Выберите структурный продукт: </h1>
+	</div>
+	<div class="row">
+	
+		<div class="col-xs-12 col-md-4 text-center ">
+			<div class="text-center green-button disable-select"  id="green-button" ng-click="filterByType('Low', $event)">
+				<i class="material-icons " aria-hidden="true">done</i>
+				<span>100% защита</span>
+			</div>
+			<span class="num-prod">Продуктов: {{lowRiskProducts}}</span>
+		</div>
+		<div class="col-xs-12  col-md-4  text-center">
+			<div class="text-center blue-button disable-select"  id="blue-button" ng-click="filterByType('Medium', $event)">
+				<i class="material-icons " aria-hidden="true">done</i>
+				<span>Частичная защита</span>
+			</div>
+			<span class="num-prod">Продуктов: {{mediumRiskProducts}}</span>
+		</div>
+		<div class="col-xs-12  col-md-4 text-center">
+			<div class="text-center red-button disable-select" id="red-button" ng-click="filterByType('High', $event)">
+				<i class="material-icons" aria-hidden="true">done</i>
+				<span>Рисковые</span>
+			</div>
+			<span class="num-prod">Продуктов: {{highRiskProducts}}</span>
+		</div>
+	
+	</div>
+
+	<div class="row">
+		<div id="table" >
+				<table class="grid-table-striped" style="margin:30px 0;width:100%">
+					<thead>
+						<tr class="underline">
+							<th></th>
+							<th>
+								<span><a class="table-sort" ng-click="order('name')">Название</a></span>
+								
+								<span ng-click="order('name')" ng-class="{'fa-sort-amount-asc' : reverse, 'fa-sort-amount-desc' : !reverse}" class="fa fa-2"></span>
+
+								<div>
+										<a href="" ng-click="clickFilter('Name')" class="sort-link">Поиск</a> <i class="fa fa-search fa-2"></i>
+									</div>
+								<!--<button ng-click="clickFilter('Name')" class="filter-button"><i class="fa fa-search fa-2"></i></button>-->
+
+								<div>
+									<input ng-show="filter.Name" ng-model="nameFilter" ng-change="filterProducts()" type="text" class="filter-input" />
+								</div>
+							</th>
+							<th class="visible-sm visible-md visible-lg">
+								<div class="btn-group" data-ng-class="{open1: open1}">
+
+									<div>Базовые активы</div>
+									<!--<div>
+										<a class="dropdown-toggle sort-link" data-ng-click="open1=!open1" data-toggle="dropdown" >Любые</a>
+									</div>-->
+									<!--<button class="dropdown-toggle filter-button" data-ng-click="open1=!open1" data-toggle="dropdown">
+										<i class="fa fa-filter fa-2"></i>
+									</button>-->
+									 <button class="btn-link sort-link" role="link"  data-ng-click="open1=!open1" data-toggle="dropdown" type="button" name="op" value="Любые">Любые</button>
+
+
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+										<li data-ng-repeat="under in unders">
+											<a href="" data-ng-click="setSelectedUnder()" data-ng-class="isCheckedForHref(under, 'selectedUnder')">{{under}}<span data-ng-class="isCheckedForSpan(under, 'selectedUnder')"></span></a>
+										</li>
+									</ul>
+								</div>
+							</th>
+							<th>
+								<div style="white-space:nowrap">
+									<span><a class="table-sort" ng-click="order('returnValue')">Доходность</a></span>
+									<span ng-click="order('returnValue')" ng-class="{'fa-sort-amount-asc' : reverse, 'fa-sort-amount-desc' : !reverse}" class="fa fa-2"></span>
+</div>
+
+
+									<div>
+										<a href="" ng-click="clickFilter('Profit')" class="sort-link">Любая</a>
+									</div>
+
+									<!--<button ng-click="clickFilter('Profit')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>-->
+									<div ng-show="filter.Profit">
+										<input type="number" class="filter-input-small" placeholder="От" ng-model="profitFilter.from" ng-change="filterProducts()" />
+										<br />
+										<input type="number" class="filter-input-small" placeholder="До" ng-model="profitFilter.to" ng-change="filterProducts()" />
+									</div>
+								
+							</th>
+							<th style="white-space:nowrap;">
+								Cумма инвестиций<br>
+								<div>
+									<a href="" ng-click="clickFilter('Sum')" class="sort-link">Любая</a>
+								</div>
+								<!--<button ng-click="clickFilter('Sum')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>-->
+								<div ng-show="filter.Sum">
+									<input type="number" class="filter-input-small" placeholder="От" ng-model="sumFilter.from" ng-change="filterProducts()" />
+									<br />
+									<input type="number" class="filter-input-small" placeholder="До" ng-model="sumFilter.to" ng-change="filterProducts()" />
+								</div>
+							</th>
+							<th class="visible-sm visible-md visible-lg" style="width:10%">
+								Срок
+								<div>
+									<a href="" ng-click="clickFilter('Terms')" class="sort-link">Любая</a>
+								</div>
+								<!--<button ng-click="clickFilter('Terms')" class="filter-button"><i class="fa fa-filter fa-2"></i></button>-->
+								<div ng-show="filter.Terms">
+									<input type="number" class="filter-input-small" placeholder="От" ng-model="termsFilter.from" ng-change="filterProducts()" />
+									<br />
+									<input type="number" class="filter-input-small" placeholder="До" ng-model="termsFilter.to" ng-change="filterProducts()" />
+								</div>
+							</th>
+							<th class="visible-sm visible-md visible-lg" style="width:15%">
+								<div class="btn-group" data-ng-class="{open2: open2}">
+									<div>Брокер</div>
+									 <button class="btn-link sort-link" role="link"  data-ng-click="open2=!open2" data-toggle="dropdown" type="button" name="op" value="Любые">Любой</button>
+									<!--<button class="dropdown-toggle filter-button" data-ng-click="open2=!open2" data-toggle="dropdown">-->
+										<!--<i class="fa fa-filter fa-2"></i>-->
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+										<li data-ng-repeat="broker in brokers">
+											<a href="" data-ng-click="setSelectedBroker()" data-ng-class="isCheckedForHref(broker,'selectedBroker')">{{broker}}<span data-ng-class="isCheckedForSpan(broker,'selectedBroker')"></span></a>
+										</li>
+									</ul>
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="val in products.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))"
+							ng-click="goToProductPage(val.id)" class="table-row" ng-class="getClassByRiskType(val.productType.riskType)">
+							<td>{{$index + 1 + ((currentPage - 1) * itemsPerPage)}}</td>
+							<td>{{val.name}}</td>
+							<td class="visible-sm visible-md visible-lg">{{val.underlayings}}</td>
+							<td>{{val.returnValue}}%</td>
+							<td>{{getPeriodValue(val.minInvest,val.maxInvest)}} {{val.currency.name}}</td>
+							<td class="visible-sm visible-md visible-lg">{{getPeriodValue(val.minTerm,val.maxTerm)}} мес.</td>
+							<td class="visible-sm visible-md visible-lg">{{val.broker.name}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div>
+					<div class="col-xs-12 col-md-6 left-unmargin">
+						<uib-pagination total-items="totalItems" ng-model="currentPage" class="pagination-sm" items-per-page="itemsPerPage"></uib-pagination>
+					</div>
+					<div class="hidden-xs hidden-sm col-md-6 col-sm-6">
+						<select ng-model="viewby" ng-change="setItemsPerPage(viewby)" class="right-mardin"><option>5</option><option>10</option><option>20</option><option>40</option></select>
+						<span class="right-mardin">Выводить по</span>
+					</div>
+				</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div style="padding-top:10px;"></div>
+	</div>
+
+
+
 </div>
 
 <link rel="stylesheet" href="resources/js/App/investproduct/investproduct.css">

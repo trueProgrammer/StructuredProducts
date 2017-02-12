@@ -121,7 +121,8 @@ angular.module('App.investproduct')
 
         restService.getAllProducts(
             function (response) {
-                setProducts(response);
+
+            	setProducts(response);
                 $scope.highRiskProducts = 0;
                 $scope.mediumRiskProducts = 0;
                 $scope.lowRiskProducts = 0;
@@ -172,6 +173,7 @@ angular.module('App.investproduct')
             var blueText = angular.element(document.getElementById("blue-text"));
 
             var greenButton = angular.element(document.getElementById("green-button"));
+
             var blueButton = angular.element(document.getElementById("blue-button"));
             var redButton = angular.element(document.getElementById("red-button"));
 
@@ -190,29 +192,39 @@ angular.module('App.investproduct')
 
             var clicked = {};
 
+
             function mouseOverLine(type, line, arc, button) {
                 line.css("visibility", "visible");
-                arc.attr("stroke-width", "9");
+                arc.attr("stroke-width", "6");
+
                 //button.css("box-shadow", "0px 0px 5px 3px #aead95");
-                button.attr("stroke-width", "9");
+                //button.attr("stroke-width", "9");
+
                 if(type === 'red') {
-                    button.attr('fill', '#FFF0FE');
-                } else if(type === 'blue') {
-                    button.attr('fill','#E3F1FF');
+                	button.addClass('red-button-selected');
+                } else if (type === 'blue') {
+                	button.addClass('blue-button-selected');
                 } else {
-                    button.attr('fill', '#D8FFD5');
+                	button.addClass('green-button-selected');
                 }
             }
+
+
             function mouseOutLine(type, line, arc, button) {
                 if(clicked[type]) {
                     return
                 }
                 line.css("visibility", "hidden");
-                arc.attr("stroke-width", "5");
-                button.attr('fill','white');
-                //button.css("box-shadow", "none");
-                button.attr("stroke-width", "3");
+                arc.attr("stroke-width", "2");
 
+				
+                if (type === 'red') {
+                	button.removeClass('red-button-selected');
+                } else if (type === 'blue') {
+                	button.removeClass('blue-button-selected');
+                } else {
+                	button.removeClass('green-button-selected');
+                }
             }
 
             function mouseOverGreen() {
@@ -233,6 +245,7 @@ angular.module('App.investproduct')
             function mouseOutBlue() {
                 mouseOutLine('blue',blueLine, blueArc, blueButton);
             }
+
             $scope.click = function(type, over, out) {
                 if(clicked[type]) {
                     clicked[type] = false;
@@ -256,7 +269,8 @@ angular.module('App.investproduct')
                 $document.scrollToElementAnimated(section);
                 $scope.filterByType(risk, event);
             };
-            $scope.filterByType = function(risk, event) {
+            $scope.filterByType = function (risk, event) {
+
                 if(risk === 'Low') {
                     $scope.click('green', mouseOverGreen, mouseOutGreen);
                 } else if(risk === 'Medium') {
@@ -271,14 +285,17 @@ angular.module('App.investproduct')
                 } else {
                     typesList.splice(index, 1);
                 }
+
                 if(typeof event !== 'undefined') {
-                    var target = event.currentTarget;
+                	var target = event.currentTarget;
+
                     if (index == -1) {
                         target.style.boxShadow = "0px 0px 5px 3px #aead95";
                     } else {
                         target.style.boxShadow = "none";
                     }
                 }
+
                 if(typesList.length === 0) {
                     restService.getAllProducts(
                         function (response) {
@@ -620,6 +637,7 @@ angular.module('App.investproduct')
         $scope.goToProductPage = function(id) {
             $location.path("/product").search("id",id);
         };
+
         $scope.getClassByRiskType = function(risk) {
             if(risk == 'Medium') {
                 return 'blue-style';

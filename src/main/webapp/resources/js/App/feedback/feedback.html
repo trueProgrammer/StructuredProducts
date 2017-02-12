@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<!--<div style="padding-top:80px"></div>-->
+
+<div class="container-fluid">
+
+	<div class="row">
+		<div class="col-xs-1"></div>
+		<div class="col-xs-10">
+
+        <div class="row margin-bottom-30">
+            <div class="col-md-9 mb-margin-bottom-30">
+                <div class="headline"><h2>Задать вопрос</h2></div>
+                <form name="emailForm" class="sky-form contact-style">
+                    <fieldset class="no-padding">
+                        <!--<label>Фамилия <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-7 col-md-offset-0">
+                                <div>
+                                    <input type="text" name="secondName" id="secondName" class="form-control" ng-model="email.secondName" required>
+                                </div>
+                            </div>
+                        </div>-->
+                        <label>Ваше имя и фамилия <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-7 col-md-offset-0">
+                                <div>
+                                    <input type="text" name="name" id="name" class="form-control" ng-model="email.name" required>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<label>Отчество <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-7 col-md-offset-0">
+                                <div>
+                                    <input type="text" name="midName" id="midName" class="form-control" ng-model="email.midName" required>
+                                </div>
+                            </div>
+                        </div>-->
+                        <label>Контактный телефон <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-7 col-md-offset-0">
+                                <div>
+                                    <input type="text" name="phone" id="phone" class="form-control" ng-model="email.phone">
+                                </div>
+                            </div>
+                        </div>
+						<label>Электронная почта <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-7 col-md-offset-0">
+                                <div>
+                                    <input type="email" name="email" id="email" class="form-control" ng-model="email.email" data-valid-pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required >
+                                </div>
+                            </div>
+                        </div>
+						<label>Ваш вопрос <span class="color-red">*</span></label>
+                        <div class="row sky-space-20">
+                            <div class="col-md-11 col-md-offset-0">
+                                <div>
+                                    <textarea rows="8" name="message" id="message" class="form-control" ng-model="email.text" required ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <label>
+                            <input type="checkbox" ng-model="agree">
+                            Подтверждаю своё согласие с <a href="resources/other/Политика конфиденциальности персональной информации.docx">Политикой обработки персональных данных.</a>
+                        </label>
+                        <div class="margin-top-5">
+                            <button class="btn-u" ng-click="sendEmail(emailForm)" ng-disabled="!agree">Отправить сообщение</button>
+                        </div>
+                    </fieldset>
+                    <!--ng-disabled="!validateForm(emailForm)"-->
+                    <div class="row">
+                        <div name="alertDiv" class="col-lg-12">
+                            <alert id="errorAlert" close="closeAlert()" dismiss-on-timeout="7000" type="{{emailAlert.type}}"
+                                   ng-if="emailAlert.visible">{{emailAlert.msg}}</alert>
+                        </div>
+                    </div>
+                </form>
+                <!-- End email form -->
+            </div>
+<!--            <div class="col-md-3">
+                <div class="headline"><h2>Контакты</h2></div>
+                <ul class="list-unstyled">
+                    <li class="padding-bottom-10">
+                        <i class="icon-custom icon-sm rounded-x icon-color-u fa fa-envelope"></i>
+                        <label>Email:</label>
+                        <p><a href="mailto:#" class="link-black">xstrum.service@gmail.com</a></p>
+                    </li>
+                    <li class="padding-bottom-10">
+                        <ul class="social-icons">
+                            <li><a href="#" data-original-title="Vk" class="rounded-x social_vk"></a></li>
+                            <li><a href="#" data-original-title="Facebook" class="rounded-x social_facebook"></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>-->
+        </div>
+
+
+		</div>
+		<div class="col-xs-1"></div>
+	</div>
+
+
+</div>
+
+
+<link rel="stylesheet" href="resources/js/App/feedback/feedback.css">
+

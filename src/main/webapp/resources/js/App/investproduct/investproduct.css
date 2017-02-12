@@ -27,17 +27,6 @@
     line-height: 15px;
 }
 
-.blue-button {
-    border-color: #2980b9;
-}
-
-.red-button {
-    border-color: #c0392b;
-}
-
-.green-button {
-    border-color: #2ecc71;
-}
 
 .num-blue {
     color: #2980b9;
@@ -149,3 +138,66 @@
 .dropdown-menu {
     min-width: 173px !important;
 }
+
+
+/*******************/
+
+.red-button, .blue-button, .green-button {
+	cursor: pointer;
+	border-radius: 38px;
+	max-width: 300px;
+	color: white;
+	font-family: 'Circe';
+	font-size: 20px;
+	white-space: nowrap;
+	line-height: 70px;
+	margin: 25px auto 6px;
+}
+
+.red-button {
+	background: #ff3300;
+	border: 2px solid #fff;
+}
+
+.blue-button {
+	background: #126bff;
+	border: 2px solid #fff;
+}
+
+.green-button {
+	background: #35c32e;
+	border: 2px solid #fff;
+}
+
+.red-button:hover, .blue-button:hover, .green-button:hover,
+.red-button-selected, .blue-button-selected, .green-button-selected
+
+ {
+	cursor: pointer;
+	border-radius: 38px;
+	background:white !important;
+	max-width: 300px;
+	color: #333;
+	font-family: 'Circe';
+	font-size: 20px;
+	white-space: nowrap;
+	line-height: 70px;
+	margin: 25px auto 6px;
+}
+
+.red-button:hover,
+.red-button-selected {
+	border: 2px solid #ff3300 !important;
+}
+
+.blue-button:hover,
+.blue-button-selected
+ {
+	border: 2px solid #126bff !important;
+}
+
+.green-button:hover,
+.green-button-selected {
+	border: 2px solid #35c32e !important;
+}
+

@@ -1,12 +1,13 @@
 angular.module('App.services').service('modalService', ['$uibModal',
     function ($uibModal) {
+
         var modalDefaults = {
             templateUrl: 'resources/js/App/modal/sendingRequestModal.html',
             // controller: 'sendRequestCtrl',
         };
         this.show = function (customModalDefaults, productId) {
             //Create temp objects to work with since we're in a singleton service
-            var tempModalDefaults = {};
+        	var tempModalDefaults = {};
 
             //Map angular-ui modal custom defaults to modal defaults defined in service
             angular.extend(tempModalDefaults, modalDefaults, customModalDefaults);
@@ -38,6 +39,7 @@ angular.module('App.services').service('modalService', ['$uibModal',
                         $('input').removeClass('invalid-control');
                         $scope.msg = "Проблема при обработке заявки."
                     };
+
                     $scope.sendParams = function () {
                         var phoneCheck = checkPhone();
                         if ($scope.sendform.$valid && phoneCheck) {

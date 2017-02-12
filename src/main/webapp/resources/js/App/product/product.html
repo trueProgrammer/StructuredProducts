@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<div class="breadcrumbs">
+<!--<div class="breadcrumbs">
     <div class="container">
         <h1 class="pull-left">Информацию о продукте</h1>
         <ul class="pull-right breadcrumb">
@@ -8,121 +8,135 @@
             <li class="active">Информация о продукте</li>
         </ul>
     </div>
-</div>
-<div class="container">
-    <div class="col-md-6 col-style margin-top-5">
-        <h2>{{productParams.product.name}}</h2>
-        <div ng-if="productParams.showImg == false">
-            <h3 >График цены базовых активов</h3>
-            <div>
-                <canvas id="chart" width="400" height="300"></canvas>
-                <div id="legendDiv"></div>
-            </div>
-        </div>
-        <div ng-if="productParams.showImg == true">
-            <img src="{{productParams.img}}"  class="product-img-style"/>
-        </div>
-        <!--<img src="{{productParams.img}}" width="400" height="300"/>
-        <h3 class="btn-link" ng-click="showChart = !showChart">График цены базового актива</h3>
-        <div ng-show="showChart">
-            <canvas id="chart" width="400" height="300"></canvas>
-        </div>
+</div>-->
 
-        <h3 class="btn-link" ng-click="showForecast = !showForecast">Прогноз аналитиков</h3>
-        <div ng-show="showForecast">
-            <p>
-                {{productParams.forecast}}
-            </p>
-        </div>-->
-    </div>
-    <!-- START RIGHT COLUMN-->
-    <div class="col-md-6 col-style">
-        <h2>Параметры продукта</h2>
-        <!--START DESCRIPTION-->
-        <div class="margin-bottom-10">
-            <div>
-                <div ng-click="click('desc')" class="cursor-type">
-                    <i class="fa fa-chevron-down" ng-show="isNotSelected('desc')"></i>
-                    <i class="fa fa-chevron-up" ng-show="isSelected('desc')"></i>
-                    &nbsp;&nbsp;
-                    <span class="custom-h2 red-style">Описание</span>
-                </div>
-            </div>
-            <div class="row" ng-if="isShow('desc')">
-                <div class="under-style">
-                    <p>{{productParams.product.description}}</p>
-                </div>
-            </div>
-        </div>
-        <!--END DESCRIPTION-->
-        <!--START MAIN PARAMS-->
-        <div>
-            <span class="custom-h3">Доходность и валюта: <span class="blue-style">{{productParams.product.returnValue}}% {{productParams.product.outputCurrency.name}}</span></span>
-            <hr class="devider devider-dashed hr-style"/>
-            <span class="custom-h3">Уровень защиты: <span class="blue-style">{{productParams.product.productType.name}}</span></span>
-            <hr class="devider devider-dashed hr-style"/>
-            <span class="custom-h3">Срок инвестирования: <span class="blue-style">{{productParams.product.termName}}</span></span>
-            <hr class="devider devider-dashed hr-style"/>
-            <span class="custom-h3">Минимальная сумма инвестиций и валюта: <span class="blue-style">{{productParams.product.investName}} {{productParams.product.inputCurrency.name}}</span></span>
-            <hr class="devider devider-dashed hr-style"/>
-            <span class="custom-h3">Базовые активы: <span class="blue-style">{{productParams.product.underlayings}}</span></span>
-            <hr class="devider devider-dashed hr-style"/>
-        </div>
-        <!--END MAIN PARAMS-->
-        <!--START OTHER PARAMS-->
-        <div>
-            <div>
-                <div ng-click="click('otherParams')" class="cursor-type">
-                    <i class="fa fa-chevron-down" ng-show="isNotSelected('otherParams')"></i>
-                    <i class="fa fa-chevron-up" ng-show="isSelected('otherParams')"></i>
-                    &nbsp;&nbsp;
-                    <span class="custom-h2 red-style">Другие параметры</span>
-                </div>
-            </div>
-            <div class="row" ng-if="isShow('otherParams')">
-                <div class="table-full">
-                    <table class="table main-table">
-                        <thead>
-                        <tr>
-                            <th>
-                                Стратегия
-                            </th>
-                            <th>
-                                Периодичность выплат
-                            </th>
-                            <th>
-                                Юридическая форма
-                            </th>
-                            <th>
-                                Размер выплаты
-                            </th>
+<div class="container">
+	<div class="row" style="padding-top:50px">
+		<div class="col-xs-12 text-center visible-xs">
+					<h1 class="headlight" style="margin-top:20px; line-height:32px;">
+						{{productParams.product.name}}
+					</h1>			
+				</div>
+		<div class="col-xs-12 col-sm-6">
+			<div ng-if="productParams.showImg == true" class="text-center">
+				<img src="{{productParams.img}}" style="width:90%;" class="product-img-style" />
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+
+			<div class="row" style="padding-bottom:20px;">
+				<div class="col-sm-12 hidden-xs">
+					<h1 class="headlight" style="margin-top:0; line-height:32px;">
+						{{productParams.product.name}}
+					</h1>			
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-10">
+					<!--START DESCRIPTION-->
+					<div class="margin-bottom-10">
+
+						<div ng-if="isShow('desc')">
+
+							<p>{{productParams.product.description}}</p>
+
+						</div>
+					</div>
+					<!--END DESCRIPTION-->
+					<div style="margin-bottom:30px;">
+						<p class="min">Доходность и валюта: <span class="dark">{{productParams.product.returnValue}}% {{productParams.product.outputCurrency.name}}</span></p>
+
+						<p class="min">Уровень защиты: <span class="dark">{{productParams.product.productType.name}}</span></p>
+
+						<p class="min">Срок инвестирования: <span style="font-weight:700;">{{productParams.product.termName}}</span></p>
+
+						<p class="min">Минимальная сумма инвестиций и валюта: <span class="dark">{{productParams.product.investName}} {{productParams.product.inputCurrency.name}}</span></p>
+
+						<p class="min">Базовые активы: <span class="dark"> {{productParams.product.underlayings}}</span></p>
+
+					</div>
+					<p class="block-header">Другие параметры</p>
+
+					<p class="min">Стратегия: <span class="dark"> {{productParams.product.strategy.name}}</span></p>
+					<p class="min">Периодичность выплат: <span class="dark"> {{productParams.product.paymentPeriodicity.name}}</span></p>
+					<p class="min">Юридическая форма: <span class="dark"> {{productParams.product.legalType.name}}</span></p>
+					<p class="min">Размер выплаты: <span class="dark">{{productParams.product.payoff.name}}</span></p>
+
+
+					 
+
+
+
+				<div style="min-width:250px; max-width: 350px; margin-top:30px;">
+				<div  class="text-center" 
+						style="padding: 3px; background:url('resources/img/button_choose_this.png') no-repeat;
+								 background-size: cover;">
+								<a class="inside-button"   role="button" 
+								ng-click="openModal()" onclick="ga('send', 'event', 'Button', 'Request', 'By product');">Выбрать этот продукт</a>
+					 </div>
+				</div>		
+
+
+				</div>
+				<div class="col-xs-2">
+					<img ng-src="{{productParams.product.broker.logo}} " class="img-style">		
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<div class="row">
+			<div class="text-center">
+
+				<h2 class="headlight text-center">Похожие продукты</h2>
+
+				<table class="grid-table-striped" style="margin:0px;width:100%">
+					<thead>
+						<tr class="underline">
+							<th></th>
+                            <th>Название <i class="fa fa-sort-amount-asc fa-2"></i></th>
+							<th class="visible-sm visible-md visible-lg">Базовые активы</th>
+                            <th class="visible-sm visible-md visible-lg">Доходность <i class="fa fa-sort-amount-asc fa-2"></i></th>
+                            <th class="visible-sm visible-md visible-lg">Cумма инвестиций</th>
+                            <th class="visible-sm visible-md visible-lg">Срок</th>
+                            <th>Брокер</th>
+						</tr>
+					</thead>
+					<tbody>
+						<!--<tr ng-repeat="val in topProducts | orderBy:predicate:reverse | limitTo:5" ng-click="goToProductPage(val.id)">
+							<td class="text-right" style="color:#a8aaac; padding-left:6px;  padding-right:6px;">{{$index + 1}}.</td>
+							<td class="text-left">{{val.name}}</td>
+							<td class="visible-sm visible-md visible-lg text-left">{{val.underlayings}}</td>
+							<td class="visible-sm visible-md visible-lg text-left">{{val.returnValue}} %</td>
+							<td class="text-left">{{val.broker.name}}</td>
+							<td class="text-left">
+								<img src="{{val.broker.logo}}" style="max-height:35px; max-width:170px;" />
+							</td>
+						</tr>-->
+
+                        <tr ng-repeat="val in products.slice(0, 4) | orderBy:val.name" ng-click="goToProductPage(val.id)" class="table-row">
+                            <td class="text-right">{{$index + 1}}</td>
+                            <td class="text-left">{{val.name}}</td>
+							<td class="visible-sm visible-md visible-lg text-left">{{val.underlayings}}</td>
+                            <td class="visible-sm visible-md visible-lg text-left">>{{val.returnValue}}%</td>
+                            <td class="visible-sm visible-md visible-lg text-left">>{{getPeriodValue(val.minInvest,val.maxInvest)}} {{val.currency.name}}</td>
+                            <td class="visible-sm visible-md visible-lg text-left">>{{getPeriodValue(val.minTerm,val.maxTerm)}} мес.</td>
+                            <td class="text-left"><img src="{{val.broker.logo}}" style="max-height:35px; max-width:170px;" /</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>{{productParams.product.strategy.name}}</td>
-                                <td>{{productParams.product.paymentPeriodicity.name}}</td>
-                                <td>{{productParams.product.legalType.name}}</td>
-                                <td>{{productParams.product.payoff.name}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!--END OTHER PARAMS-->
-        <hr class="devider devider-dashed hr-style"/>
-        <div class="margin-top-20">
-            <div class="col-md-9">
-                <a href="" ng-click="openModal()" onClick="ga('send', 'event', 'Button', 'Request', 'By product');"><h2>Отправить заявку на покупку структурного продукта</h2></a>
-                <button type="button" style="border:0; background: white" ng-click="openModal()" onClick="ga('send', 'event', 'Button', 'Request', 'By product');"><img src="resources/img/send_bid.png"/></button>
-            </div>
-            <div class="col-md-3">
-                <img ng-src="{{productParams.product.broker.logo}}" class="img-style">
-            </div>
-        </div>
-    </div>
-    <!-- END RIGHT COLUMN-->
+
+					</tbody>
+				</table>
+
+
+
+
+			</div>
+		</div>
+
 </div>
 
 <link rel="stylesheet" href="resources/js/App/product/product.css">

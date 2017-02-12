@@ -1,37 +1,42 @@
 <link rel="stylesheet" href="resources/assets/css/pages/page_invoice.css">
 
-<!--=== Breadcrumbs ===-->
-<div class="breadcrumbs">
-    <div class="container">
-        <h1 class="pull-left">{{investidea.header}}</h1>
-        <ul class="pull-right breadcrumb">
-            <li><a href="#/">Главная</a></li>
-            <li><a href="#/investideas">Инвестиционные идеи</a></li>
-        </ul>
-    </div><!--/container-->
-</div><!--/breadcrumbs-->
-<!--=== End Breadcrumbs ===-->
+<!--<div class="breadcrumbs">
+	<div class="container">
+		<h1 class="pull-left">{{investidea.header}} Заголовок инвестидеи</h1>
+		<ul class="pull-right breadcrumb">
+			<li><a href="#/">Главная страница</a></li>
+			<li class="#/investideas">Инвестиционные идеи</li>
+		</ul>
+	</div>
+</div>-->
 
 <div class="container content">
+	<div class="row">
+	<div class="col-md-2">
+	</div>
+		<div class=" col-md-8 text-center">
+		<h1 class="headlight" style="margin-bottom:45px;">{{investidea.title}}</h1>
+		</div>
+		<div class=" col-md-2">
+	    </div>
+	</div>
 
-    <div class="row invoice-header">
-        <div class="col-xs-6">
-            <img max-height="70px" max-width="120px" src="{{investidea.broker.logo}}" alt="">
-            <!--<h2 class="pull-left">{{investidea.broker.name}}</h2>-->
-        </div>
-        <div class="col-xs-6 invoice-numb">
-            {{investidea.addDate | date:'dd, MMMM yyyy'}}
-        </div>
-    </div>
+	<div class="row">
+	<div class=" col-md-1">
+	</div>
+	<div class=" col-md-10 ">
+	<p ng-bind-html="content"></p>
+		</div>
+		<div class="col-md-1">
+	    </div>
+		
+	</div>
 
-    <div class="clearfix margin-bottom-10"></div>
-    <div class="shadow-wrapper">
-        <div class="tag-box tag-box-v1 box-shadow shadow-effect-2">
-            <h2>{{investidea.title}}</h2>
-            <p ng-bind-html="content"></p>
-        </div>
-    </div>
 
-    <div class="clearfix margin-bottom-40"></div>
+	<!--<div class="text-center" style="margin-top:45px;" ><a class="headlight next"  href="#">
+	Следующая идея</a> <i class="fa fa-long-arrow-right fa-3x;" aria-hidden="true"></i>
+	</div>-->
 
 </div>
+
+<!--</div>-->

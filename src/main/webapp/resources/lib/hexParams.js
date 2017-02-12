@@ -235,7 +235,7 @@
                 .attr('visibility', 'hidden')
                 .attr('filter', 'url(#shadow)')
                 .attr('fill', 'white')
-                .attr("stroke-width", "15")
+                .attr("stroke-width", "2px")
                 .attr("stroke", function (d) {
                     return d.stroke
                 });
@@ -244,7 +244,7 @@
                 .attr("d", function (d) {
                     return "M" + d.x + "," + d.y + hexbin.hexagon();
                 })
-                .attr("stroke-width", "5px")
+                .attr("stroke-width", "2px") // Толщина линии
                 .attr('stroke', 'white')
                 .attr("class","hex-style")
                 .transition()
@@ -274,7 +274,7 @@
                 .attr("y", function (d) {
                     return d.y;
                 })
-                .attr("class","hex-text unselectable")
+                .attr("class","hex-text-big unselectable")
                 .text(function (d) {
                     return d.text;
                 })

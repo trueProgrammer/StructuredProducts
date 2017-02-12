@@ -37,7 +37,7 @@
 }
 
 .left-margin {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .top-margin {
@@ -75,8 +75,18 @@
 
 .hex-text {
     cursor: pointer;
-    letter-spacing: 0.5px;
-    font-size: 13px;
+    /*letter-spacing: 0.5px;*/
+    font-size: 15px;
+	font-family:'Circe';
+    color: #58585e;
+    text-anchor: middle;
+	
+}
+.hex-text-big {
+    cursor: pointer;
+    /*letter-spacing: 0.5px;*/
+    font-size: 22px;
+	font-family:Circe;
     color: #333333;
     text-anchor: middle;
 }
@@ -131,3 +141,54 @@
 .margin-top-150 {
     margin-top: -150px;
 }
+
+.param-head {
+	color: #4c83bd;
+	font-family: 'Circe Light';
+	font-size: 24px;
+	margin-bottom: 0px;
+}
+
+.param-data {
+	font-size: 16px;
+	font-family:Circe;
+	color: #58585e;
+	margin-bottom: 10px;
+}
+
+.diapason {
+	font-size: 16px;
+	font-family:Circe;
+	color: #58585e;
+	line-height: 36px;
+	margin-right: 5px;
+}
+
+.btn-apply {
+	border: 0;
+	color: #fff;
+	font-size: 15px;
+	font-family: Circe;
+	cursor: pointer;
+	font-weight: 400;
+	padding: 4px 10px;
+	position: relative;
+	background: #365caf;
+	white-space: nowrap;
+	display: inline-block;
+	text-decoration: none;
+}
+
+.btn-apply:hover {
+	background: #193b84;
+}
+
+/* Стиль подсветки выбранного элемента */
+#paramsContainer .dropdown-menu > li > a:hover {
+	background-color:#f0f5fd !important;
+}
+.fa-angle-down {
+color:#58585e!important;
+}
+
+

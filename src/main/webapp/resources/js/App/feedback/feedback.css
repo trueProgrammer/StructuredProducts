@@ -1,0 +1,176 @@
+/*.content-sm {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.height-60 {
+    height: 60%;
+}
+
+@media only screen and (min-width: 992px) and (min-height: 507px) {
+    .screen-height {
+        height: 97vh;
+    }
+}
+
+@media only screen and (min-width: 992px) and (min-height: 542px) {
+    .screen-height-95 {
+        height: 95vh;
+    }
+}
+
+.select-table-body {
+    margin-left: -28px;
+}
+
+.main-page-button {
+    margin-top: 18px;
+    width: 100%;
+    color: #555;
+    background: #fff;
+    border: inherit !important;
+}
+
+.main-page-button:hover {
+    background: #2295b9;
+    color: #fff;
+}
+
+.main-button-with-top {
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+}
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.invest-button {
+    margin:6px 10px;
+    font-size: 20px !important;
+}
+
+.top-five-button {
+    margin-bottom: -3px;
+}
+
+@media only screen and (min-width:1200px) {
+    .button-height {
+        height: 200px;
+    }
+}
+
+.height-80 {
+    height: 80%;
+}
+
+@media only screen and (max-width:992px) {
+    .col-btn {
+        width: 350px;
+        margin: auto;
+    }
+}*/
+
+
+/* Новое */
+
+.an-header1 {
+	padding: 4px 8px; 
+	line-height: 33px;
+	font-family:'Segoe UI Semibold'; 
+	font-size: 18px;
+	background:#00aeff;
+	color:white;
+}
+
+.an-header2 {
+	padding: 4px 8px; 
+	line-height: 33px;
+	font-family:'Segoe UI Semibold'; 
+	font-size: 18px;
+	background:#0094d9;
+	color:white;
+}
+
+
+#investTable {
+    display: table;
+    border-spacing: 6px; 
+	margin: 0px;
+	padding: 0px;
+}
+
+#investTable .idea-panel {
+    float: none;
+    display: table-cell;
+    vertical-align: top;
+	padding:8px; 
+	margin: 0px;
+	background-color:#f8fafd;
+	font-family: Circe Bold;  
+	font-size: 16px;
+}
+
+#investTable .idea-panel:before {
+    border-top: 3px solid #156ab2;
+    width: 100%;
+    position: absolute;
+	margin: 0px;
+	padding: 0px;
+    top: 0;
+    left: 0;
+    content: '';
+}
+
+#investTable .idea-panel a {
+	color: black;
+	text-decoration: none;
+	}
+
+
+#investTable .idea-panel a:hover {
+	color: #156ab2;
+	text-decoration: none;
+	}
+
+
+th {
+	font-family: 'Circe Bold', sans-serif;
+	font-size: 14px;
+}
+
+td {
+	font-family: Circe, sans-serif;
+	font-size: 14px;
+}
+
+.main-table-striped td {
+	padding: 5px 5px 5px 0px;
+	cursor: pointer;
+}
+
+.main-table-striped th {
+	font-family: 'Circe Bold', sans-serif;
+	font-size: 14px;
+	padding: 5px 5px 5px 0px;
+}
+
+
+.underline {
+border-bottom:1pt solid #c4c2c3;
+}
+
+
+.main-table-striped > tbody > tr:nth-child(odd) > td {
+   background-color: #f8fafd;
+}
+
+.main-table-striped > tbody > tr:nth-child(even) > td {
+   background-color: white;
+}
+
+.main-table-striped > tbody > tr:hover > td {
+   background-color: #dff0ff;
+}
+

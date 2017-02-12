@@ -12,12 +12,14 @@ angular.module('App.main')
                 }
         })
     }])
+
 .controller('mainCtrl', [ '$scope', '$log', 'restService', '$anchorScroll', '$document', '$location',
     function($scope, $log, restService, $anchorScroll, $document, $location) {
 
         var contactShow = false;
 
         $scope.agree = true;
+
         $scope.isContactFormShow = function() {
             return contactShow;
         };
@@ -246,9 +248,35 @@ angular.module('App.main')
 
         //init app function
         angular.element(document).ready(function () {
-            var sliderHeight = $( window ).height() * 0.95 - $("#main-buttons").height();
+
+        	var sliderHeight = $(window).height() * 0.95 - $("#main-buttons").height();
             //var sliderHeight = $("#page1").height() - $("#main-buttons").height();
-            App.init();
+
+        	App.init();
+
+			// Партнеры
+        	jQuery('#mainPartners').carouFredSel({
+        		auto: {
+        			timeoutDuration: 1
+        		},
+        		responsive: true,
+        		width: '100%',
+        		scroll: {
+        			items: 1,
+        			easing: 'linear',
+        			fx: 'scroll',
+        			duration: 5000
+        		},
+        		items: {
+        			width: 330,
+        			height: '82px',	//	optionally resize item-height
+        			visible: {
+        				min: 1,
+        				max: 4
+        			}
+        		}
+        	});
+
             jQuery("#layerslider").layerSlider({
                 navStartStop: false,
                 skin: 'fullwidth',
@@ -259,6 +287,10 @@ angular.module('App.main')
                 autoPlayVideos: true,
                 skinsPath: 'resources/assets/plugins/layer-slider/layerslider/skins/'
             });
+
+
+       
+
             /*jQuery("#layerslider").height(sliderHeight);*/
             $("#phone").mask("+7 (999) 999-9999");
             /*if (document.addEventListener) {
@@ -273,4 +305,8 @@ angular.module('App.main')
             document.removeEventListener("DOMMouseScroll", handler, false);
             document.removeEventListener("mousewheel", handler, false);
         });*/
-    }]).value('duScrollOffset', 0).value("duScrollDuration",100);
+    }]).value('duScrollOffset', 0).value("duScrollDuration", 100);
+
+
+
+

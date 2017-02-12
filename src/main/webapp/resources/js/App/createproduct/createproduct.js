@@ -35,37 +35,37 @@ angular.module('App.createproduct')
             
             var defaultParams = [{
                 text: 'Доходность',
-                stroke: '#91CF50',
+                stroke: '#35c32e',
                 id: 'profit'
             }, {
                 text: 'Срок',
-                stroke: '#4774AA',
+                stroke: '#126bff',
                 id: 'time'
             }, {
                 text: 'Сумма',
-                stroke: '#FD0001',
+                stroke: '#ff3300',
                 id: 'sum'
             }, {
                 text: 'Защита',
-                stroke: '#FDBF01',
+                stroke: '#ffa912',
                 id: 'risk'
             }];
 
             $scope.optParams = [{
                 text: 'Актив',
-                stroke: '#FDBF01',
+                stroke: '#b0b0b0',
                 id: 'baseActiveType'
             }, {
                 text: 'Брокер',
-                stroke: '#91CF50',
+                stroke: '#b0b0b0',
                 id: 'broker'
             }, {
                 text: 'Выплаты',
-                stroke: '#FDBF01',
+                stroke: '#b0b0b0',
                 id: 'paymentsPeriod'
             }, {
                 text: 'Стратегия',
-                stroke: '#4774AA',
+                stroke: '#b0b0b0',
                 id: 'strategy'
             }];
 
@@ -136,10 +136,10 @@ angular.module('App.createproduct')
                 type: 'dropdownAndDiapason'
             }, {
                 id: 'riskBlock',
-                header: 'Уровень защиты инвестиций',
-                buttonText: 'Применить уровень риска',
-                fromValues: ['10%', '20%', '30%', '40%'],
-                toValues: ['10%', '20%', '30%', '40%'],
+                header: 'Задать уровень защиты инвестиций',
+                buttonText: 'Применить уровень защиты',
+                fromValues: ['10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%'],
+                toValues: ['10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%'],
                 fromValue: '10%',
                 toValue: '20%',
                 lineFormat: 'От {0} до {1}',
@@ -238,18 +238,21 @@ angular.module('App.createproduct')
                         this.value = value;
                         $('#' + this.hexControl.id + '-text').text(value.shortValue);
                     };
+
                     control.save = function () {
                         this.isSaved = true;
                         this.line = this.lineFormat.format(this.value.value);
                         this.hexControl.inactive();
                         savedControls[this.id] = {header: this.header, value: this.line};
                     };
+
                     control.edit = function () {
                         this.isSaved = false;
                         this.line = '';
                         this.hexControl.active();
                         delete savedControls[this.id];
                     };
+
                     control.show = function () {
                         $('#' + this.id).appendTo('#optParamsControlBlock');
                     };
@@ -407,7 +410,7 @@ angular.module('App.createproduct')
 
             var hex = new hexParams({
                 $scope: $scope,
-                radius: 93,
+                radius: 100,
                 defaultParams: defaultParams,
                 optParams: $scope.optParams
             });
